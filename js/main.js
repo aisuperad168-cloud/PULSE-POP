@@ -1,14 +1,14 @@
 /* ===========================
    PULSEPOP OFFICIAL WEBSITE
-   Main JavaScript
+   Main JavaScript v3
 =========================== */
 
-// ===== STREAMER DATA (Real TikTok avatars & names) =====
+// ===== STREAMER DATA =====
 const streamers = [
   {
     handle: 'sj231009',
     name: '馬妹',
-    fullName: '馬妹🐴🦄🐴🦄',
+    fullName: '馬妹🐴',
     url: 'https://www.tiktok.com/@sj231009',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/57e7e7ef8a6c48ad005d892638f36bb4~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=dbc66509&x-expires=1778904000&x-signature=sCmGzxFnj5%2BXd1knwiwceZlKDiE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🐴'
@@ -16,7 +16,7 @@ const streamers = [
   {
     handle: 'zunwang5858518',
     name: '沐光',
-    fullName: '沐光Muguang58🍹',
+    fullName: '沐光🍹',
     url: 'https://www.tiktok.com/@zunwang5858518',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-maliva-avt-0068/a53fbaf46125a08ce525e27a97e1b2a2~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=b150334c&x-expires=1778904000&x-signature=%2BfyCdUqmhDuuSVZ3km3AWF9utQU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🍹'
@@ -64,7 +64,7 @@ const streamers = [
   {
     handle: 'duolyu1225',
     name: '多多綠',
-    fullName: '🌜多多綠🌛',
+    fullName: '多多綠🌙',
     url: 'https://www.tiktok.com/@duolyu1225',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/2bd489846b62f98eed8b4984229aba1a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=7707860a&x-expires=1778904000&x-signature=gaGT5pGPhmbPG49PIPxgrmtItjU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🌙'
@@ -80,7 +80,7 @@ const streamers = [
   {
     handle: 'nini_1003_hyn',
     name: 'NiNi',
-    fullName: '🦦NiNi小仙女🩵',
+    fullName: 'NiNi🦦',
     url: 'https://www.tiktok.com/@nini_1003_hyn',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/4af7fbc3ca065c04953e08579bba5488~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=0007ca8f&x-expires=1778904000&x-signature=RQPohDlNL%2FOZU4SrjnJIwRPOtXw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🦦'
@@ -88,7 +88,7 @@ const streamers = [
   {
     handle: 'taco_ya124',
     name: '叩叩Taco',
-    fullName: '🌱叩叩Taco',
+    fullName: '叩叩Taco🌱',
     url: 'https://www.tiktok.com/@taco_ya124',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/852caef70d15af375bf1b95a93e1e9c5~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=a278f27b&x-expires=1778904000&x-signature=d10m3UbllVEjO035wWOO9x0qia0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🌱'
@@ -136,7 +136,7 @@ const streamers = [
   {
     handle: 'sevenmonki',
     name: '阿娜子',
-    fullName: 'A-NA阿娜子',
+    fullName: 'A-NA阿娜子🐵',
     url: 'https://www.tiktok.com/@sevenmonki',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-useast2a-avt-0068-giso/2194e4d421913c5750d907e5268e22fa~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=6f497b9a&x-expires=1778904000&x-signature=%2Faa2AKZMT3Qd2R%2B1jkiUJt5g4ws%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🐵'
@@ -144,7 +144,7 @@ const streamers = [
   {
     handle: 'sea.817',
     name: '黃曉海',
-    fullName: '黃曉海',
+    fullName: '黃曉海🌊',
     url: 'https://www.tiktok.com/@sea.817',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/73c2680137417eebd50ec7f26004c78e~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=4d6cd31b&x-expires=1778904000&x-signature=DNCT%2BnykM%2FulvAio%2BCriPCS61Cw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🌊'
@@ -152,7 +152,7 @@ const streamers = [
   {
     handle: 'lucky_1388',
     name: '皮蛋',
-    fullName: '皮蛋🔱',
+    fullName: '皮蛋🍀',
     url: 'https://www.tiktok.com/@lucky_1388',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/252060d82776757f0d15942e65351e47~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=5aef64c7&x-expires=1778904000&x-signature=Oe7G7PoW8KeyqAvBtYjly7bipgw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🍀'
@@ -208,7 +208,7 @@ const streamers = [
   {
     handle: 'wawagiking',
     name: '翔a',
-    fullName: '翔a~',
+    fullName: '翔a🎈',
     url: 'https://www.tiktok.com/@wawagiking',
     thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/e1807f6f294b61a67185e7b4270c4bf7~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=96f1cc4d&x-expires=1778904000&x-signature=6Vp%2FDe0hYOwmV%2FrSodGRVwEND7k%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
     emoji: '🎈'
@@ -239,8 +239,8 @@ const streamers = [
   }
 ];
 
-// ===== TikTok SVG ICON =====
-const tiktokSVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+// ===== TikTok logo SVG =====
+const tiktokSVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
   <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5
   2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01
   a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34
@@ -259,7 +259,7 @@ function renderStreamers(list) {
 
   grid.innerHTML = list.map((s, i) => `
     <a href="${s.url}" target="_blank" rel="noopener noreferrer"
-       class="streamer-card" style="animation-delay:${(i % 12) * 0.04}s">
+       class="streamer-card" style="animation-delay:${(i % 15) * 0.05}s">
       <div class="streamer-avatar-wrap">
         <img
           class="streamer-avatar-img"
@@ -277,7 +277,7 @@ function renderStreamers(list) {
       <div class="streamer-name">${s.fullName}</div>
       <div class="streamer-handle">@${s.handle}</div>
       <div class="streamer-link-btn">
-        ${tiktokSVG} 查看主播
+        ${tiktokSVG}查看主播
       </div>
     </a>
   `).join('');
@@ -300,29 +300,35 @@ function initSearch() {
   });
 }
 
-// ===== NAVBAR SCROLL =====
+// ===== NAVBAR =====
 function initNavbar() {
   const navbar   = document.getElementById('navbar');
   const burger   = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   if (!navbar) return;
 
+  // Scroll handler
+  let lastY = 0;
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 50);
+    lastY = y;
   }, { passive: true });
 
+  // Hamburger
   burger?.addEventListener('click', () => {
     const open = navLinks?.classList.toggle('open');
     const spans = burger.querySelectorAll('span');
     if (open) {
-      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
       spans[1].style.opacity   = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
     } else {
       spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
     }
   });
 
+  // Close on nav click
   navLinks?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       navLinks.classList.remove('open');
@@ -331,40 +337,51 @@ function initNavbar() {
   });
 }
 
-// ===== COUNTER ANIMATION =====
+// ===== COUNTER =====
 function animateCounter(el) {
   const target   = parseInt(el.dataset.target, 10);
   const duration = 1800;
-  const steps    = duration / 16;
+  const fps      = 60;
+  const steps    = duration / (1000 / fps);
   const inc      = target / steps;
-  let   current  = 0;
+  let current = 0;
   const timer = setInterval(() => {
     current += inc;
-    if (current >= target) { el.textContent = target; clearInterval(timer); }
-    else el.textContent = Math.floor(current);
-  }, 16);
+    if (current >= target) {
+      el.textContent = target;
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(current);
+    }
+  }, 1000 / fps);
 }
 
 function initCounters() {
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); } });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        obs.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.5 });
-  document.querySelectorAll('.stat-num').forEach(c => obs.observe(c));
+  document.querySelectorAll('.stat-num').forEach(el => obs.observe(el));
 }
 
 // ===== PARTICLES =====
 function initParticles() {
   const container = document.getElementById('particles');
   if (!container) return;
-  for (let i = 0; i < 28; i++) {
+  for (let i = 0; i < 30; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
-    const size = Math.random() * 3 + 2;
+    const size = Math.random() * 3 + 1.5;
     p.style.cssText = `
       left:${Math.random() * 100}%;
       width:${size}px; height:${size}px;
-      animation-duration:${Math.random() * 12 + 8}s;
-      animation-delay:${Math.random() * 12}s;
+      animation-duration:${Math.random() * 14 + 9}s;
+      animation-delay:-${Math.random() * 16}s;
+      opacity:${Math.random() * 0.5 + 0.2};
     `;
     container.appendChild(p);
   }
@@ -372,26 +389,36 @@ function initParticles() {
 
 // ===== SCROLL REVEAL =====
 function initScrollReveal() {
-  const els = document.querySelectorAll(
-    '.about-grid, .platform-card, .feature-item, .join-content, .section-header, .contact-grid'
+  const targets = document.querySelectorAll(
+    '.about-grid > *, .platform-card, .feature-item, .join-content, .section-header, .contact-grid > *, .stat-item'
   );
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
+    entries.forEach((e, idx) => {
       if (e.isIntersecting) {
+        const delay = (e.target.dataset.delay || 0);
         setTimeout(() => {
           e.target.style.opacity   = '1';
-          e.target.style.transform = 'translateY(0)';
-        }, i * 60);
+          e.target.style.transform = 'translateY(0) scale(1)';
+        }, delay);
         obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
-  els.forEach(el => {
+  }, { threshold: 0.08 });
+
+  targets.forEach((el, i) => {
     el.style.opacity    = '0';
-    el.style.transform  = 'translateY(28px)';
-    el.style.transition = 'opacity 0.65s ease, transform 0.65s ease';
+    el.style.transform  = 'translateY(30px) scale(0.98)';
+    el.style.transition = 'opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+    el.dataset.delay    = (i % 6) * 80;
     obs.observe(el);
   });
+}
+
+// ===== TICKER =====
+function initTicker() {
+  const ticker = document.getElementById('tickerInner');
+  if (!ticker) return;
+  ticker.innerHTML += ticker.innerHTML; // seamless loop
 }
 
 // ===== TOAST =====
@@ -400,7 +427,7 @@ function showToast(msg) {
   if (!toast) return;
   toast.textContent = msg;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3200);
+  setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
 // ===== CONTACT FORM =====
@@ -409,7 +436,7 @@ function initContactForm() {
   if (!form) return;
   form.addEventListener('submit', e => {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
+    const btn  = form.querySelector('button[type="submit"]');
     const orig = btn.innerHTML;
     btn.innerHTML = '傳送中…';
     btn.disabled  = true;
@@ -426,42 +453,53 @@ function initContactForm() {
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
+      const id = a.getAttribute('href');
+      const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h') || '68', 10);
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - 74,
+        behavior: 'smooth'
+      });
     });
   });
 }
 
-// ===== ACTIVE NAV =====
+// ===== ACTIVE NAV HIGHLIGHT =====
 function initActiveNav() {
   const sections = document.querySelectorAll('section[id]');
   const links    = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
+  const onScroll = () => {
     let cur = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) cur = s.id; });
-    links.forEach(a => { a.style.color = a.getAttribute('href') === `#${cur}` ? 'var(--red-light)' : ''; });
-  }, { passive: true });
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 140) cur = s.id;
+    });
+    links.forEach(a => {
+      const match = a.getAttribute('href') === `#${cur}`;
+      a.style.color = match ? 'var(--white)' : '';
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-// ===== CURSOR GLOW =====
+// ===== CURSOR GLOW (desktop only) =====
 function initCursorGlow() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
   const g = document.createElement('div');
-  g.style.cssText = `position:fixed;pointer-events:none;z-index:0;width:350px;height:350px;
-    border-radius:50%;background:radial-gradient(circle,rgba(232,57,42,0.07) 0%,transparent 70%);
-    transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;`;
+  g.style.cssText = `
+    position:fixed; pointer-events:none; z-index:0;
+    width:400px; height:400px; border-radius:50%;
+    background:radial-gradient(circle, rgba(232,57,42,0.06) 0%, transparent 65%);
+    transform:translate(-50%,-50%);
+    transition:left 0.14s ease, top 0.14s ease;
+    will-change:left,top;
+  `;
   document.body.appendChild(g);
-  document.addEventListener('mousemove', e => { g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px'; });
-}
-
-// ===== STATS TICKER (旗下主播 300+ text scroll) =====
-function initTicker() {
-  const ticker = document.getElementById('tickerInner');
-  if (!ticker) return;
-  // duplicate for seamless loop
-  ticker.innerHTML += ticker.innerHTML;
+  document.addEventListener('mousemove', e => {
+    g.style.left = e.clientX + 'px';
+    g.style.top  = e.clientY + 'px';
+  }, { passive: true });
 }
 
 // ===== INIT =====

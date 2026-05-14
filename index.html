@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>脈動傳媒 PulsePop | 直播MCN機構</title>
   <meta name="description" content="脈動傳媒PulsePop — 專業直播MCN機構，旗下擁有300+優質主播，活躍於TikTok與抖音平台。" />
+  <meta name="theme-color" content="#E8392A" />
   <link rel="icon" href="assets/logo_color.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,10 +23,14 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">首頁</a></li>
         <li><a href="#about">關於我們</a></li>
-        <li><a href="#streamers">旗下主播</a></li>
         <li><a href="#platforms">合作平台</a></li>
+        <li><a href="#streamers">旗下主播</a></li>
         <li><a href="#contact">聯絡我們</a></li>
       </ul>
+      <a href="#contact" class="nav-cta">
+        立即合作
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
       <button class="hamburger" id="hamburger" aria-label="選單">
         <span></span><span></span><span></span>
       </button>
@@ -35,6 +40,8 @@
   <!-- ========== HERO ========== -->
   <section class="hero" id="home">
     <div class="hero-bg">
+      <div class="hero-bg-grad"></div>
+      <div class="hero-grid-overlay"></div>
       <div class="pulse-ring r1"></div>
       <div class="pulse-ring r2"></div>
       <div class="pulse-ring r3"></div>
@@ -43,67 +50,83 @@
 
     <div class="hero-inner">
       <div class="hero-content">
+
+        <!-- Live pill -->
+        <div class="hero-live-pill">
+          <div class="hero-live-dot"></div>
+          300+ 位主播正在直播中
+        </div>
+
+        <!-- Logo -->
         <div class="hero-logo-wrap">
           <img src="assets/logo_dark.png" alt="PulsePop Logo" class="hero-logo" />
         </div>
+
         <h1 class="hero-title">
           <span class="gradient-text">脈動傳媒</span>
           <span class="hero-en">PulsePop</span>
         </h1>
-        <p class="hero-desc">專業直播MCN機構 · 旗下300+優質主播<br/>深耕 TikTok 與 抖音 兩大頂尖直播平台</p>
+
+        <p class="hero-desc">
+          專業直播 MCN 機構 · 旗下 300+ 優質主播<br/>
+          深耕 TikTok &amp; 抖音兩大頂尖直播平台
+        </p>
 
         <!-- Platform badges -->
         <div class="hero-platforms">
           <div class="platform-badge">
             <div class="pb-icon">
-              <!-- TikTok SVG inline -->
-              <svg viewBox="0 0 24 24" fill="white" width="26" height="26">
+              <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
                 <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
               </svg>
             </div>
-            <span>TikTok Live</span>
+            TikTok Live
           </div>
           <div class="platform-badge douyin-badge">
-            <div class="pb-icon douyin-icon">
-              <!-- Douyin / Music note icon -->
-              <svg viewBox="0 0 24 24" fill="white" width="26" height="26">
+            <div class="pb-icon">
+              <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
                 <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
               </svg>
             </div>
-            <span>抖音直播</span>
+            抖音直播
           </div>
         </div>
 
         <div class="hero-cta">
-          <a href="#streamers" class="btn-primary">認識主播陣容</a>
-          <a href="#contact" class="btn-outline">立即合作</a>
+          <a href="#streamers" class="btn-primary">
+            認識主播陣容
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn-outline">立即合作洽詢</a>
         </div>
       </div>
 
+      <!-- Mascot -->
       <div class="hero-mascot">
+        <div class="hero-mascot-glow"></div>
         <img src="assets/mascot.png" alt="PulsePop 吉祥物" />
       </div>
     </div>
 
     <div class="scroll-indicator">
       <div class="mouse"><div class="wheel"></div></div>
-      <span>向下滾動</span>
+      <span>向下探索</span>
     </div>
   </section>
 
-  <!-- ========== TICKER MARQUEE ========== -->
+  <!-- ========== TICKER ========== -->
   <div class="ticker-wrap">
     <div class="ticker" id="tickerInner">
-      <span>🔴 LIVE NOW</span>
-      <span>脈動傳媒 PulsePop</span>
-      <span>✦ 旗下 300+ 優質主播</span>
-      <span>✦ TikTok Live</span>
-      <span>✦ 抖音直播</span>
-      <span>🔥 全天候直播不間斷</span>
-      <span>✦ 專業MCN機構</span>
-      <span>✦ 品牌合作歡迎洽詢</span>
-      <span>🎙️ 主播招募中</span>
-      <span>✦ 脈動傳媒 PulsePop</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>LIVE NOW</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>脈動傳媒 PulsePop</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>旗下 300+ 優質主播</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>TikTok Live</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>抖音直播</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>全天候直播不間斷</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>專業 MCN 機構</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>品牌合作歡迎洽詢</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>主播招募進行中</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>脈動不息，熱情傳播</span>
     </div>
   </div>
 
@@ -115,25 +138,22 @@
           <span class="stat-num" data-target="300">0</span>
           <span class="stat-plus">+</span>
         </div>
-        <span class="stat-label">旗下主播</span>
+        <span class="stat-label">旗下活躍主播</span>
       </div>
-      <div class="stat-divider"></div>
       <div class="stat-item">
         <div class="stat-num-wrap">
           <span class="stat-num" data-target="2">0</span>
-          <span class="stat-plus">大平台</span>
+          <span class="stat-plus">&nbsp;大平台</span>
         </div>
-        <span class="stat-label">TikTok & 抖音</span>
+        <span class="stat-label">TikTok &amp; 抖音</span>
       </div>
-      <div class="stat-divider"></div>
       <div class="stat-item">
         <div class="stat-num-wrap">
           <span class="stat-num" data-target="24">0</span>
-          <span class="stat-plus">小時</span>
+          <span class="stat-plus">&nbsp;小時</span>
         </div>
         <span class="stat-label">全天候直播</span>
       </div>
-      <div class="stat-divider"></div>
       <div class="stat-item">
         <div class="stat-num-wrap">
           <span class="stat-num" data-target="100">0</span>
@@ -149,66 +169,76 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag">ABOUT US</span>
-        <h2 class="section-title">關於脈動傳媒</h2>
+        <h2 class="section-title section-title-gradient">關於脈動傳媒</h2>
         <p class="section-desc">專注直播生態，致力發掘與培育優質內容創作者</p>
       </div>
+
       <div class="about-grid">
-        <div class="about-logos">
-          <!-- Logo variants showcase -->
+        <!-- Visual left -->
+        <div class="about-visual">
           <div class="logo-showcase">
             <div class="logo-card dark-card">
-              <img src="assets/logo_dark.png" alt="PulsePop 深色Logo" />
+              <img src="assets/logo_dark.png" alt="PulsePop 深色 Logo" />
             </div>
             <div class="logo-card light-card">
-              <img src="assets/logo_black.png" alt="PulsePop 淺色Logo" />
+              <img src="assets/logo_black.png" alt="PulsePop 黑色 Logo" />
             </div>
             <div class="logo-card dark-card">
-              <img src="assets/logo_white.png" alt="PulsePop 白色Logo" />
+              <img src="assets/logo_white.png" alt="PulsePop 白色 Logo" />
             </div>
             <div class="logo-card light-card">
-              <img src="assets/logo_color.png" alt="PulsePop 彩色Logo" />
+              <img src="assets/logo_color.png" alt="PulsePop 彩色 Logo" />
             </div>
           </div>
-          <div class="mascot-showcase">
+          <div class="mascot-wrap">
+            <div class="mascot-halo"></div>
             <img src="assets/mascot.png" alt="PulsePop 吉祥物" class="about-mascot" />
           </div>
         </div>
+
+        <!-- Content right -->
         <div class="about-content">
-          <h3>我們的使命</h3>
-          <p>脈動傳媒（PulsePop）是一間專業的直播MCN機構，旗下擁有超過300位活躍於TikTok與抖音平台的優質主播。我們秉持「脈動不息，熱情傳播」的精神，為主播提供全方位的培訓、資源與支持，共同打造最強直播生態圈。</p>
+          <p class="about-eyebrow">我們的使命</p>
+          <h3>脈動不息<br/>熱情傳播</h3>
+          <p>脈動傳媒（PulsePop）是一間專業的直播 MCN 機構，旗下擁有超過 300 位活躍於 TikTok 與抖音平台的優質主播。我們秉持「脈動不息，熱情傳播」的精神，為主播提供全方位的培訓、資源與支持，共同打造最強直播生態圈。</p>
+
           <div class="feature-list">
             <div class="feature-item">
               <div class="feature-icon">🎯</div>
               <div class="feature-text">
-                <h4>專業培訓</h4>
+                <h4>專業培訓體系</h4>
                 <p>系統化直播技巧、內容策略與個人品牌建立課程</p>
               </div>
             </div>
             <div class="feature-item">
               <div class="feature-icon">📊</div>
               <div class="feature-text">
-                <h4>數據驅動</h4>
+                <h4>數據驅動成長</h4>
                 <p>精準數據洞察，協助主播持續優化成長策略</p>
               </div>
             </div>
             <div class="feature-item">
               <div class="feature-icon">🤝</div>
               <div class="feature-text">
-                <h4>品牌合作</h4>
+                <h4>品牌商業合作</h4>
                 <p>媒合優質品牌與主播，創造互利共贏商業合作</p>
               </div>
             </div>
             <div class="feature-item">
               <div class="feature-icon">🌐</div>
               <div class="feature-text">
-                <h4>跨平台運營</h4>
-                <p>深耕TikTok與抖音，掌握兩岸最大直播流量</p>
+                <h4>跨平台全面運營</h4>
+                <p>深耕 TikTok 與抖音，掌握兩岸最大直播流量</p>
               </div>
             </div>
           </div>
-          <a href="https://www.instagram.com/pulse.pop9" target="_blank" class="btn-primary" style="margin-top:24px;display:inline-flex;align-items:center;gap:10px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            追蹤 Instagram
+
+          <a href="https://www.instagram.com/pulse.pop9" target="_blank" rel="noopener" class="about-social">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+            追蹤我們的 Instagram
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
       </div>
@@ -220,73 +250,92 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag">PLATFORMS</span>
-        <h2 class="section-title">主要合作平台</h2>
-        <p class="section-desc">深耕兩大主流直播平台，覆蓋全球及大中華區用戶</p>
+        <h2 class="section-title section-title-gradient">主要合作平台</h2>
+        <p class="section-desc">深耕兩大主流直播平台，覆蓋全球及大中華區龐大用戶群</p>
       </div>
+
       <div class="platform-cards">
 
         <!-- TikTok Card -->
-        <div class="platform-card">
-          <div class="pcard-top">
-            <div class="pcard-icon tiktok-icon-bg">
-              <svg viewBox="0 0 24 24" fill="white" width="44" height="44">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
-              </svg>
+        <div class="platform-card tiktok-card">
+          <div class="platform-card-glow"></div>
+          <div class="platform-card-inner">
+            <div class="pcard-top">
+              <div class="pcard-icon tiktok-icon-bg">
+                <svg viewBox="0 0 24 24" fill="white" width="40" height="40">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
+                </svg>
+              </div>
+              <div class="pcard-live-badge">LIVE</div>
             </div>
-            <div class="pcard-live-badge">LIVE</div>
+            <h3>TikTok Live</h3>
+            <p>全球最大短影音平台，覆蓋 190+ 國家，助主播觸及國際觀眾，實現全球流量變現。</p>
+            <ul class="pcard-features">
+              <li>
+                <div class="pcard-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                全球觀眾覆蓋 190+ 國家地區
+              </li>
+              <li>
+                <div class="pcard-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                多元禮物互動 &amp; LIVE 電商系統
+              </li>
+              <li>
+                <div class="pcard-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                完善創作者變現工具與數據分析
+              </li>
+            </ul>
+            <a href="https://www.tiktok.com/discover/%E8%84%88%E5%8B%95%E5%82%B3%E5%AA%92pulsepop" target="_blank" rel="noopener" class="pcard-btn">
+              查看我們的 TikTok
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
           </div>
-          <h3>TikTok Live</h3>
-          <p>全球最大短影音平台，覆蓋全球190+國家，助主播觸及國際觀眾，實現全球流量變現</p>
-          <ul class="pcard-features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              全球觀眾覆蓋 190+ 國家
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              多元禮物 & LIVE互動系統
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              完善創作者變現工具
-            </li>
-          </ul>
-          <a href="https://www.tiktok.com/discover/%E8%84%88%E5%8B%95%E5%82%B3%E5%AA%92pulsepop" target="_blank" class="pcard-btn">
-            查看我們的 TikTok
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
         </div>
 
         <!-- Douyin Card -->
         <div class="platform-card douyin-card">
-          <div class="pcard-top">
-            <div class="pcard-icon douyin-icon-bg">
-              <svg viewBox="0 0 24 24" fill="white" width="44" height="44">
-                <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
-              </svg>
+          <div class="platform-card-glow"></div>
+          <div class="platform-card-inner">
+            <div class="pcard-top">
+              <div class="pcard-icon douyin-icon-bg">
+                <svg viewBox="0 0 24 24" fill="white" width="40" height="40">
+                  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+                </svg>
+              </div>
+              <div class="pcard-live-badge">直播</div>
             </div>
-            <div class="pcard-live-badge">直播</div>
+            <h3>抖音直播</h3>
+            <p>大陸最大短影音直播平台，深度連結龐大的大中華區用戶，直播電商生態完整成熟。</p>
+            <ul class="pcard-features">
+              <li>
+                <div class="pcard-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                龐大大中華區用戶基礎
+              </li>
+              <li>
+                <div class="pcard-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                直播電商一體化整合生態
+              </li>
+              <li>
+                <div class="pcard-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                完整 MCN 官方支援與資源體系
+              </li>
+            </ul>
+            <a href="#contact" class="pcard-btn">
+              了解合作機會
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
           </div>
-          <h3>抖音直播</h3>
-          <p>大陸最大短影音直播平台，深度連結龐大的大中華區用戶，直播電商生態完整成熟</p>
-          <ul class="pcard-features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              龐大大陸用戶基礎
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              直播電商一體化整合
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              完整MCN官方支援體系
-            </li>
-          </ul>
-          <a href="#contact" class="pcard-btn">
-            了解合作機會
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
         </div>
 
       </div>
@@ -298,30 +347,38 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag">OUR TALENT</span>
-        <h2 class="section-title">旗下優質主播</h2>
-        <p class="section-desc">以下為目前活躍中的精選優質再現主播陣容<br/>完整陣容共 <strong style="color:var(--red-light)">300+</strong> 位主播持續直播中</p>
+        <h2 class="section-title section-title-gradient">旗下優質主播</h2>
+        <p class="section-desc">
+          精選優質再現主播陣容，完整旗下共
+          <strong style="color:#FF5444;font-weight:800;">300+</strong>
+          位主播全天候直播中
+        </p>
       </div>
 
       <div class="streamer-controls">
         <div class="search-box">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" id="searchInput" placeholder="搜尋主播名稱…" />
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="搜尋主播名稱或帳號…" autocomplete="off" />
         </div>
       </div>
 
       <div class="streamers-grid" id="streamersGrid">
-        <!-- JS rendered -->
+        <!-- Rendered by JS -->
       </div>
 
       <div class="streamers-footer">
         <p>⭐ 以上為精選優質再現主播，更多主播持續加入中</p>
-        <a href="#contact" class="btn-outline" style="margin-top:16px;display:inline-flex;">我要加入主播陣容</a>
+        <a href="#contact" class="btn-outline" style="margin-top:18px;display:inline-flex;">
+          我要加入主播陣容
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- ========== JOIN US ========== -->
   <section class="join-us">
+    <div class="join-us-bg"></div>
     <div class="container">
       <div class="join-inner">
         <div class="join-mascot">
@@ -332,34 +389,16 @@
           <h2>想成為脈動傳媒的主播嗎？</h2>
           <p>我們持續招募熱愛直播、充滿活力的創作者！無論新手或有經驗的主播，歡迎加入我們的大家庭，一起創造精彩內容！</p>
           <div class="perks-grid">
-            <div class="perk">
-              <span class="perk-icon">🎓</span>
-              <span>專業直播培訓</span>
-            </div>
-            <div class="perk">
-              <span class="perk-icon">💰</span>
-              <span>完善分潤機制</span>
-            </div>
-            <div class="perk">
-              <span class="perk-icon">📱</span>
-              <span>設備資源支持</span>
-            </div>
-            <div class="perk">
-              <span class="perk-icon">🚀</span>
-              <span>品牌曝光機會</span>
-            </div>
-            <div class="perk">
-              <span class="perk-icon">🌐</span>
-              <span>跨平台資源整合</span>
-            </div>
-            <div class="perk">
-              <span class="perk-icon">🤝</span>
-              <span>專屬經紀人服務</span>
-            </div>
+            <div class="perk"><span class="perk-icon">🎓</span><span>專業直播培訓</span></div>
+            <div class="perk"><span class="perk-icon">💰</span><span>完善分潤機制</span></div>
+            <div class="perk"><span class="perk-icon">📱</span><span>設備資源支持</span></div>
+            <div class="perk"><span class="perk-icon">🚀</span><span>品牌曝光機會</span></div>
+            <div class="perk"><span class="perk-icon">🌐</span><span>跨平台資源整合</span></div>
+            <div class="perk"><span class="perk-icon">🤝</span><span>專屬經紀人服務</span></div>
           </div>
-          <a href="#contact" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;">
+          <a href="#contact" class="btn-primary">
             立即申請加入
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
       </div>
@@ -371,9 +410,10 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag">CONTACT</span>
-        <h2 class="section-title">聯絡我們</h2>
+        <h2 class="section-title section-title-gradient">聯絡我們</h2>
         <p class="section-desc">商業合作、主播招募或任何問題，歡迎與我們聯繫</p>
       </div>
+
       <div class="contact-grid">
 
         <!-- Left info -->
@@ -382,13 +422,12 @@
             <img src="assets/logo_white.png" alt="PulsePop Logo" />
           </div>
           <h3>脈動傳媒 PulsePop</h3>
-          <p>專業直播MCN機構<br/>致力打造最強主播生態圈</p>
+          <p>專業直播 MCN 機構<br/>致力打造最強主播生態圈</p>
 
           <div class="social-links">
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/pulse.pop9" target="_blank" class="social-btn ig-btn">
+            <a href="https://www.instagram.com/pulse.pop9" target="_blank" rel="noopener" class="social-btn ig-btn">
               <div class="social-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                 </svg>
               </div>
@@ -397,10 +436,10 @@
                 <span class="shandle">@pulse.pop9</span>
               </div>
             </a>
-            <!-- TikTok -->
-            <a href="https://www.tiktok.com/discover/%E8%84%88%E5%8B%95%E5%82%B3%E5%AA%92pulsepop" target="_blank" class="social-btn tt-btn">
+
+            <a href="https://www.tiktok.com/discover/%E8%84%88%E5%8B%95%E5%82%B3%E5%AA%92pulsepop" target="_blank" rel="noopener" class="social-btn tt-btn">
               <div class="social-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
                 </svg>
               </div>
@@ -415,6 +454,7 @@
         <!-- Right form -->
         <div class="contact-form-wrap">
           <form class="contact-form" id="contactForm">
+            <h4>傳送訊息給我們</h4>
             <div class="form-row">
               <div class="form-group">
                 <label>您的姓名 <span class="req">*</span></label>
@@ -445,6 +485,7 @@
             </button>
           </form>
         </div>
+
       </div>
     </div>
   </section>
@@ -457,15 +498,19 @@
       </div>
       <p class="footer-tagline">脈動不息，熱情傳播</p>
       <div class="footer-links">
-        <a href="https://www.instagram.com/pulse.pop9" target="_blank">Instagram</a>
+        <a href="https://www.instagram.com/pulse.pop9" target="_blank" rel="noopener">Instagram</a>
         <span>·</span>
-        <a href="https://www.tiktok.com/discover/%E8%84%88%E5%8B%95%E5%82%B3%E5%AA%92pulsepop" target="_blank">TikTok</a>
+        <a href="https://www.tiktok.com/discover/%E8%84%88%E5%8B%95%E5%82%B3%E5%AA%92pulsepop" target="_blank" rel="noopener">TikTok</a>
+        <span>·</span>
+        <a href="#about">關於我們</a>
+        <span>·</span>
+        <a href="#streamers">旗下主播</a>
       </div>
       <p class="footer-copy">© 2025 脈動傳媒 PulsePop. All Rights Reserved.</p>
     </div>
   </footer>
 
-  <!-- Toast -->
+  <!-- Toast notification -->
   <div class="toast" id="toast"></div>
 
   <script src="js/main.js"></script>
