@@ -12,9 +12,13 @@
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/" />
     <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>JDI 脈動傳媒 JDI Pulse MEDIA｜TikTok LIVE 官方合作經紀公會</image:title>
+      <image:caption>脈動不息 熱情傳播 — 台灣 TikTok LIVE 官方合作經紀公會，0 抽佣、現金保底、300+ 優質主播。</image:caption>
+    </image:image>
+    <image:image>
       <image:loc>https://jdi-pulse.com/assets/logo_jdi_pulse.png</image:loc>
-      <image:title>JDI 脈動傳媒 JDI Pulse MEDIA</image:title>
-      <image:caption>TikTok LIVE 官方合作經紀公會 LOGO</image:caption>
+      <image:title>JDI 脈動傳媒 LOGO</image:title>
     </image:image>
   </url>
 
@@ -27,8 +31,9 @@
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/partnership" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/partnership" />
     <image:image>
-      <image:loc>https://jdi-pulse.com/assets/logo_jdi_pulse.png</image:loc>
-      <image:title>加入合作｜JDI 脈動傳媒</image:title>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>加入合作｜JDI 脈動傳媒 — TikTok LIVE 官方經紀公會</image:title>
+      <image:caption>0 抽佣、現金保底、無經驗可、免費上手教學。</image:caption>
     </image:image>
   </url>
 
