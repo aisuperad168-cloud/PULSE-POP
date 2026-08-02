@@ -8,214 +8,214 @@ const streamers = [
   {
     handle: 'sj231009', name: '馬妹', fullName: '馬妹🐴',
     url: 'https://www.tiktok.com/@sj231009',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/57e7e7ef8a6c48ad005d892638f36bb4~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=dbc66509&x-expires=1778904000&x-signature=sCmGzxFnj5%2BXd1knwiwceZlKDiE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/sj231009.jpg',
     emoji: '🐴'
   },
   {
     handle: 'zunwang5858518', name: '沐光', fullName: '沐光🍹',
     url: 'https://www.tiktok.com/@zunwang5858518',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-maliva-avt-0068/a53fbaf46125a08ce525e27a97e1b2a2~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=b150334c&x-expires=1778904000&x-signature=%2BfyCdUqmhDuuSVZ3km3AWF9utQU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/zunwang5858518.jpg',
     emoji: '🍹'
   },
   {
     handle: 'lin_959595', name: '優Yoyo', fullName: '優Yoyo🪀',
     url: 'https://www.tiktok.com/@lin_959595',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/a41550067abc0e02a2445ad713c58a9f~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=ee8a1896&x-expires=1778904000&x-signature=WtFuKB1f434dXdYRPpH32uGzDIs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/lin_959595.jpg',
     emoji: '🪀'
   },
   {
     handle: 'sherrolss', name: '知音姊姊', fullName: '知音姊姊',
     url: 'https://www.tiktok.com/@sherrolss',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/ae4ae713574eb5d486cfbb3d1c78d3cc~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=d9781ca3&x-expires=1778904000&x-signature=I%2BsAopXcUq1t1Pd0ZZNpFTdASwM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/sherrolss.jpg',
     emoji: '🎵'
   },
   {
     handle: 'mai916537', name: '甜桃', fullName: '甜桃🍑',
     url: 'https://www.tiktok.com/@mai916537',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/48cd78b58c79109ad6e920f8ebdf7bb2~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=39be843d&x-expires=1778904000&x-signature=N2ZQSH507NqRUJhfFjRnThYuJQY%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/mai916537.jpg',
     emoji: '🍑'
   },
   {
     handle: 'pp888a', name: '瑜媽', fullName: '瑜媽🐯',
     url: 'https://www.tiktok.com/@pp888a',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/45e8c05cbab68b96206deb2a8ed919ca~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=2bfbcf82&x-expires=1778904000&x-signature=nN3NoyYAt2xxu7O27lxShhCqgr4%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/pp888a.jpg',
     emoji: '🐯'
   },
   {
     handle: 'xnln1538', name: '亮亮', fullName: '亮亮❣️',
     url: 'https://www.tiktok.com/@xnln1538',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/51b3de1d3b76d2a6a1ad461b3e238ee6~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=8c68a5e6&x-expires=1778904000&x-signature=jm51BXr5F8%2B%2BYgW1u4nkhYEeIpA%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/xnln1538.jpg',
     emoji: '❣️'
   },
   {
     handle: 'duolyu1225', name: '多多綠', fullName: '多多綠🌙',
     url: 'https://www.tiktok.com/@duolyu1225',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/2bd489846b62f98eed8b4984229aba1a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=7707860a&x-expires=1778904000&x-signature=gaGT5pGPhmbPG49PIPxgrmtItjU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/duolyu1225.jpg',
     emoji: '🌙'
   },
   {
     handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶',
     url: 'https://www.tiktok.com/@renatz0503',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/3eccb6293e5fc8515c2f2023ee502ab6~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=01f6e05f&x-expires=1778904000&x-signature=3hggGfQtE8lbShy8L80NJLc%2BbAw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/renatz0503.jpg',
     emoji: '🧶'
   },
   {
     handle: 'nini_1003_hyn', name: 'NiNi', fullName: 'NiNi🦦',
     url: 'https://www.tiktok.com/@nini_1003_hyn',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/4af7fbc3ca065c04953e08579bba5488~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=0007ca8f&x-expires=1778904000&x-signature=RQPohDlNL%2FOZU4SrjnJIwRPOtXw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/nini_1003_hyn.jpg',
     emoji: '🦦'
   },
   {
     handle: 'taco_ya124', name: '叩叩Taco', fullName: '叩叩Taco🌱',
     url: 'https://www.tiktok.com/@taco_ya124',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/852caef70d15af375bf1b95a93e1e9c5~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=a278f27b&x-expires=1778904000&x-signature=d10m3UbllVEjO035wWOO9x0qia0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/taco_ya124.jpg',
     emoji: '🌱'
   },
   {
     handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅',
     url: 'https://www.tiktok.com/@c_mi_0908',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/a2b319c0aadf33cd90d12e6289c8f1c2~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=51951693&x-expires=1778904000&x-signature=T4VOXT3aZ8uHpKSEqyG8Mje85jY%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/c_mi_0908.jpg',
     emoji: '🪅'
   },
   {
     handle: 'ambercblyr3', name: '貢你妹', fullName: '貢你妹🍘',
     url: 'https://www.tiktok.com/@ambercblyr3',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/4067b46497b0afa848268977424fe901~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=ef978584&x-expires=1778904000&x-signature=O7fTNK%2FKZ9qJUTmnCZUZMdEOs00%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/ambercblyr3.jpg',
     emoji: '🍘'
   },
   {
     handle: 'demidemi0103', name: 'ㄚ咪', fullName: '貪吃鬼ㄚ咪🥚',
     url: 'https://www.tiktok.com/@demidemi0103',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/3c8e76800be00cbf0bdedcd6ff52ed84~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=bbe89f85&x-expires=1778904000&x-signature=e9FDJo6c77yOCLeFqItb2bnrfks%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/demidemi0103.jpg',
     emoji: '🥚'
   },
   {
     handle: 'juiccc25', name: '優優', fullName: '優優🍒',
     url: 'https://www.tiktok.com/@juiccc25',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/610a9cecdb501bd66f8ef990a281342e~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=12f29e86&x-expires=1778904000&x-signature=4TRhq78UHtR4fcPw%2F%2Fk5diic9YA%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/juiccc25.jpg',
     emoji: '🍒'
   },
   {
     handle: 'chloe13149999', name: '克蘿伊', fullName: '克蘿伊🎀',
     url: 'https://www.tiktok.com/@chloe13149999',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/dcc67005bb065ff9650c0f0ae23a501f~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=6017ead6&x-expires=1778907600&x-signature=8Xd6DOXN7RvSpiHPr8o2B9gJXT0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/chloe13149999.jpg',
     emoji: '🎀'
   },
   {
     handle: 'sevenmonki', name: '阿娜子', fullName: 'A-NA阿娜子🐵',
     url: 'https://www.tiktok.com/@sevenmonki',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-useast2a-avt-0068-giso/2194e4d421913c5750d907e5268e22fa~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=6f497b9a&x-expires=1778904000&x-signature=%2Faa2AKZMT3Qd2R%2B1jkiUJt5g4ws%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/sevenmonki.jpg',
     emoji: '🐵'
   },
   {
     handle: 'sea.817', name: '黃曉海', fullName: '黃曉海🌊',
     url: 'https://www.tiktok.com/@sea.817',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/73c2680137417eebd50ec7f26004c78e~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=099b82cd&x-expires=1778907600&x-signature=dPMZTMG9VhOrDq5zEsAHRhd3CIs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/sea.817.jpg',
     emoji: '🌊'
   },
   {
     handle: 'lucky_1388', name: '皮蛋', fullName: '皮蛋🍀',
     url: 'https://www.tiktok.com/@lucky_1388',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/252060d82776757f0d15942e65351e47~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=5aef64c7&x-expires=1778904000&x-signature=Oe7G7PoW8KeyqAvBtYjly7bipgw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/lucky_1388.jpg',
     emoji: '🍀'
   },
   {
     handle: 'user30678fuck', name: 'Faker', fullName: 'Faker🐟',
     url: 'https://www.tiktok.com/@user30678fuck',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/c214fbcfc5aadbb5b51effe025849c15~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=ce2a8a95&x-expires=1778904000&x-signature=iJ3exdSDurk4ECbHK9GMN%2BZJy%2Fc%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/user30678fuck.jpg',
     emoji: '🐟'
   },
   {
     // Fixed: now has real avatar (was placeholder before)
     handle: 'fierce1222', name: '元承烈', fullName: '元承烈🎙️',
     url: 'https://www.tiktok.com/@fierce1222',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/ab1eec9d3ee25dfde12ade5a67fb5030~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=0b85c3ae&x-expires=1778907600&x-signature=TN3t38y3ivabUG1ipgX2Pvdtd20%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/fierce1222.jpg',
     emoji: '⚜️'
   },
   {
-    handle: 'jack09_20', name: 'Jack', fullName: 'Jack💼',
+    handle: 'jack09_20', name: '曜宸Jack', fullName: '曜宸💼Jack',
     url: 'https://www.tiktok.com/@jack09_20',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/c2b630fc02952671f927982a18e367ee~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=e9ff2f1a&x-expires=1778904000&x-signature=X5%2FIK07cdaPL9CgdndGsFCkx22Y%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/jack09_20.jpg',
     emoji: '💼'
   },
   {
     handle: 'jan_11111', name: '河馬哥哥', fullName: '河馬哥哥🦛',
     url: 'https://www.tiktok.com/@jan_11111',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/5205168327d10b91eb0912f5af8d46e8~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=f9002acf&x-expires=1778907600&x-signature=rq8I4%2BDpoJlk0AEsbTthpI6ywrM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/jan_11111.jpg',
     emoji: '🦛'
   },
   {
     // Fixed: now has real avatar (was placeholder before)
     handle: 'm4jo6211', name: '小折', fullName: '小折💣',
     url: 'https://www.tiktok.com/@m4jo6211',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/bca387733b9d075426ad55f10f2ffec6~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=b65a8804&x-expires=1778907600&x-signature=dJdnd3FK3bBG8jfM9PAAiW7suyM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/m4jo6211.jpg',
     emoji: '💣'
   },
   {
     handle: 'eunice_ice_', name: '尤妮酥', fullName: '尤妮酥💫',
     url: 'https://www.tiktok.com/@eunice_ice_',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-maliva-avt-0068/77ef50ddb3a14a11b187d4929a0d7488~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=0bb43140&x-expires=1778904000&x-signature=rTlmOzVOZ2om6OOShXb56gzG%2F8M%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/eunice_ice_.jpg',
     emoji: '💫'
   },
   {
     handle: 'wawagiking', name: '翔a', fullName: '翔a🎈',
     url: 'https://www.tiktok.com/@wawagiking',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/e1807f6f294b61a67185e7b4270c4bf7~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=96f1cc4d&x-expires=1778904000&x-signature=6Vp%2FDe0hYOwmV%2FrSodGRVwEND7k%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/wawagiking.jpg',
     emoji: '🎈'
   },
   {
     handle: '080u_u080', name: '拾貳', fullName: '拾貳🎈',
     url: 'https://www.tiktok.com/@080u_u080',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-maliva-avt-0068/6699ebd71df5f5ac55e631b9fc9fc307~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=a2907d15&x-expires=1778904000&x-signature=2%2B5QEV1sUltWbr5yAgPE62ysWF0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/080u_u080.jpg',
     emoji: '🎈'
   },
   {
     handle: 'ciaoc.tw', name: '雀兒', fullName: '雀兒👽',
     url: 'https://www.tiktok.com/@ciaoc.tw',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/285138a91d23443ce43016ba53833bc8~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=148d663e&x-expires=1778904000&x-signature=6blccPo%2Bm5%2F%2B4Xs7ePcCXN7Ffhw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/ciaoc.tw.jpg',
     emoji: '👽'
   },
   {
     handle: 'zhi_xuan93_0125', name: '尹流星', fullName: '尹流星🎙️',
     url: 'https://www.tiktok.com/@zhi_xuan93_0125',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/32fa063fdaac618de40159767b9fc464~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=9640&refresh_token=e59313a7&x-expires=1778904000&x-signature=CJxT%2Fvir3UfR8dvPr3%2F7uEMV4tQ%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/zhi_xuan93_0125.jpg',
     emoji: '🎙️'
   }
 ];
 
 // ===== 活動專區 DATA =====
 
-// 4月金牌主播排行榜
+// 6月金牌主播排行榜
 const goldRanking = [
   {
-    rank: 1, handle: 'duolyu1225', name: '多多綠', fullName: '多多綠🌙',
+    rank: 1, handle: 'duolyu1225', name: '多多綠', fullName: '🌜多多綠🌛¹⁵⁷',
     url: 'https://www.tiktok.com/@duolyu1225',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/2bd489846b62f98eed8b4984229aba1a~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=05652487&x-expires=1778907600&x-signature=5gaCvQDfqZFQHpCOZCF1JTanTEs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/duolyu1225.jpg',
     emoji: '🌙', medal: '🥇'
   },
   {
-    rank: 2, handle: 'sj231009', name: '馬妹', fullName: '馬妹🐴',
-    url: 'https://www.tiktok.com/@sj231009',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/57e7e7ef8a6c48ad005d892638f36bb4~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=c60456f1&x-expires=1778907600&x-signature=ZzKmcGk5dSKsax85d7Hji1jbSY4%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
-    emoji: '🐴', medal: '🥈'
-  },
-  {
-    rank: 3, handle: 'nini_1003_hyn', name: 'NiNi', fullName: 'NiNi🦦',
-    url: 'https://www.tiktok.com/@nini_1003_hyn',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/4af7fbc3ca065c04953e08579bba5488~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=e9a22c82&x-expires=1778907600&x-signature=%2BhdBydhTfqyl%2Bopv7UbtwVqaAXw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
-    emoji: '🦦', medal: '🥉'
-  },
-  {
-    rank: 4, handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶',
+    rank: 2, handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶𝓡𝓝⁰⁵⁰³',
     url: 'https://www.tiktok.com/@renatz0503',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/3eccb6293e5fc8515c2f2023ee502ab6~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=050b50e6&x-expires=1778907600&x-signature=9H%2F3QKfl24qsHubOnndD1yAKUZM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
-    emoji: '🧶', medal: '4️⃣'
+    thumb: 'assets/avatars/renatz0503.jpg',
+    emoji: '🧶', medal: '🥈'
   },
   {
-    rank: 5, handle: 'taco_ya124', name: '叩叩Taco', fullName: '叩叩Taco🌱',
-    url: 'https://www.tiktok.com/@taco_ya124',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/852caef70d15af375bf1b95a93e1e9c5~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=6c7b84bb&x-expires=1778907600&x-signature=zkaym2PhO14xOYf71HvdPirS5Dk%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
-    emoji: '🌱', medal: '5️⃣'
+    rank: 3, handle: 'sj231009', name: '馬妹', fullName: '馬妹🐴🦄🐴🦄',
+    url: 'https://www.tiktok.com/@sj231009',
+    thumb: 'assets/avatars/sj231009.jpg',
+    emoji: '🐴', medal: '🥉'
+  },
+  {
+    rank: 4, handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅 ᴹᴵ',
+    url: 'https://www.tiktok.com/@c_mi_0908',
+    thumb: 'assets/avatars/c_mi_0908.jpg',
+    emoji: '🪅', medal: '4️⃣'
+  },
+  {
+    rank: 5, handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️ ³⁷',
+    url: 'https://www.tiktok.com/@fierce1222',
+    thumb: 'assets/avatars/fierce1222.jpg',
+    emoji: '⚜️', medal: '5️⃣'
   }
 ];
 
@@ -224,55 +224,55 @@ const newStreamers = [
   {
     handle: 'dearpink0311', name: '娃娃', fullName: 'Love娃娃🐾',
     url: 'https://www.tiktok.com/@dearpink0311',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/0a10508a4d7af2f64698ad90314fed40~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=34717b9d&x-expires=1778907600&x-signature=vCy%2FILJj2PO6h4hPHUJUUWgwKt8%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/dearpink0311.jpg',
     emoji: '🐾'
   },
   {
     handle: 'sea.817', name: '黃曉海', fullName: '黃曉海🌊',
     url: 'https://www.tiktok.com/@sea.817',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/73c2680137417eebd50ec7f26004c78e~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=099b82cd&x-expires=1778907600&x-signature=dPMZTMG9VhOrDq5zEsAHRhd3CIs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/sea.817.jpg',
     emoji: '🌊'
   },
   {
     handle: 'chloe13149999', name: '克蘿伊', fullName: '克蘿伊🎀',
     url: 'https://www.tiktok.com/@chloe13149999',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/dcc67005bb065ff9650c0f0ae23a501f~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=6017ead6&x-expires=1778907600&x-signature=8Xd6DOXN7RvSpiHPr8o2B9gJXT0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/chloe13149999.jpg',
     emoji: '🎀'
   },
   {
     handle: 'ooooo6789ooooo', name: 'Guanting99', fullName: 'Guanting 99✨',
     url: 'https://www.tiktok.com/@ooooo6789ooooo',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/601bbc662b1cd44ab926aeb39ced7a8b~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=426eb352&x-expires=1778907600&x-signature=BCW5mn6mqHuB8FvOHcZMHvqVilQ%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/ooooo6789ooooo.jpg',
     emoji: '✨'
   },
   {
     handle: 'jan_11111', name: '河馬哥哥', fullName: '河馬哥哥🦛',
     url: 'https://www.tiktok.com/@jan_11111',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/5205168327d10b91eb0912f5af8d46e8~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=f9002acf&x-expires=1778907600&x-signature=rq8I4%2BDpoJlk0AEsbTthpI6ywrM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/jan_11111.jpg',
     emoji: '🦛'
   },
   {
     handle: 'amis790608', name: '凱凱', fullName: '凱凱🌈',
     url: 'https://www.tiktok.com/@amis790608',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/711e83988c3a7035580f7ca459b8a841~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=2cb31730&x-expires=1778907600&x-signature=z5%2Bfe1yKnZr2eHHhwgqCttqtUcE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/amis790608.jpg',
     emoji: '🌈'
   },
   {
     handle: 'www__shay', name: 'Shay烜', fullName: 'Shay 烜♡',
     url: 'https://www.tiktok.com/@www__shay',
-    thumb: 'https://p19-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/d488c1b953194091d53edfdaa9242e28~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=095f9648&x-expires=1778907600&x-signature=U8r3b6yj7oCBACZFsAgfmE%2FXoag%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/www__shay.jpg',
     emoji: '♡'
   },
   {
     handle: 'lauralan.tw', name: '藍辰語', fullName: '藍辰語🌸',
     url: 'https://www.tiktok.com/@lauralan.tw',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/9e3e0f00c1f6a5c8e03775e790fb0538~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=fbda1fe8&x-expires=1778907600&x-signature=gXEl7BMjhwTfXscD2gLvYxkd4dk%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/lauralan.tw.jpg',
     emoji: '🌸'
   },
   {
     handle: 'user8542304936538', name: '柚子', fullName: '🔥柚子🐺',
     url: 'https://www.tiktok.com/@user8542304936538',
-    thumb: 'https://p16-common-sign.tiktokcdn-us.com/tos-alisg-avt-0068/27eeb7dcf036e2715310472d0cb2643f~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=c026a43d&x-expires=1778907600&x-signature=lLDTvGBI1a%2F4%2B9CcCl5E4yQTiRw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=useast5',
+    thumb: 'assets/avatars/user8542304936538.jpg',
     emoji: '🔥'
   }
 ];
@@ -317,11 +317,55 @@ function renderStreamers(list) {
 
 // ===== RENDER GOLD RANKING =====
 function renderGoldRanking() {
-  const el = document.getElementById('goldRankingList');
-  if (!el) return;
-  el.innerHTML = goldRanking.map((s, i) => `
+  const podium = document.getElementById('goldPodium');
+  const listEl = document.getElementById('goldRankingList');
+  if (!podium || !listEl) return;
+
+  const top3 = goldRanking.filter(s => s.rank <= 3);
+  const rest = goldRanking.filter(s => s.rank > 3);
+
+  // Display order on podium: 2nd | 1st | 3rd (1st in middle, raised)
+  const podiumOrder = [
+    top3.find(s => s.rank === 2),
+    top3.find(s => s.rank === 1),
+    top3.find(s => s.rank === 3),
+  ].filter(Boolean);
+
+  const medalLabel = { 1: 'CHAMPION', 2: 'RUNNER-UP', 3: '3RD PLACE' };
+  const medalIcon  = { 1: '🥇', 2: '🥈', 3: '🥉' };
+  const crownIcon  = { 1: '👑', 2: '', 3: '' };
+
+  podium.innerHTML = podiumOrder.map(s => `
+    <a href="${s.url}" target="_blank" rel="noopener noreferrer"
+       class="podium-card podium-rank-${s.rank}">
+      ${crownIcon[s.rank] ? `<div class="podium-crown">${crownIcon[s.rank]}</div>` : ''}
+      <div class="podium-rank-num">#${s.rank}</div>
+      <div class="podium-avatar-wrap">
+        <div class="podium-avatar-ring"></div>
+        <div class="podium-avatar-glow"></div>
+        <img class="podium-avatar" src="${s.thumb}" alt="${s.name}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="podium-avatar-fallback" style="display:none;"><span>${s.emoji}</span></div>
+        <div class="podium-medal">${medalIcon[s.rank]}</div>
+      </div>
+      <div class="podium-info">
+        <div class="podium-name">${s.fullName}</div>
+        <div class="podium-handle">@${s.handle}</div>
+      </div>
+      <div class="podium-label">${medalLabel[s.rank]}</div>
+      <div class="podium-cta">
+        查看主播
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+      <div class="podium-shine"></div>
+    </a>
+  `).join('');
+
+  listEl.innerHTML = rest.map(s => `
     <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="rank-card rank-${s.rank}">
-      <div class="rank-medal">${s.medal}</div>
+      <div class="rank-num-wrap">
+        <span class="rank-num-hash">#</span><span class="rank-num">${s.rank}</span>
+      </div>
       <div class="rank-avatar-wrap">
         <img class="rank-avatar" src="${s.thumb}" alt="${s.name}" loading="lazy"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -331,7 +375,9 @@ function renderGoldRanking() {
         <div class="rank-name">${s.fullName}</div>
         <div class="rank-handle">@${s.handle}</div>
       </div>
-      <div class="rank-badge">第 ${s.rank} 名</div>
+      <div class="rank-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
     </a>
   `).join('');
 }
@@ -530,4 +576,77 @@ document.addEventListener('DOMContentLoaded', () => {
   initActiveNav();
   initCursorGlow();
   initTicker();
+  initAdCarousel();
 });
+
+/* ============================================
+   AD CAROUSEL (Featured Streamers)
+   ============================================ */
+function initAdCarousel() {
+  const track = document.getElementById('adCarouselTrack');
+  const prevBtn = document.getElementById('adCarouselPrev');
+  const nextBtn = document.getElementById('adCarouselNext');
+  const dotsWrap = document.getElementById('adCarouselDots');
+  if (!track || !prevBtn || !nextBtn || !dotsWrap) return;
+
+  const slides = track.querySelectorAll('.ad-slide');
+  const dots = dotsWrap.querySelectorAll('.ad-carousel-dot');
+  const total = slides.length;
+  if (total <= 1) return;
+
+  let current = 0;
+  let autoTimer = null;
+  const AUTO_MS = 5000;
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(next, AUTO_MS);
+  }
+  function stopAuto() {
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+  }
+
+  nextBtn.addEventListener('click', (e) => { e.preventDefault(); next(); startAuto(); });
+  prevBtn.addEventListener('click', (e) => { e.preventDefault(); prev(); startAuto(); });
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', (e) => { e.preventDefault(); goTo(i); startAuto(); });
+  });
+
+  // Pause on hover (desktop)
+  const carousel = document.getElementById('adCarousel');
+  if (carousel) {
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+  }
+
+  // Touch swipe (mobile)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    stopAuto();
+  }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) next(); else prev();
+    }
+    startAuto();
+  }, { passive: true });
+
+  // Pause when tab is hidden (saves resources)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAuto(); else startAuto();
+  });
+
+  startAuto();
+}
