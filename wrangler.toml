@@ -27,7 +27,7 @@ html_handling = "auto-trailing-slash"
 
 # ============ 非機密環境變數（可 commit）============
 [vars]
-MAIL_FROM = "onboarding@resend.dev"
+MAIL_FROM = "noreply@jdi-pulse.com"
 MAIL_FROM_NAME = "JDI 脈動傳媒"
 MAIL_NOTIFY = "pulsepop9@gmail.com"
 
