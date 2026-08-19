@@ -19,12 +19,30 @@
 import { renderContactConfirmEmail, renderContactNotifyEmail } from './_email-templates.js';
 
 // ============ ALLOWED COOPERATION TYPES ============
-const ALLOWED_TYPES = new Set([
+// 對應 partnership.html 表單 checkbox。比對時會 normalize:
+//   - 去除所有空白（空格、全形空格）
+//   - 統一斜線（全形 ／ → /）
+// 這樣 "A · 經紀公司合作" / "經紀公司合作" / "直播節目 / 活動策劃" / "直播節目/活動策劃"
+// 都能對上，避免因為前後端字串細節不一致而擋掉送出。
+const ALLOWED_TYPES_RAW = [
+  // 主軸三大方案（partnership.html 主軸 checkbox）
+  'A · 經紀公司合作',
+  'B · 跨公會聯播 / 資源互換',
+  'C · 個體戶主播經紀簽約',
+  // 輔助服務
+  '品牌業配代言媒合',
+  '達人資源短期租借',
+  '直播節目 / 活動策劃',
+  // 舊版與短版別名（backwards-compat）
+  '經紀公司合作',
+  '跨公會聯播',
+  '個體戶主播經紀簽約',
   '業配代言媒合',
   '達人資源租借',
-  '經紀公司合作',
   '直播節目/活動策劃'
-]);
+];
+const normalizeType = s => String(s).replace(/[\s\u3000]+/g, '').replace(/／/g, '/');
+const ALLOWED_TYPES = new Set(ALLOWED_TYPES_RAW.map(normalizeType));
 
 const ALLOWED_SCALES = new Set([
   '初次合作（單次專案）',
@@ -79,8 +97,10 @@ export async function onRequestPost({ request, env }) {
   if (!Array.isArray(types) || types.length === 0) {
     return json({ error: 'MISSING_TYPES', message: '請至少勾選一項合作類型' }, 400);
   }
-  // Filter valid types only (defensive)
-  const safeTypes = types.filter(t => typeof t === 'string' && ALLOWED_TYPES.has(t));
+  // Filter valid types only (defensive) — normalize whitespace / slash before matching
+  const safeTypes = types
+    .filter(t => typeof t === 'string' && ALLOWED_TYPES.has(normalizeType(t)))
+    .map(t => String(t).slice(0, 60));
   if (safeTypes.length === 0) {
     return json({ error: 'INVALID_TYPES', message: '合作類型不在允許清單內' }, 400);
   }
