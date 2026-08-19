@@ -5,7 +5,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/" />
@@ -13,8 +13,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/" />
     <image:image>
       <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
-      <image:title>JDI 脈動傳媒 JDI Pulse MEDIA｜TikTok LIVE 官方合作經紀公會</image:title>
-      <image:caption>脈動不息 熱情傳播 — 台灣 TikTok LIVE 官方合作經紀公會，0 抽佣、現金保底、300+ 優質主播。</image:caption>
+      <image:title>JDI 脈動傳媒 JDI Pulse MEDIA｜TikTokLive 官方合作經紀公會</image:title>
+      <image:caption>脈動不息 熱情傳播 — 台灣 TikTokLive 官方合作經紀公會，0 抽佣、現金保底、300+ 優質主播。</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://jdi-pulse.com/assets/logo_jdi_pulse.png</image:loc>
@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/partnership</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/partnership" />
@@ -32,8 +32,87 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/partnership" />
     <image:image>
       <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
-      <image:title>加入合作｜JDI 脈動傳媒 — TikTok LIVE 官方經紀公會</image:title>
+      <image:title>加入合作｜JDI 脈動傳媒 — TikTokLive 官方經紀公會</image:title>
       <image:caption>0 抽佣、現金保底、無經驗可、免費上手教學。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ========== 主播詳細頁 ========== -->
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/jack.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_01_recruit.png</image:loc>
+      <image:title>曜宸 Jack｜JDI 脈動傳媒 公會執行長</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/rena.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_02_rena.png</image:loc>
+      <image:title>芮娜 RN0503｜聊天互動型 PK 主播</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/duoduolyu.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_03_duoduolyu.png</image:loc>
+      <image:title>多多綠 157｜療癒系菜單主播</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/mimosi.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_04_mimosi.png</image:loc>
+      <image:title>米姥思 MI｜粵語 / 華語 實力派聊天主播</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/mamei.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_05_mamei.png</image:loc>
+      <image:title>馬妹｜唱跳型主播</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/yuanchenglie.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_06_yuanchenglie.png</image:loc>
+      <image:title>元承烈 37｜歌唱型主播 SINGER</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/coco.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/ad_07_coco.png</image:loc>
+      <image:title>芊芊 coco｜舞蹈、唱歌、聊天主播</image:title>
     </image:image>
   </url>
 
