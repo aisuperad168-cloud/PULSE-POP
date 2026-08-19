@@ -185,37 +185,37 @@ const streamers = [
 
 // ===== 活動專區 DATA =====
 
-// 6月金牌主播排行榜
+// 7月金牌主播排行榜 (July 2026)
 const goldRanking = [
   {
-    rank: 1, handle: 'duolyu1225', name: '多多綠', fullName: '🌜多多綠🌛¹⁵⁷',
-    url: 'https://www.tiktok.com/@duolyu1225',
-    thumb: 'assets/avatars/duolyu1225.jpg',
-    emoji: '🌙', medal: '🥇'
-  },
-  {
-    rank: 2, handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶𝓡𝓝⁰⁵⁰³',
+    rank: 1, handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶𝓡𝓝⁰⁵⁰³',
     url: 'https://www.tiktok.com/@renatz0503',
     thumb: 'assets/avatars/renatz0503.jpg',
-    emoji: '🧶', medal: '🥈'
+    emoji: '🧶', medal: '🥇'
   },
   {
-    rank: 3, handle: 'sj231009', name: '馬妹', fullName: '馬妹🐴🦄🐴🦄',
-    url: 'https://www.tiktok.com/@sj231009',
-    thumb: 'assets/avatars/sj231009.jpg',
-    emoji: '🐴', medal: '🥉'
+    rank: 2, handle: 'duolyu1225', name: '多多綠', fullName: '🌜多多綠🌛¹⁵⁷',
+    url: 'https://www.tiktok.com/@duolyu1225',
+    thumb: 'assets/avatars/duolyu1225.jpg',
+    emoji: '🌙', medal: '🥈'
   },
   {
-    rank: 4, handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅 ᴹᴵ',
+    rank: 3, handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅 ᴹᴵ',
     url: 'https://www.tiktok.com/@c_mi_0908',
     thumb: 'assets/avatars/c_mi_0908.jpg',
-    emoji: '🪅', medal: '4️⃣'
+    emoji: '🪅', medal: '🥉'
   },
   {
-    rank: 5, handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️ ³⁷',
-    url: 'https://www.tiktok.com/@fierce1222',
-    thumb: 'assets/avatars/fierce1222.jpg',
-    emoji: '⚜️', medal: '5️⃣'
+    rank: 4, handle: 'meili_247', name: '美麗不打烊', fullName: '美麗🧸不打烊🧸',
+    url: 'https://www.tiktok.com/search?q=%E7%BE%8E%E9%BA%97%E4%B8%8D%E6%89%93%E7%83%8A',
+    thumb: 'assets/avatars/meili_247.jpg',
+    emoji: '🧸', medal: '4️⃣'
+  },
+  {
+    rank: 5, handle: 'ambercblyr3', name: '貢你妹', fullName: '貢你妹🍘',
+    url: 'https://www.tiktok.com/@ambercblyr3',
+    thumb: 'assets/avatars/ambercblyr3.jpg',
+    emoji: '🍘', medal: '5️⃣'
   }
 ];
 
