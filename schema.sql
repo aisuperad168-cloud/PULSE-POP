@@ -25,16 +25,24 @@ CREATE INDEX IF NOT EXISTS idx_quiz_email ON quiz_leads (email);
 CREATE INDEX IF NOT EXISTS idx_quiz_type ON quiz_leads (streamer_type);
 CREATE INDEX IF NOT EXISTS idx_quiz_created ON quiz_leads (created_at);
 
--- 聯絡表單訊息（未來擴充用）
+-- 商業合作需求表單（partnership.html）
 CREATE TABLE IF NOT EXISTS contact_leads (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  contact TEXT NOT NULL,
-  contact_type TEXT,
-  message TEXT,
+  company TEXT NOT NULL,              -- 公司/組織名稱
+  name TEXT NOT NULL,                 -- 聯絡人姓名
+  email TEXT NOT NULL,                -- 聯絡 Email
+  phone TEXT,                         -- 聯絡電話（選填）
+  types TEXT NOT NULL,                -- JSON array: ["業配代言媒合", "達人資源租借", ...]
+  scale TEXT,                         -- 合作規模: 初次合作 / 中型專案 / 長期合作 / 待討論
+  message TEXT NOT NULL,              -- 合作需求說明
+  start_time TEXT,                    -- 希望開始時間（自由填寫）
+  source TEXT,                        -- partnership-page
   ip TEXT,
   user_agent TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc'))
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0
 );
 
+CREATE INDEX IF NOT EXISTS idx_contact_email ON contact_leads (email);
 CREATE INDEX IF NOT EXISTS idx_contact_created ON contact_leads (created_at);

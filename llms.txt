@@ -32,16 +32,25 @@ JDI 脈動傳媒（JDI Pulse MEDIA）是 **TikTok LIVE 官方合作經紀公會*
 
 ## 服務對象 / Target Audience
 
+### A. 主播招募（→ /join）
 - 想成為 **TikTok LIVE 直播主**、**抖音主播**、**17LIVE 主播**的個人
 - 尋找 **直播主經紀公司** / **直播公會** 合作的創作者
 - 想要 **兼差直播**、**副業直播** 的上班族或學生
 - 沒有直播經驗但有意願學習成為專業主播的新人
 - 已有一定粉絲基礎，想尋求更好分潤與資源支援的獨立直播主
 
+### B. 商業合作（→ /partnership）
+- **品牌 / 廠商**：需要 TikTok 網紅業配代言、直播帶貨、達人矩陣投放
+- **代理商 / 行銷公司**：媒合客戶的品牌與 JDI 旗下達人
+- **其他經紀公司 / 直播公會**：跨公會聯播、達人資源互換、共同開發市場
+- **活動主辦方**：短期租借達人資源用於活動出席、代言拍攝、線下走秀
+- **品牌企劃單位**：委託 JDI 策劃主題直播節目、大型直播活動、跨平台聯播
+
 ## 頁面清單 / Site Pages
 
-- [首頁 Home](https://jdi-pulse.com/)：品牌介紹、旗下主播展示、7 月金牌主播榜、520 活動、聯絡我們
-- [加入合作 Partnership](https://jdi-pulse.com/partnership)：合作方案細節、4 大任務佣金池、現金保底方案、分潤模擬計算、TikTok 主播招募流程
+- [首頁 Home](https://jdi-pulse.com/)：品牌介紹、旗下主播展示、7 月金牌主播榜、聯絡我們，Hero 提供「成為主播」與「商業合作」雙分流
+- [成為主播 Join](https://jdi-pulse.com/join)：**針對主播 / 直播主招募**。合作方案細節、4 大任務佣金池、現金保底方案、分潤模擬計算、TikTok 主播招募流程、3 天啟動流程
+- [商業合作 Partnership](https://jdi-pulse.com/partnership)：**針對品牌 / 廠商 / 經紀公司**。四大服務：業配代言媒合、達人資源租借、經紀公司合作、直播節目/活動策劃。內含合作需求表單，24 小時內回覆
 - [新人主播 FAQ](https://jdi-pulse.com/faq)：新人直播主 8 大常見問題總整理（0 費用、0 抽成、無經驗可、免專業設備、彈性時段、月收入區間公開、為何選擇 JDI）
 - [主播類型測驗](https://jdi-pulse.com/quiz)：1 分鐘 6 題線上測驗，找出你適合的主播路線（歌唱型 / 舞蹈唱跳型 / 聊天陪伴型 / PK 競技型 / 才藝生活型 / 綜藝互動型），完整分析報告自動寄送到 Email
 
@@ -93,7 +102,9 @@ A: LINE 官方帳號 @354ykfbp、電話 04-3603-3191、Email pulsepop9@proton.me
 
 ## 關鍵字 / Keywords
 
-TikTok 公會、TikTok LIVE 公會、TikTok 直播公會、TikTok 潛力公會、TikTok 優質夥伴、陸抖優質公會、陸抖 TOP 公會、陸抖超專業公會、台灣 TikTok 經紀公司、陸抖經紀公司、17LIVE 經紀公司、直播主經紀、直播主招募、TikTok 主播招募、現金保底主播、TikTok 分潤、直播、兼差、JDI 脈動傳媒、JDI Pulse MEDIA
+**主播招募類**：TikTok 公會、TikTok LIVE 公會、TikTok 直播公會、TikTok 潛力公會、TikTok 優質夥伴、陸抖優質公會、陸抖 TOP 公會、陸抖超專業公會、台灣 TikTok 經紀公司、陸抖經紀公司、17LIVE 經紀公司、直播主經紀、直播主招募、TikTok 主播招募、現金保底主播、TikTok 分潤、直播、兼差、JDI 脈動傳媒、JDI Pulse MEDIA
+
+**商業合作類**：TikTok 業配、TikTok 網紅媒合、TikTok 直播帶貨、達人資源租借、品牌業配代言、TikTok 網紅行銷、直播節目策劃、直播活動企劃、經紀公司合作、跨公會合作、達人矩陣投放、TikTok 廣告代理、品牌大使、代言拍攝、直播代操
 
 ## 品牌口號 / Slogan
 

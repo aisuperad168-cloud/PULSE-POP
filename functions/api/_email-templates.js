@@ -251,3 +251,205 @@ export function renderNotifyEmail({ name, email, lineId, typeData, source, count
 </body>
 </html>`;
 }
+
+// ============ CONTACT: CONFIRMATION EMAIL (to business visitor) ============
+export function renderContactConfirmEmail({ company, name, email, phone, types, scale, message, startTime }) {
+  const typesHtml = types.map(t => `<span style="display:inline-block;padding:4px 12px;margin:2px 4px 2px 0;background:#25F4EE22;color:#0a7570;border-radius:20px;font-size:13px;font-weight:600;">${esc(t)}</span>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>已收到您的合作需求</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <!-- HEADER -->
+        <tr><td style="background:linear-gradient(135deg,#05050A,#16162A);padding:32px 32px 24px;text-align:center;">
+          <div style="color:#25F4EE;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:8px;">JDI 脈動傳媒 · JDI PULSE MEDIA</div>
+          <div style="color:#ffffff;font-size:22px;font-weight:800;">✅ 已收到您的合作需求</div>
+        </td></tr>
+
+        <!-- Greeting -->
+        <tr><td style="padding:32px 32px 16px;text-align:center;">
+          <div style="font-size:16px;color:#333;line-height:1.7;">
+            <strong>${esc(name)}</strong> 您好，感謝您聯繫 JDI 脈動傳媒！<br>
+            我們已收到您代表 <strong style="color:#FE2C55;">${esc(company)}</strong> 提出的合作需求。
+          </div>
+        </td></tr>
+
+        <!-- Response promise -->
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#25F4EE11,#FE2C5511);border-radius:12px;padding:20px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">📞</div>
+              <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:4px;">24 小時內主動聯繫</div>
+              <div style="font-size:13px;color:#666;">我們的專案顧問將透過 Email 或電話聯繫，深度了解您的合作需求</div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- Summary -->
+        <tr><td style="padding:8px 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📋 需求摘要</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:110px;vertical-align:top;">公司/組織</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-weight:600;">${esc(company)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">聯絡人</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(name)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Email</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(email)}</td></tr>
+            ${phone ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">電話</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(phone)}</td></tr>` : ''}
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">合作類型</td>
+                <td style="padding:10px 0 6px;">${typesHtml}</td></tr>
+            ${scale ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">合作規模</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(scale)}</td></tr>` : ''}
+            ${startTime ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">希望開始</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(startTime)}</td></tr>` : ''}
+            <tr><td colspan="2" style="padding:12px 0 0;">
+              <div style="font-size:13px;color:#666;margin-bottom:6px;">需求說明：</div>
+              <div style="font-size:14px;color:#333;line-height:1.7;background:#fff;border-radius:8px;padding:14px;border:1px solid #eee;white-space:pre-wrap;">${esc(message)}</div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- Urgent contact -->
+        <tr><td style="padding:0 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📱 急件聯繫</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td width="50%" style="padding:0 6px 0 0;">
+                <a href="https://line.me/R/ti/p/@354ykfbp" style="display:block;padding:14px;background:#06C755;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:700;font-size:14px;">
+                  💬 LINE 官方諮詢
+                </a>
+              </td>
+              <td width="50%" style="padding:0 0 0 6px;">
+                <a href="tel:04-3603-3191" style="display:block;padding:14px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:700;font-size:14px;">
+                  📞 04-3603-3191
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- Signature -->
+        <tr><td style="padding:24px 32px;border-top:1px solid #eee;background:#fafafa;">
+          <div style="font-size:13px;color:#666;line-height:1.7;text-align:center;">
+            <strong style="color:#111;">JDI 脈動傳媒 JDI Pulse MEDIA</strong><br>
+            TikTok LIVE 官方合作經紀公會<br>
+            <a href="https://jdi-pulse.com/" style="color:#25F4EE;text-decoration:none;">jdi-pulse.com</a>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:16px 32px 24px;text-align:center;">
+          <div style="font-size:11px;color:#aaa;line-height:1.5;">
+            此為系統自動確認信，請勿直接回覆此信箱。<br>
+            若需回覆，請 email 至 pulsepop9@proton.me 或加 LINE @354ykfbp。
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+// ============ CONTACT: ADMIN NOTIFY EMAIL ============
+export function renderContactNotifyEmail({ company, name, email, phone, types, scale, message, startTime, source, country, leadId }) {
+  const typesHtml = types.map(t => `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#FE2C55;color:#fff;border-radius:12px;font-size:12px;font-weight:600;">${esc(t)}</span>`).join('');
+  const now = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>新商業合作需求</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+        <tr><td style="background:linear-gradient(135deg,#FE2C55,#FF6B9D);padding:24px 28px;">
+          <div style="color:#fff;font-size:12px;font-weight:600;letter-spacing:1px;opacity:0.9;">JDI 官網通知 · CONTACT LEAD</div>
+          <div style="color:#fff;font-size:22px;font-weight:800;margin-top:6px;">🤝 新商業合作需求</div>
+        </td></tr>
+
+        <tr><td style="padding:24px 28px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">Lead ID</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-family:monospace;">#${esc(leadId || 'N/A')}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">時間</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-family:monospace;">${esc(now)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">來源</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(source || 'partnership-page')} ${country ? '· ' + esc(country) : ''}</td></tr>
+          </table>
+
+          <hr style="border:none;border-top:1px solid #eee;margin:16px 0;">
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">公司</td>
+                <td style="padding:6px 0;font-size:16px;color:#111;font-weight:700;">${esc(company)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">聯絡人</td>
+                <td style="padding:6px 0;font-size:15px;color:#111;font-weight:600;">${esc(name)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Email</td>
+                <td style="padding:6px 0;font-size:14px;"><a href="mailto:${esc(email)}" style="color:#FE2C55;text-decoration:none;font-weight:600;">${esc(email)}</a></td></tr>
+            ${phone ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">電話</td>
+                <td style="padding:6px 0;font-size:14px;"><a href="tel:${esc(phone)}" style="color:#FE2C55;text-decoration:none;font-weight:600;">${esc(phone)}</a></td></tr>` : ''}
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">合作類型</td>
+                <td style="padding:10px 0 6px;">${typesHtml}</td></tr>
+            ${scale ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">合作規模</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(scale)}</td></tr>` : ''}
+            ${startTime ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">希望開始</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(startTime)}</td></tr>` : ''}
+          </table>
+
+          <div style="margin-top:16px;padding:16px;background:#fafafa;border-left:3px solid #FE2C55;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">需求說明</div>
+            <div style="font-size:14px;color:#333;line-height:1.7;white-space:pre-wrap;">${esc(message)}</div>
+          </div>
+
+          <div style="margin-top:20px;padding:14px;background:linear-gradient(135deg,#25F4EE22,#FE2C5522);border-radius:8px;text-align:center;">
+            <div style="font-size:13px;color:#111;line-height:1.6;">
+              ⚡ <strong>建議在 24 小時內回覆</strong><br>
+              直接回覆此信 → 客戶會收到（Reply-To 已設為客戶 Email）
+            </div>
+          </div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
+            <tr>
+              <td width="50%" style="padding:0 6px 0 0;">
+                <a href="mailto:${esc(email)}" style="display:block;padding:12px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📧 直接回信
+                </a>
+              </td>
+              <td width="50%" style="padding:0 0 0 6px;">
+                ${phone ? `<a href="tel:${esc(phone)}" style="display:block;padding:12px;background:#25F4EE;color:#000;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📞 撥打電話
+                </a>` : `<div style="display:block;padding:12px;background:#eee;color:#999;text-align:center;border-radius:8px;font-weight:600;font-size:13px;">(無提供電話)</div>`}
+              </td>
+            </tr>
+          </table>
+
+        </td></tr>
+
+        <tr><td style="padding:16px 28px;background:#fafafa;text-align:center;">
+          <div style="font-size:11px;color:#aaa;">
+            JDI 脈動傳媒 · JDI PULSE MEDIA · 商業合作 Lead 通知系統
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}

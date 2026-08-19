@@ -23,6 +23,21 @@
   </url>
 
   <url>
+    <loc>https://jdi-pulse.com/join</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/join" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/join" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/join" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>成為主播｜JDI 脈動傳媒 — TikTokLive 官方經紀公會 · 直播主招募</image:title>
+      <image:caption>0 抽佣、現金保底、佣金池最高 43.5%、3 天審核簽約、新人歡迎、免費上手教學。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://jdi-pulse.com/partnership</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -32,8 +47,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/partnership" />
     <image:image>
       <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
-      <image:title>加入合作｜JDI 脈動傳媒 — TikTokLive 官方經紀公會</image:title>
-      <image:caption>0 抽佣、現金保底、無經驗可、免費上手教學。</image:caption>
+      <image:title>商業合作｜JDI 脈動傳媒 — 業配代言・達人媒合・跨公會合作・活動策劃</image:title>
+      <image:caption>品牌業配代言媒合、達人資源租借、經紀公司合作、直播節目/活動策劃。24 小時內回覆。</image:caption>
     </image:image>
   </url>
 
