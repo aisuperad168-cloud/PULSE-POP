@@ -162,6 +162,28 @@
 @media (max-width: 960px) { .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
 @media (max-width: 560px) { .benefits-grid { grid-template-columns: 1fr; } }
 
+/* BONUS card — always full-width on mobile so inline grid-column:span 2 doesn't force a 2-col ghost track */
+.benefit-card--bonus {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(37,244,238,.08), rgba(254,44,85,.08));
+  border-color: var(--line-2);
+}
+@media (max-width: 560px) {
+  .benefit-card--bonus { grid-column: 1 / -1; }
+}
+
+/* ============ Mobile nav overflow guards (join page) ============ */
+@media (max-width: 720px) {
+  .p-nav-back { display: none !important; }        /* hide 回首頁 / 新人 FAQ pill buttons */
+  .p-nav-logo-sub { display: none; }              /* hide 'JDI PULSE MEDIA' subline */
+  .p-nav-logo .p-nav-logo-txt { font-size: 14px; }
+  .p-nav-logo img { height: 34px; }
+  .p-nav-inner { gap: 10px; }
+}
+@media (max-width: 420px) {
+  .p-nav-logo .p-nav-logo-txt { font-size: 13px; }
+}
+
 .benefit-card {
   position: relative;
   padding: 28px 26px;
@@ -735,7 +757,7 @@
       </div>
 
       <!-- Filler / Highlight -->
-      <div class="benefit-card reveal d1" style="grid-column: span 2; background: linear-gradient(135deg, rgba(37,244,238,.08), rgba(254,44,85,.08)); border-color: var(--line-2);">
+      <div class="benefit-card benefit-card--bonus reveal d1">
         <div class="b-idx">BONUS</div>
         <div class="b-icon" style="filter: drop-shadow(0 6px 18px rgba(254,44,85,.35));">💎</div>
         <div class="b-title">再加上：<span style="color:var(--tt-pink);">0 抽佣</span> · <span style="color:var(--tt-cyan);">現金保底方案</span>（符合條件者）· 業配代言分潤透明</div>
