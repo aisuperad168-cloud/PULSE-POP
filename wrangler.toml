@@ -1,36 +1,38 @@
 # ============================================================
-# JDI 脈動傳媒 · Cloudflare Pages 配置
+# JDI 脈動傳媒 · Cloudflare Worker with Static Assets 配置
 # ============================================================
-# 部署命令:
-#   wrangler pages deploy . --project-name=jdi-pulse
+# 部署到現有的 pulse-pop Worker（覆蓋 jdi-pulse.com）:
+#   wrangler deploy
 #
-# 環境變數（Dashboard 或 wrangler secret 設定）:
-#   RESEND_API_KEY   — Resend API key (re_xxx)
-#   MAIL_FROM        — 寄件人 email
-#   MAIL_FROM_NAME   — 寄件人顯示名
-#   MAIL_NOTIFY      — 內部通知信箱
+# Secrets (敏感值不寫在檔案裡):
+#   RESEND_API_KEY   — 用 `wrangler secret put RESEND_API_KEY` 設
 # ============================================================
 
-name = "jdi-pulse"
+name = "pulse-pop"
+main = "_worker.js"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Pages Functions 使用 functions/ 目錄自動路由
-pages_build_output_dir = "."
+# ============ Static Assets (取代 pages_build_output_dir) ============
+# 這個新格式讓 Worker 可以同時服務靜態檔案 + 執行 fetch handler
+# 靜態資源會從專案根目錄讀取，不匹配 API 路由的請求都轉給 assets
+[assets]
+directory = "."
+# ASSETS binding：讓 _worker.js 可以呼叫 env.ASSETS.fetch(request)
+binding = "ASSETS"
+# 對於 SPA 或 404 的處理策略；none = 完全交給 _worker.js
+not_found_handling = "single-page-application"
+# HTML 檔案存取時可省略 .html（例如 /join 對應 /join.html）
+html_handling = "auto-trailing-slash"
 
-# ============ 非機密環境變數 (可 commit) ============
+# ============ 非機密環境變數（可 commit）============
 [vars]
 MAIL_FROM = "onboarding@resend.dev"
 MAIL_FROM_NAME = "JDI 脈動傳媒"
-MAIL_NOTIFY = "pulsepop9@proton.me"
+MAIL_NOTIFY = "pulsepop9@gmail.com"
 
 # ============ D1 Database 綁定 ============
-# 建立後填入實際的 database_id
 [[d1_databases]]
 binding = "DB"
 database_name = "jdi-pulse-leads"
-database_id = "REPLACE_WITH_ACTUAL_D1_ID_AFTER_CREATE"
-
-# ============ 機密環境變數（不能 commit，用 secret put） ============
-# 部署後執行：
-#   wrangler pages secret put RESEND_API_KEY --project-name=jdi-pulse
+database_id = "cdb12dcc-2c47-4585-91cd-be67af6d0210"

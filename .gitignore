@@ -17,3 +17,10 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Crash dumps
+core
+*.core
+
+# Local worker backup (not shared to GitHub)
+.backup-worker/

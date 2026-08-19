@@ -1,0 +1,29 @@
+# Git & 開發用檔案
+.git
+.gitignore
+.github
+
+# 備份與 dump
+.backup-worker
+core
+*.core
+
+# 部署腳本
+deploy-quiz.sh
+QUIZ_SETUP.md
+schema.sql
+wrangler.toml
+
+# Worker 程式（會被 main= 直接綁定，不作為靜態資源）
+_worker.js
+functions
+
+# 本地開發
+node_modules
+.wrangler
+.DS_Store
+*.log
+
+# 其他不需要對外暴露的檔案  
+llms.txt
+.assetsignore
