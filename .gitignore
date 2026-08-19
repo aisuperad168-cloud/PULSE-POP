@@ -1,0 +1,19 @@
+# Secrets / env
+.env
+.env.*
+.dev.vars
+.wrangler/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups
+*.bak
+
+# Logs
+*.log

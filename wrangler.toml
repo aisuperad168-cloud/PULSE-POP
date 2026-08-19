@@ -1,0 +1,36 @@
+# ============================================================
+# JDI 脈動傳媒 · Cloudflare Pages 配置
+# ============================================================
+# 部署命令:
+#   wrangler pages deploy . --project-name=jdi-pulse
+#
+# 環境變數（Dashboard 或 wrangler secret 設定）:
+#   RESEND_API_KEY   — Resend API key (re_xxx)
+#   MAIL_FROM        — 寄件人 email
+#   MAIL_FROM_NAME   — 寄件人顯示名
+#   MAIL_NOTIFY      — 內部通知信箱
+# ============================================================
+
+name = "jdi-pulse"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Pages Functions 使用 functions/ 目錄自動路由
+pages_build_output_dir = "."
+
+# ============ 非機密環境變數 (可 commit) ============
+[vars]
+MAIL_FROM = "onboarding@resend.dev"
+MAIL_FROM_NAME = "JDI 脈動傳媒"
+MAIL_NOTIFY = "pulsepop9@proton.me"
+
+# ============ D1 Database 綁定 ============
+# 建立後填入實際的 database_id
+[[d1_databases]]
+binding = "DB"
+database_name = "jdi-pulse-leads"
+database_id = "REPLACE_WITH_ACTUAL_D1_ID_AFTER_CREATE"
+
+# ============ 機密環境變數（不能 commit，用 secret put） ============
+# 部署後執行：
+#   wrangler pages secret put RESEND_API_KEY --project-name=jdi-pulse

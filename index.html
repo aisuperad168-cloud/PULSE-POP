@@ -158,6 +158,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css?v=20260715d" />
+  <link rel="stylesheet" href="css/quiz.css?v=20260819a" />
 </head>
 <body>
 
@@ -174,6 +175,7 @@
         <li><a href="#streamers">旗下主播</a></li>
         <li><a href="partnership.html">加入合作</a></li>
         <li><a href="faq.html">新人 FAQ</a></li>
+        <li><a href="#" data-open-quiz>主播測驗 ✨</a></li>
         <li><a href="#contact">聯絡我們</a></li>
       </ul>
       <a href="partnership.html" class="nav-cta">
@@ -1027,6 +1029,15 @@
   <!-- Toast notification -->
   <div class="toast" id="toast"></div>
 
+  <!-- ===== Streamer Quiz Modal ===== -->
+  <div class="quiz-overlay" id="quizOverlay" data-mode="modal" aria-hidden="true">
+    <div class="quiz-container" id="quizContainer" data-mode="modal" role="dialog" aria-label="主播類型測驗">
+      <!-- 由 quiz.js 動態渲染 -->
+    </div>
+  </div>
+
   <script src="js/main.js?v=20260616d"></script>
+  <script src="js/quiz-data.js?v=20260819a"></script>
+  <script src="js/quiz.js?v=20260819a"></script>
 </body>
 </html>

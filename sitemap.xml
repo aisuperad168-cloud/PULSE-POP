@@ -52,6 +52,21 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://jdi-pulse.com/quiz</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/quiz" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/quiz" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/quiz" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>主播類型測驗｜JDI 脈動傳媒 · 1 分鐘找出你的直播路線</image:title>
+      <image:caption>免費線上測驗：6 題找出你適合的主播類型（歌唱 / 舞蹈 / 聊天 / PK / 才藝 / 綜藝），完整分析報告寄到你的信箱。</image:caption>
+    </image:image>
+  </url>
+
   <!-- ========== 主播詳細頁 ========== -->
 
   <url>
