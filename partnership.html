@@ -1189,15 +1189,23 @@
   });
 
   // ============ Reveal on scroll ============
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (en.isIntersecting) {
-        en.target.classList.add('on');
-        io.unobserve(en.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // CSS uses .reveal.in — match that class name (not 'on', which was a legacy bug
+  // that made every section stay invisible on page load).
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    // Fallback: no observer support -> show everything immediately.
+    revealEls.forEach(el => el.classList.add('in'));
+  }
 
 })();
 </script>
