@@ -206,9 +206,9 @@ const goldRanking = [
     emoji: '🪅', medal: '🥉'
   },
   {
-    rank: 4, handle: 'meili_247', name: '美麗不打烊', fullName: '美麗🧸不打烊🧸',
-    url: 'https://www.tiktok.com/search?q=%E7%BE%8E%E9%BA%97%E4%B8%8D%E6%89%93%E7%83%8A',
-    thumb: 'assets/avatars/meili_247.jpg',
+    rank: 4, handle: 'emily10148888', name: '美麗不打烊', fullName: '美麗🧸不打烊🧸',
+    url: 'https://www.tiktok.com/@emily10148888',
+    thumb: 'assets/avatars/emily10148888.jpg',
     emoji: '🧸', medal: '4️⃣'
   },
   {
