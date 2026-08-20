@@ -407,6 +407,7 @@ ul  { list-style: none; }
   animation: fade-in-up 1s ease 1.5s both;
 }
 @keyframes fade-in-up { from{opacity:0;transform:translateX(-50%) translateY(10px);} to{opacity:1;transform:translateX(-50%) translateY(0);} }
+@keyframes fade-in-up-static { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 .mouse {
   width: 20px; height: 33px;
   border: 1.5px solid rgba(255,255,255,0.25);
@@ -569,6 +570,16 @@ ul  { list-style: none; }
   letter-spacing: -0.01em;
   margin-bottom: 22px;
 }
+/* Inline single-line variant: keep all 8 characters on one row, auto-scale on mobile */
+.mission-title-fx--inline {
+  font-size: clamp(1.5rem, 6.2vw, 2.8rem);
+  white-space: nowrap;
+  letter-spacing: -0.005em;
+}
+.mission-title-fx--inline .mtx-gap {
+  display: inline-block;
+  width: 0.4em;
+}
 .mission-title-fx .mtx-line {
   display: block;
   position: relative;
@@ -597,15 +608,16 @@ ul  { list-style: none; }
              mtxPulse 3.2s ease-in-out infinite;
   will-change: background-position, transform, filter;
 }
-/* Staggered pulse across each character for a heartbeat wave */
-.mission-title-fx .mtx-line--1 .mtx-word:nth-child(1) { animation-delay: 0s,       0s;    }
-.mission-title-fx .mtx-line--1 .mtx-word:nth-child(2) { animation-delay: -0.35s,   0.15s; }
-.mission-title-fx .mtx-line--1 .mtx-word:nth-child(3) { animation-delay: -0.7s,    0.3s;  }
-.mission-title-fx .mtx-line--1 .mtx-word:nth-child(4) { animation-delay: -1.05s,   0.45s; }
-.mission-title-fx .mtx-line--2 .mtx-word:nth-child(1) { animation-delay: -1.4s,    0.6s;  }
-.mission-title-fx .mtx-line--2 .mtx-word:nth-child(2) { animation-delay: -1.75s,   0.75s; }
-.mission-title-fx .mtx-line--2 .mtx-word:nth-child(3) { animation-delay: -2.1s,    0.9s;  }
-.mission-title-fx .mtx-line--2 .mtx-word:nth-child(4) { animation-delay: -2.45s,   1.05s; }
+/* Staggered pulse across each character for a heartbeat wave
+   (uses nth-of-type so .mtx-gap doesn't count) */
+.mission-title-fx .mtx-word:nth-of-type(1) { animation-delay: 0s,       0s;    }
+.mission-title-fx .mtx-word:nth-of-type(2) { animation-delay: -0.35s,   0.15s; }
+.mission-title-fx .mtx-word:nth-of-type(3) { animation-delay: -0.7s,    0.3s;  }
+.mission-title-fx .mtx-word:nth-of-type(4) { animation-delay: -1.05s,   0.45s; }
+.mission-title-fx .mtx-word:nth-of-type(5) { animation-delay: -1.4s,    0.6s;  }
+.mission-title-fx .mtx-word:nth-of-type(6) { animation-delay: -1.75s,   0.75s; }
+.mission-title-fx .mtx-word:nth-of-type(7) { animation-delay: -2.1s,    0.9s;  }
+.mission-title-fx .mtx-word:nth-of-type(8) { animation-delay: -2.45s,   1.05s; }
 
 @keyframes mtxShine {
   0%   { background-position: 100% 50%; }
@@ -1244,10 +1256,19 @@ ul  { list-style: none; }
   .shandle { font-size: 0.72rem; }
 }
 @media (max-width: 480px) {
-  .hero { padding: 70px 18px 50px; }
-  .hero-cta { flex-direction: column; align-items: stretch; }
+  /* Extra bottom padding so scroll-indicator does not overlap the last CTA button */
+  .hero { padding: 70px 18px 96px; min-height: auto; }
+  .hero-cta { flex-direction: column; align-items: stretch; margin-bottom: 12px; }
   .btn-primary, .btn-outline { justify-content: center; text-align: center; }
-  .hero-logo { width: 160px; }
+  /* Push scroll indicator further from CTA and make it non-absolute so it flows below content */
+  .scroll-indicator {
+    position: static;
+    transform: none;
+    margin: 22px auto 0;
+    align-self: center;
+    animation: fade-in-up-static 1s ease 1.5s both;
+  }
+  .hero-logo { width: 280px; }
   .logo-img { height: 46px; }
   .hero-title { font-size: clamp(2.2rem, 11vw, 3rem); }
   .hero-platforms { flex-wrap: wrap; }
