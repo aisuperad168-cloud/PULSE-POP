@@ -370,7 +370,8 @@
         throw new Error(msg);
       }
 
-      // 存到 sessionStorage 給結果頁使用
+      // 存到 sessionStorage + localStorage 雙保險給結果頁使用
+      // iOS Safari 在頁面導向間有時會遺失 sessionStorage，localStorage 更穩定
       const packet = {
         result: data.result,
         cta: data.cta,
@@ -380,14 +381,32 @@
         name: payload.name,
         submittedAt: new Date().toISOString(),
       };
+      const packetJSON = JSON.stringify(packet);
+      let sessionOK = false;
+      let localOK = false;
       try {
-        sessionStorage.setItem('stmt_result', JSON.stringify(packet));
+        sessionStorage.setItem('stmt_result', packetJSON);
+        sessionOK = true;
       } catch (e) {
-        console.warn('[stmt-ui] sessionStorage write failed, will pass via URL', e);
+        console.warn('[stmt-ui] sessionStorage write failed', e);
       }
+      try {
+        // localStorage 作為 iOS Safari sessionStorage 遺失的 fallback
+        // 加時間戳，結果頁讀取時可判斷是否過期（>30 分鐘視為過期）
+        localStorage.setItem('stmt_result', packetJSON);
+        localStorage.setItem('stmt_result_ts', String(Date.now()));
+        localOK = true;
+      } catch (e) {
+        console.warn('[stmt-ui] localStorage write failed', e);
+      }
+      console.log('[stmt-ui] storage saved:', { sessionOK, localOK, leadId: data.leadId });
 
-      // 導向結果頁
-      window.location.href = '/streamer-test/result/';
+      // 給 storage 一點時間 flush（iOS Safari 對 storage commit 較慢）
+      await new Promise((r) => setTimeout(r, 60));
+
+      // 導向結果頁（附上 leadId 作為 URL 參數，作為第三層備援）
+      const leadParam = data.leadId ? ('?lead=' + encodeURIComponent(data.leadId)) : '';
+      window.location.href = '/streamer-test/result/' + leadParam;
     } catch (e) {
       console.error('[stmt-ui] submit error', e);
       showFormError(e.message || '網路連線異常，請稍後再試。');
@@ -446,6 +465,13 @@
   // ────────────────────────────────────────────────────────────
   function init() {
     if (!els.container) return;
+
+    // 進入 quiz 頁 → 清除舊的結果快取，避免導向 result 頁時讀到上次的舊資料
+    try { sessionStorage.removeItem('stmt_result'); } catch (_) {}
+    try {
+      localStorage.removeItem('stmt_result');
+      localStorage.removeItem('stmt_result_ts');
+    } catch (_) {}
 
     // 綁定 nav
     els.btnPrev.addEventListener('click', goPrev);

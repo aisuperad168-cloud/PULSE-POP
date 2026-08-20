@@ -413,11 +413,25 @@ export function renderStreamerNotifyEmail({ name, email, lineId, demographics, r
       ${lieWarning}
     </td></tr>
 
-    <!-- 建議 CTA -->
+    <!-- 建議 CTA + 聯絡 LINE 按鈕 -->
     <tr><td style="padding:0 24px 20px;">
-      <div style="padding:12px 14px;background:#E0F2FE;border-left:3px solid #0EA5E9;border-radius:6px;font-size:13px;color:#0C4A6E;line-height:1.6;">
+      <div style="padding:14px 16px;background:#E0F2FE;border-left:3px solid #0EA5E9;border-radius:6px;font-size:13px;color:#0C4A6E;line-height:1.65;">
         💡 <strong>建議跟進策略</strong>：${esc(cta.label)}<br>
         <span style="font-size:12px;color:#555;">${esc(cta.sub)}</span>
+        <div style="margin-top:12px;">
+          <a href="${esc(cta.url)}"
+             style="display:inline-block;padding:10px 20px;background:#06C755;color:#ffffff;text-decoration:none;font-size:13px;font-weight:800;border-radius:22px;box-shadow:0 2px 8px rgba(6,199,85,0.35);"
+             target="_blank" rel="noopener">
+            💬 立即以 LINE 聯絡此名單
+          </a>
+          <a href="mailto:${esc(email)}"
+             style="display:inline-block;margin-left:8px;padding:10px 18px;background:#ffffff;color:#0C4A6E;text-decoration:none;font-size:13px;font-weight:700;border-radius:22px;border:1px solid #0EA5E9;">
+            ✉️ 回信給 ${esc(name)}
+          </a>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:#777;line-height:1.5;">
+          LINE 連結：<a href="${esc(cta.url)}" style="color:#06C755;text-decoration:none;" target="_blank" rel="noopener">${esc(cta.url)}</a>
+        </div>
       </div>
     </td></tr>
 

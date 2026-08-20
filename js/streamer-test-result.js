@@ -28,19 +28,73 @@
   const $ = (id) => document.getElementById(id);
 
   // ────────────────────────────────────────────────────────────
-  // 1. 讀 sessionStorage
+  // 1. 讀取結果 packet
+  //    優先順序：sessionStorage → localStorage(<30 分鐘) → null
+  //    iOS Safari 在頁面導向間有時會遺失 sessionStorage，
+  //    因此 quiz 頁同時寫入 localStorage 作為 fallback。
   // ────────────────────────────────────────────────────────────
   function loadPacket() {
+    // 1) 先試 sessionStorage
+    let rawSession = null;
     try {
-      const raw = sessionStorage.getItem('stmt_result');
-      if (!raw) return null;
-      const packet = JSON.parse(raw);
-      if (!packet || !packet.result) return null;
-      return packet;
+      rawSession = sessionStorage.getItem('stmt_result');
     } catch (e) {
       console.warn('[stmt-result] sessionStorage read failed', e);
-      return null;
     }
+    if (rawSession) {
+      try {
+        const packet = JSON.parse(rawSession);
+        if (packet && packet.result) {
+          console.log('[stmt-result] loaded from sessionStorage');
+          return packet;
+        }
+      } catch (e) {
+        console.warn('[stmt-result] sessionStorage parse failed', e);
+      }
+    }
+
+    // 2) 再試 localStorage（TTL 30 分鐘）
+    let rawLocal = null;
+    let tsLocal = null;
+    try {
+      rawLocal = localStorage.getItem('stmt_result');
+      tsLocal = localStorage.getItem('stmt_result_ts');
+    } catch (e) {
+      console.warn('[stmt-result] localStorage read failed', e);
+    }
+    if (rawLocal) {
+      try {
+        const packet = JSON.parse(rawLocal);
+        const ts = Number(tsLocal) || 0;
+        const ageMs = Date.now() - ts;
+        const THIRTY_MIN = 30 * 60 * 1000;
+        if (packet && packet.result && ts > 0 && ageMs < THIRTY_MIN) {
+          console.log('[stmt-result] loaded from localStorage (age ' + Math.round(ageMs / 1000) + 's)');
+          // 補回 sessionStorage，方便同分頁重新整理時仍可讀取
+          try { sessionStorage.setItem('stmt_result', rawLocal); } catch (_) {}
+          return packet;
+        } else if (packet && !ts) {
+          // 沒時間戳但有資料 → 也允許（舊資料兼容）
+          console.log('[stmt-result] loaded from localStorage (no ts)');
+          return packet;
+        } else if (ageMs >= THIRTY_MIN) {
+          console.log('[stmt-result] localStorage data expired (age ' + Math.round(ageMs / 60000) + ' min)');
+        }
+      } catch (e) {
+        console.warn('[stmt-result] localStorage parse failed', e);
+      }
+    }
+
+    // 3) URL ?lead=X 標記：僅用於 debug log，不阻止顯示 empty state
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const leadId = params.get('lead');
+      if (leadId) {
+        console.log('[stmt-result] URL has lead=' + leadId + ' but no storage packet; showing empty state');
+      }
+    } catch (_) {}
+
+    return null;
   }
 
   // ────────────────────────────────────────────────────────────
