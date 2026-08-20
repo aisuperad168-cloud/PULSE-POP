@@ -162,6 +162,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css?v=20260820e" />
   <link rel="stylesheet" href="css/quiz.css?v=20260820a" />
+  <link rel="stylesheet" href="css/streamer-test.css?v=20260820a" />
 </head>
 <body>
 
@@ -244,11 +245,16 @@
         </div>
 
         <div class="hero-cta">
-          <a href="join.html" class="btn-primary">
-            🎤 成為主播
+          <a href="/streamer-test/" class="btn-primary">
+            🎯 5 分鐘主播適配度測驗
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-          <a href="partnership.html" class="btn-outline">🤝 商業合作</a>
+          <a href="/quiz.html" class="btn-outline">⚡ 1 分鐘快速測驗</a>
+        </div>
+        <div class="hero-cta-secondary" style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="join.html" style="color:#B5B5C0; font-size:14px; text-decoration:underline; text-underline-offset:3px;">🎤 我想直接申請成為主播</a>
+          <span style="color:#7A7A88;">·</span>
+          <a href="partnership.html" style="color:#B5B5C0; font-size:14px; text-decoration:underline; text-underline-offset:3px;">🤝 我要談商業合作</a>
         </div>
       </div>
 
@@ -1047,6 +1053,138 @@
       <!-- 由 quiz.js 動態渲染 -->
     </div>
   </div>
+
+  <!-- ===== 首頁分流彈窗（首次訪客 · 3 秒後顯示 · 24 小時 cooldown） ===== -->
+  <div class="stmt-home-popup" id="stmtHomePopup" hidden aria-hidden="true">
+    <div class="stmt-home-popup-backdrop" data-stmt-popup-close></div>
+    <div class="stmt-home-popup-panel" role="dialog" aria-labelledby="stmtHomePopupTitle">
+      <button class="stmt-home-popup-close" type="button" data-stmt-popup-close aria-label="關閉">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="stmt-home-popup-header">
+        <div class="stmt-home-popup-eyebrow">先了解自己再開始</div>
+        <h2 class="stmt-home-popup-title" id="stmtHomePopupTitle">你適合當主播嗎？</h2>
+        <p class="stmt-home-popup-sub">在申請成為主播之前，先用一個測驗看看自己準備到哪。</p>
+      </div>
+
+      <div class="stmt-popup-choices">
+        <!-- 主推：新的 5 分鐘測驗 -->
+        <a href="/streamer-test/" class="stmt-popup-choice stmt-popup-choice-primary" data-stmt-popup-track="deep">
+          <span class="stmt-popup-choice-tag">🆕 全新推薦</span>
+          <div class="stmt-popup-choice-title">
+            5 分鐘主播適配度深度測驗
+            <span class="stmt-popup-choice-arrow">→</span>
+          </div>
+          <p class="stmt-popup-choice-desc">60 題深度心理測驗，分析你的 6 大能力、找出你的主播分型，並產出完整發展報告寄到信箱。</p>
+          <div class="stmt-popup-choice-meta">
+            <span>約 5 分鐘</span>
+            <span>60 題</span>
+            <span>完整報告</span>
+          </div>
+        </a>
+
+        <!-- 舊的 1 分鐘測驗 -->
+        <a href="/quiz.html" class="stmt-popup-choice" data-stmt-popup-track="quick">
+          <span class="stmt-popup-choice-tag">⚡ 快速版</span>
+          <div class="stmt-popup-choice-title">
+            1 分鐘主播類型快速測驗
+            <span class="stmt-popup-choice-arrow">→</span>
+          </div>
+          <p class="stmt-popup-choice-desc">10 題，快速看你適合哪種主播類型（陪伴、才藝、電商、知識…）。</p>
+          <div class="stmt-popup-choice-meta">
+            <span>約 1 分鐘</span>
+            <span>10 題</span>
+            <span>快速分型</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="stmt-home-popup-footer">
+        <button type="button" class="stmt-home-popup-dismiss" data-stmt-popup-close>暫時不需要，先瀏覽網站</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 首頁分流彈窗控制 · A1=A+E (3s+first-visitor) / A2=C (24h cooldown) */
+    (function () {
+      var STORAGE_KEY = 'jdi_home_popup';
+      var COOLDOWN_MS = 24 * 60 * 60 * 1000; // 24 小時
+      var DELAY_MS = 3000;
+
+      function shouldShow() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return true; // 首次訪客
+          var data = JSON.parse(raw);
+          if (!data || !data.lastDismissedAt) return true;
+          return (Date.now() - Number(data.lastDismissedAt)) > COOLDOWN_MS;
+        } catch (e) {
+          return true;
+        }
+      }
+
+      function recordDismiss(action) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            lastDismissedAt: Date.now(),
+            action: action || 'close',
+          }));
+        } catch (e) { /* ignore */ }
+      }
+
+      function openPopup() {
+        var popup = document.getElementById('stmtHomePopup');
+        if (!popup) return;
+        popup.hidden = false;
+        popup.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('stmt-modal-open');
+      }
+
+      function closePopup(action) {
+        var popup = document.getElementById('stmtHomePopup');
+        if (!popup) return;
+        popup.hidden = true;
+        popup.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('stmt-modal-open');
+        recordDismiss(action || 'close');
+      }
+
+      // 綁定關閉
+      document.addEventListener('click', function (ev) {
+        var t = ev.target;
+        // 找到最近的 close 觸發元素（含背景與按鈕）
+        while (t && t !== document) {
+          if (t.hasAttribute && t.hasAttribute('data-stmt-popup-close')) {
+            closePopup('close');
+            return;
+          }
+          if (t.hasAttribute && t.hasAttribute('data-stmt-popup-track')) {
+            recordDismiss('click-' + t.getAttribute('data-stmt-popup-track'));
+            return; // 讓瀏覽器繼續導航
+          }
+          t = t.parentNode;
+        }
+      });
+
+      // ESC 關閉
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'Escape') return;
+        var popup = document.getElementById('stmtHomePopup');
+        if (popup && !popup.hidden) closePopup('esc');
+      });
+
+      // 觸發：3 秒後、首次訪客 / 冷卻期外
+      if (shouldShow()) {
+        window.addEventListener('load', function () {
+          setTimeout(openPopup, DELAY_MS);
+        });
+      }
+    })();
+  </script>
 
   <script src="js/main.js?v=20260616d"></script>
   <script src="js/quiz-data.js?v=20260819a"></script>
