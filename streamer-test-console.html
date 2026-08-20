@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>主播測驗 - Console 測試頁</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 24px; background: #0f0f14; color: #e4e4e7; line-height: 1.6; }
+    h1 { color: #FE2C55; }
+    code, pre { background: #1a1a24; color: #25F4EE; padding: 2px 6px; border-radius: 4px; font-family: 'Menlo', 'Monaco', monospace; }
+    pre { padding: 16px; overflow: auto; }
+    .box { background: #1a1a24; border: 1px solid #333; padding: 20px; border-radius: 8px; margin: 16px 0; }
+    .hint { color: #a1a1aa; font-size: 14px; }
+    button { background: #FE2C55; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-right: 8px; margin-bottom: 8px; font-size: 14px; }
+    button:hover { background: #ff4570; }
+  </style>
+</head>
+<body>
+  <h1>🎤 主播測驗 - Console 手動測試</h1>
+  <p class="hint">此頁面僅供測試 <code>STMT_DATA</code> 和 <code>STMT_CORE</code>，不是正式 UI。打開 DevTools Console (F12) 試看看以下指令。</p>
+
+  <div class="box">
+    <h3>快速按鈕（結果會印到 console）</h3>
+    <button onclick="testAll3()">全部答 3</button>
+    <button onclick="testHigh()">舞台型高分</button>
+    <button onclick="testCompanion()">陪伴型</button>
+    <button onclick="testRisky()">觸發風險</button>
+    <button onclick="testLie()">誠實檢核觸發</button>
+    <button onclick="showData()">看資料結構</button>
+  </div>
+
+  <div class="box">
+    <h3>Console 手動指令</h3>
+    <pre>// 1. 看有多少題
+STMT_DATA.questions.length            // → 60
+
+// 2. 看反向題有哪些
+STMT_DATA.questions.filter(q => q.reverse).map(q => q.id)
+
+// 3. 快速用同一分數答完全部（例：全部答 4）
+const ans = {};
+STMT_DATA.questions.forEach(q => ans[q.id] = 4);
+STMT_CORE.buildResult(ans);
+
+// 4. 用你自己的手動答案（部分示範）
+const ans2 = {};
+STMT_DATA.questions.forEach(q => ans2[q.id] = 3);
+ans2[1] = 5;      // 我很敢在鏡頭前 → 5
+ans2[19] = 2;     // 反向題（我常忽略觀眾）→ 2
+STMT_CORE.buildResult(ans2);
+
+// 5. 看單一結果的某個欄位
+STMT_CORE.buildResult(ans).profile   // → { key, name, tagline }
+STMT_CORE.buildResult(ans).riskFlags // → 陣列
+STMT_CORE.buildResult(ans).moduleScores.map(m => `${m.shortName} ${m.percent}%`)
+
+// 6. 誠實檢核測試
+STMT_CORE.buildResult(ans, { L1: 5, L2: 5, L3: 5 }).lieCheck
+</pre>
+  </div>
+
+  <div class="box">
+    <h3>正在載入的資料</h3>
+    <p>資料版本：<code id="version">-</code></p>
+    <p>題目數：<code id="q-count">-</code></p>
+    <p>模組數：<code id="m-count">-</code></p>
+    <p>分型數：<code id="p-count">-</code></p>
+    <p>風險規則：<code id="r-count">-</code></p>
+  </div>
+
+  <!-- 載入資料層與計分核心 -->
+  <script src="/js/streamer-test-data.js"></script>
+  <script src="/js/streamer-test-core.js"></script>
+
+  <script>
+    // 顯示載入資訊
+    document.getElementById('version').textContent = STMT_DATA.version;
+    document.getElementById('q-count').textContent = STMT_DATA.questions.length + ' 題（' + STMT_DATA.questions.filter(q => q.reverse).length + ' 反向）';
+    document.getElementById('m-count').textContent = STMT_DATA.modules.length;
+    document.getElementById('p-count').textContent = Object.keys(STMT_DATA.profiles).length;
+    document.getElementById('r-count').textContent = Object.keys(STMT_DATA.riskRules).length;
+
+    // 工具
+    function allAns(v) {
+      const o = {};
+      STMT_DATA.questions.forEach(q => o[q.id] = v);
+      return o;
+    }
+    function ansFor(targets, fb = 60) {
+      const o = {};
+      STMT_DATA.questions.forEach(q => {
+        const p = targets[q.module] != null ? targets[q.module] : fb;
+        let v = Math.max(1, Math.min(5, p / 20));
+        o[q.id] = q.reverse ? (6 - v) : v;
+      });
+      return o;
+    }
+
+    // 快速按鈕
+    window.testAll3 = () => console.log('全部答 3：', STMT_CORE.buildResult(allAns(3)));
+    window.testHigh = () => console.log('舞台型：', STMT_CORE.buildResult(ansFor({
+      camera_expression: 85, audience_interaction: 80, emotional_regulation: 70,
+      self_discipline: 65, content_creativity: 75, boundary_control: 70,
+    })));
+    window.testCompanion = () => console.log('陪伴型：', STMT_CORE.buildResult(ansFor({
+      camera_expression: 65, audience_interaction: 90, emotional_regulation: 80,
+      self_discipline: 65, content_creativity: 60, boundary_control: 70,
+    })));
+    window.testRisky = () => console.log('風險：', STMT_CORE.buildResult(ansFor({
+      camera_expression: 40, audience_interaction: 70, emotional_regulation: 40,
+      self_discipline: 40, content_creativity: 40, boundary_control: 40,
+    })));
+    window.testLie = () => console.log('誠實檢核觸發：', STMT_CORE.buildResult(allAns(4), { L1: 5, L2: 5, L3: 5 }));
+    window.showData = () => { console.log('STMT_DATA:', STMT_DATA); console.log('STMT_CORE:', STMT_CORE); };
+
+    console.log('%c✅ STMT_DATA 與 STMT_CORE 已載入，可以在 console 直接呼叫。', 'color: #25F4EE; font-size: 14px;');
+    console.log('%c試試看：STMT_CORE.buildResult(allAns(3))', 'color: #FE2C55;');
+  </script>
+</body>
+</html>
