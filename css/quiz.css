@@ -131,18 +131,37 @@
   transition: all .25s ease;
   white-space: nowrap;
   text-decoration: none;
+  /* iOS Safari tap fixes:
+     - touch-action:manipulation kills the 300ms double-tap-to-zoom delay
+     - -webkit-tap-highlight gives users tap feedback (previously 'none' made
+       them think nothing was happening even when tap was received)
+     - min-height 48px meets Apple HIG minimum tap-target */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.18);
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 48px;
+  user-select: none;
 }
 .quiz-btn:disabled { opacity: .5; cursor: not-allowed; }
+.quiz-btn:active:not(:disabled) {
+  transform: scale(0.97);
+  transition: transform 0.08s ease;
+}
 .quiz-btn-primary {
   background: linear-gradient(135deg, var(--q-cyan), var(--q-pink));
   color: #fff;
   box-shadow: 0 8px 32px rgba(254,44,85,.35);
   width: 100%;
+  min-height: 54px;   /* extra tap area for the primary submit button */
+  font-size: 16px;    /* iOS Safari never zooms on 16px+ */
 }
 .quiz-btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(254,44,85,.55);
 }
+/* Ensure text/svg inside button don't intercept the tap (Safari edge case) */
+.quiz-btn > * { pointer-events: none; }
 .quiz-btn-line {
   background: #06C755;
   color: #fff;

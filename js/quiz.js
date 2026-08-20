@@ -281,7 +281,24 @@
       </div>
     `;
 
+    // Primary path: form submit event (works with Enter key too)
     $('#quizForm').addEventListener('submit', handleSubmit);
+    // Fallback: direct button click — iOS Safari occasionally fails to fire
+    // 'submit' when the form has a hidden/absolutely-positioned checkbox.
+    // Guard against double-fire by tracking in-flight state on the button.
+    const submitBtn = $('#quizSubmitBtn');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', function(e){
+        // If the browser is going to fire 'submit' anyway (native form), let it.
+        // We only run our handler when submit didn't fire within 50ms.
+        if (submitBtn.dataset.submitting === '1') return;
+        setTimeout(() => {
+          if (submitBtn.dataset.submitting !== '1') {
+            handleSubmit(e);
+          }
+        }, 50);
+      });
+    }
     document.querySelectorAll('[data-open-privacy]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
@@ -292,9 +309,14 @@
 
   // ========== FORM SUBMIT ==========
   async function handleSubmit(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     const btn = $('#quizSubmitBtn');
     const err = $('#quizFormError');
+    // Mark in-flight so the button-click fallback doesn't double-fire
+    if (btn) {
+      if (btn.dataset.submitting === '1') return;
+      btn.dataset.submitting = '1';
+    }
     err.textContent = '';
 
     const name    = $('#qName').value.trim();
@@ -349,6 +371,7 @@
       setTimeout(() => renderSuccess(email, true), 2000);
     } finally {
       btn.disabled = false;
+      if (btn) delete btn.dataset.submitting;
     }
   }
 
