@@ -1063,6 +1063,9 @@ body.stmt-quiz-page {
   justify-content: center;
   gap: 8px;
 }
+/* [hidden] 必須贏過 display 宣告 */
+.stmt-btn-submit-idle[hidden],
+.stmt-btn-submit-loading[hidden] { display: none !important; }
 
 .stmt-form-notice {
   font-size: 12px;

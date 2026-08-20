@@ -333,15 +333,40 @@
     state.submitted = true;
 
     try {
-      const resp = await fetch('/api/streamer-test-submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await resp.json();
+      let resp;
+      try {
+        resp = await fetch('/api/streamer-test-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch (netErr) {
+        throw new Error('網路連線失敗，請確認網路後再試一次。');
+      }
+
+      // 檢查回應內容類型 —— 如果不是 JSON（例如打到靜態伺服器 404 頁面）就給友善錯誤
+      const contentType = resp.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        // 直接讀 text 印到 console 方便除錯，但顯示給使用者的是友善訊息
+        try {
+          const bodyText = await resp.text();
+          console.error('[stmt-ui] Non-JSON response from API:', resp.status, bodyText.slice(0, 200));
+        } catch (_) {}
+        if (resp.status === 404 || resp.status === 501) {
+          throw new Error('測驗系統正在部署中，請稍後再試（或聯絡管理員）。');
+        }
+        throw new Error(`伺服器回應異常（${resp.status}），請稍後再試。`);
+      }
+
+      let data;
+      try {
+        data = await resp.json();
+      } catch (jsonErr) {
+        throw new Error('伺服器回應格式錯誤，請稍後再試。');
+      }
 
       if (!resp.ok || !data.ok) {
-        const msg = (data && data.error) || `送出失敗（狀態 ${resp.status}），請稍後再試。`;
+        const msg = (data && (data.message || data.error)) || `送出失敗（狀態 ${resp.status}），請稍後再試。`;
         throw new Error(msg);
       }
 
@@ -395,8 +420,16 @@
   function setSubmitting(isSubmitting) {
     if (!els.btnSubmit) return;
     els.btnSubmit.disabled = isSubmitting;
-    if (els.submitIdle)    els.submitIdle.hidden = isSubmitting;
-    if (els.submitLoading) els.submitLoading.hidden = !isSubmitting;
+    // 同時設 hidden 屬性 + inline display 樣式，避免 iOS Safari
+    // 在 flex 容器內對 [hidden] 的忽略導致兩個狀態同時顯示。
+    if (els.submitIdle) {
+      els.submitIdle.hidden = isSubmitting;
+      els.submitIdle.style.display = isSubmitting ? 'none' : '';
+    }
+    if (els.submitLoading) {
+      els.submitLoading.hidden = !isSubmitting;
+      els.submitLoading.style.display = !isSubmitting ? 'none' : '';
+    }
   }
 
   // ────────────────────────────────────────────────────────────
