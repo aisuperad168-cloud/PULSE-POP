@@ -137,6 +137,59 @@ export async function onRequestPost({ request, env }) {
   // 5. Store to D1
   let leadId = null;
   if (env.DB) {
+    // 5a. 首次呼叫時自動建表（IF NOT EXISTS 所以安全，重跑無害）
+    try {
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS streamer_test_leads (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          email TEXT NOT NULL,
+          line_id TEXT NOT NULL,
+          gender TEXT,
+          age TEXT,
+          region TEXT,
+          experience TEXT,
+          consent INTEGER NOT NULL DEFAULT 1,
+          total_score REAL NOT NULL,
+          tier_key TEXT NOT NULL,
+          tier_label TEXT NOT NULL,
+          profile_key TEXT NOT NULL,
+          profile_name TEXT NOT NULL,
+          score_camera REAL,
+          score_audience REAL,
+          score_emotional REAL,
+          score_self_disc REAL,
+          score_creativity REAL,
+          score_boundary REAL,
+          risk_count INTEGER NOT NULL DEFAULT 0,
+          risk_flags TEXT,
+          lie_triggered INTEGER NOT NULL DEFAULT 0,
+          lie_avg REAL,
+          answers TEXT,
+          lie_answers TEXT,
+          full_result TEXT,
+          source TEXT,
+          ip TEXT,
+          user_agent TEXT,
+          country TEXT,
+          created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+          notified INTEGER NOT NULL DEFAULT 0
+        )
+      `).run();
+      // 建索引（也是 IF NOT EXISTS）
+      await env.DB.batch([
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_stmt_email ON streamer_test_leads (email)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_stmt_profile ON streamer_test_leads (profile_key)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_stmt_total ON streamer_test_leads (total_score)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_stmt_created ON streamer_test_leads (created_at)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_stmt_experience ON streamer_test_leads (experience)'),
+      ]);
+    } catch (schemaErr) {
+      console.error('[streamer-test] Schema init failed (may be ok if already exists):', schemaErr.message);
+      // 不阻斷主流程 — 表可能已經存在
+    }
+
+    // 5b. 寫入
     try {
       const dbResult = await env.DB.prepare(`
         INSERT INTO streamer_test_leads (
