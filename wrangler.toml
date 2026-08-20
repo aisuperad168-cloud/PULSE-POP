@@ -20,10 +20,13 @@ compatibility_flags = ["nodejs_compat"]
 directory = "."
 # ASSETS binding：讓 _worker.js 可以呼叫 env.ASSETS.fetch(request)
 binding = "ASSETS"
-# 對於 SPA 或 404 的處理策略；none = 完全交給 _worker.js
+# 對於 SPA 或 404 的處理策略；single-page-application = 找不到檔案時 fallback 到 index.html
 not_found_handling = "single-page-application"
 # HTML 檔案存取時可省略 .html（例如 /join 對應 /join.html）
 html_handling = "auto-trailing-slash"
+# ⚠️ 關鍵：讓 Worker 先執行（處理 /api/*），只有 Worker 呼叫 env.ASSETS.fetch() 時才走 assets
+# 沒這行的話 assets 會先攔截所有請求，/api/* 會被 SPA fallback 到 index.html
+run_worker_first = true
 
 # ============ 非機密環境變數（可 commit）============
 [vars]

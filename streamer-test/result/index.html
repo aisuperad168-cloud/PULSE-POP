@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>你的主播適配度報告｜JDI 脈動傳媒</title>
+<meta name="description" content="你的主播適配度深度分析報告 - 總分、6 大能力雷達圖、主播分型、發展路徑、行動清單" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#0A0A14" />
+
+<!-- Favicon -->
+<link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260820b" sizes="180x180" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/streamer-test.css?v=20260820a" />
+
+<!-- Chart.js CDN 用於雷達圖 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="stmt-page stmt-result-page">
+
+<!-- ============ RESULT: NO DATA STATE ============ -->
+<div class="stmt-result-empty" id="stmtResultEmpty" hidden>
+  <div class="stmt-result-empty-inner">
+    <div class="stmt-result-empty-icon">🤔</div>
+    <h1>找不到你的測驗結果</h1>
+    <p>看起來你還沒完成測驗，或是資料已經過期。</p>
+    <div class="stmt-result-empty-cta">
+      <a href="/streamer-test/quiz/" class="stmt-btn-primary">開始測驗</a>
+      <a href="/streamer-test/" class="stmt-btn-secondary">回介紹頁</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT: MAIN CONTENT ============ -->
+<div class="stmt-result-wrap" id="stmtResultWrap" hidden>
+
+  <!-- === 1. HERO: 總分 + Tier + 分型 === -->
+  <section class="stmt-result-hero">
+    <div class="stmt-result-hero-bg">
+      <div class="stmt-hero-orb stmt-hero-orb-1"></div>
+      <div class="stmt-hero-orb stmt-hero-orb-2"></div>
+    </div>
+
+    <div class="stmt-result-hero-inner">
+      <!-- 頂部小 badge -->
+      <div class="stmt-result-badge">
+        <span class="stmt-badge-dot"></span>
+        <span id="stmtResultUserName">你</span> 的專屬適配度報告
+      </div>
+
+      <!-- 總分大字 -->
+      <div class="stmt-result-score-wrap">
+        <div class="stmt-result-score-label">你的主播適配度總分</div>
+        <div class="stmt-result-score" id="stmtResultScore">
+          <span class="stmt-result-score-num">0</span>
+          <span class="stmt-result-score-slash">/</span>
+          <span class="stmt-result-score-max">100</span>
+        </div>
+        <div class="stmt-result-tier" id="stmtResultTier">- - -</div>
+      </div>
+
+      <!-- 分型卡片 -->
+      <div class="stmt-result-profile-card" id="stmtResultProfileCard">
+        <div class="stmt-result-profile-eyebrow">你的主播分型</div>
+        <h1 class="stmt-result-profile-name" id="stmtResultProfileName">- - -</h1>
+        <div class="stmt-result-profile-tagline" id="stmtResultProfileTagline">- - -</div>
+      </div>
+
+      <!-- 摘要 -->
+      <div class="stmt-result-summary" id="stmtResultSummary">- - -</div>
+
+      <!-- 誠實檢核警告（若觸發才顯示） -->
+      <div class="stmt-result-lie-warning" id="stmtResultLieWarning" hidden>
+        <span class="stmt-result-lie-icon">🕵️</span>
+        <span class="stmt-result-lie-text"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- === 2. 雷達圖 + 模組分數 === -->
+  <section class="stmt-result-section">
+    <div class="stmt-container">
+      <div class="stmt-section-title">
+        <div class="stmt-eyebrow">六大能力分析</div>
+        <h2>你的能力雷達</h2>
+      </div>
+
+      <div class="stmt-radar-grid">
+        <!-- 雷達圖 -->
+        <div class="stmt-radar-canvas-wrap">
+          <canvas id="stmtRadarChart"></canvas>
+        </div>
+
+        <!-- 模組長條 -->
+        <div class="stmt-module-bars" id="stmtModuleBars">
+          <!-- 由 JS 動態渲染 -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === 3. 優勢 + 待加強 === -->
+  <section class="stmt-result-section">
+    <div class="stmt-container">
+      <div class="stmt-strength-weakness-grid">
+        <!-- 優勢 -->
+        <div class="stmt-strength-card">
+          <div class="stmt-card-header">
+            <span class="stmt-card-icon">💎</span>
+            <h3>你的 3 大優勢</h3>
+          </div>
+          <div class="stmt-card-body" id="stmtStrengthsList">
+            <!-- 動態渲染 -->
+          </div>
+        </div>
+
+        <!-- 待加強 -->
+        <div class="stmt-weakness-card">
+          <div class="stmt-card-header">
+            <span class="stmt-card-icon">🔧</span>
+            <h3>需要加強的地方</h3>
+          </div>
+          <div class="stmt-card-body" id="stmtWeaknessList">
+            <!-- 動態渲染 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === 4. 風險預警 === -->
+  <section class="stmt-result-section" id="stmtRiskSection">
+    <div class="stmt-container">
+      <div class="stmt-section-title">
+        <div class="stmt-eyebrow">風險預警</div>
+        <h2 id="stmtRiskTitle">- - -</h2>
+      </div>
+      <div class="stmt-risk-list" id="stmtRiskList">
+        <!-- 動態渲染 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- === 5. 發展路徑 === -->
+  <section class="stmt-result-section">
+    <div class="stmt-container">
+      <div class="stmt-section-title">
+        <div class="stmt-eyebrow">發展路徑</div>
+        <h2>適合你走的路 vs 建議避開</h2>
+      </div>
+
+      <div class="stmt-path-grid">
+        <div class="stmt-path-card stmt-path-recommend">
+          <div class="stmt-path-header">
+            <span class="stmt-path-icon">✓</span>
+            <h3>推薦方向</h3>
+          </div>
+          <ul class="stmt-path-list" id="stmtRecommendPaths">
+            <!-- 動態渲染 -->
+          </ul>
+        </div>
+        <div class="stmt-path-card stmt-path-avoid">
+          <div class="stmt-path-header">
+            <span class="stmt-path-icon">✕</span>
+            <h3>建議避開</h3>
+          </div>
+          <ul class="stmt-path-list" id="stmtAvoidPaths">
+            <!-- 動態渲染 -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === 6. 4 週行動清單 === -->
+  <section class="stmt-result-section">
+    <div class="stmt-container">
+      <div class="stmt-section-title">
+        <div class="stmt-eyebrow">下一步</div>
+        <h2>🎯 4 週行動清單</h2>
+        <p class="stmt-section-desc">依你目前最弱的 3 個模組給出的具體行動建議</p>
+      </div>
+
+      <div class="stmt-action-list" id="stmtActionList">
+        <!-- 動態渲染 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- === 7. CTA (依分型分流) === -->
+  <section class="stmt-result-cta">
+    <div class="stmt-container">
+      <div class="stmt-result-cta-card" id="stmtResultCtaCard">
+        <div class="stmt-result-cta-eyebrow">建議下一步</div>
+        <h2 class="stmt-result-cta-title" id="stmtResultCtaSub">- - -</h2>
+        <a href="#" class="stmt-btn-primary stmt-btn-lg" id="stmtResultCtaBtn" target="_blank" rel="noopener">
+          <span id="stmtResultCtaLabel">- - -</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <p class="stmt-result-cta-tel">
+          或撥打 <a href="tel:04-3603-3191">04-3603-3191</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- === 8. Meta + 分享 === -->
+  <section class="stmt-result-footer-actions">
+    <div class="stmt-container">
+      <p class="stmt-email-notice">
+        📩 完整報告已寄到 <strong id="stmtResultEmail">你的信箱</strong>
+      </p>
+      <div class="stmt-result-actions">
+        <button type="button" class="stmt-btn-secondary" id="stmtBtnShare">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+          分享測驗給朋友
+        </button>
+        <a href="/streamer-test/quiz/" class="stmt-btn-secondary">🔁 重新測驗</a>
+        <a href="/" class="stmt-btn-secondary">回首頁</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer footer-simple">
+  <div class="footer-inner">
+    <div class="footer-copyright">
+      © 2025 JDI 脈動傳媒 JDI PULSE MEDIA · TikTok LIVE 官方合作經紀公會 · <a href="/">jdi-pulse.com</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Scripts ============ -->
+<script src="/js/streamer-test-result.js?v=20260820a"></script>
+
+</body>
+</html>
