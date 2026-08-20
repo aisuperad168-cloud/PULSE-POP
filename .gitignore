@@ -24,3 +24,4 @@ core
 
 # Local worker backup (not shared to GitHub)
 .backup-worker/
+package-lock.json
