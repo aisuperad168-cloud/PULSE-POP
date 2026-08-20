@@ -8,7 +8,7 @@
  *
  * 流程：
  *   分頁作答 (6 頁 · 每頁 1 模組 = 10 題) → 誠實檢核（第 7 頁）→ 完成 → 顯示留資 Modal
- *   → POST /api/streamer-test-submit → 存 sessionStorage → 導向 /streamer-test/result/
+ *   → POST /api/streamer-test-submit → 存 sessionStorage/localStorage → 導向 /streamer-test/thanks/
  * ===================================================================== */
 (function () {
   'use strict';
@@ -404,9 +404,11 @@
       // 給 storage 一點時間 flush（iOS Safari 對 storage commit 較慢）
       await new Promise((r) => setTimeout(r, 60));
 
-      // 導向結果頁（附上 leadId 作為 URL 參數，作為第三層備援）
+      // 導向感謝頁（附上 leadId 作為 URL 參數，作為第三層備援）
+      // 提交完直接看信件拿完整報告，不再顯示前端雷達圖 —— 體驗更一致
+      // 也避免 iOS Safari sessionStorage 遺失導致「找不到結果」的空狀態
       const leadParam = data.leadId ? ('?lead=' + encodeURIComponent(data.leadId)) : '';
-      window.location.href = '/streamer-test/result/' + leadParam;
+      window.location.href = '/streamer-test/thanks/' + leadParam;
     } catch (e) {
       console.error('[stmt-ui] submit error', e);
       showFormError(e.message || '網路連線異常，請稍後再試。');
