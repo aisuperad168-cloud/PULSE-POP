@@ -43,23 +43,15 @@ export function getCTAByProfile(profileKey) {
   return CTAS[profileKey] || CTAS.stable;
 }
 
-// ============ 1. USER: FULL REPORT EMAIL ============
+// ============ Section builders (shared between USER report & ADMIN notify) ============
 /**
- * 使用者的完整測驗報告信
- * @param {Object} p
- * @param {string} p.name  姓名
- * @param {string} p.email  Email
- * @param {string} p.lineId  LINE ID
- * @param {Object} p.result  buildResult() 完整回傳
- * @param {Object} p.demographics  { gender, age, region, experience }
+ * 建構「六大能力模組」區塊（含長條圖）。使用者信 + 內部通知信共用，
+ * 確保兩邊看到的圖表完全一致。
+ * @param {Object} result  buildResult() 完整回傳
+ * @returns {string} HTML fragment (<table>...</table>)
  */
-export function renderStreamerReportEmail({ name, result, demographics }) {
-  const total = result.totalScore;
-  const tierColor = pickTierColor(result.tier.key);
-  const cta = getCTAByProfile(result.profile.key);
-
-  // 模組分數列
-  const moduleRows = result.moduleScores.map(ms => {
+function buildModuleRowsHtml(result) {
+  return result.moduleScores.map(ms => {
     const moduleColor = pickModuleColor(ms.key);
     return `
       <tr>
@@ -79,54 +71,69 @@ export function renderStreamerReportEmail({ name, result, demographics }) {
       </tr>
     `;
   }).join('');
+}
 
-  // 3 大優勢
+/**
+ * 建構「優勢 / 短板」兩欄卡片（strengths + weaknesses）。
+ */
+function buildStrengthsWeaknessesHtml(result) {
   const strengthsHtml = result.strengths.map(s => `
     <tr><td style="padding:6px 0;font-size:14px;color:#333;line-height:1.6;">
       <span style="color:#25F4EE;font-weight:700;margin-right:8px;">✓</span>${esc(s.name)}
       <span style="color:#888;font-size:12px;margin-left:6px;">${s.percent}%</span>
     </td></tr>
   `).join('');
-
-  // 2 個短板
   const weakHtml = result.weaknesses.map(w => `
     <tr><td style="padding:6px 0;font-size:14px;color:#333;line-height:1.6;">
       <span style="color:#FFA500;font-weight:700;margin-right:8px;">△</span>${esc(w.name)}
       <span style="color:#888;font-size:12px;margin-left:6px;">${w.percent}%</span>
     </td></tr>
   `).join('');
+  return { strengthsHtml, weakHtml };
+}
 
-  // 風險 flag
-  const riskHtml = result.riskFlags.length > 0
-    ? result.riskFlags.map(f => `
-        <tr><td style="padding:12px 14px;background:#FFF3E0;border-left:3px solid #FF6B35;border-radius:6px;margin-bottom:8px;">
-          <div style="font-size:13px;font-weight:800;color:#FF6B35;margin-bottom:4px;">
-            ⚠️ ${esc(f.name)}
-          </div>
-          <div style="font-size:13px;color:#555;line-height:1.65;">${esc(f.advice)}</div>
-        </td></tr>
-        <tr><td style="height:8px;"></td></tr>
-      `).join('')
-    : `<tr><td style="padding:14px;background:#E8F5E9;border-left:3px solid #4ADE80;border-radius:6px;font-size:13px;color:#2E7D32;">
+/**
+ * 建構「風險預警」區塊（含 advice 詳解，非只有 tag）。
+ */
+function buildRiskDetailHtml(result) {
+  if (!result.riskFlags || result.riskFlags.length === 0) {
+    return `<tr><td style="padding:14px;background:#E8F5E9;border-left:3px solid #4ADE80;border-radius:6px;font-size:13px;color:#2E7D32;">
         ✓ 目前沒有觸發任何風險預警，代表你的準備度相對均衡。
       </td></tr>`;
+  }
+  return result.riskFlags.map(f => `
+    <tr><td style="padding:12px 14px;background:#FFF3E0;border-left:3px solid #FF6B35;border-radius:6px;margin-bottom:8px;">
+      <div style="font-size:13px;font-weight:800;color:#FF6B35;margin-bottom:4px;">
+        ⚠️ ${esc(f.name)}
+      </div>
+      <div style="font-size:13px;color:#555;line-height:1.65;">${esc(f.advice)}</div>
+    </td></tr>
+    <tr><td style="height:8px;"></td></tr>
+  `).join('');
+}
 
-  // 推薦路徑
-  const recPathHtml = result.recommendedPaths.slice(0, 3).map((p, i) => `
+/**
+ * 建構「推薦 vs 避開路徑」兩張卡。
+ */
+function buildPathsHtml(result) {
+  const recPathHtml = (result.recommendedPaths || []).slice(0, 3).map((p, i) => `
     <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.65;">
       <span style="color:#25F4EE;font-weight:700;margin-right:8px;">${i + 1}.</span>${esc(p)}
     </td></tr>
   `).join('');
-
-  // 避開路徑
-  const avoidPathHtml = result.avoidPaths.slice(0, 3).map((p, i) => `
+  const avoidPathHtml = (result.avoidPaths || []).slice(0, 3).map((p, i) => `
     <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.65;">
       <span style="color:#FE2C55;font-weight:700;margin-right:8px;">✕</span>${esc(p)}
     </td></tr>
   `).join('');
+  return { recPathHtml, avoidPathHtml };
+}
 
-  // 3 條行動建議
-  const actionHtml = result.actionItems.map((item, i) => `
+/**
+ * 建構「4 週行動清單」區塊。
+ */
+function buildActionsHtml(result) {
+  return (result.actionItems || []).map((item, i) => `
     <tr><td style="padding:14px 16px;background:#f9f9fb;border-radius:8px;margin-bottom:10px;">
       <div style="font-size:12px;color:#7B68EE;font-weight:700;letter-spacing:1px;margin-bottom:6px;">
         行動 ${i + 1} · ${esc(item.moduleName)}（目前 ${item.percent}%）
@@ -135,15 +142,50 @@ export function renderStreamerReportEmail({ name, result, demographics }) {
     </td></tr>
     <tr><td style="height:8px;"></td></tr>
   `).join('');
+}
 
-  // 誠實檢核（有觸發才顯示）
-  const lieHtml = result.lieCheck && result.lieCheck.triggered
-    ? `<tr><td style="padding:0 32px 20px;">
-        <div style="padding:14px 16px;background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;font-size:12.5px;color:#7C5300;line-height:1.65;">
-          🕵️ <strong>作答一致性提醒</strong>：本測驗設有 3 題誠實檢核題，你的平均值為 ${result.lieCheck.avg}（門檻 ${result.lieCheck.threshold}）。這代表你可能對自己過度理想化，建議與經紀人面談時更誠實一些，才能拿到最精準的培訓路線。
-        </div>
-      </td></tr>`
-    : '';
+/**
+ * 建構「誠實檢核提醒」區塊（觸發才有）。
+ * @param {'user'|'admin'} audience  user 版顯示白話提醒；admin 版顯示驗證備註
+ */
+function buildLieHtml(result, audience = 'user') {
+  if (!(result.lieCheck && result.lieCheck.triggered)) return '';
+  if (audience === 'admin') {
+    return `<tr><td style="padding:0 32px 20px;">
+      <div style="padding:12px 14px;background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;font-size:12.5px;color:#7C5300;line-height:1.6;">
+        🕵️ <strong>誠實檢核觸發</strong>（平均 ${result.lieCheck.avg} / 門檻 ${result.lieCheck.threshold}）— 此名單可能對自身能力過度理想化，面談時需驗證。
+      </div>
+    </td></tr>`;
+  }
+  return `<tr><td style="padding:0 32px 20px;">
+    <div style="padding:14px 16px;background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;font-size:12.5px;color:#7C5300;line-height:1.65;">
+      🕵️ <strong>作答一致性提醒</strong>：本測驗設有 3 題誠實檢核題，你的平均值為 ${result.lieCheck.avg}（門檻 ${result.lieCheck.threshold}）。這代表你可能對自己過度理想化，建議與經紀人面談時更誠實一些，才能拿到最精準的培訓路線。
+    </div>
+  </td></tr>`;
+}
+
+// ============ 1. USER: FULL REPORT EMAIL ============
+/**
+ * 使用者的完整測驗報告信
+ * @param {Object} p
+ * @param {string} p.name  姓名
+ * @param {string} p.email  Email
+ * @param {string} p.lineId  LINE ID
+ * @param {Object} p.result  buildResult() 完整回傳
+ * @param {Object} p.demographics  { gender, age, region, experience }
+ */
+export function renderStreamerReportEmail({ name, result, demographics }) {
+  const total = result.totalScore;
+  const tierColor = pickTierColor(result.tier.key);
+  const cta = getCTAByProfile(result.profile.key);
+
+  // 各區塊 HTML（抽成共用 helper，讓內部通知信也能重用完全一致的內容）
+  const moduleRows = buildModuleRowsHtml(result);
+  const { strengthsHtml, weakHtml } = buildStrengthsWeaknessesHtml(result);
+  const riskHtml = buildRiskDetailHtml(result);
+  const { recPathHtml, avoidPathHtml } = buildPathsHtml(result);
+  const actionHtml = buildActionsHtml(result);
+  const lieHtml = buildLieHtml(result, 'user');
 
   return `<!DOCTYPE html>
 <html lang="zh-Hant">
@@ -341,38 +383,36 @@ https://jdi-pulse.com/
 // ============ 3. ADMIN: NOTIFY EMAIL ============
 export function renderStreamerNotifyEmail({ name, email, lineId, demographics, result, source, country, ip, leadId }) {
   const { gender, age, region, experience } = demographics || {};
-  const modules = result.moduleScores
-    .map(m => `<tr><td style="padding:4px 8px;font-size:13px;color:#666;">${esc(m.shortName)}</td><td style="padding:4px 8px;font-size:13px;font-weight:700;color:${pickModuleColor(m.key)};text-align:right;">${m.percent}%</td></tr>`)
-    .join('');
-  const risks = result.riskFlags.length === 0
-    ? '<span style="color:#4ADE80;">✓ 無風險</span>'
-    : result.riskFlags.map(f => `<span style="display:inline-block;padding:2px 8px;background:#FEF2F2;color:#DC2626;border-radius:4px;font-size:12px;margin:2px;">${esc(f.name)}</span>`).join(' ');
-  const lieWarning = result.lieCheck && result.lieCheck.triggered
-    ? `<div style="padding:10px 14px;background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;margin-top:12px;font-size:13px;color:#7C5300;">
-        🕵️ <strong>誠實檢核觸發</strong>（平均 ${result.lieCheck.avg} / 門檻 ${result.lieCheck.threshold}）— 此名單可能對自身能力過度理想化，面談時需驗證。
-      </div>`
-    : '';
-
+  const tierColor = pickTierColor(result.tier.key);
   const cta = getCTAByProfile(result.profile.key);
+
+  // 完整報告區塊（與 user email 一致，透過共用 helper 保證圖表 & 細項不會漏）
+  const moduleRows = buildModuleRowsHtml(result);
+  const { strengthsHtml, weakHtml } = buildStrengthsWeaknessesHtml(result);
+  const riskDetailHtml = buildRiskDetailHtml(result);
+  const { recPathHtml, avoidPathHtml } = buildPathsHtml(result);
+  const actionHtml = buildActionsHtml(result);
+  const lieHtml = buildLieHtml(result, 'admin');
 
   return `<!DOCTYPE html>
 <html lang="zh-Hant">
 <head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:20px;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
-  <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+  <table width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
 
+    <!-- Admin Header -->
     <tr><td style="background:#05050A;padding:20px 24px;">
-      <div style="color:#25F4EE;font-size:11px;letter-spacing:2px;font-weight:700;">JDI 脈動傳媒 · 名單通知</div>
+      <div style="color:#25F4EE;font-size:11px;letter-spacing:2px;font-weight:700;">JDI 脈動傳媒 · 內部名單通知</div>
       <div style="color:#fff;font-size:18px;font-weight:800;margin-top:6px;">🔔 新的主播適配度測驗名單</div>
     </td></tr>
 
-    <!-- 摘要卡 -->
-    <tr><td style="padding:24px;">
+    <!-- 摘要卡（Admin 特有 - 快速總覽） -->
+    <tr><td style="padding:20px 24px 12px;">
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#fafafa,#f0f0f4);border-radius:10px;padding:16px 20px;">
         <tr>
           <td width="50%">
             <div style="font-size:11px;color:#888;letter-spacing:1px;">總分</div>
-            <div style="font-size:32px;font-weight:900;color:${pickTierColor(result.tier.key)};line-height:1.1;margin-top:4px;">${result.totalScore}</div>
+            <div style="font-size:32px;font-weight:900;color:${tierColor};line-height:1.1;margin-top:4px;">${result.totalScore}</div>
             <div style="font-size:12px;color:#666;margin-top:2px;">${esc(result.tier.label)}</div>
           </td>
           <td width="50%">
@@ -384,7 +424,7 @@ export function renderStreamerNotifyEmail({ name, email, lineId, demographics, r
       </table>
     </td></tr>
 
-    <!-- 個資 -->
+    <!-- 聯絡資訊（Admin 特有） -->
     <tr><td style="padding:0 24px 20px;">
       <div style="font-size:13px;font-weight:800;color:#111;margin-bottom:8px;">👤 聯絡資訊</div>
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #eee;border-radius:8px;">
@@ -398,22 +438,87 @@ export function renderStreamerNotifyEmail({ name, email, lineId, demographics, r
       </table>
     </td></tr>
 
-    <!-- 模組分數 -->
-    <tr><td style="padding:0 24px 20px;">
-      <div style="font-size:13px;font-weight:800;color:#111;margin-bottom:8px;">📊 六大模組</div>
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #eee;border-radius:8px;overflow:hidden;">
-        ${modules}
+    <!-- ========== 以下為與使用者收到的完整報告 100% 一致（透過共用 helper） ========== -->
+
+    <!-- 分隔標題 -->
+    <tr><td style="padding:8px 24px 4px;">
+      <div style="padding:10px 14px;background:#FFF8E1;border-left:3px solid #F59E0B;border-radius:6px;font-size:12px;color:#7C5300;line-height:1.6;">
+        📄 <strong>以下為主播本人收到的完整報告內容</strong>（含長條圖 / 優勢 / 短板 / 風險詳解 / 發展路徑 / 4 週行動清單）
+      </div>
+    </td></tr>
+
+    <!-- 總結評語 -->
+    <tr><td style="padding:16px 24px 8px;">
+      <div style="padding:16px 18px;background:#f9f9fb;border-left:3px solid #25F4EE;border-radius:8px;font-size:14px;color:#333;line-height:1.85;">
+        ${esc(result.summary)}
+      </div>
+    </td></tr>
+
+    <!-- 六大模組（含長條圖） -->
+    <tr><td style="padding:12px 24px 20px;">
+      <div style="font-size:15px;font-weight:800;color:#111;margin-bottom:10px;">
+        📊 六大能力模組分析
+      </div>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border:1px solid #eee;border-radius:10px;padding:10px 18px;">
+        ${moduleRows}
       </table>
     </td></tr>
 
-    <!-- 風險 -->
+    <!-- 前 3 大優勢 + 待加強 -->
     <tr><td style="padding:0 24px 20px;">
-      <div style="font-size:13px;font-weight:800;color:#111;margin-bottom:8px;">🚨 風險 flag</div>
-      <div>${risks}</div>
-      ${lieWarning}
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="50%" valign="top" style="padding-right:6px;">
+            <div style="font-size:13px;font-weight:800;color:#111;margin-bottom:8px;">💎 前 3 大優勢</div>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border:1px solid #E8F5E9;border-radius:10px;padding:10px 14px;">
+              ${strengthsHtml}
+            </table>
+          </td>
+          <td width="50%" valign="top" style="padding-left:6px;">
+            <div style="font-size:13px;font-weight:800;color:#111;margin-bottom:8px;">🔧 待加強</div>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;border:1px solid #FFF3E0;border-radius:10px;padding:10px 14px;">
+              ${weakHtml}
+            </table>
+          </td>
+        </tr>
+      </table>
     </td></tr>
 
-    <!-- 建議 CTA + 聯絡 LINE 按鈕 -->
+    <!-- 風險預警（含 advice 詳解） -->
+    <tr><td style="padding:0 24px 20px;">
+      <div style="font-size:15px;font-weight:800;color:#111;margin-bottom:10px;">🚨 風險預警</div>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        ${riskDetailHtml}
+      </table>
+    </td></tr>
+
+    <!-- 誠實檢核（觸發才顯示，admin 版有加註「面談時需驗證」） -->
+    ${lieHtml}
+
+    <!-- 推薦 vs 避開發展路徑 -->
+    <tr><td style="padding:0 24px 20px;">
+      <div style="font-size:15px;font-weight:800;color:#111;margin-bottom:10px;">🗺️ 適合的發展路徑</div>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F0FDFA;border:1px solid #99F6E4;border-radius:10px;padding:14px 18px;margin-bottom:10px;">
+        <tr><td style="font-size:13px;font-weight:800;color:#0D9488;padding-bottom:6px;">✓ 推薦方向</td></tr>
+        ${recPathHtml}
+      </table>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:14px 18px;">
+        <tr><td style="font-size:13px;font-weight:800;color:#DC2626;padding-bottom:6px;">✕ 建議避開</td></tr>
+        ${avoidPathHtml}
+      </table>
+    </td></tr>
+
+    <!-- 4 週行動清單 -->
+    <tr><td style="padding:0 24px 24px;">
+      <div style="font-size:15px;font-weight:800;color:#111;margin-bottom:10px;">🎯 4 週行動清單</div>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        ${actionHtml}
+      </table>
+    </td></tr>
+
+    <!-- ========== 完整報告內容結束，以下為 Admin 特有的跟進 CTA ========== -->
+
+    <!-- 建議跟進策略 + 聯絡 LINE 按鈕（Admin 特有） -->
     <tr><td style="padding:0 24px 20px;">
       <div style="padding:14px 16px;background:#E0F2FE;border-left:3px solid #0EA5E9;border-radius:6px;font-size:13px;color:#0C4A6E;line-height:1.65;">
         💡 <strong>建議跟進策略</strong>：${esc(cta.label)}<br>
@@ -435,7 +540,7 @@ export function renderStreamerNotifyEmail({ name, email, lineId, demographics, r
       </div>
     </td></tr>
 
-    <!-- Meta -->
+    <!-- Meta（Admin 特有） -->
     <tr><td style="padding:16px 24px 24px;background:#fafafa;border-top:1px solid #eee;">
       <div style="font-size:11px;color:#888;line-height:1.7;">
         Lead ID: <code>#${leadId || 'N/A'}</code> · Source: ${esc(source || 'unknown')} · Country: ${esc(country || '-')} · IP: ${esc(ip || '-')}<br>
