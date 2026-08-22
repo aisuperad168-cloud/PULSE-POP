@@ -1,0 +1,58 @@
+# ============================================================
+# JDI 脈動傳媒 · Cloudflare Pages/Workers _headers
+# ============================================================
+#
+# 規則說明：
+#   1. /assets/*      → 圖片、字型、靜態資產：長 cache 1 年 immutable
+#   2. /js/*, /css/*  → 有 ?v=xxx 版本查詢字串，改內容時換 v 就會 bust cache
+#   3. /*.html        → 短 cache，讓 HTML 隨時可以更新
+#   4. /api/*         → 完全不 cache（動態 API）
+#
+# Cloudflare _headers 語法：
+#   路徑一行、header 縮排兩空白、順序 = 「特定 → 通用」
+# ============================================================
+
+# ------------ API 動態端點：完全不 cache ------------
+/api/*
+  Cache-Control: no-store, no-cache, must-revalidate
+  Access-Control-Allow-Origin: *
+
+# ------------ 靜態資產：長 cache（含 ?v= 版本號） ------------
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# ------------ favicon / logo 等根目錄小圖：中 cache ------------
+/*.png
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.jpg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.webp
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.svg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.ico
+  Cache-Control: public, max-age=604800
+
+# ------------ HTML：短 cache，讓內容可即時更新 ------------
+/*.html
+  Cache-Control: public, max-age=300, stale-while-revalidate=3600
+  X-Content-Type-Options: nosniff
+
+# ------------ 全站通用安全性 headers ------------
+/*
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: interest-cohort=()
