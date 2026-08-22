@@ -98,3 +98,55 @@ CREATE INDEX IF NOT EXISTS idx_stmt_profile   ON streamer_test_leads (profile_ke
 CREATE INDEX IF NOT EXISTS idx_stmt_total     ON streamer_test_leads (total_score);
 CREATE INDEX IF NOT EXISTS idx_stmt_created   ON streamer_test_leads (created_at);
 CREATE INDEX IF NOT EXISTS idx_stmt_experience ON streamer_test_leads (experience);
+
+-- ============================================================
+-- 全新素人測驗名單 (rookie-test/)
+-- 24 題 6 模組加權計分，4 分型 + 次要分型，6 風險 flag
+-- ============================================================
+CREATE TABLE IF NOT EXISTS rookie_test_leads (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 個資（rookie 表單欄位）
+  nickname TEXT NOT NULL,                    -- 暱稱（做為 email 稱謂）
+  email TEXT NOT NULL,
+  line_id TEXT NOT NULL,
+  age_range TEXT,                            -- under_18 / 18-24 / 25-29 / 30-34 / 35+
+  identity TEXT,                             -- student / office_worker / freelancer / stay_home / between_jobs / other
+  live_experience TEXT NOT NULL,             -- none / tried / short_active
+  interest_directions TEXT,                  -- JSON array: ["entertainment","companion",...]
+  intent_level TEXT NOT NULL,                -- curious / considering / ready_now
+  consent INTEGER NOT NULL DEFAULT 1,
+  -- 主要結果（後台快速查詢用）
+  total_score REAL NOT NULL,                 -- 總分 0-100
+  tier_key TEXT NOT NULL,                    -- excellent / developing / potential / needs_training
+  tier_label TEXT NOT NULL,
+  profile_key TEXT NOT NULL,                 -- natural_camera / content_sharer / companion_interactive / potential_rookie
+  profile_name TEXT NOT NULL,
+  secondary_profile_key TEXT,                -- 次要分型（rookie 特有）
+  secondary_profile_name TEXT,
+  -- 6 個模組分數
+  score_expression REAL,                     -- expression
+  score_interaction REAL,                    -- interaction
+  score_stability REAL,                      -- stability
+  score_discipline REAL,                     -- discipline
+  score_content_potential REAL,              -- contentPotential
+  score_boundary REAL,                       -- boundary
+  -- 風險
+  risk_count INTEGER NOT NULL DEFAULT 0,
+  risk_flags TEXT,                           -- JSON array of risk keys
+  -- 完整資料 (JSON)
+  answers TEXT,                              -- JSON: { "1": 5, ... "24": 4 }
+  full_result TEXT,                          -- JSON: buildResult() 完整回傳物件
+  -- Meta
+  source TEXT,                               -- rookie-test-page / rookie-test-quiz
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_rook_email    ON rookie_test_leads (email);
+CREATE INDEX IF NOT EXISTS idx_rook_profile  ON rookie_test_leads (profile_key);
+CREATE INDEX IF NOT EXISTS idx_rook_total    ON rookie_test_leads (total_score);
+CREATE INDEX IF NOT EXISTS idx_rook_created  ON rookie_test_leads (created_at);
+CREATE INDEX IF NOT EXISTS idx_rook_intent   ON rookie_test_leads (intent_level);
