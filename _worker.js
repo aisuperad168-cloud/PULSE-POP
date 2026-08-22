@@ -14,6 +14,7 @@
  *   POST   /api/quiz-submit           → functions/api/quiz-submit.js
  *   POST   /api/contact-submit        → functions/api/contact-submit.js
  *   POST   /api/streamer-test-submit  → functions/api/streamer-test-submit.js
+ *   POST   /api/rookie-test-submit    → functions/api/rookie-test-submit.js
  *   （每個都同時支援 OPTIONS for CORS）
  * ============================================================
  */
@@ -22,12 +23,14 @@
 import * as quizHandler from './functions/api/quiz-submit.js';
 import * as contactHandler from './functions/api/contact-submit.js';
 import * as streamerTestHandler from './functions/api/streamer-test-submit.js';
+import * as rookieTestHandler from './functions/api/rookie-test-submit.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
   '/api/quiz-submit': quizHandler,
   '/api/contact-submit': contactHandler,
   '/api/streamer-test-submit': streamerTestHandler,
+  '/api/rookie-test-submit': rookieTestHandler,
 };
 
 export default {
