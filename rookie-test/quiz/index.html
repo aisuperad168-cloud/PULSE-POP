@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>作答中｜素人主播適配度測驗 · JDI 脈動傳媒</title>
+<meta name="description" content="24 題素人主播適配度測驗作答頁面，快速分析你的 6 大核心能力。" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#0A0A14" />
+
+<!-- Favicon -->
+<link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260820b" sizes="180x180" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<!-- CSS -->
+<link rel="stylesheet" href="/css/streamer-test.css?v=20260820a" />
+</head>
+<body class="stmt-page stmt-quiz-page">
+
+<!-- ============ PROGRESS BAR (sticky top) ============ -->
+<div class="stmt-progress-wrap" id="stmtProgressWrap">
+  <div class="stmt-progress-inner">
+    <a href="/rookie-test/" class="stmt-progress-back" aria-label="回到介紹頁">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </a>
+
+    <div class="stmt-progress-info">
+      <div class="stmt-progress-module" id="stmtProgressModule">正在準備...</div>
+      <div class="stmt-progress-count">
+        <span id="stmtProgressCurrent">0</span>
+        <span class="stmt-progress-slash">/</span>
+        <span id="stmtProgressTotal">24</span>
+      </div>
+    </div>
+
+    <div class="stmt-progress-bar">
+      <div class="stmt-progress-fill" id="stmtProgressFill" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ QUIZ CONTAINER ============ -->
+<main class="stmt-quiz-main">
+  <div class="stmt-quiz-container" id="stmtQuizContainer">
+    <!-- 由 JS 動態生成題目 -->
+    <div class="stmt-loading">
+      <div class="stmt-spinner"></div>
+      <p>載入中...</p>
+    </div>
+  </div>
+</main>
+
+<!-- ============ BOTTOM NAV ============ -->
+<div class="stmt-bottom-nav" id="stmtBottomNav" hidden>
+  <button class="stmt-btn-nav stmt-btn-nav-prev" id="stmtBtnPrev" type="button">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    上一頁
+  </button>
+  <button class="stmt-btn-nav stmt-btn-nav-next" id="stmtBtnNext" type="button" disabled>
+    下一頁
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ============ LEAD FORM MODAL (答完後顯示) ============ -->
+<div class="stmt-modal" id="stmtLeadModal" hidden aria-hidden="true">
+  <div class="stmt-modal-backdrop" data-close-modal></div>
+  <div class="stmt-modal-panel" role="dialog" aria-labelledby="stmtLeadModalTitle">
+    <button class="stmt-modal-close" type="button" data-close-modal aria-label="關閉">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="stmt-modal-header">
+      <div class="stmt-modal-eyebrow">最後一步</div>
+      <h2 id="stmtLeadModalTitle">📩 留下你的資料，收到完整分析報告</h2>
+      <p class="stmt-modal-desc">
+        我們會將你的<strong>完整測驗報告</strong>（總分、雷達圖、分型分析、發展路徑、4 週行動清單）寄到你的信箱，並由專業經紀人依你的分型提供 1 對 1 諮詢。
+      </p>
+    </div>
+
+    <form id="rookLeadForm" class="stmt-lead-form" novalidate>
+      <!-- 暱稱 + LINE ID row -->
+      <div class="stmt-form-row">
+        <div class="stmt-form-field">
+          <label for="rookNickname">暱稱 <span class="stmt-required">*</span></label>
+          <input type="text" id="rookNickname" name="nickname" required maxlength="20" placeholder="怎麼稱呼你？" autocomplete="nickname" />
+        </div>
+        <div class="stmt-form-field">
+          <label for="rookLineId">LINE ID <span class="stmt-required">*</span></label>
+          <input type="text" id="rookLineId" name="lineId" required maxlength="40" placeholder="@your_line_id" />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="stmt-form-field">
+        <label for="rookEmail">Email <span class="stmt-required">*</span></label>
+        <input type="email" id="rookEmail" name="email" required maxlength="80" placeholder="your@email.com" autocomplete="email" />
+      </div>
+
+      <!-- 年齡 + 身分 row -->
+      <div class="stmt-form-row">
+        <div class="stmt-form-field">
+          <label for="rookAgeRange">年齡</label>
+          <select id="rookAgeRange" name="ageRange">
+            <option value="">請選擇</option>
+            <option value="under_18">18 歲以下</option>
+            <option value="18-24">18–24</option>
+            <option value="25-29">25–29</option>
+            <option value="30-34">30–34</option>
+            <option value="35+">35+</option>
+          </select>
+        </div>
+        <div class="stmt-form-field">
+          <label for="rookIdentity">身分</label>
+          <select id="rookIdentity" name="identity">
+            <option value="">請選擇</option>
+            <option value="student">學生</option>
+            <option value="office_worker">上班族</option>
+            <option value="freelancer">自由工作者</option>
+            <option value="stay_home">全職家管</option>
+            <option value="between_jobs">待業中</option>
+            <option value="other">其他</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 直播經驗 -->
+      <div class="stmt-form-field">
+        <label>目前的直播經驗 <span class="stmt-required">*</span></label>
+        <div class="stmt-radio-group">
+          <label class="stmt-radio-item">
+            <input type="radio" name="liveExperience" value="none" required />
+            <span class="stmt-radio-box">
+              <span class="stmt-radio-title">完全沒有</span>
+              <span class="stmt-radio-desc">從沒開播過</span>
+            </span>
+          </label>
+          <label class="stmt-radio-item">
+            <input type="radio" name="liveExperience" value="tried" />
+            <span class="stmt-radio-box">
+              <span class="stmt-radio-title">試過幾次</span>
+              <span class="stmt-radio-desc">但沒持續</span>
+            </span>
+          </label>
+          <label class="stmt-radio-item">
+            <input type="radio" name="liveExperience" value="short_active" />
+            <span class="stmt-radio-box">
+              <span class="stmt-radio-title">短期經驗</span>
+              <span class="stmt-radio-desc">1-3 個月</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 有興趣方向（多選 checkbox） -->
+      <div class="stmt-form-field">
+        <label>有興趣的直播方向（可複選）</label>
+        <div class="stmt-checkbox-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:6px;">
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="entertainment" />
+            <span>🎤 娛樂 / 才藝</span>
+          </label>
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="companion" />
+            <span>💬 陪聊 / 陪伴</span>
+          </label>
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="content_knowledge" />
+            <span>📚 知識 / 內容型</span>
+          </label>
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="commerce" />
+            <span>🛍️ 電商 / 帶貨</span>
+          </label>
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="gaming" />
+            <span>🎮 遊戲</span>
+          </label>
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="lifestyle" />
+            <span>🌿 生活 / Vlog</span>
+          </label>
+          <label class="stmt-checkbox-chip">
+            <input type="checkbox" name="interestDirections" value="not_sure" />
+            <span>🤔 還不確定</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 意願強度 -->
+      <div class="stmt-form-field">
+        <label>你想開始直播的意願強度 <span class="stmt-required">*</span></label>
+        <div class="stmt-radio-group">
+          <label class="stmt-radio-item">
+            <input type="radio" name="intentLevel" value="curious" required />
+            <span class="stmt-radio-box">
+              <span class="stmt-radio-title">好奇看看</span>
+              <span class="stmt-radio-desc">先了解</span>
+            </span>
+          </label>
+          <label class="stmt-radio-item">
+            <input type="radio" name="intentLevel" value="considering" />
+            <span class="stmt-radio-box">
+              <span class="stmt-radio-title">認真考慮</span>
+              <span class="stmt-radio-desc">還在評估</span>
+            </span>
+          </label>
+          <label class="stmt-radio-item">
+            <input type="radio" name="intentLevel" value="ready_now" />
+            <span class="stmt-radio-box">
+              <span class="stmt-radio-title">馬上就想</span>
+              <span class="stmt-radio-desc">已決定</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 隱私同意 -->
+      <label class="stmt-consent">
+        <input type="checkbox" id="rookConsent" name="consent" required />
+        <span class="stmt-consent-box"></span>
+        <span class="stmt-consent-text">
+          我同意 JDI 脈動傳媒依《個資法》使用我提供的資料，寄送測驗結果並提供合作諮詢。
+        </span>
+      </label>
+
+      <!-- 錯誤訊息 -->
+      <div class="stmt-form-error" id="rookFormError" hidden></div>
+
+      <!-- 送出 -->
+      <button type="submit" class="stmt-btn-submit" id="rookBtnSubmit">
+        <span class="stmt-btn-submit-idle">
+          🎉 產生我的專屬報告
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+        <span class="stmt-btn-submit-loading" hidden>
+          <span class="stmt-spinner-sm"></span>
+          正在計算並寄送報告...
+        </span>
+      </button>
+
+      <p class="stmt-form-notice">
+        🔒 我們絕不販售或分享你的資料。取消訂閱請寄信到 <a href="mailto:noreply@jdi-pulse.com">noreply@jdi-pulse.com</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ Scripts ============ -->
+<!-- 資料層（24 題 + 6 模組 + 4 分型規則） -->
+<script src="/js/rookie-test-data.js?v=20260822a"></script>
+<!-- 計分核心（純函式） -->
+<script src="/js/rookie-test-core.js?v=20260822a"></script>
+<!-- UI 邏輯 -->
+<script src="/js/rookie-test-ui.js?v=20260822a"></script>
+
+</body>
+</html>
