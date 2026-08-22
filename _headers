@@ -30,29 +30,7 @@
   Cache-Control: public, max-age=31536000, immutable
   X-Content-Type-Options: nosniff
 
-# ------------ favicon / logo 等根目錄小圖：中 cache ------------
-/*.png
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
-
-/*.jpg
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
-
-/*.webp
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
-
-/*.svg
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
-
-/*.ico
-  Cache-Control: public, max-age=604800
-
-# ------------ HTML：短 cache，讓內容可即時更新 ------------
-/*.html
-  Cache-Control: public, max-age=300, stale-while-revalidate=3600
-  X-Content-Type-Options: nosniff
-
-# ------------ 全站通用安全性 headers ------------
-/*
-  X-Frame-Options: SAMEORIGIN
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: interest-cohort=()
+# 注意：
+#   /*.png /*.jpg /*.html 等 pattern 會和 /assets/* /js/* 疊加，導致
+#   Cache-Control 出現重複值。所以只保留 /assets /js /css /api 這幾條，
+#   其他檔案（HTML、favicon、根目錄小圖）維持 Cloudflare 預設。
