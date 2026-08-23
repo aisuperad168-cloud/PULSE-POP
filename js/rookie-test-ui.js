@@ -1,6 +1,6 @@
 /* =====================================================================
  * rookie-test-ui.js
- * 全新素人測驗（1 分鐘快速版 · 24 題）作答頁 UI 邏輯
+ * 全新素人測驗（3 分鐘快速版 · 24 題）作答頁 UI 邏輯
  *
  * 依賴（依此順序載入）：
  *   1. /js/rookie-test-data.js   (window.ROOK_DATA, ROOK_MODULES, ROOK_QUESTIONS)
