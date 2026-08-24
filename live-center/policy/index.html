@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/css/style.css?v=20260820e" />
-<link rel="stylesheet" href="/css/live-center.css?v=20260824a" />
+<link rel="stylesheet" href="/css/live-center.css?v=20260824c" />
 <style>body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }</style>
 </head>
 <body>
@@ -40,6 +40,16 @@
 </nav>
 
 <main class="lc-main">
+  <nav class="lc-subnav" aria-label="直播中心分類">
+    <div class="lc-subnav-inner">
+      <a href="/live-center/" class="lc-subnav-item">✨ 精選</a>
+      <a href="/live-center/creator/" class="lc-subnav-item" data-cat="creator">🎨 主播專欄</a>
+      <a href="/live-center/policy/" class="lc-subnav-item active" data-cat="policy">📢 活動政策</a>
+      <a href="/live-center/tutorial/" class="lc-subnav-item" data-cat="tutorial">📚 直播教學</a>
+      <a href="/live-center/revenue/" class="lc-subnav-item" data-cat="revenue">💰 收益策略</a>
+    </div>
+  </nav>
+
   <div class="lc-container">
     <nav class="lc-breadcrumb" aria-label="breadcrumb">
       <a href="/">首頁</a>
@@ -58,9 +68,8 @@
 
     <div class="lc-list">
       <a href="/live-center/article/2026-q2-tiktok-live-payout-update/" class="lc-list-item">
-        <div class="lc-list-cover lc-cover--policy">
-          <div class="lc-cover-pattern"></div>
-          <span class="lc-cover-emoji">📊</span>
+        <div class="lc-list-cover lc-list-cover--photo">
+          <img src="/assets/live-center/payout-update-hero.jpg" alt="分潤更新數據儀表板俯拍" loading="lazy" width="1280" height="714" />
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">2026 Q2 TikTok LIVE 主播分潤方案更新重點</h3>

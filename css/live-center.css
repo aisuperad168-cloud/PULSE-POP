@@ -711,3 +711,90 @@
   .lc-article-body h3 { font-size: 18px; }
   .lc-article-cover .lc-cover-emoji { font-size: 72px; }
 }
+
+/* ============================================================
+ * Sub-navigation（直播中心子導航列）
+ * Medium 風格 · sticky 於主 nav 下方
+ * ============================================================ */
+.lc-subnav {
+  position: sticky;
+  top: 68px; /* 主 nav 高度 */
+  z-index: 90;
+  background: rgba(5, 5, 10, 0.85);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--dark4);
+  margin-bottom: 40px;
+}
+
+.lc-subnav-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.lc-subnav-inner::-webkit-scrollbar { display: none; }
+
+.lc-subnav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-light);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--trans), border-color var(--trans);
+  flex-shrink: 0;
+}
+
+.lc-subnav-item:hover {
+  color: var(--white);
+}
+
+.lc-subnav-item.active {
+  color: var(--white);
+  border-bottom-color: var(--red);
+}
+.lc-subnav-item.active[data-cat="creator"]  { border-bottom-color: var(--lc-creator); }
+.lc-subnav-item.active[data-cat="policy"]   { border-bottom-color: var(--lc-policy); }
+.lc-subnav-item.active[data-cat="tutorial"] { border-bottom-color: var(--lc-tutorial); }
+.lc-subnav-item.active[data-cat="revenue"]  { border-bottom-color: var(--lc-revenue); }
+
+@media (max-width: 640px) {
+  .lc-subnav { top: 60px; margin-bottom: 24px; }
+  .lc-subnav-inner { padding: 0 16px; }
+  .lc-subnav-item { padding: 14px 10px; font-size: 13px; }
+}
+
+/* ============================================================
+ * 列表卡片 · 圖片封面（Task 5）
+ * ============================================================ */
+.lc-list-cover--photo {
+  background: #0a0a0f;
+}
+.lc-list-cover--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+ * 精選卡片 · 圖片封面（Task 6）
+ * ============================================================ */
+.lc-featured-cover--photo {
+  background: #0a0a0f;
+}
+.lc-featured-cover--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
