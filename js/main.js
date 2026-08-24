@@ -577,16 +577,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursorGlow();
   initTicker();
   initAdCarousel();
+  initArticleCarousel();
 });
 
 /* ============================================
-   AD CAROUSEL (Featured Streamers)
+   Generic Carousel Factory
    ============================================ */
-function initAdCarousel() {
-  const track = document.getElementById('adCarouselTrack');
-  const prevBtn = document.getElementById('adCarouselPrev');
-  const nextBtn = document.getElementById('adCarouselNext');
-  const dotsWrap = document.getElementById('adCarouselDots');
+function createCarousel({ carouselId, trackId, prevId, nextId, dotsId, autoMs = 5000 }) {
+  const track = document.getElementById(trackId);
+  const prevBtn = document.getElementById(prevId);
+  const nextBtn = document.getElementById(nextId);
+  const dotsWrap = document.getElementById(dotsId);
   if (!track || !prevBtn || !nextBtn || !dotsWrap) return;
 
   const slides = track.querySelectorAll('.ad-slide');
@@ -596,7 +597,6 @@ function initAdCarousel() {
 
   let current = 0;
   let autoTimer = null;
-  const AUTO_MS = 5000;
 
   function goTo(idx) {
     current = (idx + total) % total;
@@ -608,7 +608,7 @@ function initAdCarousel() {
 
   function startAuto() {
     stopAuto();
-    autoTimer = setInterval(next, AUTO_MS);
+    autoTimer = setInterval(next, autoMs);
   }
   function stopAuto() {
     if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
@@ -621,7 +621,7 @@ function initAdCarousel() {
   });
 
   // Pause on hover (desktop)
-  const carousel = document.getElementById('adCarousel');
+  const carousel = document.getElementById(carouselId);
   if (carousel) {
     carousel.addEventListener('mouseenter', stopAuto);
     carousel.addEventListener('mouseleave', startAuto);
@@ -649,4 +649,32 @@ function initAdCarousel() {
   });
 
   startAuto();
+}
+
+/* ============================================
+   AD CAROUSEL (Featured Streamers 脈動之星)
+   ============================================ */
+function initAdCarousel() {
+  createCarousel({
+    carouselId: 'adCarousel',
+    trackId: 'adCarouselTrack',
+    prevId: 'adCarouselPrev',
+    nextId: 'adCarouselNext',
+    dotsId: 'adCarouselDots',
+    autoMs: 5000
+  });
+}
+
+/* ============================================
+   ARTICLE CAROUSEL (直播中心 熱門文章)
+   ============================================ */
+function initArticleCarousel() {
+  createCarousel({
+    carouselId: 'articleCarousel',
+    trackId: 'articleCarouselTrack',
+    prevId: 'articleCarouselPrev',
+    nextId: 'articleCarouselNext',
+    dotsId: 'articleCarouselDots',
+    autoMs: 6500  // 文章給多一點閱讀時間
+  });
 }

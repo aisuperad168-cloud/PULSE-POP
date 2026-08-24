@@ -2545,3 +2545,85 @@ ul  { list-style: none; }
   .ad-slide-cta { padding: 7px 11px; font-size: 0.76rem; }
   .ad-slide-platform { font-size: 0.66rem; }
 }
+
+/* ============================================================
+ * 熱門文章 CAROUSEL（複用 .ad-carousel 樣式 · 細微差異）
+ * ============================================================ */
+.article-carousel-section {
+  /* 稍微不同的背景色調（藍紫色向），與脈動之星紅粉色區隔 */
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(123,104,238,0.05) 50%, rgba(255,255,255,0) 100%);
+}
+
+/* 分類 tag —— 覆蓋預設的 platform pill 顏色 */
+.article-slide-tag {
+  background: rgba(255,255,255,0.15) !important;
+  color: #fff;
+  font-weight: 700;
+}
+.article-slide-tag--creator {
+  background: rgba(254, 44, 85, 0.85) !important;
+  border-color: rgba(254, 44, 85, 0.5) !important;
+}
+.article-slide-tag--policy {
+  background: rgba(37, 244, 238, 0.85) !important;
+  color: #001a1a !important;
+  border-color: rgba(37, 244, 238, 0.5) !important;
+}
+.article-slide-tag--tutorial {
+  background: rgba(123, 104, 238, 0.9) !important;
+  border-color: rgba(123, 104, 238, 0.5) !important;
+}
+.article-slide-tag--revenue {
+  background: rgba(255, 184, 77, 0.9) !important;
+  color: #2a1a00 !important;
+  border-color: rgba(255, 184, 77, 0.5) !important;
+}
+
+/* 文章標題比主播名長，需要限制行數與行高 */
+.article-slide .ad-slide-name {
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 640px;
+}
+
+/* 底部「進入直播中心」按鈕 */
+.article-carousel-more {
+  text-align: center;
+  margin-top: 28px;
+}
+.article-carousel-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(123, 104, 238, 0.12);
+  border: 1px solid rgba(123, 104, 238, 0.4);
+  border-radius: 999px;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.article-carousel-more-btn:hover {
+  background: rgba(123, 104, 238, 0.28);
+  border-color: rgba(123, 104, 238, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(123, 104, 238, 0.35);
+}
+
+@media (max-width: 600px) {
+  .article-slide .ad-slide-name {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 2;
+  }
+  .article-carousel-more { margin-top: 18px; }
+  .article-carousel-more-btn { padding: 10px 20px; font-size: 0.85rem; }
+}

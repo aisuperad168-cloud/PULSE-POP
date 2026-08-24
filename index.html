@@ -160,7 +160,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=20260820e" />
+  <link rel="stylesheet" href="css/style.css?v=20260824e" />
   <link rel="stylesheet" href="css/streamer-test.css?v=20260820a" />
 </head>
 <body>
@@ -425,6 +425,80 @@
           <button class="ad-carousel-dot" data-dot="5" aria-label="第 6 張"></button>
           <button class="ad-carousel-dot" data-dot="6" aria-label="第 7 張"></button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 熱門文章 CAROUSEL (直播中心入口) ========== -->
+  <section class="ad-carousel-section article-carousel-section" aria-label="熱門文章輪播">
+    <div class="ad-carousel-container">
+      <div class="ad-carousel-header">
+        <span class="section-tag">LIVE CONTENT HUB</span>
+        <h2 class="ad-carousel-title">直播中心 · 熱門文章</h2>
+      </div>
+
+      <div class="ad-carousel" id="articleCarousel">
+        <div class="ad-carousel-track" id="articleCarouselTrack">
+
+          <!-- Article 1: 直播教學 · PK 攻略 -->
+          <a href="/live-center/article/live-pk-benefits-guide/" class="ad-slide article-slide" data-slide="0">
+            <img src="/assets/live-center/live-pk-hero.jpg" alt="為什麼主播要打 PK？直播 PK 的好處與實用技巧 · 直播中心" class="ad-slide-img" loading="lazy" />
+            <div class="ad-slide-overlay">
+              <div class="ad-slide-info">
+                <span class="ad-slide-platform article-slide-tag article-slide-tag--tutorial">📚 直播教學</span>
+                <span class="ad-slide-name">為什麼主播要打 PK？直播 PK 的好處與實用技巧</span>
+              </div>
+              <span class="ad-slide-cta">閱讀文章 →</span>
+            </div>
+          </a>
+
+          <!-- Article 2: 主播專欄 · 素人到黃金時段 -->
+          <a href="/live-center/article/rookie-to-golden-hour-in-6-months/" class="ad-slide article-slide" data-slide="1">
+            <img src="/assets/live-center/rookie-hero.jpg" alt="從素人到黃金時段：一位 JDI 主播的 6 個月成長軌跡 · 主播專欄" class="ad-slide-img" loading="lazy" />
+            <div class="ad-slide-overlay">
+              <div class="ad-slide-info">
+                <span class="ad-slide-platform article-slide-tag article-slide-tag--creator">🎨 主播專欄</span>
+                <span class="ad-slide-name">從素人到黃金時段：一位 JDI 主播的 6 個月成長軌跡</span>
+              </div>
+              <span class="ad-slide-cta">閱讀文章 →</span>
+            </div>
+          </a>
+
+          <!-- Article 3: 活動政策 · 分潤更新 -->
+          <a href="/live-center/article/2026-q2-tiktok-live-payout-update/" class="ad-slide article-slide" data-slide="2">
+            <img src="/assets/live-center/payout-update-hero.jpg" alt="2026 Q2 TikTok LIVE 主播分潤方案更新重點 · 活動政策" class="ad-slide-img" loading="lazy" />
+            <div class="ad-slide-overlay">
+              <div class="ad-slide-info">
+                <span class="ad-slide-platform article-slide-tag article-slide-tag--policy">📢 活動政策</span>
+                <span class="ad-slide-name">2026 Q2 TikTok LIVE 主播分潤方案更新重點</span>
+              </div>
+              <span class="ad-slide-cta">閱讀文章 →</span>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- Prev / Next buttons -->
+        <button class="ad-carousel-arrow ad-carousel-prev" id="articleCarouselPrev" aria-label="上一篇">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="ad-carousel-arrow ad-carousel-next" id="articleCarouselNext" aria-label="下一篇">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <!-- Dots -->
+        <div class="ad-carousel-dots" id="articleCarouselDots">
+          <button class="ad-carousel-dot active" data-dot="0" aria-label="第 1 篇"></button>
+          <button class="ad-carousel-dot" data-dot="1" aria-label="第 2 篇"></button>
+          <button class="ad-carousel-dot" data-dot="2" aria-label="第 3 篇"></button>
+        </div>
+      </div>
+
+      <!-- 查看更多 -->
+      <div class="article-carousel-more">
+        <a href="/live-center/" class="article-carousel-more-btn">
+          瀏覽全部文章 · 進入直播中心 →
+        </a>
       </div>
     </div>
   </section>
@@ -1183,6 +1257,6 @@
     })();
   </script>
 
-  <script src="js/main.js?v=20260616d"></script>
+  <script src="js/main.js?v=20260824e"></script>
 </body>
 </html>
