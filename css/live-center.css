@@ -718,7 +718,8 @@
  * ============================================================ */
 .lc-subnav {
   position: sticky;
-  top: 68px; /* 主 nav 高度 */
+  /* 主 nav 高度 68px + iOS 瀏海 safe area */
+  top: calc(68px + env(safe-area-inset-top));
   z-index: 90;
   background: rgba(5, 5, 10, 0.85);
   backdrop-filter: blur(20px) saturate(140%);
@@ -768,7 +769,7 @@
 .lc-subnav-item.active[data-cat="revenue"]  { border-bottom-color: var(--lc-revenue); }
 
 @media (max-width: 640px) {
-  .lc-subnav { top: 60px; margin-bottom: 24px; }
+  .lc-subnav { top: calc(60px + env(safe-area-inset-top)); margin-bottom: 24px; }
   .lc-subnav-inner { padding: 0 16px; }
   .lc-subnav-item { padding: 14px 10px; font-size: 13px; }
 }
