@@ -2627,3 +2627,73 @@ ul  { list-style: none; }
   .article-carousel-more { margin-top: 18px; }
   .article-carousel-more-btn { padding: 10px 20px; font-size: 0.85rem; }
 }
+
+/* ============================================================
+ * 首屏脈動之星輪播（取代原 hero）
+ * ============================================================ */
+.ad-carousel-hero {
+  /* navbar 高 68px + iOS safe area top */
+  padding-top: calc(68px + env(safe-area-inset-top) + 32px);
+  padding-bottom: 40px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(255,77,138,0.05) 0%, rgba(255,77,138,0.03) 60%, rgba(255,255,255,0) 100%);
+}
+.ad-carousel-hero .ad-carousel-container {
+  width: 100%;
+}
+
+/* 向下探索箭頭 */
+.ad-carousel-scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 28px auto 0;
+  padding: 10px 20px;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  /* 讓它水平置中 */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll-hint-bounce 2.4s ease-in-out infinite;
+}
+.ad-carousel-scroll-hint:hover {
+  color: #fff;
+  background: rgba(255,77,138,0.15);
+  border-color: rgba(255,77,138,0.4);
+}
+.ad-carousel-scroll-hint svg {
+  animation: scroll-hint-arrow 1.6s ease-in-out infinite;
+}
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(6px); }
+}
+@keyframes scroll-hint-arrow {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50%      { transform: translateY(3px); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .ad-carousel-hero {
+    padding-top: calc(60px + env(safe-area-inset-top) + 20px);
+    padding-bottom: 28px;
+    min-height: auto; /* 手機不強制滿版，讓內容自然高 */
+  }
+  .ad-carousel-scroll-hint {
+    margin-top: 20px;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+  }
+}
