@@ -452,21 +452,9 @@ function initCounters() {
   document.querySelectorAll('.stat-num').forEach(el => obs.observe(el));
 }
 
-// ===== PARTICLES =====
-function initParticles() {
-  const c = document.getElementById('particles');
-  if (!c) return;
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const sz = Math.random() * 3 + 1.5;
-    p.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;
-      animation-duration:${Math.random()*14+9}s;animation-delay:-${Math.random()*16}s;`;
-    c.appendChild(p);
-  }
-}
-
 // ===== SCROLL REVEAL =====
+// 註：原 initParticles() 已隨 Hero 版塊移除（2026-08-24）
+
 function initScrollReveal() {
   const targets = document.querySelectorAll(
     '.about-grid > *, .platform-card, .feature-item, .join-content, .section-header, .contact-grid > *, .event-card, .rank-card, .activity-block'
@@ -569,7 +557,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSearch();
   initNavbar();
   initCounters();
-  initParticles();
   initScrollReveal();
   initContactForm();
   initSmoothScroll();
