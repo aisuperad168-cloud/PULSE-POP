@@ -10,6 +10,12 @@
   --red-light:  #FF5444;
   --red-dark:   #C0251A;
   --red-glow:   rgba(232,57,42,0.35);
+  /* 2026-08-25 品牌輔助色（TikTok 青 + 金）— 用於 Stats/section-tag/subtle accents */
+  --tt-cyan:    #25F4EE;
+  --tt-cyan-soft: rgba(37, 244, 238, 0.14);
+  --gold:       #FFC53D;
+  --gold-light: #FFD56B;
+  --gold-soft:  rgba(255, 197, 61, 0.14);
   --black:      #060608;
   --dark:       #0E0E10;
   --dark2:      #141416;
@@ -20,6 +26,7 @@
   --white:      #FFFFFF;
   --gradient:   linear-gradient(135deg, #E8392A 0%, #FF6B35 100%);
   --gradient2:  linear-gradient(135deg, #FF5444 0%, #E8392A 50%, #C0251A 100%);
+  --gradient-tt: linear-gradient(135deg, #E8392A 0%, #FF6B35 50%, #25F4EE 100%); /* red → cyan 品牌漸層 */
   --shadow-red: 0 8px 32px rgba(232,57,42,0.4);
   --shadow-lg:  0 24px 64px rgba(0,0,0,0.6);
   --radius:     16px;
@@ -123,6 +130,19 @@ ul  { list-style: none; }
   background: var(--red-light); border-radius: 50%;
   animation: dot-blink 1.8s ease-in-out infinite;
 }
+/* 2026-08-25 section-tag 變體 — 破除全站單一紅色 */
+.section-tag--cyan {
+  background: var(--tt-cyan-soft);
+  border-color: rgba(37,244,238,0.35);
+  color: var(--tt-cyan);
+}
+.section-tag--cyan::before { background: var(--tt-cyan); }
+.section-tag--gold {
+  background: var(--gold-soft);
+  border-color: rgba(255,197,61,0.35);
+  color: var(--gold-light);
+}
+.section-tag--gold::before { background: var(--gold-light); }
 @keyframes dot-blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
 .section-title {
@@ -257,13 +277,26 @@ ul  { list-style: none; }
   background: var(--dark2);
   border-top: 1px solid rgba(255,255,255,0.04);
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  padding: 56px 28px;
+  padding: 64px 28px 56px;
   position: relative; overflow: hidden;
 }
 .stats-section::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 100%, rgba(232,57,42,0.08) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(37,244,238,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(232,57,42,0.08) 0%, transparent 60%);
+}
+/* 2026-08-25 stats 加小標題，給數字牆 context */
+.stats-header {
+  text-align: center; margin-bottom: 40px;
+  position: relative; z-index: 1;
+}
+.stats-header .section-tag { margin-bottom: 10px; }
+.stats-title {
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-weight: 800; letter-spacing: -0.01em;
+  color: rgba(255,255,255,0.9);
 }
 .stats-container {
   max-width: 1000px; margin: 0 auto;
@@ -277,9 +310,17 @@ ul  { list-style: none; }
 }
 .stat-item:not(:last-child)::after {
   content: ''; position: absolute; right: 0; top: 10%; bottom: 10%;
-  width: 1px; background: rgba(255,255,255,0.07);
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(37,244,238,0.28) 50%, transparent 100%);
 }
-.stat-num-wrap { display: flex; align-items: baseline; gap: 3px; }
+.stat-num-wrap { display: flex; align-items: baseline; gap: 3px; position: relative; }
+/* 2026-08-25 stat 底下加青色細裝飾線，破除單色疲勞 */
+.stat-num-wrap::after {
+  content: ''; position: absolute; left: 50%; bottom: -8px;
+  width: 32px; height: 2px; transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, var(--tt-cyan), transparent);
+  border-radius: 2px; opacity: 0.7;
+}
 .stat-num {
   font-family: 'Inter', sans-serif; font-size: 3.5rem; font-weight: 900;
   background: var(--gradient);
@@ -287,7 +328,10 @@ ul  { list-style: none; }
   background-clip: text; line-height: 1;
 }
 .stat-plus { font-size: 1.3rem; color: var(--red-light); font-weight: 700; }
-.stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.4); font-weight: 500; letter-spacing: 0.04em; }
+.stat-label {
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+  font-weight: 500; letter-spacing: 0.04em; margin-top: 6px;
+}
 
 /* ===========================
    ABOUT
@@ -456,7 +500,15 @@ ul  { list-style: none; }
   width: 42px; height: 42px; border-radius: 12px;
   background: rgba(232,57,42,0.12); border: 1px solid rgba(232,57,42,0.2);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; flex-shrink: 0;
+  flex-shrink: 0;
+  color: var(--red-light); /* SVG stroke color */
+}
+.feature-icon svg { display: block; }
+.feature-item:hover .feature-icon {
+  background: rgba(232,57,42,0.18);
+  border-color: rgba(232,57,42,0.4);
+  color: #fff;
+  transition: var(--trans);
 }
 .feature-text h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
 .feature-text p  { font-size: 0.84rem; color: var(--gray); line-height: 1.6; }
@@ -782,7 +834,21 @@ ul  { list-style: none; }
   transition: var(--trans);
 }
 .perk:hover { border-color: rgba(232,57,42,0.25); background: rgba(232,57,42,0.06); }
-.perk-icon { font-size: 1.3rem; flex-shrink: 0; }
+.perk-icon {
+  width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(232,57,42,0.14);
+  border: 1px solid rgba(232,57,42,0.28);
+  color: var(--red-light);
+  transition: var(--trans);
+}
+.perk-icon svg { display: block; }
+.perk:hover .perk-icon {
+  background: rgba(232,57,42,0.24);
+  border-color: rgba(232,57,42,0.5);
+  color: #fff;
+  transform: scale(1.05);
+}
 
 /* ===========================
    CONTACT
@@ -946,28 +1012,124 @@ ul  { list-style: none; }
 /* ===========================
    FOOTER
 =========================== */
+/* 2026-08-25 Footer 大改版：3 欄式 sitemap */
 .footer {
   background: var(--dark2);
   border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 56px 28px;
+  padding: 64px 28px 32px;
+  position: relative;
+}
+.footer::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: min(60%, 500px); height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,57,42,0.4), transparent);
 }
 .footer-inner {
   max-width: 1200px; margin: 0 auto;
-  display: flex; flex-direction: column; align-items: center; gap: 20px;
 }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand { display: flex; flex-direction: column; gap: 14px; }
 .footer-logo img {
   height: 44px; width: auto;
   filter: drop-shadow(0 2px 8px rgba(232,80,42,0.3));
 }
-.footer-tagline { color: rgba(255,255,255,0.35); font-size: 0.87rem; letter-spacing: 0.08em; }
-.footer-links { display: flex; gap: 20px; align-items: center; }
-.footer-links a {
-  color: rgba(255,255,255,0.4); font-size: 0.87rem;
+.footer-tagline {
+  color: rgba(255,255,255,0.55); font-size: 0.92rem;
+  font-weight: 700; letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+.footer-brand-desc {
+  color: rgba(255,255,255,0.4); font-size: 0.82rem;
+  line-height: 1.75; max-width: 320px;
+}
+.footer-social {
+  display: flex; gap: 10px; margin-top: 8px;
+}
+.footer-social a {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  transition: var(--trans);
+}
+.footer-social a:hover {
+  background: rgba(232,57,42,0.12);
+  border-color: rgba(232,57,42,0.35);
+  color: var(--red-light);
+  transform: translateY(-2px);
+}
+
+.footer-col-title {
+  font-size: 0.78rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.9); margin-bottom: 16px;
+  position: relative; padding-bottom: 10px;
+}
+.footer-col-title::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 24px; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--tt-cyan));
+  border-radius: 2px;
+}
+.footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a {
+  color: rgba(255,255,255,0.5); font-size: 0.86rem;
+  text-decoration: none; transition: color var(--trans);
+  display: inline-block;
+}
+.footer-col ul a:hover { color: var(--red-light); transform: translateX(3px); transition: var(--trans); }
+
+.footer-contact li {
+  display: flex; align-items: flex-start; gap: 10px;
+  color: rgba(255,255,255,0.5); font-size: 0.82rem;
+  line-height: 1.6;
+}
+.footer-contact li svg { color: var(--tt-cyan); flex-shrink: 0; margin-top: 3px; }
+.footer-contact li a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color var(--trans); }
+.footer-contact li a:hover { color: var(--red-light); }
+
+.footer-bottom {
+  padding-top: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { color: rgba(255,255,255,0.35); font-size: 0.78rem; }
+.footer-legal {
+  display: flex; gap: 12px; align-items: center;
+  color: rgba(255,255,255,0.35); font-size: 0.78rem;
+}
+.footer-legal a {
+  color: rgba(255,255,255,0.5); text-decoration: none;
   transition: color var(--trans);
 }
-.footer-links a:hover { color: var(--red-light); }
-.footer-links span { color: rgba(255,255,255,0.15); }
-.footer-copy { color: rgba(255,255,255,0.25); font-size: 0.8rem; }
+.footer-legal a:hover { color: var(--red-light); }
+.footer-legal span { color: rgba(255,255,255,0.15); }
+
+/* Footer RWD */
+@media (max-width: 900px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 32px;
+  }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .footer { padding: 44px 20px 28px; }
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 32px;
+  }
+  .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+  .footer-copy, .footer-legal { font-size: 0.72rem; }
+}
 
 /* ===========================
    TOAST
@@ -1018,7 +1180,15 @@ ul  { list-style: none; }
     z-index: 999;
   }
   .nav-links.open { display: flex; }
-  .nav-cta { display: none; }
+  /* 2026-08-25 手機版 CTA 縮小保留（原本 display:none 藏起來，主要轉換路徑被藏） */
+  .nav-cta {
+    padding: 6px 12px 6px 14px;
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    box-shadow: 0 3px 10px rgba(232,57,42,0.28);
+    margin-right: 4px;
+  }
+  .nav-cta svg { width: 12px; height: 12px; }
   .hamburger { display: flex; }
   .logo-img { height: 50px; }
   .about-visual { flex-direction: column; }
@@ -1067,6 +1237,12 @@ ul  { list-style: none; }
   }
   .container { padding: 0 16px; }
   .nav-container { padding: 0 16px; }
+  /* 2026-08-25 極小螢幕 nav CTA 進一步縮 */
+  .nav-cta {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+  .nav-cta svg { display: none; }
   /* Contact form */
   .contact-form { padding: 24px 16px; border-radius: 18px; }
   .contact-info h3 { font-size: 1.3rem; }
@@ -1518,11 +1694,13 @@ ul  { list-style: none; }
   margin-bottom: 34px; /* 2026-08-24 縮小：50→34 */
 }
 .gold-crown {
-  font-size: 2rem; /* 2026-08-24 縮小：2.6→2 */
-  filter: drop-shadow(0 5px 14px rgba(255,193,61,0.4));
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #FFC53D;
+  filter: drop-shadow(0 5px 14px rgba(255,193,61,0.45));
   margin-bottom: 10px;
   animation: float 5s ease-in-out infinite;
 }
+.gold-crown svg { display: block; }
 .gold-month-tag {
   display: inline-block;
   padding: 6px 16px;
@@ -1571,20 +1749,21 @@ ul  { list-style: none; }
 .podium-card {
   position: relative;
   display: flex; flex-direction: column; align-items: center;
-  padding: 22px 16px 20px; /* 2026-08-24 縮小：28/22/26 → 22/16/20 */
+  padding: 22px 16px 20px;
   border-radius: 22px;
   text-decoration: none; color: inherit;
   background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
   border: 1px solid rgba(255,255,255,0.08);
-  transition: transform 0.45s cubic-bezier(.2,.9,.3,1.2), box-shadow 0.4s, border-color 0.4s;
+  /* 2026-08-25 hover 動畫收斂—幅度變小、速度加快，不再離平面好遠 */
+  transition: transform 0.28s cubic-bezier(.2,.9,.3,1.05), box-shadow 0.28s, border-color 0.28s;
   overflow: hidden;
   isolation: isolate;
   backdrop-filter: blur(8px);
   min-width: 0;
 }
 .podium-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 60px -16px rgba(0,0,0,0.7);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -14px rgba(0,0,0,0.6);
 }
 
 /* Shine sweep */
@@ -1611,7 +1790,7 @@ ul  { list-style: none; }
     0 0 0 1px rgba(255,215,61,0.15) inset,
     0 24px 60px -10px rgba(255,193,61,0.25);
 }
-.podium-rank-1:hover { transform: translateY(-30px); }
+.podium-rank-1:hover { transform: translateY(-22px); /* 2026-08-25 -30→-22 */ }
 
 .podium-rank-2 {
   order: 1;
@@ -2330,6 +2509,11 @@ ul  { list-style: none; }
 .article-carousel-section {
   /* 稍微不同的背景色調（藍紫色向），與脈動之星紅粉色區隔 */
   background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(123,104,238,0.05) 50%, rgba(255,255,255,0) 100%);
+  /* 2026-08-25 與 ticker 之間加呼吸間距 */
+  padding-top: 40px !important;
+}
+@media (max-width: 768px) {
+  .article-carousel-section { padding-top: 24px !important; }
 }
 
 /* 分類 tag —— 覆蓋預設的 platform pill 顏色 */
@@ -2414,9 +2598,12 @@ ul  { list-style: none; }
   padding-top: calc(68px + env(safe-area-inset-top) + 32px);
   padding-bottom: 40px;
   min-height: 100vh;
+  max-height: 900px; /* 2026-08-25 4K/超寬螢幕限制，避免空曠感 */
   display: flex;
   align-items: center;
-  background: linear-gradient(180deg, rgba(255,77,138,0.05) 0%, rgba(255,77,138,0.03) 60%, rgba(255,255,255,0) 100%);
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 20%, rgba(37,244,238,0.06) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(255,77,138,0.05) 0%, rgba(255,77,138,0.03) 60%, rgba(255,255,255,0) 100%);
 }
 .ad-carousel-hero .ad-carousel-container {
   width: 100%;
@@ -2473,5 +2660,102 @@ ul  { list-style: none; }
     margin-top: 20px;
     padding: 8px 16px;
     font-size: 0.78rem;
+  }
+}
+
+/* ===========================
+   2026-08-25 SECTION DIVIDERS
+   用純 CSS pseudo-element 做出 section 之間的章節切割感
+   不動 HTML 結構，只靠 ::before / ::after
+=========================== */
+
+/* Divider A: 熱門文章 → Stats（斜切光線）
+   在 .stats-section 頂部畫一條斜向的紅→青漸變光線 */
+.stats-section::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(232, 57, 42, 0.5) 25%,
+    rgba(37, 244, 238, 0.5) 75%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Divider B: 黃金排行榜 → 活動（光暈漸變）
+   在 .gold-ranking-section 底部畫金色光暈，暗示章節收束 */
+.gold-ranking-section {
+  position: relative;
+}
+.gold-ranking-section::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 60px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 197, 61, 0.06) 60%,
+    rgba(255, 197, 61, 0.12) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+.gold-ranking-section::before {
+  /* 保留原有裝飾若已存在則不影響；這條是底部細金線 */
+  content: '';
+  position: absolute;
+  left: 10%; right: 10%; bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 197, 61, 0.55) 50%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Divider C: Join Us → Platforms（頂部青色光線 + 微光暈）
+   .platforms::before 已被用於底層紅色漸變，這裡用不衝突的 background-image 疊層方式
+   透過 platforms 上方 border-image 效果模擬光暈 divider */
+.platforms {
+  border-top: 1px solid transparent;
+  background-image:
+    linear-gradient(180deg, rgba(37, 244, 238, 0.08) 0%, transparent 60px),
+    linear-gradient(var(--dark), var(--dark));
+  background-clip: padding-box, padding-box;
+}
+/* 頂部細光線（青→紅漸變） */
+.platforms::after {
+  /* 只在沒有其他 .platforms::after 使用時安全；grep 已確認無衝突 */
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(37, 244, 238, 0.5) 30%,
+    rgba(232, 57, 42, 0.5) 70%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 手機端輕量化 divider，避免視覺過重 */
+@media (max-width: 768px) {
+  .gold-ranking-section::after { height: 40px; }
+  .platforms {
+    background-image:
+      linear-gradient(180deg, rgba(37, 244, 238, 0.05) 0%, transparent 40px),
+      linear-gradient(var(--dark), var(--dark));
   }
 }
