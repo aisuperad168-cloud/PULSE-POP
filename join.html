@@ -191,11 +191,23 @@
   .benefit-card--bonus { grid-column: 1 / -1; }
 }
 
-/* ============ Mobile nav overflow guards (join page) ============ */
-@media (max-width: 720px) {
-  .p-nav-back { display: none !important; }        /* hide 回首頁 / 新人 FAQ pill buttons */
-  .p-nav-logo-sub { display: none; }              /* hide 'JDI PULSE MEDIA' subline */
+/* ============ Nav overflow guards (join page) ============ */
+/* 6 個章節連結 + 2 顆 back 按鈕 + logo 在 1200px 以下容易擠 → 分段收縮 */
+.p-nav-links a { white-space: nowrap; }            /* 章節標題絕不換行 */
+
+@media (max-width: 1200px) {
+  .p-nav-inner { gap: 20px; padding: 14px 24px; }
+  .p-nav-links { gap: 2px; }
+  .p-nav-links a { padding: 8px 10px; font-size: 13px; }
+}
+@media (max-width: 1080px) {
+  .p-nav-back { display: none !important; }        /* 先隱藏 回首頁 / 新人 FAQ pill 讓章節連結有空間 */
+}
+@media (max-width: 960px) {
+  .p-nav-logo-sub { display: none; }              /* 隱藏 'JDI PULSE MEDIA' 副標，讓主標維持單行 */
   .p-nav-logo .p-nav-logo-txt { font-size: 14px; }
+}
+@media (max-width: 720px) {
   .p-nav-logo img { height: 34px; }
   .p-nav-inner { gap: 10px; }
 }
