@@ -150,3 +150,40 @@ CREATE INDEX IF NOT EXISTS idx_rook_profile  ON rookie_test_leads (profile_key);
 CREATE INDEX IF NOT EXISTS idx_rook_total    ON rookie_test_leads (total_score);
 CREATE INDEX IF NOT EXISTS idx_rook_created  ON rookie_test_leads (created_at);
 CREATE INDEX IF NOT EXISTS idx_rook_intent   ON rookie_test_leads (intent_level);
+
+-- ============================================================
+-- 職缺應徵名單 (careers.html)
+-- 8 大職缺（3 部門）· 履歷連結 · Email 通知
+-- ============================================================
+CREATE TABLE IF NOT EXISTS careers_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 基本資料
+  name TEXT NOT NULL,                        -- 姓名
+  email TEXT NOT NULL,                       -- Email
+  phone TEXT NOT NULL,                       -- 電話
+  -- 應徵資訊
+  position_key TEXT NOT NULL,                -- agent / bd / editor / studio_lead / tech / makeup / social / hr
+  position_name TEXT NOT NULL,               -- 主播經紀人 / 招募 BD / ...（中文）
+  department TEXT NOT NULL,                  -- online / studio / support
+  start_date TEXT,                           -- 期望到職日（自由填寫）
+  interview_slots TEXT,                      -- JSON array: ["weekday_day","weekday_night","weekend"]
+  -- 經歷簡介
+  experience TEXT,                            -- 相關經驗（可空，200 字內）
+  motivation TEXT NOT NULL,                   -- 為什麼想加入 JDI（300 字內）
+  resume_url TEXT,                            -- 履歷連結（Google Drive/Dropbox/iCloud）
+  portfolio_url TEXT,                         -- 作品集連結（選填）
+  -- 意願
+  consent INTEGER NOT NULL DEFAULT 1,         -- 隱私同意
+  -- Meta
+  source TEXT,                                -- careers-page
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_careers_email      ON careers_applications (email);
+CREATE INDEX IF NOT EXISTS idx_careers_position   ON careers_applications (position_key);
+CREATE INDEX IF NOT EXISTS idx_careers_department ON careers_applications (department);
+CREATE INDEX IF NOT EXISTS idx_careers_created    ON careers_applications (created_at);

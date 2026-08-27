@@ -453,3 +453,279 @@ export function renderContactNotifyEmail({ company, name, email, phone, types, s
 </body>
 </html>`;
 }
+
+// ============ CAREERS: APPLICANT CONFIRM EMAIL ============
+export function renderCareersConfirmEmail({
+  name, email, phone, positionName, department,
+  startDate, slotLabels, experience, motivation,
+  resumeUrl, portfolioUrl
+}) {
+  const deptLabel = {
+    online:  '線上營運部',
+    studio:  '線下直播間部',
+    support: '支援部門'
+  }[department] || department;
+
+  const slotsHtml = (slotLabels && slotLabels.length)
+    ? slotLabels.map(s => `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#25F4EE22;color:#0a7570;border-radius:12px;font-size:12px;font-weight:600;">${esc(s)}</span>`).join('')
+    : '<span style="color:#999;font-size:13px;">未指定</span>';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>已收到您的履歷</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <tr><td style="background:linear-gradient(135deg,#05050A,#16162A);padding:32px 32px 24px;text-align:center;">
+          <div style="color:#25F4EE;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:8px;">JDI 脈動傳媒 · JDI PULSE MEDIA</div>
+          <div style="color:#ffffff;font-size:22px;font-weight:800;">✅ 已收到您的履歷</div>
+        </td></tr>
+
+        <tr><td style="padding:32px 32px 16px;text-align:center;">
+          <div style="font-size:16px;color:#333;line-height:1.7;">
+            <strong>${esc(name)}</strong> 您好，感謝您應徵 JDI 脈動傳媒！<br>
+            我們已收到您應徵 <strong style="color:#FE2C55;">${esc(positionName)}</strong> 的履歷資料。
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#25F4EE11,#FE2C5511);border-radius:12px;padding:20px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">📞</div>
+              <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:4px;">5 個工作天內回覆</div>
+              <div style="font-size:13px;color:#666;">若通過履歷審核，我們的 HR 將透過 Email 或電話聯繫安排面試</div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:8px 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📋 應徵摘要</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:110px;vertical-align:top;">應徵職缺</td>
+                <td style="padding:6px 0;font-size:15px;color:#111;font-weight:700;">${esc(positionName)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">所屬部門</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(deptLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">姓名</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(name)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Email</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(email)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">電話</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(phone)}</td></tr>
+            ${startDate ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">期望到職日</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(startDate)}</td></tr>` : ''}
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">可面試時段</td>
+                <td style="padding:10px 0 6px;">${slotsHtml}</td></tr>
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">履歷連結</td>
+                <td style="padding:10px 0 6px;font-size:13px;"><a href="${esc(resumeUrl)}" style="color:#25F4EE;word-break:break-all;text-decoration:underline;">${esc(resumeUrl)}</a></td></tr>
+            ${portfolioUrl ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">作品集</td>
+                <td style="padding:6px 0;font-size:13px;"><a href="${esc(portfolioUrl)}" style="color:#25F4EE;word-break:break-all;text-decoration:underline;">${esc(portfolioUrl)}</a></td></tr>` : ''}
+            ${experience ? `<tr><td colspan="2" style="padding:12px 0 0;">
+              <div style="font-size:13px;color:#666;margin-bottom:6px;">相關經驗：</div>
+              <div style="font-size:14px;color:#333;line-height:1.7;background:#fff;border-radius:8px;padding:14px;border:1px solid #eee;white-space:pre-wrap;">${esc(experience)}</div>
+            </td></tr>` : ''}
+            <tr><td colspan="2" style="padding:12px 0 0;">
+              <div style="font-size:13px;color:#666;margin-bottom:6px;">加入動機：</div>
+              <div style="font-size:14px;color:#333;line-height:1.7;background:#fff;border-radius:8px;padding:14px;border:1px solid #eee;white-space:pre-wrap;">${esc(motivation)}</div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">🎯 接下來的流程</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;">
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">① 履歷審核</strong>（3-5 個工作天）<br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">HR 團隊會仔細審閱您的資料</span>
+            </td></tr>
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">② 電話 / 視訊初談</strong>（30 分鐘）<br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">聊聊您的背景與期待，我們也會介紹公會現況</span>
+            </td></tr>
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">③ 現場面試</strong>（60 分鐘）<br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">到公司實地了解直播間環境，跟未來主管深聊</span>
+            </td></tr>
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">④ Offer + 到職</strong><br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">錄取後 2 週內到職，帶你認識團隊</span>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📱 若有疑問，隨時聯繫我們</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td width="50%" style="padding:0 6px 0 0;">
+                <a href="https://line.me/R/ti/p/@354ykfbp" style="display:block;padding:14px;background:#06C755;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:700;font-size:14px;">
+                  💬 LINE 官方諮詢
+                </a>
+              </td>
+              <td width="50%" style="padding:0 0 0 6px;">
+                <a href="tel:04-3603-3191" style="display:block;padding:14px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:700;font-size:14px;">
+                  📞 04-3603-3191
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:24px 32px;border-top:1px solid #eee;background:#fafafa;">
+          <div style="font-size:13px;color:#666;line-height:1.7;text-align:center;">
+            <strong style="color:#111;">JDI 脈動傳媒 JDI Pulse MEDIA</strong><br>
+            TikTok LIVE 官方合作經紀公會<br>
+            <a href="https://jdi-pulse.com/" style="color:#25F4EE;text-decoration:none;">jdi-pulse.com</a>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:16px 32px 24px;text-align:center;">
+          <div style="font-size:11px;color:#aaa;line-height:1.5;">
+            此為系統自動確認信，請勿直接回覆此信箱。<br>
+            若需回覆，請 email 至 pulsepop9@gmail.com 或加 LINE @354ykfbp。
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+// ============ CAREERS: ADMIN NOTIFY EMAIL ============
+export function renderCareersNotifyEmail({
+  name, email, phone, positionName, department,
+  startDate, slotLabels, experience, motivation,
+  resumeUrl, portfolioUrl, source, country, appId
+}) {
+  const deptColor = {
+    online:  '#25F4EE',
+    studio:  '#FE2C55',
+    support: '#FFA500'
+  }[department] || '#666';
+  const deptLabel = {
+    online:  '線上營運部',
+    studio:  '線下直播間部',
+    support: '支援部門'
+  }[department] || department;
+
+  const slotsHtml = (slotLabels && slotLabels.length)
+    ? slotLabels.map(s => `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:${deptColor};color:#fff;border-radius:12px;font-size:12px;font-weight:600;">${esc(s)}</span>`).join('')
+    : '<span style="color:#999;font-size:13px;">未指定</span>';
+
+  const now = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>新職缺應徵</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+        <tr><td style="background:linear-gradient(135deg,${deptColor},#16162A);padding:24px 28px;">
+          <div style="color:#fff;font-size:12px;font-weight:600;letter-spacing:1px;opacity:0.9;">JDI 官網通知 · CAREERS APPLICATION</div>
+          <div style="color:#fff;font-size:22px;font-weight:800;margin-top:6px;">📮 新職缺應徵</div>
+          <div style="color:#fff;font-size:14px;margin-top:8px;opacity:0.9;">
+            <strong style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:6px;">${esc(positionName)}</strong>
+            <span style="margin-left:8px;">${esc(deptLabel)}</span>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:24px 28px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">應徵編號</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-family:monospace;">#${esc(appId || 'N/A')}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">時間</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-family:monospace;">${esc(now)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">來源</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(source || 'careers-page')} ${country ? '· ' + esc(country) : ''}</td></tr>
+          </table>
+
+          <hr style="border:none;border-top:1px solid #eee;margin:16px 0;">
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">姓名</td>
+                <td style="padding:6px 0;font-size:16px;color:#111;font-weight:700;">${esc(name)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Email</td>
+                <td style="padding:6px 0;font-size:14px;"><a href="mailto:${esc(email)}" style="color:${deptColor};text-decoration:none;font-weight:600;">${esc(email)}</a></td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">電話</td>
+                <td style="padding:6px 0;font-size:14px;"><a href="tel:${esc(phone)}" style="color:${deptColor};text-decoration:none;font-weight:600;">${esc(phone)}</a></td></tr>
+            ${startDate ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">期望到職</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-weight:600;">${esc(startDate)}</td></tr>` : ''}
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">面試時段</td>
+                <td style="padding:10px 0 6px;">${slotsHtml}</td></tr>
+          </table>
+
+          <div style="margin-top:16px;padding:16px;background:linear-gradient(135deg,${deptColor}15,#fafafa);border-left:3px solid ${deptColor};border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">📎 履歷連結</div>
+            <a href="${esc(resumeUrl)}" style="color:${deptColor};font-size:14px;font-weight:600;word-break:break-all;text-decoration:underline;">${esc(resumeUrl)}</a>
+          </div>
+
+          ${portfolioUrl ? `<div style="margin-top:12px;padding:16px;background:#fafafa;border-left:3px solid #25F4EE;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">🎨 作品集</div>
+            <a href="${esc(portfolioUrl)}" style="color:#25F4EE;font-size:14px;font-weight:600;word-break:break-all;text-decoration:underline;">${esc(portfolioUrl)}</a>
+          </div>` : ''}
+
+          ${experience ? `<div style="margin-top:16px;padding:16px;background:#fafafa;border-left:3px solid #FFA500;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">💼 相關經驗</div>
+            <div style="font-size:14px;color:#333;line-height:1.7;white-space:pre-wrap;">${esc(experience)}</div>
+          </div>` : ''}
+
+          <div style="margin-top:16px;padding:16px;background:#fafafa;border-left:3px solid #FE2C55;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">🔥 加入動機</div>
+            <div style="font-size:14px;color:#333;line-height:1.7;white-space:pre-wrap;">${esc(motivation)}</div>
+          </div>
+
+          <div style="margin-top:20px;padding:14px;background:linear-gradient(135deg,#25F4EE22,#FE2C5522);border-radius:8px;text-align:center;">
+            <div style="font-size:13px;color:#111;line-height:1.6;">
+              ⚡ <strong>建議在 5 個工作天內回覆</strong><br>
+              直接回覆此信 → 應徵者會收到（Reply-To 已設為應徵者 Email）
+            </div>
+          </div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
+            <tr>
+              <td width="33%" style="padding:0 4px 0 0;">
+                <a href="${esc(resumeUrl)}" style="display:block;padding:12px;background:${deptColor};color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📎 看履歷
+                </a>
+              </td>
+              <td width="33%" style="padding:0 4px;">
+                <a href="mailto:${esc(email)}" style="display:block;padding:12px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📧 回信
+                </a>
+              </td>
+              <td width="33%" style="padding:0 0 0 4px;">
+                <a href="tel:${esc(phone)}" style="display:block;padding:12px;background:#25F4EE;color:#000;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📞 撥打
+                </a>
+              </td>
+            </tr>
+          </table>
+
+        </td></tr>
+
+        <tr><td style="padding:16px 28px;background:#fafafa;text-align:center;">
+          <div style="font-size:11px;color:#aaa;">
+            JDI 脈動傳媒 · JDI PULSE MEDIA · Careers 應徵通知系統
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}

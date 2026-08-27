@@ -609,6 +609,199 @@
 }
 .c-btn-secondary:hover { border-color: var(--tt-cyan); color: var(--tt-cyan) !important; }
 
+/* ============ Application Form ============ */
+.c-form-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 44px 40px;
+  background: linear-gradient(135deg, rgba(37,244,238,0.03), rgba(254,44,85,0.03));
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  backdrop-filter: blur(10px);
+}
+@media (max-width: 720px) {
+  .c-form-wrap { padding: 28px 20px; }
+}
+.c-form-head { text-align: center; margin-bottom: 32px; }
+.c-form-head h3 { font-size: 24px; font-weight: 900; margin: 0 0 8px; letter-spacing: -.02em; }
+.c-form-head p { font-size: 14px; color: var(--t-3); line-height: 1.7; margin: 0; }
+.c-form { display: flex; flex-direction: column; gap: 20px; }
+.c-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .c-form-row { grid-template-columns: 1fr; } }
+.c-field { display: flex; flex-direction: column; gap: 8px; }
+.c-field label {
+  font-size: 13px;
+  color: var(--t-2);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.c-field label .req { color: var(--tt-pink); font-weight: 700; }
+.c-field .hint { font-size: 12px; color: var(--t-4); font-weight: 400; margin-left: 4px; }
+.c-field input[type="text"],
+.c-field input[type="email"],
+.c-field input[type="tel"],
+.c-field input[type="url"],
+.c-field select,
+.c-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  color: var(--t-1);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.c-field input:focus,
+.c-field select:focus,
+.c-field textarea:focus {
+  outline: none;
+  border-color: var(--tt-cyan);
+  box-shadow: 0 0 0 3px rgba(37,244,238,0.15);
+}
+.c-field textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+.c-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.c-field .char-count {
+  font-size: 11px;
+  color: var(--t-4);
+  text-align: right;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+/* Interview slots checkbox group */
+.c-slot-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 640px) { .c-slot-group { grid-template-columns: 1fr; } }
+.c-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.c-slot:hover { border-color: var(--line-2); background: rgba(255,255,255,0.03); }
+.c-slot input[type="checkbox"] {
+  accent-color: var(--tt-cyan);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.c-slot.on {
+  border-color: var(--tt-cyan);
+  background: rgba(37,244,238,0.06);
+}
+.c-slot span { font-size: 13px; color: var(--t-1); }
+
+/* Consent */
+.c-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--t-3);
+  line-height: 1.6;
+}
+.c-consent input { margin-top: 3px; accent-color: var(--tt-cyan); flex-shrink: 0; }
+.c-consent a { color: var(--tt-cyan); }
+
+/* Submit button */
+.c-submit {
+  padding: 16px 28px;
+  background: linear-gradient(135deg, var(--tt-cyan), var(--tt-pink));
+  color: #000;
+  border: none;
+  border-radius: var(--r-sm);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  letter-spacing: .02em;
+}
+.c-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(37,244,238,0.25);
+}
+.c-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Form message */
+.c-msg {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  display: none;
+}
+.c-msg.ok {
+  display: block;
+  background: rgba(37,244,238,0.08);
+  border: 1px solid rgba(37,244,238,0.3);
+  color: var(--tt-cyan);
+}
+.c-msg.err {
+  display: block;
+  background: rgba(254,44,85,0.08);
+  border: 1px solid rgba(254,44,85,0.3);
+  color: var(--tt-pink);
+}
+
+/* Success state */
+.c-form-success {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+.c-form-success.show { display: block; }
+.c-form-success .icon {
+  width: 72px; height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--tt-cyan), var(--tt-pink));
+  display: flex; align-items: center; justify-content: center;
+  color: #000; font-size: 36px; font-weight: 900;
+}
+.c-form-success h4 { font-size: 22px; font-weight: 900; margin: 0 0 12px; }
+.c-form-success p { color: var(--t-3); font-size: 14px; line-height: 1.7; max-width: 480px; margin: 0 auto 24px; }
+
+/* Alt contact section under form */
+.c-form-alt {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--r-md);
+  text-align: center;
+}
+.c-form-alt-label {
+  font-size: 12px;
+  color: var(--t-4);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+}
+.c-form-alt-buttons {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
+}
+
 /* ============ FAQ ============ */
 .c-faq {
   max-width: 860px; margin: 0 auto;
@@ -1164,23 +1357,172 @@
 <!-- ============ 投遞履歷 ============ -->
 <section class="c-section" id="apply">
   <div class="c-section-inner">
-    <div class="c-apply">
+    <div class="c-section-head">
       <span class="c-section-tag">04 · APPLY NOW</span>
-      <h3>準備好加入我們了嗎？</h3>
-      <p class="c-apply-desc">
-        點擊下方按鈕填寫應徵表單，我們會在 <strong style="color: var(--tt-cyan);">5 個工作天內</strong>回覆你。<br />
-        履歷請附作品集連結（如有）與希望應徵的職缺名稱，讓我們更快速媒合。
-      </p>
-      <div class="c-apply-buttons">
-        <a href="https://forms.gle/YourGoogleFormLinkHere" target="_blank" rel="noopener" class="c-btn-primary">
-          填寫應徵表單
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
-        </a>
-        <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="c-btn-secondary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
-          LINE 直接聯繫
+      <h2>準備好加入我們了嗎？</h2>
+    </div>
+
+    <div class="c-form-wrap">
+      <div class="c-form-head">
+        <h3>投遞履歷</h3>
+        <p>填完送出後，你會立刻收到確認信。我們將在 <strong style="color: var(--tt-cyan);">5 個工作天內</strong>回覆是否進入下一階段。</p>
+      </div>
+
+      <!-- Success state (hidden by default) -->
+      <div class="c-form-success" id="careerSuccess">
+        <div class="icon">✓</div>
+        <h4>已收到你的履歷！</h4>
+        <p>
+          我們已寄出確認信到你的信箱（請檢查垃圾郵件夾）。<br>
+          HR 團隊會在 5 個工作天內審閱，若通過會透過 Email 或電話聯繫。<br><br>
+          若有急件或問題，隨時加 LINE 官方帳號直接聯繫我們。
+        </p>
+        <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="c-btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+          加 LINE 諮詢
         </a>
       </div>
+
+      <!-- Application form -->
+      <form class="c-form" id="careerForm" novalidate>
+
+        <!-- 應徵職缺 -->
+        <div class="c-field">
+          <label for="cf-position">應徵職缺 <span class="req">*</span></label>
+          <select id="cf-position" name="position" required>
+            <option value="">請選擇應徵職缺</option>
+            <optgroup label="🌐 線上營運部">
+              <option value="agent">主播經紀人（月薪 33-45K）</option>
+              <option value="bd">主播招募 BD（月薪 35-50K）</option>
+              <option value="editor">短影音企劃剪輯師（月薪 35-48K）</option>
+            </optgroup>
+            <optgroup label="🎬 線下直播間部">
+              <option value="studio_lead">直播間店長 / 場控（月薪 40-55K）</option>
+              <option value="tech">直播技術工程師（月薪 40-60K）</option>
+              <option value="makeup">化妝造型師（月薪 35-45K）</option>
+            </optgroup>
+            <optgroup label="🛠 支援部門">
+              <option value="social">社群小編 / 內容編輯（月薪 32-42K）</option>
+              <option value="hr">行政人資（月薪 30-38K）</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- 姓名 + 電話 -->
+        <div class="c-form-row">
+          <div class="c-field">
+            <label for="cf-name">姓名 <span class="req">*</span></label>
+            <input type="text" id="cf-name" name="name" required maxlength="40" placeholder="王小明" autocomplete="name">
+          </div>
+          <div class="c-field">
+            <label for="cf-phone">電話 <span class="req">*</span></label>
+            <input type="tel" id="cf-phone" name="phone" required maxlength="30" placeholder="0912-345-678" autocomplete="tel">
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="c-field">
+          <label for="cf-email">Email <span class="req">*</span></label>
+          <input type="email" id="cf-email" name="email" required maxlength="80" placeholder="your@email.com" autocomplete="email">
+        </div>
+
+        <!-- 履歷連結 -->
+        <div class="c-field">
+          <label for="cf-resume">
+            履歷連結 <span class="req">*</span>
+            <span class="hint">Google Drive / Dropbox / iCloud</span>
+          </label>
+          <input type="url" id="cf-resume" name="resumeUrl" required maxlength="500" placeholder="https://drive.google.com/... （記得開啟公開檢視權限）">
+        </div>
+
+        <!-- 作品集（選填） -->
+        <div class="c-field">
+          <label for="cf-portfolio">
+            作品集連結
+            <span class="hint">選填 · 剪輯師/小編可放 Behance/IG/YT</span>
+          </label>
+          <input type="url" id="cf-portfolio" name="portfolioUrl" maxlength="500" placeholder="https://... （選填）">
+        </div>
+
+        <!-- 期望到職日 + 可面試時段 -->
+        <div class="c-field">
+          <label for="cf-start">
+            期望到職日
+            <span class="hint">選填 · 例如「2 週後」或「12/15 前」</span>
+          </label>
+          <input type="text" id="cf-start" name="startDate" maxlength="40" placeholder="2 週後 / 農曆年後 / 隨時可到職">
+        </div>
+
+        <div class="c-field">
+          <label>可面試時段 <span class="hint">複選</span></label>
+          <div class="c-slot-group">
+            <label class="c-slot">
+              <input type="checkbox" name="slots" value="weekday_day">
+              <span>週間白天</span>
+            </label>
+            <label class="c-slot">
+              <input type="checkbox" name="slots" value="weekday_night">
+              <span>週間晚上</span>
+            </label>
+            <label class="c-slot">
+              <input type="checkbox" name="slots" value="weekend">
+              <span>週末</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 相關經驗 -->
+        <div class="c-field">
+          <label for="cf-exp">
+            相關經驗
+            <span class="hint">選填 · 200 字內</span>
+          </label>
+          <textarea id="cf-exp" name="experience" maxlength="500" placeholder="簡述你的相關工作經驗（例：曾在 XX 公司做過 Y 職位、負責 Z 專案），沒有經驗可以留空。"></textarea>
+          <div class="char-count" id="cf-exp-count">0 / 500</div>
+        </div>
+
+        <!-- 加入動機 -->
+        <div class="c-field">
+          <label for="cf-motiv">
+            為什麼想加入 JDI 脈動傳媒？ <span class="req">*</span>
+            <span class="hint">10-300 字</span>
+          </label>
+          <textarea id="cf-motiv" name="motivation" required minlength="10" maxlength="800" placeholder="想聊聊你對直播產業的看法、對這個職缺的興趣、或你希望在 JDI 學到什麼、貢獻什麼。真誠回答就好，不用寫得太官腔。"></textarea>
+          <div class="char-count" id="cf-motiv-count">0 / 800</div>
+        </div>
+
+        <!-- 同意條款 -->
+        <label class="c-consent">
+          <input type="checkbox" id="cf-consent" required>
+          <span>
+            我同意 JDI 脈動傳媒為招募目的蒐集、處理、利用我提供的個人資料。資料保留 1 年，通過履歷審核者將主動聯繫，未通過者資料將依法刪除。
+          </span>
+        </label>
+
+        <!-- Submit -->
+        <button type="submit" class="c-submit" id="cfSubmit">
+          🚀 送出履歷
+        </button>
+
+        <!-- Message state -->
+        <div class="c-msg" id="cfMsg"></div>
+
+      </form>
+
+      <!-- Alt contact -->
+      <div class="c-form-alt">
+        <div class="c-form-alt-label">◆ 不方便填表單？直接聯繫我們</div>
+        <div class="c-form-alt-buttons">
+          <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="c-btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+            LINE @354ykfbp
+          </a>
+          <a href="mailto:pulsepop9@gmail.com" class="c-btn-secondary">
+            📧 pulsepop9@gmail.com
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1265,14 +1607,143 @@
   <span>LINE 諮詢</span>
 </a>
 
-<!-- Interactive hover glow effect for job cards -->
+<!-- Interactive hover glow + Application form submission -->
 <script>
-document.querySelectorAll('.c-job-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+(function(){
+  // ============ Interactive hover glow effect for job cards ============
+  document.querySelectorAll('.c-job-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+    });
   });
-});
+
+  // ============ Job card "投遞履歷" auto-fills position dropdown ============
+  const positionMap = {
+    '主播經紀人': 'agent',
+    '主播招募 BD': 'bd',
+    '短影音企劃剪輯師': 'editor',
+    '直播間店長 / 場控': 'studio_lead',
+    '直播技術工程師': 'tech',
+    '化妝造型師': 'makeup',
+    '社群小編 / 內容編輯': 'social',
+    '行政人資': 'hr'
+  };
+  document.querySelectorAll('.c-job-apply').forEach(link => {
+    link.addEventListener('click', function(e) {
+      // Find job title within same card
+      const card = this.closest('.c-job-card');
+      const title = card?.querySelector('.c-job-title')?.textContent?.trim();
+      if (title && positionMap[title]) {
+        const select = document.getElementById('cf-position');
+        if (select) select.value = positionMap[title];
+      }
+    });
+  });
+
+  // ============ Slot checkbox visual toggle ============
+  document.querySelectorAll('.c-slot input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.closest('.c-slot').classList.toggle('on', this.checked);
+    });
+  });
+
+  // ============ Character counters ============
+  function bindCounter(inputId, counterId, max) {
+    const input = document.getElementById(inputId);
+    const counter = document.getElementById(counterId);
+    if (!input || !counter) return;
+    const update = () => {
+      const len = input.value.length;
+      counter.textContent = `${len} / ${max}`;
+      counter.style.color = len > max * 0.9 ? 'var(--tt-pink)' : 'var(--t-4)';
+    };
+    input.addEventListener('input', update);
+    update();
+  }
+  bindCounter('cf-exp', 'cf-exp-count', 500);
+  bindCounter('cf-motiv', 'cf-motiv-count', 800);
+
+  // ============ Form submission ============
+  const form = document.getElementById('careerForm');
+  const submitBtn = document.getElementById('cfSubmit');
+  const msg = document.getElementById('cfMsg');
+  const success = document.getElementById('careerSuccess');
+
+  if (!form) return;
+
+  function showMsg(text, ok) {
+    msg.textContent = text;
+    msg.className = 'c-msg ' + (ok ? 'ok' : 'err');
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function validUrl(u) {
+    if (!u) return false;
+    try {
+      const url = new URL(u);
+      return url.protocol === 'https:' || url.protocol === 'http:';
+    } catch { return false; }
+  }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    msg.className = 'c-msg';
+
+    // Collect data
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      phone: form.phone.value.trim(),
+      position: form.position.value,
+      startDate: form.startDate.value.trim(),
+      interviewSlots: Array.from(form.querySelectorAll('input[name="slots"]:checked')).map(x => x.value),
+      experience: form.experience.value.trim(),
+      motivation: form.motivation.value.trim(),
+      resumeUrl: form.resumeUrl.value.trim(),
+      portfolioUrl: form.portfolioUrl.value.trim(),
+      consent: form.querySelector('#cf-consent').checked,
+      source: 'careers-page'
+    };
+
+    // Validation
+    if (!data.position) return showMsg('請選擇應徵職缺', false);
+    if (!data.name) return showMsg('請填寫姓名', false);
+    if (!data.phone) return showMsg('請填寫電話', false);
+    if (!/^\+?[\d\s\-()]{8,20}$/.test(data.phone)) return showMsg('電話格式錯誤（請輸入 8-15 位數字）', false);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return showMsg('請填寫正確的 Email 格式', false);
+    if (!validUrl(data.resumeUrl)) return showMsg('請提供有效的履歷連結（https:// 開頭）', false);
+    if (data.portfolioUrl && !validUrl(data.portfolioUrl)) return showMsg('作品集連結格式錯誤', false);
+    if (!data.motivation || data.motivation.length < 10) return showMsg('請填寫加入動機（至少 10 字）', false);
+    if (!data.consent) return showMsg('請勾選同意個資使用條款', false);
+
+    // Submit
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ 送出中...';
+
+    try {
+      const resp = await fetch('/api/careers-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await resp.json();
+
+      if (resp.ok && json.ok) {
+        form.style.display = 'none';
+        success.classList.add('show');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        throw new Error(json.message || json.error || 'submit_failed');
+      }
+    } catch (err) {
+      console.error('Careers submit error:', err);
+      showMsg('⚠️ ' + (err.message === 'submit_failed' ? '系統暫時無法送出，請直接加 LINE @354ykfbp 或寄 email 到 pulsepop9@gmail.com' : err.message), false);
+      submitBtn.disabled = false;
+      submitBtn.textContent = '🚀 送出履歷';
+    }
+  });
+})();
 </script>
 
 </body>
