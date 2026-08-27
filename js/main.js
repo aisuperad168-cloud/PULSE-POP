@@ -126,8 +126,8 @@ const streamers = [
     emoji: '🐟'
   },
   {
-    // Fixed: now has real avatar (was placeholder before)
-    handle: 'fierce1222', name: '元承烈', fullName: '元承烈🎙️',
+    // 2026-08-27 頭像已從 TikTok 抓取 1080p 高畫質更新；fullName 補上前綴徽章
+    handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️',
     url: 'https://www.tiktok.com/@fierce1222',
     thumb: 'assets/avatars/fierce1222.jpg',
     emoji: '⚜️'
@@ -180,12 +180,6 @@ const streamers = [
     url: 'https://www.tiktok.com/@zhi_xuan93_0125',
     thumb: 'assets/avatars/zhi_xuan93_0125.jpg',
     emoji: '🎙️'
-  },
-  {
-    handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️',
-    url: 'https://www.tiktok.com/@fierce1222',
-    thumb: 'assets/avatars/fierce1222.jpg',
-    emoji: '⚜️'
   }
 ];
 
