@@ -25,3 +25,6 @@ core
 # Local worker backup (not shared to GitHub)
 .backup-worker/
 package-lock.json
+
+# Avatar backups (local only)
+assets/avatars/_backup_*/
