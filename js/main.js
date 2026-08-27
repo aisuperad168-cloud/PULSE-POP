@@ -180,6 +180,12 @@ const streamers = [
     url: 'https://www.tiktok.com/@zhi_xuan93_0125',
     thumb: 'assets/avatars/zhi_xuan93_0125.jpg',
     emoji: '🎙️'
+  },
+  {
+    handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️',
+    url: 'https://www.tiktok.com/@fierce1222',
+    thumb: 'assets/avatars/fierce1222.jpg',
+    emoji: '⚜️'
   }
 ];
 
