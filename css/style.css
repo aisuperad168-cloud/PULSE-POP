@@ -539,7 +539,7 @@ ul  { list-style: none; }
   pointer-events: none;
 }
 
-.platform-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; position: relative; z-index: 1; }
+.platform-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; z-index: 1; }
 
 .platform-card {
   padding: 48px 40px; border-radius: var(--radius-xl);
@@ -637,6 +637,38 @@ ul  { list-style: none; }
   background: rgba(0,242,234,0.08); border-color: rgba(0,242,234,0.2); color: #00d4ce;
 }
 .douyin-card .pcard-btn:hover { background: linear-gradient(135deg,#00f2ea,#ff0050); border-color: transparent; color: var(--white); }
+
+/* 2026-08-27 17LIVE card accent (品牌色：橘紅 #FF5B4F + 黃 #FFCC00) */
+.platform-card.seventeen-card .platform-card-glow {
+  background: radial-gradient(ellipse at 0% 0%, rgba(255,91,79,0.12) 0%, rgba(255,204,0,0.06) 55%, transparent 75%);
+}
+.seventeen-icon-bg {
+  background: linear-gradient(135deg, #FF5B4F 0%, #FFCC00 100%);
+  position: relative;
+}
+.seventeen-logo-text {
+  color: #fff;
+  font-weight: 900;
+  font-size: 2.1rem;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.28);
+}
+.seventeen-card .pcard-check {
+  background: rgba(255,91,79,0.12); border-color: rgba(255,91,79,0.28);
+}
+.seventeen-card .pcard-check svg { color: #FFCC00; }
+.seventeen-card .pcard-live-badge {
+  background: rgba(255,91,79,0.12);
+  border-color: rgba(255,91,79,0.35);
+  color: #FF7A6F;
+}
+.seventeen-card .pcard-live-badge::before { color: #FF5B4F; }
+.seventeen-card .pcard-btn {
+  background: rgba(255,91,79,0.1); border-color: rgba(255,91,79,0.28); color: #FF9D95;
+}
+.seventeen-card .pcard-btn:hover { background: linear-gradient(135deg,#FF5B4F,#FFCC00); border-color: transparent; color: var(--white); }
 
 /* ===========================
    STREAMERS
@@ -1208,10 +1240,18 @@ ul  { list-style: none; }
   .stat-item:nth-child(1)::after { display: block; }
   .stat-item:nth-child(3)::after { display: block; }
 }
+/* 2026-08-27 3 卡響應式：≤1024px 兩欄 + 第三張置中；≤600px 單欄 */
+@media (max-width: 1024px) {
+  .platform-cards { grid-template-columns: 1fr 1fr; max-width: 780px; margin: 0 auto; }
+  .platform-cards .seventeen-card { grid-column: 1 / -1; max-width: 380px; justify-self: center; }
+}
 @media (max-width: 900px) {
-  .platform-cards { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
   .contact-grid { grid-template-columns: 1fr; }
   .contact-info { position: static; }
+}
+@media (max-width: 600px) {
+  .platform-cards { grid-template-columns: 1fr; max-width: 480px; }
+  .platform-cards .seventeen-card { grid-column: auto; max-width: none; }
 }
 @media (max-width: 768px) {
   .container { padding: 0 18px; }
