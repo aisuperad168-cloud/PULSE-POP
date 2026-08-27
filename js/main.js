@@ -6,180 +6,207 @@
 // ===== STREAMER DATA (29 featured) =====
 const streamers = [
   {
-    handle: 'sj231009', name: '馬妹', fullName: '馬妹🐴',
-    url: 'https://www.tiktok.com/@sj231009',
-    thumb: 'assets/avatars/sj231009.jpg',
-    emoji: '🐴'
-  },
-  {
     handle: 'zunwang5858518', name: '沐光', fullName: '沐光🍹',
     url: 'https://www.tiktok.com/@zunwang5858518',
     thumb: 'assets/avatars/zunwang5858518.jpg',
+    followers: 130800,
     emoji: '🍹'
+  },
+  {
+    handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶',
+    url: 'https://www.tiktok.com/@renatz0503',
+    thumb: 'assets/avatars/renatz0503.jpg',
+    followers: 42600,
+    emoji: '🧶'
+  },
+  {
+    handle: 'duolyu1225', name: '多多綠', fullName: '多多綠🌙',
+    url: 'https://www.tiktok.com/@duolyu1225',
+    thumb: 'assets/avatars/duolyu1225.jpg',
+    followers: 42200,
+    emoji: '🌙'
+  },
+  {
+    handle: 'nini_1003_hyn', name: 'NiNi', fullName: 'NiNi🦦',
+    url: 'https://www.tiktok.com/@nini_1003_hyn',
+    thumb: 'assets/avatars/nini_1003_hyn.jpg',
+    followers: 23200,
+    emoji: '🦦'
+  },
+  {
+    handle: 'pp888a', name: '瑜媽', fullName: '瑜媽🐯',
+    url: 'https://www.tiktok.com/@pp888a',
+    thumb: 'assets/avatars/pp888a.jpg',
+    followers: 20300,
+    emoji: '🐯'
+  },
+  {
+    handle: 'sj231009', name: '馬妹', fullName: '馬妹🐴',
+    url: 'https://www.tiktok.com/@sj231009',
+    thumb: 'assets/avatars/sj231009.jpg',
+    followers: 20000,
+    emoji: '🐴'
+  },
+  {
+    handle: 'sevenmonki', name: '阿娜子', fullName: 'A-NA阿娜子🐵',
+    url: 'https://www.tiktok.com/@sevenmonki',
+    thumb: 'assets/avatars/sevenmonki.jpg',
+    followers: 17800,
+    emoji: '🐵'
   },
   {
     handle: 'lin_959595', name: '優Yoyo', fullName: '優Yoyo🪀',
     url: 'https://www.tiktok.com/@lin_959595',
     thumb: 'assets/avatars/lin_959595.jpg',
+    followers: 17500,
     emoji: '🪀'
   },
   {
     handle: 'sherrolss', name: '知音姊姊', fullName: '知音姊姊',
     url: 'https://www.tiktok.com/@sherrolss',
     thumb: 'assets/avatars/sherrolss.jpg',
+    followers: 15900,
     emoji: '🎵'
-  },
-  {
-    handle: 'mai916537', name: '甜桃', fullName: '甜桃🍑',
-    url: 'https://www.tiktok.com/@mai916537',
-    thumb: 'assets/avatars/mai916537.jpg',
-    emoji: '🍑'
-  },
-  {
-    handle: 'pp888a', name: '瑜媽', fullName: '瑜媽🐯',
-    url: 'https://www.tiktok.com/@pp888a',
-    thumb: 'assets/avatars/pp888a.jpg',
-    emoji: '🐯'
-  },
-  {
-    handle: 'xnln1538', name: '亮亮', fullName: '亮亮❣️',
-    url: 'https://www.tiktok.com/@xnln1538',
-    thumb: 'assets/avatars/xnln1538.jpg',
-    emoji: '❣️'
-  },
-  {
-    handle: 'duolyu1225', name: '多多綠', fullName: '多多綠🌙',
-    url: 'https://www.tiktok.com/@duolyu1225',
-    thumb: 'assets/avatars/duolyu1225.jpg',
-    emoji: '🌙'
-  },
-  {
-    handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶',
-    url: 'https://www.tiktok.com/@renatz0503',
-    thumb: 'assets/avatars/renatz0503.jpg',
-    emoji: '🧶'
-  },
-  {
-    handle: 'nini_1003_hyn', name: 'NiNi', fullName: 'NiNi🦦',
-    url: 'https://www.tiktok.com/@nini_1003_hyn',
-    thumb: 'assets/avatars/nini_1003_hyn.jpg',
-    emoji: '🦦'
-  },
-  {
-    handle: 'taco_ya124', name: '叩叩Taco', fullName: '叩叩Taco🌱',
-    url: 'https://www.tiktok.com/@taco_ya124',
-    thumb: 'assets/avatars/taco_ya124.jpg',
-    emoji: '🌱'
-  },
-  {
-    handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅',
-    url: 'https://www.tiktok.com/@c_mi_0908',
-    thumb: 'assets/avatars/c_mi_0908.jpg',
-    emoji: '🪅'
-  },
-  {
-    handle: 'ambercblyr3', name: '貢你妹', fullName: '貢你妹🍘',
-    url: 'https://www.tiktok.com/@ambercblyr3',
-    thumb: 'assets/avatars/ambercblyr3.jpg',
-    emoji: '🍘'
-  },
-  {
-    handle: 'demidemi0103', name: 'ㄚ咪', fullName: '貪吃鬼ㄚ咪🥚',
-    url: 'https://www.tiktok.com/@demidemi0103',
-    thumb: 'assets/avatars/demidemi0103.jpg',
-    emoji: '🥚'
-  },
-  {
-    handle: 'juiccc25', name: '優優', fullName: '優優🍒',
-    url: 'https://www.tiktok.com/@juiccc25',
-    thumb: 'assets/avatars/juiccc25.jpg',
-    emoji: '🍒'
-  },
-  {
-    handle: 'chloe13149999', name: '克蘿伊', fullName: '克蘿伊🎀',
-    url: 'https://www.tiktok.com/@chloe13149999',
-    thumb: 'assets/avatars/chloe13149999.jpg',
-    emoji: '🎀'
-  },
-  {
-    handle: 'sevenmonki', name: '阿娜子', fullName: 'A-NA阿娜子🐵',
-    url: 'https://www.tiktok.com/@sevenmonki',
-    thumb: 'assets/avatars/sevenmonki.jpg',
-    emoji: '🐵'
-  },
-  {
-    handle: 'sea.817', name: '黃曉海', fullName: '黃曉海🌊',
-    url: 'https://www.tiktok.com/@sea.817',
-    thumb: 'assets/avatars/sea.817.jpg',
-    emoji: '🌊'
-  },
-  {
-    handle: 'lucky_1388', name: '皮蛋', fullName: '皮蛋🍀',
-    url: 'https://www.tiktok.com/@lucky_1388',
-    thumb: 'assets/avatars/lucky_1388.jpg',
-    emoji: '🍀'
-  },
-  {
-    handle: 'user30678fuck', name: 'Faker', fullName: 'Faker🐟',
-    url: 'https://www.tiktok.com/@user30678fuck',
-    thumb: 'assets/avatars/user30678fuck.jpg',
-    emoji: '🐟'
-  },
-  {
-    // 2026-08-27 頭像已從 TikTok 抓取 1080p 高畫質更新；fullName 補上前綴徽章
-    handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️',
-    url: 'https://www.tiktok.com/@fierce1222',
-    thumb: 'assets/avatars/fierce1222.jpg',
-    emoji: '⚜️'
   },
   {
     handle: 'jack09_20', name: '曜宸Jack', fullName: '曜宸💼Jack',
     url: 'https://www.tiktok.com/@jack09_20',
     thumb: 'assets/avatars/jack09_20.jpg',
+    followers: 14800,
     emoji: '💼'
   },
   {
-    handle: 'jan_11111', name: '河馬哥哥', fullName: '河馬哥哥🦛',
-    url: 'https://www.tiktok.com/@jan_11111',
-    thumb: 'assets/avatars/jan_11111.jpg',
-    emoji: '🦛'
+    handle: 'demidemi0103', name: 'ㄚ咪', fullName: '貪吃鬼ㄚ咪🥚',
+    url: 'https://www.tiktok.com/@demidemi0103',
+    thumb: 'assets/avatars/demidemi0103.jpg',
+    followers: 14200,
+    emoji: '🥚'
   },
   {
-    // Fixed: now has real avatar (was placeholder before)
+    handle: 'lucky_1388', name: '皮蛋', fullName: '皮蛋🍀',
+    url: 'https://www.tiktok.com/@lucky_1388',
+    thumb: 'assets/avatars/lucky_1388.jpg',
+    followers: 12500,
+    emoji: '🍀'
+  },
+  {
     handle: 'm4jo6211', name: '小折', fullName: '小折💣',
     url: 'https://www.tiktok.com/@m4jo6211',
     thumb: 'assets/avatars/m4jo6211.jpg',
+    followers: 7081,
     emoji: '💣'
   },
   {
-    handle: 'eunice_ice_', name: '尤妮酥', fullName: '尤妮酥💫',
-    url: 'https://www.tiktok.com/@eunice_ice_',
-    thumb: 'assets/avatars/eunice_ice_.jpg',
-    emoji: '💫'
+    handle: 'taco_ya124', name: '叩叩Taco', fullName: '叩叩Taco🌱',
+    url: 'https://www.tiktok.com/@taco_ya124',
+    thumb: 'assets/avatars/taco_ya124.jpg',
+    followers: 6994,
+    emoji: '🌱'
   },
   {
-    handle: 'wawagiking', name: '翔a', fullName: '翔a🎈',
-    url: 'https://www.tiktok.com/@wawagiking',
-    thumb: 'assets/avatars/wawagiking.jpg',
-    emoji: '🎈'
+    handle: 'fierce1222', name: '元承烈', fullName: '⚜️元承烈🎙️',
+    url: 'https://www.tiktok.com/@fierce1222',
+    thumb: 'assets/avatars/fierce1222.jpg',
+    followers: 5379,
+    emoji: '⚜️'
   },
   {
-    handle: '080u_u080', name: '拾貳', fullName: '拾貳🎈',
-    url: 'https://www.tiktok.com/@080u_u080',
-    thumb: 'assets/avatars/080u_u080.jpg',
-    emoji: '🎈'
+    handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅',
+    url: 'https://www.tiktok.com/@c_mi_0908',
+    thumb: 'assets/avatars/c_mi_0908.jpg',
+    followers: 5065,
+    emoji: '🪅'
   },
   {
-    handle: 'ciaoc.tw', name: '雀兒', fullName: '雀兒👽',
-    url: 'https://www.tiktok.com/@ciaoc.tw',
-    thumb: 'assets/avatars/ciaoc.tw.jpg',
-    emoji: '👽'
+    handle: 'user30678fuck', name: '予辰', fullName: '予辰🐟',
+    url: 'https://www.tiktok.com/@user30678fuck',
+    thumb: 'assets/avatars/user30678fuck.jpg',
+    followers: 5043,
+    emoji: '🐟'
   },
   {
     handle: 'zhi_xuan93_0125', name: '尹流星', fullName: '尹流星🎙️',
     url: 'https://www.tiktok.com/@zhi_xuan93_0125',
     thumb: 'assets/avatars/zhi_xuan93_0125.jpg',
+    followers: 4835,
     emoji: '🎙️'
+  },
+  {
+    handle: 'mai916537', name: '甜桃', fullName: '甜桃🍑',
+    url: 'https://www.tiktok.com/@mai916537',
+    thumb: 'assets/avatars/mai916537.jpg',
+    followers: 4776,
+    emoji: '🍑'
+  },
+  {
+    handle: 'ambercblyr3', name: '貢你妹', fullName: '貢你妹🍘',
+    url: 'https://www.tiktok.com/@ambercblyr3',
+    thumb: 'assets/avatars/ambercblyr3.jpg',
+    followers: 4300,
+    emoji: '🍘'
+  },
+  {
+    handle: 'juiccc25', name: '優優', fullName: '優優🍒',
+    url: 'https://www.tiktok.com/@juiccc25',
+    thumb: 'assets/avatars/juiccc25.jpg',
+    followers: 3939,
+    emoji: '🍒'
+  },
+  {
+    handle: 'ciaoc.tw', name: '雀兒', fullName: '雀兒👽',
+    url: 'https://www.tiktok.com/@ciaoc.tw',
+    thumb: 'assets/avatars/ciaoc.tw.jpg',
+    followers: 3507,
+    emoji: '👽'
+  },
+  {
+    handle: 'eunice_ice_', name: '尤妮酥', fullName: '尤妮酥💫',
+    url: 'https://www.tiktok.com/@eunice_ice_',
+    thumb: 'assets/avatars/eunice_ice_.jpg',
+    followers: 3014,
+    emoji: '💫'
+  },
+  {
+    handle: 'chloe13149999', name: '玖玖', fullName: '玖玖🎀',
+    url: 'https://www.tiktok.com/@chloe13149999',
+    thumb: 'assets/avatars/chloe13149999.jpg',
+    followers: 2834,
+    emoji: '🎀'
+  },
+  {
+    handle: 'wawagiking', name: '嘎吱窩的味道', fullName: '嘎吱窩的味道♋',
+    url: 'https://www.tiktok.com/@wawagiking',
+    thumb: 'assets/avatars/wawagiking.jpg',
+    followers: 2181,
+    emoji: '♋'
+  },
+  {
+    handle: 'sea.817', name: '黃曉海', fullName: '黃曉海🌊',
+    url: 'https://www.tiktok.com/@sea.817',
+    thumb: 'assets/avatars/sea.817.jpg',
+    followers: 1401,
+    emoji: '🌊'
+  },
+  {
+    handle: 'xnln950726', name: '亮亮', fullName: '亮亮❣️',
+    url: 'https://www.tiktok.com/@xnln950726',
+    thumb: 'assets/avatars/xnln950726.jpg',
+    followers: 1011,
+    emoji: '❣️'
+  },
+  {
+    handle: 'jan_11111', name: '河馬哥哥', fullName: '河馬哥哥🦛',
+    url: 'https://www.tiktok.com/@jan_11111',
+    thumb: 'assets/avatars/jan_11111.jpg',
+    followers: 863,
+    emoji: '🦛'
+  },
+  {
+    handle: '080u_u080', name: '拾貳', fullName: '拾貳🎈',
+    url: 'https://www.tiktok.com/@080u_u080',
+    thumb: 'assets/avatars/080u_u080.jpg',
+    followers: 810,
+    emoji: '🎈'
   }
 ];
 
@@ -286,11 +313,26 @@ const tiktokSVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="current
 </svg>`;
 
 // ===== STREAMER CARD HTML =====
+// 格式化粉絲數：>= 10000 => 「X.X 萬粉」；否則不顯示
+function formatFollowers(n) {
+  if (!n || n < 10000) return null;
+  const wan = n / 10000;
+  return wan >= 10 ? `${Math.round(wan)}萬粉` : `${wan.toFixed(1)}萬粉`;
+}
 function makeCard(s, i, small = false) {
+  const followersLabel = formatFollowers(s.followers);
+  const followerBadge = followersLabel
+    ? `<div class="streamer-followers-badge" title="TikTok 粉絲數">
+         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+         ${followersLabel}
+       </div>`
+    : '';
   return `
     <a href="${s.url}" target="_blank" rel="noopener noreferrer"
        class="streamer-card${small ? ' streamer-card-sm' : ''}"
        style="animation-delay:${(i % 15) * 0.05}s">
+      <div class="streamer-tiktok-badge" title="TikTok 主播" aria-hidden="true">${tiktokSVG}</div>
+      ${followerBadge}
       <div class="streamer-avatar-wrap">
         <img class="streamer-avatar-img" src="${s.thumb}" alt="${s.name}" loading="lazy"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
