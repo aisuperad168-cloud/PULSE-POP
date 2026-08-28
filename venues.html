@@ -523,13 +523,14 @@ a { color: inherit; text-decoration: none; }
 
 /* ========== WHAT JDI PROVIDES ========== */
 .v-provides-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px; margin-top: 40px;
 }
 .v-provide-card {
   padding: 24px; background: rgba(255,255,255,0.04);
   border: 1px solid var(--line-1); border-radius: 14px;
   display: flex; gap: 14px; align-items: flex-start;
+  min-width: 0;
 }
 .v-provide-icon {
   width: 44px; height: 44px; border-radius: 12px;
@@ -537,8 +538,17 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; flex-shrink: 0;
 }
-.v-provide-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.v-provide-body {
+  flex: 1; min-width: 0;
+}
+.v-provide-title {
+  font-size: 15px; font-weight: 800; margin-bottom: 4px;
+  white-space: nowrap; letter-spacing: 0.5px;
+}
 .v-provide-desc { font-size: 13px; color: var(--tx-2); line-height: 1.6; }
+@media (max-width: 480px) {
+  .v-provide-title { white-space: normal; }
+}
 
 /* ========== REQUIREMENTS (場地資格) ========== */
 .v-req-box {
@@ -978,33 +988,45 @@ a { color: inherit; text-decoration: none; }
     <div class="v-provides-grid">
       <div class="v-provide-card">
         <div class="v-provide-icon">🎤</div>
-        <div class="v-provide-title">主播派遣</div>
-        <div class="v-provide-desc">JDI 從全台百人主播庫依你的偏好媒合適配主播，含背景審查與簽約。</div>
+        <div class="v-provide-body">
+          <div class="v-provide-title">主播派遣</div>
+          <div class="v-provide-desc">JDI 從全台百人主播庫依你的偏好媒合適配主播，含背景審查與簽約。</div>
+        </div>
       </div>
       <div class="v-provide-card">
         <div class="v-provide-icon">💡</div>
-        <div class="v-provide-title">設備補助</div>
-        <div class="v-provide-desc">補光燈、麥克風、直播支架、Wi-Fi 增強器等基本設備由 JDI 補助或代購。</div>
+        <div class="v-provide-body">
+          <div class="v-provide-title">設備補助</div>
+          <div class="v-provide-desc">補光燈、麥克風、直播支架、Wi-Fi 增強器等基本設備由 JDI 補助或代購。</div>
+        </div>
       </div>
       <div class="v-provide-card">
         <div class="v-provide-icon">📋</div>
-        <div class="v-provide-title">使用 SOP</div>
-        <div class="v-provide-desc">門鎖交接、清潔規範、噪音管理、安全守則—— 全部寫入合約與 SOP 手冊。</div>
+        <div class="v-provide-body">
+          <div class="v-provide-title">使用 SOP</div>
+          <div class="v-provide-desc">門鎖交接、清潔規範、噪音管理、安全守則—— 全部寫入合約與 SOP 手冊。</div>
+        </div>
       </div>
       <div class="v-provide-card">
         <div class="v-provide-icon">🛡️</div>
-        <div class="v-provide-title">公共意外險</div>
-        <div class="v-provide-desc">每位主播投保責任險，物品損壞 JDI 依比例賠償，屋主零風險。</div>
+        <div class="v-provide-body">
+          <div class="v-provide-title">公共意外險</div>
+          <div class="v-provide-desc">每位主播投保責任險，物品損壞 JDI 依比例賠償，屋主零風險。</div>
+        </div>
       </div>
       <div class="v-provide-card">
         <div class="v-provide-icon">💰</div>
-        <div class="v-provide-title">營收結算</div>
-        <div class="v-provide-desc">每月固定日期匯款，明細透明可查，屋主完全被動收入。</div>
+        <div class="v-provide-body">
+          <div class="v-provide-title">營收結算</div>
+          <div class="v-provide-desc">每月固定日期匯款，明細透明可查，屋主完全被動收入。</div>
+        </div>
       </div>
       <div class="v-provide-card">
         <div class="v-provide-icon">📞</div>
-        <div class="v-provide-title">專屬窗口</div>
-        <div class="v-provide-desc">簽約後配置專屬合作經理，任何問題 LINE 直接對接，24h 內回覆。</div>
+        <div class="v-provide-body">
+          <div class="v-provide-title">專屬窗口</div>
+          <div class="v-provide-desc">簽約後配置專屬合作經理，任何問題 LINE 直接對接，24h 內回覆。</div>
+        </div>
       </div>
     </div>
   </div>
