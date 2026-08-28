@@ -187,3 +187,43 @@ CREATE INDEX IF NOT EXISTS idx_careers_email      ON careers_applications (email
 CREATE INDEX IF NOT EXISTS idx_careers_position   ON careers_applications (position_key);
 CREATE INDEX IF NOT EXISTS idx_careers_department ON careers_applications (department);
 CREATE INDEX IF NOT EXISTS idx_careers_created    ON careers_applications (created_at);
+
+-- ============================================================
+-- 全台直播間夥伴募集名單 (venues.html)
+-- 屋主提供場地 · 抽成分潤 or 使用費 · 場勘 → 簽約 → 上線
+-- ============================================================
+CREATE TABLE IF NOT EXISTS venue_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 屋主資料
+  name TEXT NOT NULL,                       -- 屋主/聯絡人姓名
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  line_id TEXT,                             -- LINE ID（選填但推薦）
+  -- 場地資訊
+  city TEXT NOT NULL,                       -- 縣市: taipei / newtaipei / taoyuan / hsinchu / miaoli / taichung / changhua / nantou / yunlin / chiayi / tainan / kaohsiung / pingtung / yilan / hualien / taitung / penghu / kinmen / matsu
+  district TEXT,                            -- 行政區（選填）
+  space_size TEXT NOT NULL,                 -- 空間大小: under_3 / 3_5 / 5_10 / 10_20 / over_20 （坪）
+  space_type TEXT NOT NULL,                 -- 空間類型: home / studio / cafe / homestay / shop / office / other
+  wifi_speed TEXT NOT NULL,                 -- Wi-Fi 速度: under_100 / 100_300 / 300_500 / over_500 （Mbps）
+  has_lighting INTEGER NOT NULL DEFAULT 0,  -- 有無基本補光: 0 無 / 1 有
+  available_time TEXT,                      -- 可用時段: JSON array ["weekday_day","weekday_night","weekend_day","weekend_night","anytime"]
+  -- 合作意向
+  cooperation_mode TEXT NOT NULL,           -- 合作模式偏好: profit_share / hourly_rate / both
+  photos_url TEXT,                          -- 場地照片連結（Google Drive/Photos）
+  space_features TEXT,                      -- 場地特色描述（自由填寫）
+  message TEXT,                             -- 其他備註
+  -- 同意
+  consent INTEGER NOT NULL DEFAULT 1,
+  -- Meta
+  source TEXT,                              -- venues-page
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_venue_email      ON venue_applications (email);
+CREATE INDEX IF NOT EXISTS idx_venue_city       ON venue_applications (city);
+CREATE INDEX IF NOT EXISTS idx_venue_mode       ON venue_applications (cooperation_mode);
+CREATE INDEX IF NOT EXISTS idx_venue_created    ON venue_applications (created_at);

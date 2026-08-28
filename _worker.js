@@ -26,6 +26,7 @@ import * as contactHandler from './functions/api/contact-submit.js';
 import * as streamerTestHandler from './functions/api/streamer-test-submit.js';
 import * as rookieTestHandler from './functions/api/rookie-test-submit.js';
 import * as careersHandler from './functions/api/careers-submit.js';
+import * as venuesHandler from './functions/api/venues-submit.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -34,6 +35,7 @@ const API_ROUTES = {
   '/api/streamer-test-submit': streamerTestHandler,
   '/api/rookie-test-submit': rookieTestHandler,
   '/api/careers-submit': careersHandler,
+  '/api/venues-submit': venuesHandler,
 };
 
 export default {

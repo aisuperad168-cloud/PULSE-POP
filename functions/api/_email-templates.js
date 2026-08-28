@@ -729,3 +729,293 @@ export function renderCareersNotifyEmail({
 </body>
 </html>`;
 }
+
+// ============================================================
+// VENUES: OWNER CONFIRM EMAIL (寄給屋主 / 場地業主)
+// ============================================================
+export function renderVenuesConfirmEmail({
+  name, cityLabel, district,
+  spaceSizeLabel, spaceTypeLabel, wifiSpeedLabel, hasLighting,
+  availableTimeLabels, cooperationModeLabel,
+  photosUrl, spaceFeatures, message,
+  lineId
+}) {
+  const slotsHtml = (availableTimeLabels && availableTimeLabels.length)
+    ? availableTimeLabels.map(s => `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#25F4EE22;color:#0a7570;border-radius:12px;font-size:12px;font-weight:600;">${esc(s)}</span>`).join('')
+    : '<span style="color:#999;font-size:13px;">未指定 · 可協商</span>';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>已收到您的場地登記</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <tr><td style="background:linear-gradient(135deg,#05050A,#16162A);padding:32px 32px 24px;text-align:center;">
+          <div style="color:#25F4EE;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:8px;">JDI 脈動傳媒 · 全台直播間夥伴計畫</div>
+          <div style="color:#ffffff;font-size:22px;font-weight:800;">🏠 已收到您的場地登記</div>
+        </td></tr>
+
+        <tr><td style="padding:32px 32px 16px;text-align:center;">
+          <div style="font-size:16px;color:#333;line-height:1.7;">
+            <strong>${esc(name)}</strong> 您好，感謝您有意成為 JDI 直播間合作夥伴！<br>
+            我們已收到您的 <strong style="color:#FE2C55;">${esc(cityLabel)}${district ? ' ' + esc(district) : ''}</strong> 場地資料。
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#25F4EE11,#FE2C5511);border-radius:12px;padding:20px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">📞</div>
+              <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:4px;">3 個工作天內主動聯繫</div>
+              <div style="font-size:13px;color:#666;">場地媒合團隊將透過 Email / 電話 / LINE 與您安排線上初談或現場場勘</div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:8px 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📋 場地摘要</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:110px;vertical-align:top;">地區</td>
+                <td style="padding:6px 0;font-size:15px;color:#111;font-weight:700;">${esc(cityLabel)}${district ? '　' + esc(district) : ''}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">空間大小</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(spaceSizeLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">空間類型</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(spaceTypeLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Wi-Fi 速度</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(wifiSpeedLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">基本補光</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${hasLighting ? '✅ 有' : '⚠️ 無（我們可協助補齊）'}</td></tr>
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">可用時段</td>
+                <td style="padding:10px 0 6px;">${slotsHtml}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">合作模式</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-weight:600;">${esc(cooperationModeLabel)}</td></tr>
+            ${lineId ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">LINE ID</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(lineId)}</td></tr>` : ''}
+            ${photosUrl ? `<tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">場地照片</td>
+                <td style="padding:10px 0 6px;font-size:13px;"><a href="${esc(photosUrl)}" style="color:#25F4EE;word-break:break-all;text-decoration:underline;">${esc(photosUrl)}</a></td></tr>` : ''}
+            ${spaceFeatures ? `<tr><td colspan="2" style="padding:12px 0 0;">
+              <div style="font-size:13px;color:#666;margin-bottom:6px;">場地特色：</div>
+              <div style="font-size:14px;color:#333;line-height:1.7;background:#fff;border-radius:8px;padding:14px;border:1px solid #eee;white-space:pre-wrap;">${esc(spaceFeatures)}</div>
+            </td></tr>` : ''}
+            ${message ? `<tr><td colspan="2" style="padding:12px 0 0;">
+              <div style="font-size:13px;color:#666;margin-bottom:6px;">其他備註：</div>
+              <div style="font-size:14px;color:#333;line-height:1.7;background:#fff;border-radius:8px;padding:14px;border:1px solid #eee;white-space:pre-wrap;">${esc(message)}</div>
+            </td></tr>` : ''}
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">🎯 接下來的流程</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;">
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">① 線上初談</strong>（3 個工作天內）<br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">場地媒合團隊透過電話 / LINE 了解場地細節與合作意向</span>
+            </td></tr>
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">② 現場場勘</strong>（1–2 週內）<br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">實地檢查空間、光線、Wi-Fi、隔音；提供設備需求評估</span>
+            </td></tr>
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">③ 合作簽約</strong><br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">依場地條件協商分潤 / 使用費、保險、SOP、責任範圍</span>
+            </td></tr>
+            <tr><td style="padding:8px 0;font-size:14px;color:#333;line-height:1.7;">
+              <strong style="color:#25F4EE;">④ 主播進駐上線</strong>（簽約後 1–2 週）<br>
+              <span style="color:#666;font-size:13px;padding-left:16px;">補齊設備 → 主播試播 → 正式使用場地開始創造收益</span>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📱 若有疑問，隨時聯繫我們</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td width="50%" style="padding:0 6px 0 0;">
+                <a href="https://line.me/R/ti/p/@354ykfbp" style="display:block;padding:14px;background:#06C755;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:700;font-size:14px;">
+                  💬 LINE 官方諮詢
+                </a>
+              </td>
+              <td width="50%" style="padding:0 0 0 6px;">
+                <a href="tel:04-3603-3191" style="display:block;padding:14px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:700;font-size:14px;">
+                  📞 04-3603-3191
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:24px 32px;border-top:1px solid #eee;background:#fafafa;">
+          <div style="font-size:13px;color:#666;line-height:1.7;text-align:center;">
+            <strong style="color:#111;">JDI 脈動傳媒 JDI Pulse MEDIA</strong><br>
+            TikTok LIVE 官方合作經紀公會 · 全台直播間夥伴計畫<br>
+            <a href="https://jdi-pulse.com/venues" style="color:#25F4EE;text-decoration:none;">jdi-pulse.com/venues</a>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:16px 32px 24px;text-align:center;">
+          <div style="font-size:11px;color:#aaa;line-height:1.5;">
+            此為系統自動確認信，請勿直接回覆此信箱。<br>
+            若需回覆，請 email 至 pulsepop9@gmail.com 或加 LINE @354ykfbp。
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+// ============================================================
+// VENUES: ADMIN NOTIFY EMAIL (寄給 HR / 場地媒合團隊)
+// ============================================================
+export function renderVenuesNotifyEmail({
+  name, email, phone, lineId,
+  cityLabel, district,
+  spaceSizeLabel, spaceTypeLabel, wifiSpeedLabel, hasLighting,
+  availableTimeLabels, cooperationModeLabel, cooperationModeKey,
+  photosUrl, spaceFeatures, message,
+  source, country, appId
+}) {
+  const modeColor = {
+    profit_share: '#FE2C55',
+    hourly_rate:  '#25F4EE',
+    both:         '#FFA500'
+  }[cooperationModeKey] || '#666';
+
+  const slotsHtml = (availableTimeLabels && availableTimeLabels.length)
+    ? availableTimeLabels.map(s => `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:${modeColor};color:#fff;border-radius:12px;font-size:12px;font-weight:600;">${esc(s)}</span>`).join('')
+    : '<span style="color:#999;font-size:13px;">未指定 · 可協商</span>';
+
+  const now = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>新場地登記</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+        <tr><td style="background:linear-gradient(135deg,${modeColor},#16162A);padding:24px 28px;">
+          <div style="color:#fff;font-size:12px;font-weight:600;letter-spacing:1px;opacity:0.9;">JDI 官網通知 · VENUE APPLICATION</div>
+          <div style="color:#fff;font-size:22px;font-weight:800;margin-top:6px;">🏠 新場地登記</div>
+          <div style="color:#fff;font-size:14px;margin-top:8px;opacity:0.95;">
+            <strong style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:6px;">${esc(cityLabel)}${district ? ' ' + esc(district) : ''}</strong>
+            <span style="margin-left:8px;">${esc(spaceSizeLabel)}</span>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:24px 28px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">登記編號</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-family:monospace;">#${esc(appId || 'N/A')}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">時間</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-family:monospace;">${esc(now)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">來源</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(source || 'venues-page')} ${country ? '· ' + esc(country) : ''}</td></tr>
+          </table>
+
+          <hr style="border:none;border-top:1px solid #eee;margin:16px 0;">
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">屋主</td>
+                <td style="padding:6px 0;font-size:16px;color:#111;font-weight:700;">${esc(name)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Email</td>
+                <td style="padding:6px 0;font-size:14px;"><a href="mailto:${esc(email)}" style="color:${modeColor};text-decoration:none;font-weight:600;">${esc(email)}</a></td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">電話</td>
+                <td style="padding:6px 0;font-size:14px;"><a href="tel:${esc(phone)}" style="color:${modeColor};text-decoration:none;font-weight:600;">${esc(phone)}</a></td></tr>
+            ${lineId ? `<tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">LINE ID</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-weight:600;">${esc(lineId)}</td></tr>` : ''}
+          </table>
+
+          <hr style="border:none;border-top:1px solid #eee;margin:16px 0;">
+
+          <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:10px;">🏠 場地資訊</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;width:100px;vertical-align:top;">地區</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;font-weight:600;">${esc(cityLabel)}${district ? '　' + esc(district) : ''}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">空間大小</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(spaceSizeLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">空間類型</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(spaceTypeLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">Wi-Fi 速度</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${esc(wifiSpeedLabel)}</td></tr>
+            <tr><td style="padding:6px 0;font-size:13px;color:#666;vertical-align:top;">基本補光</td>
+                <td style="padding:6px 0;font-size:14px;color:#111;">${hasLighting ? '✅ 有' : '⚠️ 無（需協助補齊）'}</td></tr>
+            <tr><td style="padding:10px 0 6px;font-size:13px;color:#666;vertical-align:top;">可用時段</td>
+                <td style="padding:10px 0 6px;">${slotsHtml}</td></tr>
+          </table>
+
+          <div style="margin-top:16px;padding:16px;background:linear-gradient(135deg,${modeColor}15,#fafafa);border-left:3px solid ${modeColor};border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">💰 合作模式偏好</div>
+            <div style="font-size:15px;color:#111;font-weight:700;">${esc(cooperationModeLabel)}</div>
+          </div>
+
+          ${photosUrl ? `<div style="margin-top:12px;padding:16px;background:#fafafa;border-left:3px solid #25F4EE;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">📸 場地照片</div>
+            <a href="${esc(photosUrl)}" style="color:#25F4EE;font-size:14px;font-weight:600;word-break:break-all;text-decoration:underline;">${esc(photosUrl)}</a>
+          </div>` : `<div style="margin-top:12px;padding:12px 16px;background:#fff8e1;border-left:3px solid #FFA500;border-radius:6px;">
+            <div style="font-size:13px;color:#a06400;">⚠️ 屋主未提供場地照片 — 場勘前建議先請對方拍照傳送</div>
+          </div>`}
+
+          ${spaceFeatures ? `<div style="margin-top:16px;padding:16px;background:#fafafa;border-left:3px solid #FE2C55;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">✨ 場地特色</div>
+            <div style="font-size:14px;color:#333;line-height:1.7;white-space:pre-wrap;">${esc(spaceFeatures)}</div>
+          </div>` : ''}
+
+          ${message ? `<div style="margin-top:16px;padding:16px;background:#fafafa;border-left:3px solid #FFA500;border-radius:6px;">
+            <div style="font-size:12px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:8px;">💬 其他備註</div>
+            <div style="font-size:14px;color:#333;line-height:1.7;white-space:pre-wrap;">${esc(message)}</div>
+          </div>` : ''}
+
+          <div style="margin-top:20px;padding:14px;background:linear-gradient(135deg,#25F4EE22,#FE2C5522);border-radius:8px;text-align:center;">
+            <div style="font-size:13px;color:#111;line-height:1.6;">
+              ⚡ <strong>建議在 3 個工作天內回覆</strong><br>
+              直接回覆此信 → 屋主會收到（Reply-To 已設為屋主 Email）
+            </div>
+          </div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
+            <tr>
+              <td width="33%" style="padding:0 4px 0 0;">
+                <a href="mailto:${esc(email)}" style="display:block;padding:12px;background:${modeColor};color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📧 回信
+                </a>
+              </td>
+              <td width="33%" style="padding:0 4px;">
+                <a href="tel:${esc(phone)}" style="display:block;padding:12px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📞 撥打
+                </a>
+              </td>
+              <td width="33%" style="padding:0 0 0 4px;">
+                ${photosUrl ? `<a href="${esc(photosUrl)}" style="display:block;padding:12px;background:#25F4EE;color:#000;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📸 看照片
+                </a>` : `<div style="padding:12px;background:#eee;color:#999;text-align:center;border-radius:8px;font-weight:700;font-size:13px;">📸 無照片</div>`}
+              </td>
+            </tr>
+          </table>
+
+        </td></tr>
+
+        <tr><td style="padding:16px 28px;background:#fafafa;text-align:center;">
+          <div style="font-size:11px;color:#aaa;">
+            JDI 脈動傳媒 · JDI PULSE MEDIA · Venues 場地媒合系統
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
