@@ -71,31 +71,134 @@
 }
 </script>
 
-<!-- ========== SCHEMA.ORG JSON-LD · JobPosting × 8 ========== -->
+<!-- ========== SCHEMA.ORG JSON-LD · Organization (全站共用) ========== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://jdi-pulse.com/#organization",
+  "name": "JDI 脈動傳媒",
+  "alternateName": ["JDI Pulse MEDIA", "脈動傳媒", "JDI 公會", "Pulse MEDIA"],
+  "legalName": "JDI 脈動傳媒",
+  "description": "台灣 TikTok LIVE 官方合作經紀公會，300+ 簽約主播、0 抽佣、現金保底、佣金池最高 43.5%。同時經營線下直播間，提供完整直播設備與多主題場景。",
+  "url": "https://jdi-pulse.com/",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
+    "width": 512,
+    "height": 512
+  },
+  "image": "https://jdi-pulse.com/assets/og_banner.jpg",
+  "email": "pulsepop9@gmail.com",
+  "telephone": "+886-4-3603-3191",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "台北市",
+    "addressRegion": "台灣",
+    "addressCountry": "TW"
+  },
+  "areaServed": [
+    { "@type": "Country", "name": "Taiwan" },
+    { "@type": "Country", "name": "Hong Kong" },
+    { "@type": "Country", "name": "Singapore" }
+  ],
+  "knowsAbout": [
+    "TikTok LIVE",
+    "直播主經紀",
+    "主播培訓",
+    "線下直播間營運",
+    "業配代言媒合",
+    "短影音企劃剪輯",
+    "娛樂公會"
+  ],
+  "sameAs": [
+    "https://www.tiktok.com/@pulse.pop9",
+    "https://www.instagram.com/pulse.pop9",
+    "https://line.me/R/ti/p/@354ykfbp"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+886-4-3603-3191",
+      "contactType": "customer service",
+      "email": "pulsepop9@gmail.com",
+      "areaServed": "TW",
+      "availableLanguage": ["zh-Hant", "zh-TW"]
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "HR",
+      "email": "pulsepop9@gmail.com",
+      "areaServed": "TW",
+      "availableLanguage": ["zh-Hant"]
+    }
+  ]
+}
+</script>
+
+<!-- ========== SCHEMA.ORG JSON-LD · JobPosting × 8 (2026 增強版) ========== -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "主播經紀人",
-  "description": "1v1 對接旗下主播、日常溝通與 KPI 追蹤、直播內容規劃與心態輔導。每位經紀約管 20-40 位主播。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>1v1 對接旗下 20-40 位簽約主播，建立信任關係</li><li>日常溝通、直播 KPI 追蹤與檢討</li><li>直播內容規劃、選題建議與人設調整</li><li>心態輔導、情緒陪伴（直播主是高壓工作，經紀人是心靈支柱）</li><li>與品牌方對接業配、活動媒合機會</li><li>月度分潤結算、獎金試算與主播財務規劃建議</li></ul><p><strong>【必備條件】</strong></p><ul><li>2 年以上內容 / 娛樂 / 媒體 / 客服相關經驗</li><li>優秀的溝通與同理心，能處理主播情緒與衝突</li><li>熟悉 TikTok / IG / YouTube / Line 等社交平台</li><li>基本的 Excel 或 Google Sheets 數據追蹤能力</li></ul><p><strong>【加分條件】</strong></p><ul><li>曾從事直播 / KOL / 網紅相關工作</li><li>熟悉 TikTok LIVE 演算法與獎勵機制</li><li>有心理諮商 / 教練 / 銷售背景</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 33,000-45,000 元（依經驗核薪）</li><li>季度績效獎金 + 主播晉升激勵</li><li>勞健保、特休、國定假日</li><li>每年 2 次員工旅遊、免費員工餐、直播間免費使用</li><li>年終獎金 1-3 個月</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-AGT-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "TELECOMMUTE",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 33000, "maxValue": 45000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Talent Management",
+  "occupationalCategory": "13-1011.00 Agents and Business Managers of Artists, Performers, and Athletes",
+  "workHours": "週一至週五 13:00-22:00（可彈性）",
+  "responsibilities": "1v1 對接 20-40 位簽約主播、KPI 追蹤、直播內容規劃、心態輔導、業配媒合、月度分潤結算",
+  "qualifications": "2 年以上內容/娛樂/媒體/客服經驗，優秀溝通與同理心，熟悉 TikTok/IG/YouTube 等平台",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 24
+  },
+  "skills": "溝通協調, 情緒管理, TikTok LIVE 演算法, 數據分析, Excel, Google Sheets, 內容企劃, 客戶關係管理",
+  "jobBenefits": "月薪 33-45K + 季度獎金 + 年終 1-3 個月 + 勞健保 + 員工旅遊 × 2/年 + 直播間免費使用",
+  "incentiveCompensation": "季度績效獎金 + 主播晉升激勵金",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "線上營運部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -104,25 +207,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "主播招募 BD",
-  "description": "主動開發新主播（IG/TikTok 私訊、線下面試、推薦制媒合），達成月度招募 KPI。招募獎金另計。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>主動開發新主播（每日 IG / TikTok / Threads 私訊 50+ 位潛力創作者）</li><li>安排線下面試、公會導覽、簽約流程</li><li>推薦制媒合：現有主播/朋友介紹回饋制度</li><li>達成月度招募 KPI（新簽約 8-12 位/月）</li><li>經營招募社群（LINE 群組、Discord、Facebook 社團）</li><li>與經紀團隊交接新簽約主播</li></ul><p><strong>【必備條件】</strong></p><ul><li>2 年以上業務、招募、社群、公關相關經驗</li><li>擅長冷啟動陌生開發，抗壓能力強</li><li>熱愛社交媒體，能識別潛力主播</li><li>熟悉台灣 TikTok / IG 網紅生態</li></ul><p><strong>【加分條件】</strong></p><ul><li>本身有直播 / 短影音經驗</li><li>擅長私訊話術、能引導潛在客戶下決定</li><li>有 HR / 獵頭 / 業務背景</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 35,000-50,000 元</li><li><strong>招募獎金另計</strong>（每簽約 1 位新主播 2,000-5,000 元）</li><li>季度招募王獎金：達標最高 30,000 元</li><li>勞健保、特休、年終 1-3 個月、員工旅遊</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-BD-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "TELECOMMUTE",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 35000, "maxValue": 50000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Recruiting",
+  "occupationalCategory": "13-1071.00 Human Resources Specialists",
+  "workHours": "週一至週五 13:00-22:00（可彈性）",
+  "responsibilities": "主動開發新主播、安排面試簽約、推薦制媒合、月度招募 KPI（8-12 位/月）、經營招募社群",
+  "qualifications": "2 年以上業務/招募/社群/公關經驗，擅長冷啟動陌生開發，熟悉台灣 TikTok/IG 網紅生態",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 24
+  },
+  "skills": "業務開發, 陌生開發, 私訊話術, 招募面試, 社群經營, 網紅生態, LINE 群組管理, 談判技巧",
+  "jobBenefits": "月薪 35-50K + 招募獎金（每人 2-5K）+ 季度招募王獎金最高 30K + 勞健保 + 年終 1-3 個月",
+  "incentiveCompensation": "招募獎金 2,000-5,000 元/人 + 季度招募王獎金最高 30,000 元",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "線上營運部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -131,25 +272,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "短影音企劃 / 剪輯師",
-  "description": "為旗下主播規劃 TikTok / Reels 短影音內容，包含腳本發想、剪輯、字幕、封面設計。負責主播的短影音導流成效。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>為旗下 20-40 位主播規劃 TikTok / Reels / Shorts 短影音內容</li><li>腳本發想、拍攝協作、剪輯、字幕、封面設計一條龍</li><li>負責主播短影音導流成效（追蹤觀看數 / 完播率 / 導流至直播間）</li><li>參與熱點選題會議，快速產出當日蹭熱點素材</li><li>與經紀人協作，優化主播人設短影音</li><li>建立與維護 JDI 官方剪輯素材庫（音效、轉場、字幕模板）</li></ul><p><strong>【必備條件】</strong></p><ul><li>1 年以上短影音剪輯經驗（作品集必備）</li><li>熟練 CapCut、Premiere Pro 或 Final Cut Pro</li><li>對 TikTok / Reels 平台演算法與熱點有敏感度</li><li>能同時處理 3-5 條並行剪輯需求</li></ul><p><strong>【加分條件】</strong></p><ul><li>會 After Effects 動態圖形（MG 動畫加分）</li><li>有 KOL / 網紅短影音操作實績</li><li>會攝影、燈光布置</li><li>熟悉 AI 剪輯工具（Descript、Runway、CapCut AI）</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 35,000-48,000 元（依作品集核薪）</li><li>爆款影片獎金（單片破 100 萬觀看 = 5,000 元）</li><li>勞健保、特休、年終 1-3 個月</li><li>提供高階剪輯設備 + Adobe / CapCut Pro 訂閱</li><li>可遠端 / 混合辦公</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-EDIT-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "TELECOMMUTE",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 35000, "maxValue": 48000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Video Production",
+  "occupationalCategory": "27-4032.00 Film and Video Editors",
+  "workHours": "週一至週五 11:00-20:00（可彈性 / 可遠端）",
+  "responsibilities": "短影音腳本發想、剪輯、字幕、封面設計、導流成效追蹤、熱點素材產出、剪輯素材庫維護",
+  "qualifications": "1 年以上短影音剪輯經驗、熟練 CapCut / Premiere Pro，對 TikTok / Reels 演算法敏感",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 12
+  },
+  "skills": "影片剪輯, CapCut, Premiere Pro, Final Cut Pro, After Effects, 字幕製作, 封面設計, 腳本企劃, TikTok 熱點, 短影音演算法, MG 動畫, AI 剪輯",
+  "jobBenefits": "月薪 35-48K + 爆款影片獎金（破百萬觀看 5K）+ 年終 1-3 個月 + Adobe / CapCut Pro 訂閱 + 高階剪輯設備 + 可遠端",
+  "incentiveCompensation": "爆款影片獎金（單片 100 萬觀看 = 5,000 元）",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "內容製作部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -158,25 +337,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "直播間店長 / 場控",
-  "description": "線下直播間每日整體運營、班表排程、主播進出管理、突發狀況處理、跨部門協調。輪班制，包夜班津貼。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>線下直播間每日整體運營（開店 / 收店 SOP）</li><li>10-15 位排班主播的班表排程、進出場管理</li><li>直播間 5-8 個包廂使用率調度、跨主播衝突協調</li><li>突發狀況即時處理（技術故障、主播情緒、粉絲事件）</li><li>與經紀人、技術、化妝跨部門日常協作</li><li>直播間物料補給、清潔外包管理、安全巡檢</li><li>月度營運報表製作（包廂使用率 / 開播時數 / 主播出席）</li></ul><p><strong>【必備條件】</strong></p><ul><li>2 年以上店長、場控、營運相關經驗（餐飲 / 零售 / 娛樂皆可）</li><li>能接受輪班制（含夜班，另有津貼）</li><li>抗壓能力強，能同時處理多線問題</li><li>基礎 Excel / Google Sheets 排班能力</li></ul><p><strong>【加分條件】</strong></p><ul><li>曾任 KTV / 夜店 / 直播間 / 攝影棚場控</li><li>有主播接觸經驗</li><li>會基本器材檢修</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 40,000-55,000 元</li><li>夜班津貼 200-500 元/班</li><li>季度營運績效獎金</li><li>勞健保、特休、年終 1-3 個月</li><li>免費員工餐、直播間免費使用</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-STUDIO-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "OnSite",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 40000, "maxValue": 55000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Studio Operations",
+  "occupationalCategory": "11-9081.00 Lodging Managers",
+  "workHours": "輪班制（含夜班，14:00-23:00 / 17:00-02:00）",
+  "responsibilities": "直播間營運、班表排程、主播進出管理、包廂調度、突發處理、跨部門協調、月度營運報表",
+  "qualifications": "2 年以上店長 / 場控 / 營運經驗，能接受輪班（含夜班），抗壓多線處理能力",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 24
+  },
+  "skills": "現場管理, 人員排班, 突發應變, 跨部門協調, 團隊領導, Excel, Google Sheets, 場地調度, 客訴處理, SOP 執行",
+  "jobBenefits": "月薪 40-55K + 夜班津貼 200-500/班 + 季度營運獎金 + 年終 1-3 個月 + 勞健保 + 免費員工餐",
+  "incentiveCompensation": "夜班津貼 200-500 元/班 + 季度營運績效獎金",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "線下直播間營運部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -185,25 +402,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "直播技術工程師",
-  "description": "直播間網路穩定、OBS 推流設定、多平台推流、燈光音響調校、器材維護與故障排除。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>維護 5-8 個直播間網路穩定性（雙線光纖 + 4G 備援）</li><li>OBS Studio / vMix 推流設定、多平台同時推流架構</li><li>燈光配置（三點布光、環形燈、柔光箱）與情境調整</li><li>音響 / 麥克風調校（動圈 / 電容麥、混音器、消噪處理）</li><li>直播中即時技術支援（斷流、卡頓、破音、閃退排除）</li><li>器材採購評估、日常保養、故障維修</li><li>建立 SOP 與教育訓練，讓主播能自主排除小狀況</li></ul><p><strong>【必備條件】</strong></p><ul><li>2 年以上直播 / 影音技術 / 網管相關經驗</li><li>熟練 OBS Studio、推流原理與位元率設定</li><li>會基礎網路排錯（Ping、Traceroute、路由器設定）</li><li>能接受輪班支援夜間直播</li></ul><p><strong>【加分條件】</strong></p><ul><li>會 vMix / Wirecast 專業導播軟體</li><li>有攝影棚 / 電視台 / 演唱會技術背景</li><li>熟悉 TikTok LIVE / IG LIVE 推流限制與最佳化</li><li>會 Streamlabs、SLOBS、直播打賞特效整合</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 40,000-60,000 元（依技術力核薪）</li><li>技術認證獎金（廠商認證通過 3,000-10,000 元）</li><li>器材採購決策參與權</li><li>勞健保、特休、年終 1-3 個月、員工旅遊</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-TECH-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "OnSite",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 40000, "maxValue": 60000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Broadcast Technology",
+  "occupationalCategory": "27-4011.00 Audio and Video Equipment Technicians",
+  "workHours": "輪班制（14:00-23:00 / 17:00-02:00），支援夜間直播",
+  "responsibilities": "直播間網路維護、OBS 推流設定、多平台推流、燈光音響調校、即時技術支援、器材保養、SOP 建立",
+  "qualifications": "2 年以上直播 / 影音技術經驗，熟練 OBS Studio 與網路排錯，能接受輪班",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "associate degree"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 24
+  },
+  "skills": "OBS Studio, vMix, 直播推流, 網路排錯, 燈光配置, 音響調校, 混音器, 麥克風, 影音編碼, 位元率設定, TikTok LIVE, IG LIVE, Streamlabs, 器材維護",
+  "jobBenefits": "月薪 40-60K + 技術認證獎金 3-10K + 器材採購決策權 + 年終 1-3 個月 + 勞健保 + 員工旅遊",
+  "incentiveCompensation": "技術認證獎金（廠商認證通過 3,000-10,000 元）",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "技術工程部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -212,25 +467,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "化妝造型師（駐點）",
-  "description": "駐點於 JDI 線下直播間，為排班主播開播前提供妝髮造型服務。可全職或排班兼職。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>駐點於 JDI 線下直播間，為排班主播開播前提供妝髮造型服務</li><li>依主播人設 / 直播主題設計對應妝容（清純、御姐、韓系、辣妹等）</li><li>直播鏡頭妝容特化（打亮 / 修容 / 眼妝加強，適應高亮度攝影燈）</li><li>快速妝髮：單人 30-45 分鐘完成完整妝造</li><li>髮型造型（吹整、電棒、盤髮、假髮處理）</li><li>妝品 / 造型工具庫存管理與採購建議</li><li>與主播建立長期造型檔案（照片紀錄 + 偏好記錄）</li></ul><p><strong>【必備條件】</strong></p><ul><li>1 年以上專業化妝經驗（新娘秘書 / 攝影棚 / 沙龍皆可）</li><li>有作品集</li><li>熟悉直播 / 攝影鏡頭下妝容差異</li><li>能配合輪班（含夜班）</li></ul><p><strong>【加分條件】</strong></p><ul><li>持有國際彩妝 / 髮型證照</li><li>曾服務 KOL / 網紅 / 直播主</li><li>會美甲、美睫（可額外收費）</li></ul><p><strong>【福利待遇】</strong></p><ul><li>全職月薪 35,000-45,000 元 / 兼職按班次計費 1,500-2,500 元</li><li>主播打賞分潤（主播開心的話會另外包紅包 XD）</li><li>妝品公費補助（每月 2,000 元）</li><li>勞健保、特休、年終獎金</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-STYLE-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": ["FULL_TIME", "PART_TIME"],
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "OnSite",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 35000, "maxValue": 45000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Makeup & Styling",
+  "occupationalCategory": "39-5091.00 Makeup Artists, Theatrical and Performance",
+  "workHours": "輪班制（含夜班），全職 40hr/週或兼職按班次",
+  "responsibilities": "直播主妝髮造型、鏡頭妝容特化、快速妝髮 30-45 分鐘、髮型設計、造型檔案建立、妝品庫存管理",
+  "qualifications": "1 年以上專業化妝經驗、有作品集、熟悉直播/攝影鏡頭妝容、能配合輪班",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 12
+  },
+  "skills": "專業彩妝, 直播妝容, 鏡頭妝, 髮型設計, 電棒造型, 盤髮, 快速妝髮, 假髮處理, 新娘秘書, 攝影棚妝, 美甲, 美睫",
+  "jobBenefits": "全職 35-45K / 兼職 1.5-2.5K/班 + 主播打賞分潤 + 妝品公費 2K/月 + 年終獎金 + 勞健保",
+  "incentiveCompensation": "主播打賞分潤紅包 + 兼職按班次 1,500-2,500 元",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "線下直播間營運部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -239,25 +532,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "社群小編 / 內容編輯",
-  "description": "經營 JDI 官方 IG / FB / 官網 SEO 內容，招募與品牌文案撰寫，短影音企劃協作。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>經營 JDI 官方 IG / Threads / FB / TikTok / X（Twitter）</li><li>招募向文案撰寫（吸引新主播加入）+ 品牌向文案（B2B 曝光）</li><li>官網 SEO 內容產出（Blog、案例故事、主播專欄）</li><li>直播主專訪素材採集與整理</li><li>與剪輯師協作短影音企劃</li><li>粉絲互動、私訊初步分流（意向主播轉 BD）</li><li>月度社群數據分析報告（觸及、互動、轉換）</li></ul><p><strong>【必備條件】</strong></p><ul><li>1 年以上社群 / 內容 / 文案相關經驗</li><li>個人 IG / Threads 有一定經營成效（追蹤 500+ 或高互動）</li><li>文字敏感度高，能快速產出多平台差異化文案</li><li>熟悉 Threads、IG、TikTok 平台生態</li></ul><p><strong>【加分條件】</strong></p><ul><li>會基礎 Canva / Figma 排版設計</li><li>有 SEO 內容寫作經驗</li><li>會使用 ChatGPT / Claude 等 AI 工具加速產出</li><li>對直播 / 網紅產業有熱情</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 32,000-42,000 元</li><li>爆款貼文獎金（單篇破 1 萬互動 = 2,000 元）</li><li>SEO 排名獎金（關鍵字進前 3 = 5,000 元）</li><li>勞健保、特休、年終 1-3 個月</li><li>可遠端 / 混合辦公</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-SNS-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "TELECOMMUTE",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 32000, "maxValue": 42000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Social Media Marketing",
+  "occupationalCategory": "27-3031.00 Public Relations Specialists",
+  "workHours": "週一至週五 10:00-19:00（可彈性 / 可遠端）",
+  "responsibilities": "多平台社群經營、招募與品牌文案、SEO 內容產出、主播專訪、短影音企劃協作、粉絲互動、月度社群報告",
+  "qualifications": "1 年以上社群 / 內容 / 文案經驗，個人 IG / Threads 有經營成效，熟悉多平台生態",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 12
+  },
+  "skills": "社群經營, IG 經營, Threads, TikTok, 文案撰寫, SEO 內容寫作, Canva, Figma, ChatGPT, Claude, AI 工具, 粉絲互動, 社群數據分析, 品牌傳播",
+  "jobBenefits": "月薪 32-42K + 爆款貼文獎金 2K/篇 + SEO 關鍵字獎金 5K + 年終 1-3 個月 + 可遠端",
+  "incentiveCompensation": "爆款貼文獎金 2,000 元/篇 + SEO 關鍵字獎金 5,000 元",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "品牌行銷部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
@@ -266,25 +597,63 @@
   "@context": "https://schema.org",
   "@type": "JobPosting",
   "title": "行政 / 人資",
-  "description": "合約管理、勞務、薪資、履歷篩選、辦公室行政、主播基本資料維護。",
+  "description": "<p><strong>【工作內容】</strong></p><ul><li>主播合約管理（新簽、續約、終止流程）</li><li>員工勞務行政（勞健保加退保、薪資試算、扣繳）</li><li>應徵履歷初步篩選（協助 BD 團隊）</li><li>辦公室日常行政（採購、報帳、發票、快遞、水電）</li><li>主播基本資料庫維護（合約條款、分潤比、聯絡方式）</li><li>員工出勤、請假、加班紀錄管理</li><li>協助內部教育訓練活動籌辦</li></ul><p><strong>【必備條件】</strong></p><ul><li>1 年以上行政 / 人資 / 會計相關經驗</li><li>熟悉勞基法、勞健保實務</li><li>細心、有條理、能處理機密資料</li><li>Excel / Google Sheets 熟練</li></ul><p><strong>【加分條件】</strong></p><ul><li>有中小企業人資 all-in-one 經驗</li><li>會使用人資 SaaS（如 Salary、Nueip、Femas）</li><li>會基礎會計 / 記帳</li><li>對娛樂 / 傳媒產業有興趣</li></ul><p><strong>【福利待遇】</strong></p><ul><li>月薪 30,000-38,000 元</li><li>年度考核調薪</li><li>勞健保、特休、年終 1-3 個月</li><li>員工旅遊、生日禮金、婚喪補助</li><li>免費員工餐</li></ul>",
   "identifier": { "@type": "PropertyValue", "name": "JDI Pulse MEDIA", "value": "JDI-HR-001" },
-  "datePosted": "2026-08-27",
-  "validThrough": "2027-08-27",
+  "datePosted": "2026-08-28",
+  "validThrough": "2027-08-28",
   "employmentType": "FULL_TIME",
+  "directApply": true,
   "hiringOrganization": {
     "@type": "Organization",
-    "name": "JDI 脈動傳媒 JDI Pulse MEDIA",
+    "@id": "https://jdi-pulse.com/#organization",
+    "name": "JDI 脈動傳媒",
     "sameAs": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png"
   },
   "jobLocation": {
     "@type": "Place",
-    "address": { "@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW" }
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "台北市",
+      "addressRegion": "台灣",
+      "addressCountry": "TW"
+    }
+  },
+  "jobLocationType": "OnSite",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Taiwan"
   },
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "TWD",
     "value": { "@type": "QuantitativeValue", "minValue": 30000, "maxValue": 38000, "unitText": "MONTH" }
+  },
+  "industry": "Entertainment/Live Streaming/Human Resources",
+  "occupationalCategory": "13-1071.00 Human Resources Specialists",
+  "workHours": "週一至週五 10:00-19:00",
+  "responsibilities": "主播合約管理、勞務行政、薪資試算、履歷篩選、辦公室行政、主播資料庫維護、出勤管理",
+  "qualifications": "1 年以上行政 / 人資 / 會計經驗，熟悉勞基法與勞健保實務，Excel 熟練",
+  "educationRequirements": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "high school"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "monthsOfExperience": 12
+  },
+  "skills": "勞健保實務, 勞基法, 薪資計算, 合約管理, 履歷篩選, Excel, Google Sheets, 人資 SaaS, Nueip, Femas, 記帳, 辦公室行政, 出勤管理",
+  "jobBenefits": "月薪 30-38K + 年度調薪 + 年終 1-3 個月 + 勞健保 + 員工旅遊 + 生日禮金 + 婚喪補助 + 免費員工餐",
+  "incentiveCompensation": "年度考核調薪 + 生日禮金 + 婚喪補助",
+  "employmentUnit": {
+    "@type": "Organization",
+    "name": "行政人資部"
+  },
+  "url": "https://jdi-pulse.com/careers#apply",
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "email": "pulsepop9@gmail.com",
+    "contactType": "HR"
   }
 }
 </script>
