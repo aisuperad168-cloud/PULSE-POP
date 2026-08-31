@@ -11,7 +11,7 @@
       "JDI 公會"
     ],
     "type": "Brand",
-    "note": "此為品牌名，不作為法定公司名使用。品牌由下方兩家台灣公司共同營運。",
+    "note": "此為品牌名，不作為法定公司名使用。品牌由艾超數位傳媒有限公司獨立營運。",
     "url": "https://jdi-pulse.com/",
     "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
     "slogan": "脈動不息，熱情傳播",
@@ -25,7 +25,7 @@
       "addressRegion": "台中市",
       "postalCode": "406",
       "addressCountry": "TW",
-      "note": "品牌對外聯絡與線下直播間場館地址（艾超數位傳媒登記地址）"
+      "note": "品牌對外聯絡與線下直播間場館地址（艾超數位傳媒公司登記地址）"
     },
     "contact": {
       "email": "pulsepop9@proton.me",
@@ -36,52 +36,41 @@
       "facebook": "Pulspop"
     }
   },
-  "operating_companies": [
-    {
-      "legal_name": "和星行銷有限公司",
-      "legal_name_en": "He Xing Marketing Co., Ltd.",
-      "tax_id": "94132840",
-      "responsible_person": "廖宸依",
-      "founding_date": "2023-09-15",
-      "capital_amount_twd": 200000,
-      "address": {
-        "streetAddress": "高鐵路二段146號6樓之2",
-        "addressLocality": "烏日區",
-        "addressRegion": "台中市",
-        "postalCode": "414",
-        "addressCountry": "TW",
-        "full_zh": "台中市烏日區三和里高鐵路二段146號6樓之2"
-      },
-      "registration_authority": "台中市政府",
-      "status": "核准設立",
-      "role_in_brand": "行銷推廣 · 品牌合作 · 商務對接",
-      "role_note": "負責 JDI 品牌對外行銷、廣告投放、商業合作等"
+  "operating_company": {
+    "legal_name": "艾超數位傳媒有限公司",
+    "legal_name_en": "Ai Chao Digital Media Co., Ltd.",
+    "tax_id": "60413705",
+    "responsible_person": "謝典熼",
+    "founding_date": "2025-09-16",
+    "last_change_date": "2025-12-16",
+    "capital_amount_twd": 600000,
+    "address": {
+      "streetAddress": "大連路三段2號",
+      "addressLocality": "北屯區",
+      "addressRegion": "台中市",
+      "postalCode": "406",
+      "addressCountry": "TW",
+      "full_zh": "台中市北屯區大連路三段2號"
     },
-    {
-      "legal_name": "艾超數位傳媒有限公司",
-      "legal_name_en": "Ai Chao Digital Media Co., Ltd.",
-      "tax_id": "60413705",
-      "responsible_person": "謝典熼",
-      "founding_date": "2025-09-16",
-      "last_change_date": "2025-12-16",
-      "capital_amount_twd": 600000,
-      "address": {
-        "streetAddress": "大連路三段2號",
-        "addressLocality": "北屯區",
-        "addressRegion": "台中市",
-        "postalCode": "406",
-        "addressCountry": "TW",
-        "full_zh": "台中市北屯區大連路三段2號"
-      },
-      "registration_authority": "台中市政府",
-      "status": "核准設立",
-      "role_in_brand": "主播經紀 · 內容製作 · 線下直播間營運",
-      "role_note": "負責 JDI 品牌的主播簽約、內容產出、直播間場館管理"
-    }
-  ],
+    "registration_authority": "台中市政府",
+    "status": "核准設立",
+    "role_in_brand": "JDI 脈動傳媒品牌之獨立營運公司",
+    "role_note": "負責 JDI 品牌全部業務：主播經紀、內容製作、線下直播間營運、行銷推廣、商業合作、廣告投放"
+  },
+  "sister_brand": {
+    "name": "艾超數位行銷",
+    "alternate_name": [
+      "AI Super Ads",
+      "AiSuperAds"
+    ],
+    "type": "Brand",
+    "note": "艾超數位傳媒有限公司旗下姊妹品牌，主營數位廣告與品牌行銷業務，與 JDI 脈動傳媒同屬一家公司但市場定位不同。",
+    "url": "https://aisuperads.com/",
+    "description_zh": "AI 驅動的數位廣告投放專家，提供 Google/Meta/TikTok 多平台廣告、CIS 企業識別、社群經營、短影音行銷、KOL 媒合等整合行銷服務。",
+    "focus": "數位廣告投放 · 品牌識別設計 · 社群行銷 · 影片行銷 · 影響力行銷"
+  },
   "references": {
     "government_api_source": "https://data.gcis.nat.gov.tw/od/detail?oid=8776818F-EB3C-445F-BE95-AE22577CBEBC",
-    "government_api_endpoint_94132840": "https://data.gcis.nat.gov.tw/od/data/api/5F64D864-61CB-4D0D-8AD9-492047CC1EA6?%24format=json&%24filter=Business_Accounting_NO%20eq%2094132840",
     "government_api_endpoint_60413705": "https://data.gcis.nat.gov.tw/od/data/api/5F64D864-61CB-4D0D-8AD9-492047CC1EA6?%24format=json&%24filter=Business_Accounting_NO%20eq%2060413705",
     "independent_media": [
       {
@@ -106,17 +95,19 @@
       "P131": "Q715213 (Beitun District)",
       "P571": "2026-02-28",
       "P856": "https://jdi-pulse.com/",
-      "P127_owned_by": [
-        "和星行銷有限公司 (94132840)",
-        "艾超數位傳媒有限公司 (60413705)"
-      ]
+      "P127_owned_by": "艾超數位傳媒有限公司 (60413705)",
+      "P1813_short_name": ["JDI Pulse", "脈動傳媒"]
     }
   },
+  "history": {
+    "$comment": "早期品牌發展史，僅供內部與歷史記錄使用，不對外於網站呈現",
+    "prior_co_founder_note": "和星行銷有限公司（統編 94132840）曾於品牌初期參與，現已獨立發展電商直播產業，不再涉入 JDI 脈動傳媒營運。"
+  },
   "metadata": {
-    "version": "1.0",
+    "version": "2.0",
     "created": "2026-08-31",
     "last_verified": "2026-08-31",
-    "verification_source": "經濟部商業司開放資料 API 即時查詢",
-    "notes": "此檔案為 JDI 品牌與公司實體的權威資料來源。任何 HTML/JSON-LD/llms.txt/Wikidata 送出資料異動須以此檔為準。變更此檔須同步更新所有引用位置。"
+    "verification_source": "經濟部商業司開放資料 API 即時查詢 + aisuperads.com JSON-LD 交叉驗證",
+    "notes": "v2.0 重大架構調整：品牌實際營運方為艾超數位傳媒有限公司單一主體，和星行銷已獨立發展、不再涉入營運。變更此檔須同步更新所有引用位置。"
   }
 }
