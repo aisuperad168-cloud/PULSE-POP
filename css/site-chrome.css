@@ -1,0 +1,399 @@
+/* ============================================================
+ * Site Chrome · 全站統一 Header + Footer
+ * v1.0 · 2026-08-31
+ * ------------------------------------------------------------
+ * 使用方式：
+ *   1. 在 <head> 引入：<link rel="stylesheet" href="/css/site-chrome.css?v=20260831a" />
+ *   2. Header 結構：<nav class="site-nav" data-active="partnership">...</nav>
+ *   3. Footer 結構：<footer class="site-footer">...</footer>
+ *   4. data-active 對應：home / join / partnership / test / live-center / faq
+ * ============================================================ */
+
+/* ============ CSS Variables (與全站主題色一致) ============ */
+:root {
+  --sc-bg: #0A0A0F;
+  --sc-bg-alt: #12121A;
+  --sc-border: rgba(255, 255, 255, 0.08);
+  --sc-border-strong: rgba(255, 255, 255, 0.14);
+  --sc-text: #F5F5F7;
+  --sc-text-muted: rgba(245, 245, 247, 0.65);
+  --sc-text-dim: rgba(245, 245, 247, 0.45);
+  --sc-cyan: #25F4EE;
+  --sc-red: #E8392A;
+  --sc-red-hover: #FF4B3A;
+  --sc-line: #06C755;
+}
+
+/* ============================================================
+ * SITE NAV （全站統一 header）
+ * ============================================================ */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--sc-border);
+}
+
+.site-nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* --- Brand（左） --- */
+.site-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--sc-text);
+  flex-shrink: 0;
+}
+.site-nav-brand img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+.site-nav-brand-txt {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.site-nav-brand-txt .zh {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sc-text);
+  letter-spacing: 0.5px;
+}
+.site-nav-brand-txt .en {
+  font-size: 10px;
+  color: var(--sc-text-dim);
+  letter-spacing: 1px;
+}
+
+/* --- Main links（中） --- */
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+.site-nav-links a {
+  display: block;
+  padding: 8px 14px;
+  color: var(--sc-text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.site-nav-links a:hover {
+  color: var(--sc-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+/* Active state via data-active on <nav> */
+.site-nav[data-active="home"] a[data-key="home"],
+.site-nav[data-active="join"] a[data-key="join"],
+.site-nav[data-active="partnership"] a[data-key="partnership"],
+.site-nav[data-active="test"] a[data-key="test"],
+.site-nav[data-active="live-center"] a[data-key="live-center"],
+.site-nav[data-active="faq"] a[data-key="faq"] {
+  color: var(--sc-cyan);
+  background: rgba(37, 244, 238, 0.08);
+}
+
+/* --- CTA（右） --- */
+.site-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--sc-red);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.site-nav-cta:hover {
+  background: var(--sc-red-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(232, 57, 42, 0.35);
+}
+
+/* --- Hamburger（mobile only） --- */
+.site-nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--sc-border-strong);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--sc-text);
+  flex-shrink: 0;
+}
+.site-nav-toggle svg { display: block; }
+
+/* --- Mobile RWD --- */
+@media (max-width: 900px) {
+  .site-nav-inner {
+    height: 56px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+  .site-nav-brand img { height: 28px; }
+  .site-nav-brand-txt .zh { font-size: 14px; }
+  .site-nav-brand-txt .en { display: none; }
+  .site-nav-links {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #0A0A0F;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 16px 20px;
+    border-bottom: 1px solid var(--sc-border);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
+  }
+  .site-nav-links.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  .site-nav-links li { width: 100%; }
+  .site-nav-links a {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+  .site-nav-cta {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  .site-nav-cta span { display: none; } /* hide "LINE 諮詢" text, keep only icon */
+  .site-nav-cta svg:last-child { display: none; }
+  .site-nav-toggle { display: inline-flex; align-items: center; }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .site-nav-brand-txt .en { display: none; }
+  .site-nav-brand-txt .zh { font-size: 13px; }
+  .site-nav-inner { gap: 8px; }
+}
+@media (max-width: 360px) {
+  .site-nav-brand-txt { display: none; }
+}
+
+/* ============================================================
+ * SITE FOOTER （全站統一 footer）
+ * ============================================================ */
+.site-footer {
+  background: var(--sc-bg-alt);
+  border-top: 1px solid var(--sc-border);
+  color: var(--sc-text-muted);
+  margin-top: 60px;
+}
+
+.site-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 24px 30px;
+}
+
+/* ---- Layer 1: Top grid (4 columns) ---- */
+.site-footer-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--sc-border);
+}
+
+/* Brand column */
+.site-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.site-footer-brand img {
+  height: 40px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(232, 57, 42, 0.3));
+}
+.site-footer-tagline {
+  color: var(--sc-text);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+.site-footer-desc {
+  color: var(--sc-text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+.site-footer-social {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.site-footer-social a {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--sc-border-strong);
+  border-radius: 50%;
+  color: var(--sc-text-muted);
+  transition: all 0.2s;
+}
+.site-footer-social a:hover {
+  color: var(--sc-cyan);
+  border-color: var(--sc-cyan);
+  transform: translateY(-2px);
+}
+
+/* Link columns */
+.site-footer-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sc-text);
+  margin: 0 0 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.site-footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.site-footer-col a {
+  color: var(--sc-text-muted);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.site-footer-col a:hover {
+  color: var(--sc-cyan);
+}
+
+/* Contact column icons */
+.site-footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--sc-text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.site-footer-contact svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--sc-text-dim);
+}
+.site-footer-contact a {
+  color: var(--sc-cyan);
+  text-decoration: none;
+}
+.site-footer-contact a:hover { text-decoration: underline; }
+
+/* ---- Layer 2: Company info bar ---- */
+.site-footer-company {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--sc-border);
+  color: var(--sc-text-dim);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+.site-footer-company .sep {
+  color: rgba(255, 255, 255, 0.15);
+  margin: 0 8px;
+}
+.site-footer-company .nowrap { white-space: nowrap; }
+.site-footer-company a {
+  color: var(--sc-cyan);
+  text-decoration: none;
+}
+.site-footer-company a:hover { text-decoration: underline; }
+
+/* ---- Layer 3: Bottom (copyright) ---- */
+.site-footer-bottom {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.site-footer-copy {
+  color: var(--sc-text-dim);
+  font-size: 12px;
+  margin: 0;
+}
+.site-footer-legal {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.site-footer-legal a {
+  color: var(--sc-text-muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+.site-footer-legal a:hover { color: var(--sc-cyan); }
+.site-footer-legal .sep {
+  color: rgba(255, 255, 255, 0.15);
+}
+
+/* ---- Mobile RWD ---- */
+@media (max-width: 900px) {
+  .site-footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .site-footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .site-footer-inner { padding: 40px 20px 24px; }
+  .site-footer-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-bottom: 28px;
+  }
+  .site-footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+  .site-footer-company .sep { display: block; height: 4px; visibility: hidden; }
+}
