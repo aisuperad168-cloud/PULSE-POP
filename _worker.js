@@ -88,7 +88,41 @@ export default {
       }
     }
 
-    // ============ 2. 靜態資源交給 Assets ============
+    // ============ 2. AI/Search 抓取用的關鍵靜態檔案：防 SPA fallback ============
+    // wrangler.toml 的 not_found_handling = "single-page-application" 會讓
+    // 找不到的檔案 fallback 到 index.html body。這對 HTML 頁面沒問題，但對
+    // llms.txt / sitemap.xml / brand-entities.json 這種給 bot 抓的檔案是災難：
+    // header 是 text/plain 但 body 是整個 index.html HTML。
+    //
+    // 解法：這些檔案先明確 fetch，若 assets 回傳的 content-type 是 HTML
+    // 就代表發生了 fallback，此時我們直接回 404，不要騙 AI/bot。
+    const CRITICAL_STATIC_FILES = new Set([
+      '/llms.txt',
+      '/robots.txt',
+      '/sitemap.xml',
+      '/brand-entities.json',
+    ]);
+    if (CRITICAL_STATIC_FILES.has(path)) {
+      const resp = await env.ASSETS.fetch(request);
+      const ct = resp.headers.get('content-type') || '';
+      // 若 assets 誤 fallback 到 index.html（body 是 HTML），
+      // 明確回傳 404 避免給 bot 錯誤內容
+      if (ct.includes('text/html')) {
+        return new Response(
+          `File not found: ${path}\n\nThis file is expected to be served as a static asset.\nIf you see this message in production, the deployment is misconfigured.\n`,
+          {
+            status: 404,
+            headers: {
+              'Content-Type': 'text/plain; charset=utf-8',
+              'X-Debug-Reason': 'spa-fallback-blocked-for-critical-static-file',
+            },
+          }
+        );
+      }
+      return resp;
+    }
+
+    // ============ 3. 其他靜態資源交給 Assets ============
     // env.ASSETS 由 wrangler.toml 的 [assets] 綁定提供
     // 它會自動處理：找到對應 HTML、404 fallback、_redirects 等
     return env.ASSETS.fetch(request);

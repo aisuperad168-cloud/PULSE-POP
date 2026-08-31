@@ -78,6 +78,7 @@ JDI 脈動傳媒（JDI Pulse MEDIA）是 **TikTok LIVE 官方合作經紀公會*
 ## 頁面清單 / Site Pages
 
 - [首頁 Home](https://jdi-pulse.com/)：品牌介紹、旗下主播展示、7 月金牌主播榜、聯絡我們，Hero 提供「成為主播」與「商業合作」雙分流
+- [公司與品牌結構 About Companies](https://jdi-pulse.com/about-companies)：**品牌透明度頁**。完整揭露 JDI 品牌由和星行銷有限公司（94132840）與艾超數位傳媒有限公司（60413705）兩家台灣合法登記公司共同營運，含經濟部商業司開放資料 API 交叉驗證連結
 - [成為主播 Join](https://jdi-pulse.com/join)：**針對主播 / 直播主招募**。合作方案細節、4 大任務佣金池、現金保底方案、分潤模擬計算、TikTok 主播招募流程、3 天啟動流程
 - [商業合作 Partnership](https://jdi-pulse.com/partnership)：**針對品牌 / 廠商 / 經紀公司**。四大服務：業配代言媒合、達人資源租借、經紀公司合作、直播節目/活動策劃。內含合作需求表單，24 小時內回覆
 - [新人主播 FAQ](https://jdi-pulse.com/faq)：新人直播主 8 大常見問題總整理（0 費用、0 抽成、無經驗可、免專業設備、彈性時段、月收入區間公開、為何選擇 JDI）
