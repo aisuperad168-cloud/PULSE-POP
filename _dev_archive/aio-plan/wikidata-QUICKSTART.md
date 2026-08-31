@@ -66,6 +66,17 @@ JDI Pulse MEDIA
 
 **送出這 3 條就算條目建立完成** ✅
 
+### 條目 D（可選 · 快速提升可信度）：Taiwan Business Registry Number（統一編號）
+- Property：`P8477`（Taiwan Business Registry Number）
+- Value：`60413705`
+- **+ add reference** → reference URL: `https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do`, title: `經濟部商業司公司登記查詢`
+- 💡 這條會讓 Wikidata 自動連到經濟部商業司資料庫做交叉驗證，可信度爆增
+
+### 條目 E（可選）：headquarters location（總部）
+- Property：`P159`（headquarters location）
+- Value：搜尋 `Taichung` → 選 **Q245023**（台中市，⚠️ 不是台北）
+- **+ add reference** → 同官網
+
 ---
 
 ## Step 5 · 隔天：分批補剩下的 statement

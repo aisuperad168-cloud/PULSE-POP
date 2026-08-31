@@ -8,11 +8,13 @@
 >
 > **送出網址**：https://www.wikidata.org/wiki/Special:NewItem（需要先註冊帳號並確認 email）
 >
-> **⚠️ 送出前必須先填的 [用戶填入] 欄位**（本文件搜尋 `[用戶填入]` 可看到全部）：
-> 1. 公司統一編號（真的那個，不是 12345678 placeholder）
-> 2. 精確成立日期（如 2024-03-15 這種格式，你目前只有寫 2024）
-> 3. 台北市完整登記地址（含樓層，例如「台北市信義區松高路 XX 號 X 樓」）
-> 4. 公會執行長姓名英譯（曜宸 Jack 的英文全名）
+> **✅ 用戶已提供的真實資料**（已套用到本文件全部欄位）：
+> 1. **公司統一編號**：`60413705`
+> 2. **精確成立日期**：`2024-03-06`（YYYY-MM-DD）
+> 3. **登記地址**：`台中市北屯區大連路三段 2 號`（郵遞區號 406）
+> 4. **執行長姓名**：`謝典熼`（Jack Hsieh）—— 同時為創辦人
+>
+> ⚠️ **重要修正**：原本假設總部在台北，實際登記在**台中市北屯區**。P159（headquarters location）必須用 `Taichung (Q245023)`，不是 Taipei。
 
 ---
 
@@ -93,15 +95,18 @@ JDI Pulse Media Co., Ltd.
 | industry | **P452** | `entertainment industry` (Q173799) + `social media` (Q202833) + `talent management` (Q42413370) | 產業別（可加多個） |
 | legal form | **P1454** | `limited company (Taiwan)` (Q113489728) 或 `有限公司` | 台灣公司型態 |
 | country | **P17** | `Taiwan` (Q865) | 所在國 |
-| headquarters location | **P159** | `Taipei` (Q1867) | 總部城市 |
+| headquarters location | **P159** | `Taichung` (Q245023) | 總部城市（台中市，非台北） |
+| located in the administrative territorial entity | **P131** | `Beitun District` (Q715213) | 更精確：北屯區 |
 
 ### 2.2 公司登記資料
 
 | Property | Property ID | 值 |
 |---|---|---|
 | official name | **P1448** | `JDI 脈動傳媒有限公司`（中文）/ `JDI Pulse Media Co., Ltd.`（英文） |
-| inception (成立日期) | **P571** | `[用戶填入：例如 2024-03-15]`（YYYY-MM-DD 格式，精確度可設為「日」或「年」） |
-| Taiwan Business Registry Number（統一編號） | **P8477** | `[用戶填入：8 碼統一編號]` |
+| inception (成立日期) | **P571** | `2024-03-06`（精確度：day） |
+| Taiwan Business Registry Number（統一編號） | **P8477** | `60413705` |
+| street address | **P6375** | `大連路三段2號`（qualifier language: zh-Hant） |
+| postal code | **P281** | `406` |
 
 ### 2.3 網路資產（AI 交叉驗證用）
 
@@ -129,8 +134,8 @@ JDI Pulse Media Co., Ltd.
 
 | Property | Property ID | 值 |
 |---|---|---|
-| founded by | **P112** | `[用戶填入：曜宸 Jack 的中文全名]` |
-| chief executive officer | **P169** | `[用戶填入：曜宸 Jack 的中文全名]` |
+| founded by | **P112** | `謝典熼`（Jack Hsieh，如已有個人 Wikidata 條目請連結 Q 編號，否則填字串值） |
+| chief executive officer | **P169** | `謝典熼`（Jack Hsieh） |
 
 ---
 
@@ -304,12 +309,13 @@ Wikidata 條目建立成功後：
 - [ ] Wikidata 帳號已註冊 + email 已驗證
 - [ ] 個人頁面已寫 2-3 行自我介紹
 - [ ] 已完成 5-10 次小編輯練手
-- [ ] 已收集：真實統編、精確成立日期、完整地址、Jack 中文全名
+- [x] ✅ 已收集：真實統編 `60413705`、精確成立日期 `2024-03-06`、完整地址 `台中市北屯區大連路三段 2 號 (406)`、執行長中文全名 `謝典熼`
 - [ ] Label + Description + Aliases 已按第一節填好
 - [ ] Statement 第 1 批（5 個核心屬性）已填好
 - [ ] 每個 Statement 都掛上 reference（至少 1 個獨立媒體 + 1 個官方）
 - [ ] 沒有形容詞、沒有行銷用語
-- [ ] 統編填的是真實統編（不是 12345678 placeholder）
+- [x] 統編填的是真實統編 `60413705`（不是 12345678 placeholder）
+- [ ] ⚠️ P159 headquarters location 記得選 **Taichung (Q245023)** 而非 Taipei
 
 ---
 
