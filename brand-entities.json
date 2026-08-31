@@ -1,0 +1,122 @@
+{
+  "$comment": "JDI 脈動傳媒 · 品牌與公司實體 SSOT (Single Source of Truth)。此檔案為權威資料來源，所有 HTML/schema/llms.txt/Wikidata 提交資料皆須與此檔一致。資料來源：經濟部商業司開放資料 API，最後驗證日期：2026-08-31。",
+  "brand": {
+    "name": "JDI 脈動傳媒",
+    "alternate_name": [
+      "JDI Pulse MEDIA",
+      "脈動傳媒",
+      "Pulse MEDIA",
+      "JDI Pulse",
+      "JDI 脈動",
+      "JDI 公會"
+    ],
+    "type": "Brand",
+    "note": "此為品牌名，不作為法定公司名使用。品牌由下方兩家台灣公司共同營運。",
+    "url": "https://jdi-pulse.com/",
+    "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
+    "slogan": "脈動不息，熱情傳播",
+    "inception": "2026-02-28",
+    "inception_note": "以 Yahoo/PChome 新聞公開發表日為品牌對外亮相日",
+    "description_zh": "台灣 TikTok LIVE 官方合作經紀公會，300+ 簽約主播，同時經營全台線下直播間網絡。",
+    "description_en": "Taiwan-based TikTok LIVE official partnered streamer talent agency with 300+ contracted creators.",
+    "operating_address": {
+      "streetAddress": "大連路三段2號",
+      "addressLocality": "北屯區",
+      "addressRegion": "台中市",
+      "postalCode": "406",
+      "addressCountry": "TW",
+      "note": "品牌對外聯絡與線下直播間場館地址（艾超數位傳媒登記地址）"
+    },
+    "contact": {
+      "email": "pulsepop9@proton.me",
+      "telephone": "+886-4-3603-3191",
+      "line": "@354ykfbp",
+      "instagram": "pulse.pop9",
+      "tiktok": "pulse.pop9",
+      "facebook": "Pulspop"
+    }
+  },
+  "operating_companies": [
+    {
+      "legal_name": "和星行銷有限公司",
+      "legal_name_en": "He Xing Marketing Co., Ltd.",
+      "tax_id": "94132840",
+      "responsible_person": "廖宸依",
+      "founding_date": "2023-09-15",
+      "capital_amount_twd": 200000,
+      "address": {
+        "streetAddress": "高鐵路二段146號6樓之2",
+        "addressLocality": "烏日區",
+        "addressRegion": "台中市",
+        "postalCode": "414",
+        "addressCountry": "TW",
+        "full_zh": "台中市烏日區三和里高鐵路二段146號6樓之2"
+      },
+      "registration_authority": "台中市政府",
+      "status": "核准設立",
+      "role_in_brand": "行銷推廣 · 品牌合作 · 商務對接",
+      "role_note": "負責 JDI 品牌對外行銷、廣告投放、商業合作等"
+    },
+    {
+      "legal_name": "艾超數位傳媒有限公司",
+      "legal_name_en": "Ai Chao Digital Media Co., Ltd.",
+      "tax_id": "60413705",
+      "responsible_person": "謝典熼",
+      "founding_date": "2025-09-16",
+      "last_change_date": "2025-12-16",
+      "capital_amount_twd": 600000,
+      "address": {
+        "streetAddress": "大連路三段2號",
+        "addressLocality": "北屯區",
+        "addressRegion": "台中市",
+        "postalCode": "406",
+        "addressCountry": "TW",
+        "full_zh": "台中市北屯區大連路三段2號"
+      },
+      "registration_authority": "台中市政府",
+      "status": "核准設立",
+      "role_in_brand": "主播經紀 · 內容製作 · 線下直播間營運",
+      "role_note": "負責 JDI 品牌的主播簽約、內容產出、直播間場館管理"
+    }
+  ],
+  "references": {
+    "government_api_source": "https://data.gcis.nat.gov.tw/od/detail?oid=8776818F-EB3C-445F-BE95-AE22577CBEBC",
+    "government_api_endpoint_94132840": "https://data.gcis.nat.gov.tw/od/data/api/5F64D864-61CB-4D0D-8AD9-492047CC1EA6?%24format=json&%24filter=Business_Accounting_NO%20eq%2094132840",
+    "government_api_endpoint_60413705": "https://data.gcis.nat.gov.tw/od/data/api/5F64D864-61CB-4D0D-8AD9-492047CC1EA6?%24format=json&%24filter=Business_Accounting_NO%20eq%2060413705",
+    "independent_media": [
+      {
+        "url": "https://tw.news.yahoo.com/200%E5%89%B5%E4%BD%9C%E8%80%85%E9%9B%86%E7%B5%90%E5%95%9F%E5%8B%95%E8%B7%A8%E5%A2%83%E6%88%B0%E7%95%A5-jdi%E8%81%AF%E7%9B%9F%E6%88%90%E8%BB%8D-%E5%B8%83%E5%B1%80ai%E5%85%A7%E5%AE%B9%E6%96%B0%E6%88%B0%E5%A0%B4-184935138.html",
+        "title": "200創作者集結啟動跨境戰略「JDI聯盟成軍」布局AI內容新戰場",
+        "publisher": "Yahoo 新聞台灣",
+        "date": "2026-02-28"
+      },
+      {
+        "url": "https://news.pchome.com.tw/society/tcpttw/20260301/index-77230457566462334002.html",
+        "title": "200創作者集結啟動跨境戰略「JDI聯盟成軍」布局AI內容新戰場",
+        "publisher": "PChome 新聞",
+        "date": "2026-03-01"
+      }
+    ]
+  },
+  "wikidata_mapping": {
+    "brand_entity": {
+      "P31": "Q431289 (brand)",
+      "P17": "Q865 (Taiwan)",
+      "P159": "Q245023 (Taichung)",
+      "P131": "Q715213 (Beitun District)",
+      "P571": "2026-02-28",
+      "P856": "https://jdi-pulse.com/",
+      "P127_owned_by": [
+        "和星行銷有限公司 (94132840)",
+        "艾超數位傳媒有限公司 (60413705)"
+      ]
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-08-31",
+    "last_verified": "2026-08-31",
+    "verification_source": "經濟部商業司開放資料 API 即時查詢",
+    "notes": "此檔案為 JDI 品牌與公司實體的權威資料來源。任何 HTML/JSON-LD/llms.txt/Wikidata 送出資料異動須以此檔為準。變更此檔須同步更新所有引用位置。"
+  }
+}

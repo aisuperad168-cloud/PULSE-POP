@@ -63,6 +63,16 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Brand",
+        "@id": "https://jdi-pulse.com/#brand",
+        "name": "JDI 脈動傳媒",
+        "alternateName": ["JDI Pulse MEDIA", "脈動傳媒", "Pulse MEDIA", "JDI Pulse", "JDI 公會"],
+        "url": "https://jdi-pulse.com/",
+        "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
+        "slogan": "脈動不息，熱情傳播",
+        "description": "台灣 TikTok LIVE 官方合作經紀公會品牌，由和星行銷有限公司與艾超數位傳媒有限公司共同營運。"
+      },
+      {
         "@type": "Organization",
         "@id": "https://jdi-pulse.com/#organization",
         "name": "JDI 脈動傳媒",
@@ -75,12 +85,28 @@
           "height": 512
         },
         "image": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
-        "description": "TikTok LIVE 官方合作經紀公會，台灣 TikTok / 陸抖 / 17LIVE 直播主經紀公司，旗下 300+ 位優質主播。",
-        "foundingDate": "2024-03-06",
-        "taxID": "60413705",
+        "description": "TikTok LIVE 官方合作經紀公會，台灣 TikTok / 陸抖 / 17LIVE 直播主經紀公司，旗下 300+ 位優質主播。品牌由和星行銷有限公司與艾超數位傳媒有限公司共同營運。",
+        "foundingDate": "2026-02-28",
+        "brand": { "@id": "https://jdi-pulse.com/#brand" },
+        "subOrganization": [
+          { "@id": "https://jdi-pulse.com/#company-hexing" },
+          { "@id": "https://jdi-pulse.com/#company-aichao" }
+        ],
         "areaServed": {
           "@type": "Country",
           "name": "Taiwan"
+        },
+        "location": {
+          "@type": "Place",
+          "name": "JDI 脈動傳媒 · 台中線下直播間場館",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "大連路三段2號",
+            "addressLocality": "北屯區",
+            "addressRegion": "台中市",
+            "postalCode": "406",
+            "addressCountry": "TW"
+          }
         },
         "address": {
           "@type": "PostalAddress",
@@ -127,10 +153,11 @@
         "url": "https://jdi-pulse.com/",
         "image": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
         "logo": "https://jdi-pulse.com/assets/logo_jdi_pulse.png",
-        "description": "TikTok LIVE 官方合作經紀公會，台灣直播主招募，提供現金保底、0 抽佣分潤、專業培訓。",
+        "description": "TikTok LIVE 官方合作經紀公會 · 線下直播間場館（由艾超數位傳媒有限公司營運）。台灣直播主招募，提供現金保底、0 抽佣分潤、專業培訓。",
         "priceRange": "$$",
-        "foundingDate": "2024-03-06",
+        "foundingDate": "2025-09-16",
         "taxID": "60413705",
+        "parentOrganization": { "@id": "https://jdi-pulse.com/#company-aichao" },
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "大連路三段2號",
@@ -150,6 +177,46 @@
           "https://www.instagram.com/pulse.pop9",
           "https://line.me/R/ti/p/@354ykfbp"
         ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://jdi-pulse.com/#company-hexing",
+        "name": "和星行銷有限公司",
+        "legalName": "和星行銷有限公司",
+        "alternateName": "He Xing Marketing Co., Ltd.",
+        "taxID": "94132840",
+        "foundingDate": "2023-09-15",
+        "founder": { "@type": "Person", "name": "廖宸依" },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "高鐵路二段146號6樓之2",
+          "addressLocality": "烏日區",
+          "addressRegion": "台中市",
+          "postalCode": "414",
+          "addressCountry": "TW"
+        },
+        "description": "JDI 脈動傳媒品牌共同營運公司，負責行銷推廣、品牌合作與商務對接。",
+        "parentOrganization": { "@id": "https://jdi-pulse.com/#organization" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://jdi-pulse.com/#company-aichao",
+        "name": "艾超數位傳媒有限公司",
+        "legalName": "艾超數位傳媒有限公司",
+        "alternateName": "Ai Chao Digital Media Co., Ltd.",
+        "taxID": "60413705",
+        "foundingDate": "2025-09-16",
+        "founder": { "@type": "Person", "name": "謝典熼" },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "大連路三段2號",
+          "addressLocality": "北屯區",
+          "addressRegion": "台中市",
+          "postalCode": "406",
+          "addressCountry": "TW"
+        },
+        "description": "JDI 脈動傳媒品牌共同營運公司，負責主播經紀、內容製作與線下直播間營運。",
+        "parentOrganization": { "@id": "https://jdi-pulse.com/#organization" }
       },
       {
         "@type": "WebSite",
@@ -1162,6 +1229,7 @@
       <!-- Bottom: Copyright + Legal -->
       <div class="footer-bottom">
         <p class="footer-copy">© 2026 JDI 脈動傳媒 · JDI PULSE MEDIA. All Rights Reserved.</p>
+        <p class="footer-copy" style="color:#8B8B99;font-size:12px;margin-top:8px;line-height:1.6">品牌共同營運：和星行銷有限公司（統編 94132840）· 艾超數位傳媒有限公司（統編 60413705）· 台中市北屯區大連路三段 2 號</p>
         <div class="footer-legal">
           <a href="/live-center/">直播中心</a>
           <span>·</span>
