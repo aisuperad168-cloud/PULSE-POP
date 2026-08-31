@@ -103,3 +103,30 @@ Allow: /
 
 User-agent: YouBot
 Allow: /
+
+User-agent: Grok
+Allow: /
+
+User-agent: xAI-Bot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: DeepSeekBot
+Allow: /
+
+User-agent: Kimi-Bot
+Allow: /
+
+User-agent: Qwen-Bot
+Allow: /
+
+User-agent: Baiduspider-render
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: AhrefsBot
+Allow: /
