@@ -30,6 +30,33 @@
   Cache-Control: public, max-age=31536000, immutable
   X-Content-Type-Options: nosniff
 
+# ------------ AI/Search 抓取用的關鍵檔案（明確 content-type） ------------
+# 這些檔案是 AI bot (GPTBot, ClaudeBot, PerplexityBot 等) 抓取用
+# 必須明確設定 content-type，避免 SPA fallback 誤判為 HTML route
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
+
+/brand-entities.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=3600
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
+
 # 注意：
 #   /*.png /*.jpg /*.html 等 pattern 會和 /assets/* /js/* 疊加，導致
 #   Cache-Control 出現重複值。所以只保留 /assets /js /css /api 這幾條，
