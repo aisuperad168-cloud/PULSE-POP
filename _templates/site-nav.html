@@ -1,0 +1,46 @@
+<!-- ============ SITE NAV（全站統一 header） ============ -->
+<nav class="site-nav" data-active="{{ACTIVE}}" aria-label="主導覽">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <span class="site-nav-brand-txt">
+        <span class="zh">JDI 脈動傳媒</span>
+        <span class="en">JDI PULSE MEDIA</span>
+      </span>
+    </a>
+    <button class="site-nav-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="siteNavLinks">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="site-nav-links" id="siteNavLinks">
+      <li><a href="/" data-key="home">首頁</a></li>
+      <li><a href="/join.html" data-key="join">加入我們</a></li>
+      <li><a href="/partnership.html" data-key="partnership">商業合作</a></li>
+      <li><a href="/streamer-test/" data-key="test">主播測驗</a></li>
+      <li><a href="/live-center/" data-key="live-center">直播中心</a></li>
+      <li><a href="/faq.html" data-key="faq">新人 FAQ</a></li>
+    </ul>
+    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="site-nav-cta" aria-label="LINE 諮詢">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+      <span>LINE 諮詢</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+<script>
+  // Mobile hamburger toggle
+  (function(){
+    var btn = document.querySelector('.site-nav-toggle');
+    var links = document.getElementById('siteNavLinks');
+    if(!btn || !links) return;
+    btn.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
