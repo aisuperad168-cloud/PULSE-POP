@@ -818,3 +818,58 @@
   object-fit: cover;
   display: block;
 }
+
+/* ============================================================
+ * 修正 · Live Center Footer Logo 圖片尺寸
+ * 修復先前所有 live-center 頁面 footer 的 JDI logo 被拉到 1200×1200 的 bug
+ * .footer-brand 是 flex column，內部 img 沒有 width/height 約束會撐到 max-width
+ * ============================================================ */
+.footer .footer-brand {
+  align-items: flex-start;
+  gap: 12px;
+}
+.footer .footer-brand img {
+  height: 40px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(232, 80, 42, 0.3));
+}
+.footer .footer-brand p {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+.footer .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.footer .footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+.footer .footer-links a:hover {
+  color: #E8392A;
+}
+.footer .footer-brand-info {
+  padding-top: 16px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.06);
+  margin-top: 16px;
+}
+.footer .footer-copyright {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  margin-top: 10px;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .footer .footer-brand { align-items: center; text-align: center; }
+  .footer .footer-links { justify-content: center; }
+}
