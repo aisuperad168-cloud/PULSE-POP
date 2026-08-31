@@ -24,6 +24,7 @@ node_modules
 .DS_Store
 *.log
 
-# 其他不需要對外暴露的檔案  
-llms.txt
+# 其他不需要對外暴露的檔案
+# 注意：llms.txt 需要對外暴露給 AI bot（GPTBot / ClaudeBot / PerplexityBot 等）
+# 抓取，不要放這裡！
 .assetsignore

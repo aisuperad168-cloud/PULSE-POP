@@ -20,11 +20,9 @@ compatibility_flags = ["nodejs_compat"]
 directory = "."
 # ASSETS binding：讓 _worker.js 可以呼叫 env.ASSETS.fetch(request)
 binding = "ASSETS"
-# ⚠️ 曾經用 "single-page-application"，會導致 .txt/.xml/.json 找不到時
-# fallback 回傳 index.html body（但 header 是 text/plain），對 AI/Search
-# bot 造成資料污染。改用 "none"：真找不到就 404，讓 _worker.js 白名單邏輯
-# 可以誠實檢測。HTML 路由（如 /join → /join.html）由下方 html_handling 處理。
-not_found_handling = "none"
+# 對於 SPA 或 404 的處理策略；single-page-application = 找不到檔案時 fallback 到 index.html
+# 這是安全的——網站確實有多個 HTML route（/join, /venues 等）由 html_handling 處理
+not_found_handling = "single-page-application"
 # HTML 檔案存取時可省略 .html（例如 /join 對應 /join.html）
 html_handling = "auto-trailing-slash"
 # ⚠️ 關鍵：讓 Worker 先執行（處理 /api/*），只有 Worker 呼叫 env.ASSETS.fetch() 時才走 assets
