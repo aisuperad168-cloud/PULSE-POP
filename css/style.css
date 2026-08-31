@@ -1173,6 +1173,10 @@ ul  { list-style: none; }
   flex-wrap: wrap; gap: 16px;
 }
 .footer-copy { color: rgba(255,255,255,0.35); font-size: 0.78rem; }
+/* 品牌共同營運那行：讓「公司名+統編」「地址」「連結」整組不被拆開 */
+.footer-copy .nowrap { white-space: nowrap; }
+.footer-copy .footer-brand-info { line-height: 1.8; }
+.footer-copy .footer-brand-info .sep { color: rgba(255,255,255,0.2); margin: 0 6px; }
 .footer-legal {
   display: flex; gap: 12px; align-items: center;
   color: rgba(255,255,255,0.35); font-size: 0.78rem;
@@ -1193,7 +1197,8 @@ ul  { list-style: none; }
   .footer-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
-  .footer { padding: 44px 20px 28px; }
+  /* 底部多留空間，避免被 LINE 浮動按鈕遮住 */
+  .footer { padding: 44px 20px 96px; }
   .footer-top {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -1201,6 +1206,16 @@ ul  { list-style: none; }
   }
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
   .footer-copy, .footer-legal { font-size: 0.72rem; }
+  /* 手機版品牌資訊分行顯示，可讀性優先 */
+  .footer-copy .footer-brand-info { line-height: 1.9; }
+  .footer-copy .footer-brand-info .sep-break { display: block; height: 4px; visibility: hidden; }
+  .footer-copy .footer-brand-info .sep-break + .nowrap { display: inline-block; }
+  /* 讓 legal 導航能自動換行不被切斷 */
+  .footer-legal { flex-wrap: wrap; justify-content: center; row-gap: 6px; }
+}
+/* 更窄螢幕 (iPhone SE etc.) LINE 按鈕變圓形，footer 需要更多底部空間 */
+@media (max-width: 380px) {
+  .footer { padding-bottom: 88px; }
 }
 
 /* ===========================
