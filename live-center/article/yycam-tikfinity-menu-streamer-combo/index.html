@@ -24,7 +24,93 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/css/style.css?v=20260820e" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260827a" />
-<style>body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }</style>
+<style>
+  body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }
+
+  /* 對照表 · 桌面版 */
+  .lc-compare-table-wrap {
+    margin: 28px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(232, 57, 42, 0.04), rgba(37, 244, 238, 0.04));
+    border: 1px solid rgba(232, 57, 42, 0.15);
+  }
+  .lc-compare-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #E4E4E7;
+  }
+  .lc-compare-table thead th {
+    background: rgba(232, 57, 42, 0.12);
+    color: #FFFFFF;
+    font-weight: 700;
+    padding: 16px 18px;
+    text-align: left;
+    border-bottom: 2px solid rgba(232, 57, 42, 0.35);
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .lc-compare-table thead th:first-child {
+    width: 22%;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+  }
+  .lc-compare-table .lc-th-sub {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #B4B4C0;
+  }
+  .lc-compare-table tbody th {
+    background: rgba(255, 255, 255, 0.03);
+    color: #FFFFFF;
+    font-weight: 700;
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  .lc-compare-table tbody td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    vertical-align: top;
+    color: #D4D4D8;
+  }
+  .lc-compare-table tbody tr:last-child th,
+  .lc-compare-table tbody tr:last-child td { border-bottom: none; }
+  .lc-compare-table tbody tr:hover th,
+  .lc-compare-table tbody tr:hover td {
+    background: rgba(232, 57, 42, 0.05);
+  }
+
+  /* 手機版：讓表格橫向滑動 */
+  @media (max-width: 640px) {
+    .lc-compare-table { font-size: 14px; }
+    .lc-compare-table thead th,
+    .lc-compare-table tbody th,
+    .lc-compare-table tbody td { padding: 12px 14px; }
+    .lc-compare-table-wrap {
+      position: relative;
+    }
+    .lc-compare-table-wrap::after {
+      content: '→ 左右滑動查看';
+      display: block;
+      text-align: center;
+      font-size: 11px;
+      color: #8B8B99;
+      padding: 6px 0 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+  }
+</style>
 
 <script type="application/ld+json">
 {
@@ -117,23 +203,39 @@
         </ul>
       </div>
 
-      <h3>功能維度對照</h3>
-
-      <p><strong>YYCam / YYCam Pro（視覺的化妝師）</strong></p>
-      <ul>
-        <li><strong>核心作用：</strong>提升畫面質感、美顏去背、鏡頭切換</li>
-        <li><strong>主要功能：</strong>專業級美肌瘦臉、綠幕摳像、開播模板</li>
-        <li><strong>使用場景：</strong>讓主播在鏡頭前保持完美狀態，場景更專業</li>
-        <li><strong>輸出方式：</strong>輸出為「虛擬攝影機（Virtual Camera）」供直播軟體讀取</li>
-      </ul>
-
-      <p><strong>TikFinity（互動與變現的大腦）</strong></p>
-      <ul>
-        <li><strong>核心作用：</strong>禮物觸發機制、自動語音播報、音效與遊戲</li>
-        <li><strong>主要功能：</strong>禮物進度條（Goal）、自動感謝、指令觸發螢幕動畫</li>
-        <li><strong>使用場景：</strong>實現「送玫瑰播放專屬音效」、「送跑車觸發霸屏」</li>
-        <li><strong>輸出方式：</strong>提供「瀏覽器網址（Browser Source）」供直播軟體讀取</li>
-      </ul>
+      <div class="lc-compare-table-wrap">
+        <table class="lc-compare-table">
+          <thead>
+            <tr>
+              <th scope="col">功能維度</th>
+              <th scope="col">YYCam / YYCam Pro<br><span class="lc-th-sub">（視覺的化妝師）</span></th>
+              <th scope="col">TikFinity<br><span class="lc-th-sub">（互動與變現的大腦）</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">核心作用</th>
+              <td>提升畫面質感、美顏去背、鏡頭切換</td>
+              <td>禮物觸發機制、自動語音播報、音效與遊戲</td>
+            </tr>
+            <tr>
+              <th scope="row">主要功能</th>
+              <td>專業級美肌瘦臉、綠幕摳像、開播模板</td>
+              <td>禮物進度條（Goal）、自動感謝、指令觸發螢幕動畫</td>
+            </tr>
+            <tr>
+              <th scope="row">使用場景</th>
+              <td>讓主播在鏡頭前保持完美狀態，場景更專業</td>
+              <td>實現「送玫瑰播放專屬音效」、「送跑車觸發霸屏」</td>
+            </tr>
+            <tr>
+              <th scope="row">輸出方式</th>
+              <td>輸出為「虛擬攝影機（Virtual Camera）」供直播軟體讀取</td>
+              <td>提供「瀏覽器網址（Browser Source）」供直播軟體讀取</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2>🌟 為什麼「菜單主播」需要同時擁有它們？</h2>
 
