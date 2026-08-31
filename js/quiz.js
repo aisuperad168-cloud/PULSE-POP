@@ -302,7 +302,7 @@
     document.querySelectorAll('[data-open-privacy]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
-        alert('隱私條款：\n\n1. 蒐集目的：直播主招募聯繫、寄送 JDI 脈動傳媒相關資訊\n2. 蒐集項目：姓名、Email、LINE ID\n3. 保存期間：至你要求刪除為止\n4. 你的權利：可隨時要求查詢、修改、刪除你的資料\n5. 聯絡方式：pulsepop9@proton.me\n\n(如需詳細條款請透過 LINE 洽詢)');
+        alert('隱私條款：\n\n1. 蒐集目的：直播主招募聯繫、寄送 JDI 脈動傳媒相關資訊\n2. 蒐集項目：姓名、Email、LINE ID\n3. 保存期間：至你要求刪除為止\n4. 你的權利：可隨時要求查詢、修改、刪除你的資料\n5. 聯絡方式：pulsepop9@gmail.com\n\n(如需詳細條款請透過 LINE 洽詢)');
       });
     });
   }

@@ -551,7 +551,7 @@ function initContactForm() {
     const body     = encodeURIComponent(
       `姓名：${name}\n聯絡方式：${contact}\n合作類型：${type}\n\n訊息內容：\n${message}\n\n---\n透過脈動傳媒官方網站聯絡表單送出`
     );
-    window.location.href = `mailto:pulse.Pop9@proton.me?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:pulsepop9@gmail.com?subject=${subject}&body=${body}`;
     showToast('✅ 正在開啟郵件程式，請確認寄出！');
     form.reset();
   });

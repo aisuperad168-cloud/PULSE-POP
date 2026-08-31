@@ -148,7 +148,7 @@ export function renderReportEmail({ name, email, lineId, typeData }) {
         <!-- Footer -->
         <tr><td style="padding:24px 32px 32px;background:#fafafa;border-top:1px solid #eee;">
           <div style="text-align:center;font-size:12px;color:#888;line-height:1.7;">
-            <div style="margin-bottom:8px;">📞 04-3603-3191 · 📧 pulsepop9@proton.me</div>
+            <div style="margin-bottom:8px;">📞 04-3603-3191 · 📧 pulsepop9@gmail.com</div>
             <div style="margin-bottom:8px;">📱 LINE：@354ykfbp · IG：@pulse.pop9</div>
             <div style="margin-top:12px;padding-top:12px;border-top:1px solid #eee;color:#aaa;font-size:11px;">
               © 2026 JDI 脈動傳媒 · JDI PULSE MEDIA<br />
@@ -350,7 +350,7 @@ export function renderContactConfirmEmail({ company, name, email, phone, types, 
         <tr><td style="padding:16px 32px 24px;text-align:center;">
           <div style="font-size:11px;color:#aaa;line-height:1.5;">
             此為系統自動確認信，請勿直接回覆此信箱。<br>
-            若需回覆，請 email 至 pulsepop9@proton.me 或加 LINE @354ykfbp。
+            若需回覆，請 email 至 pulsepop9@gmail.com 或加 LINE @354ykfbp。
           </div>
         </td></tr>
 

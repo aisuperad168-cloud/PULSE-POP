@@ -245,7 +245,7 @@ export async function onRequestPost({ request, env }) {
   const RESEND_API_KEY = env.RESEND_API_KEY;
   const MAIL_FROM      = env.MAIL_FROM || 'onboarding@resend.dev';
   const MAIL_FROM_NAME = env.MAIL_FROM_NAME || 'JDI 脈動傳媒';
-  const MAIL_NOTIFY    = env.MAIL_NOTIFY || 'pulsepop9@proton.me';
+  const MAIL_NOTIFY    = env.MAIL_NOTIFY || 'pulsepop9@gmail.com';
 
   if (!RESEND_API_KEY) {
     console.error('[streamer-test] Missing RESEND_API_KEY');

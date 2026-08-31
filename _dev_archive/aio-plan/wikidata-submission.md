@@ -129,7 +129,7 @@ JDI Pulse Media
 | TikTok username | **P7085** | `pulse.pop9` |
 | Facebook Page ID | **P2013** | `Pulspop` |
 | LINE ID | **P8933** | `@354ykfbp` |
-| email address | **P968** | `mailto:pulsepop9@proton.me` |
+| email address | **P968** | `mailto:pulsepop9@gmail.com` |
 | phone number | **P1329** | `+886-4-3603-3191` |
 | street address | **P6375** | `大連路三段2號`（qualifier language: zh-Hant） |
 | postal code | **P281** | `406` |
@@ -248,7 +248,7 @@ JDI Pulse Media
 ### 步驟 1：建立 Wikidata 帳號（如尚未建立）
 1. 進 https://www.wikidata.org
 2. 右上「Create account」
-3. 用**個人 email**註冊（不要用 pulsepop9@proton.me 公司信）
+3. 用**個人 email**註冊（不要用 pulsepop9@gmail.com 公司信）
 4. 驗證 email
 
 ### 步驟 2：完善個人頁面（提高審核通過率）

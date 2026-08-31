@@ -78,7 +78,7 @@ bash deploy-quiz.sh
 ### 填完表單後應該發生的事
 1. ✅ 訪客看到完整分析結果頁
 2. ✅ 訪客的 Email 收到 HTML 報告
-3. ✅ `pulsepop9@proton.me` 收到通知信
+3. ✅ `pulsepop9@gmail.com` 收到通知信
 4. ✅ D1 資料庫 `quiz_leads` 表有一筆新紀錄
 
 ### 查詢名單
@@ -122,7 +122,7 @@ wrangler d1 execute jdi-pulse-leads --remote \
 [vars]
 MAIL_FROM = "noreply@jdi-pulse.com"        # 或 hello@ / newcomer@
 MAIL_FROM_NAME = "JDI 脈動傳媒"
-MAIL_NOTIFY = "pulsepop9@proton.me"
+MAIL_NOTIFY = "pulsepop9@gmail.com"
 ```
 
 然後：

@@ -7,7 +7,7 @@
  *   RESEND_API_KEY   — Resend API key (re_xxx)
  *   MAIL_FROM        — 寄件人 email (e.g. onboarding@resend.dev)
  *   MAIL_FROM_NAME   — 寄件人顯示名稱 (e.g. JDI 脈動傳媒)
- *   MAIL_NOTIFY      — 內部通知信箱 (e.g. pulsepop9@proton.me)
+ *   MAIL_NOTIFY      — 內部通知信箱 (e.g. pulsepop9@gmail.com)
  *
  * Bindings:
  *   DB               — D1 database (quiz_leads table)
@@ -184,7 +184,7 @@ export async function onRequestPost({ request, env }) {
   const RESEND_API_KEY = env.RESEND_API_KEY;
   const MAIL_FROM      = env.MAIL_FROM || 'onboarding@resend.dev';
   const MAIL_FROM_NAME = env.MAIL_FROM_NAME || 'JDI 脈動傳媒';
-  const MAIL_NOTIFY    = env.MAIL_NOTIFY || 'pulsepop9@proton.me';
+  const MAIL_NOTIFY    = env.MAIL_NOTIFY || 'pulsepop9@gmail.com';
 
   if (!RESEND_API_KEY) {
     console.error('[quiz] Missing RESEND_API_KEY');
