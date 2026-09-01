@@ -451,8 +451,8 @@ function renderStreamers(list) {
   track.innerHTML = doubled.map((s, i) => makeCarouselCard(s, i, i < featured.length && newHandles.has(s.handle))).join('');
 }
 
-// 輪播用卡片（含「新上線」徽章）
-function makeCarouselCard(s, i, showNewBadge) {
+// 輪播用卡片（統一顯示 TikTok 徽章 + 粉絲數，不再顯示 NEW 標籤）
+function makeCarouselCard(s, i, _unused) {
   const followersLabel = formatFollowers(s.followers);
   const followerBadge = followersLabel
     ? `<div class="streamer-followers-badge" title="TikTok 粉絲數">
@@ -460,13 +460,10 @@ function makeCarouselCard(s, i, showNewBadge) {
          ${followersLabel}
        </div>`
     : '';
-  const newBadge = s.isNew
-    ? `<div class="streamer-new-badge" title="新上線" aria-hidden="true">NEW</div>`
-    : '';
   return `
     <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="streamer-card streamer-card-carousel" aria-label="${s.fullName}">
       <div class="streamer-tiktok-badge" title="TikTok 主播" aria-hidden="true">${tiktokSVG}</div>
-      ${newBadge || followerBadge}
+      ${followerBadge}
       <div class="streamer-avatar-wrap">
         <img class="streamer-avatar-img" src="${s.thumb}" alt="${s.name}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -481,6 +478,7 @@ function makeCarouselCard(s, i, showNewBadge) {
 }
 
 // 全部主播頁用卡片（同 makeCard，但用絕對路徑指向 /assets 避免子路徑相對失效）
+// 不再顯示 NEW 標籤
 function makeCardAll(s, i) {
   const followersLabel = formatFollowers(s.followers);
   const followerBadge = followersLabel
@@ -489,9 +487,6 @@ function makeCardAll(s, i) {
          ${followersLabel}
        </div>`
     : '';
-  const newBadge = s.isNew
-    ? `<div class="streamer-new-badge" title="新上線" aria-hidden="true">NEW</div>`
-    : '';
   // s.thumb 是相對路徑（assets/avatars/xxx.jpg），子頁面需要加 leading slash
   const thumbSrc = s.thumb.startsWith('/') || /^https?:/.test(s.thumb) ? s.thumb : '/' + s.thumb;
   return `
@@ -499,7 +494,6 @@ function makeCardAll(s, i) {
        class="streamer-card"
        style="animation-delay:${(i % 15) * 0.05}s">
       <div class="streamer-tiktok-badge" title="TikTok 主播" aria-hidden="true">${tiktokSVG}</div>
-      ${newBadge}
       ${followerBadge}
       <div class="streamer-avatar-wrap">
         <img class="streamer-avatar-img" src="${thumbSrc}" alt="${s.name}" loading="lazy"
@@ -514,75 +508,9 @@ function makeCardAll(s, i) {
     </a>`;
 }
 
-// 脈動之星輪播（/streamers/all/ 頁面）
-// 有深度介紹頁的 7 位主播 slug → 對應 tiktok handle（用於資料查表）
-const FEATURED_STARS = [
-  { slug: 'rena',         handle: 'renatz0503' },
-  { slug: 'duoduolyu',    handle: 'duolyu1225' },
-  { slug: 'mimosi',       handle: 'c_mi_0908' },
-  { slug: 'mamei',        handle: 'sj231009' },
-  { slug: 'yuanchenglie', handle: 'fierce1222' },
-  { slug: 'coco',         handle: 'coco061688' },  // 主陣列可能無此人，走 fallback
-  { slug: 'jack',         handle: 'jack09_20' }
-];
-
-function renderFeaturedStars() {
-  const track = document.getElementById('featuredStarsTrack');
-  if (!track) return;
-  const cards = FEATURED_STARS.map(f => {
-    const s = streamers.find(x => x.handle === f.handle);
-    if (s) {
-      return { ...s, profileUrl: `/streamers/${f.slug}.html` };
-    }
-    // fallback：主陣列沒收錄，用最基本資訊
-    return {
-      handle: f.handle,
-      name: f.slug,
-      fullName: f.slug,
-      url: `https://www.tiktok.com/@${f.handle}`,
-      thumb: `assets/avatars/${f.handle}.jpg`,
-      emoji: '⭐',
-      profileUrl: `/streamers/${f.slug}.html`
-    };
-  });
-  // 無縫循環：複製一份
-  const doubled = [...cards, ...cards];
-  track.innerHTML = doubled.map(s => makeStarCard(s)).join('');
-}
-
-function makeStarCard(s) {
-  const followersLabel = formatFollowers(s.followers);
-  // 右上角只放粉絲數徽章（若有），避免與脈動之星 chip 重疊
-  const followerBadge = followersLabel
-    ? `<div class="streamer-followers-badge" title="TikTok 粉絲數">
-         <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
-         ${followersLabel}
-       </div>`
-    : '';
-  // 脈動之星改為卡片內部 eyebrow chip（居中、置於頭像上方），與右上粉絲徽章解耦
-  const thumbSrc = s.thumb.startsWith('/') || /^https?:/.test(s.thumb) ? s.thumb : '/' + s.thumb;
-  return `
-    <a href="${s.profileUrl}" class="streamer-card streamer-card-carousel streamer-card-star" aria-label="${s.fullName}">
-      ${followerBadge}
-      <div class="streamer-star-chip" title="脈動之星" aria-label="脈動之星">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
-        <span>脈動之星</span>
-      </div>
-      <div class="streamer-avatar-wrap">
-        <img class="streamer-avatar-img" src="${thumbSrc}" alt="${s.name}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="streamer-avatar-fallback" style="display:none;"><span>${s.emoji}</span></div>
-        <div class="live-ring"></div>
-        <div class="live-badge">LIVE</div>
-      </div>
-      <div class="streamer-name">${s.fullName}</div>
-      <div class="streamer-handle">@${s.handle}</div>
-      <div class="streamer-link-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        深度介紹
-      </div>
-    </a>`;
-}
+// 註：/streamers/all/ 頁面頂端的「脈動之星 · 精選推薦」現改用海報式輪播
+// (與首頁相同的 .ad-carousel + initAdCarousel)，由 HTML 靜態渲染，
+// 因此舊的 renderFeaturedStars() / makeStarCard() / FEATURED_STARS 已移除。
 
 // ===== RENDER GOLD RANKING =====
 function renderGoldRanking() {
@@ -821,7 +749,6 @@ function initCursorGlow() {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   renderStreamers(streamers);
-  renderFeaturedStars();
   renderGoldRanking();
   renderNewStreamers();
   initSearch();
