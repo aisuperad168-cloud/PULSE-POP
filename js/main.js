@@ -279,37 +279,37 @@ const streamers = [
 
 // ===== 活動專區 DATA =====
 
-// 7月金牌主播排行榜 (July 2026)
+// 8月金牌主播排行榜 (August 2026)
 const goldRanking = [
   {
-    rank: 1, handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶𝓡𝓝⁰⁵⁰³',
-    url: 'https://www.tiktok.com/@renatz0503',
-    thumb: 'assets/avatars/renatz0503.jpg',
-    emoji: '🧶', medal: '🥇'
-  },
-  {
-    rank: 2, handle: 'duolyu1225', name: '多多綠', fullName: '🌜多多綠🌛¹⁵⁷',
+    rank: 1, handle: 'duolyu1225', name: '多多綠', fullName: '🌜多多綠🌛¹⁵⁷',
     url: 'https://www.tiktok.com/@duolyu1225',
     thumb: 'assets/avatars/duolyu1225.jpg',
-    emoji: '🌙', medal: '🥈'
+    emoji: '🌙', medal: '🥇'
   },
   {
-    rank: 3, handle: 'c_mi_0908', name: '米姥思', fullName: '米姥思🪅 ᴹᴵ',
-    url: 'https://www.tiktok.com/@c_mi_0908',
-    thumb: 'assets/avatars/c_mi_0908.jpg',
-    emoji: '🪅', medal: '🥉'
+    rank: 2, handle: 'renatz0503', name: '芮娜', fullName: '芮娜🧶𝓡𝓝⁰⁵⁰³',
+    url: 'https://www.tiktok.com/@renatz0503',
+    thumb: 'assets/avatars/renatz0503.jpg',
+    emoji: '🧶', medal: '🥈'
   },
   {
-    rank: 4, handle: 'emily10148888', name: '美麗不打烊', fullName: '美麗🧸不打烊🧸',
+    rank: 3, handle: 'emily10148888', name: '美麗不打烊', fullName: '美麗🧸不打烊🧸',
     url: 'https://www.tiktok.com/@emily10148888',
     thumb: 'assets/avatars/emily10148888.jpg',
-    emoji: '🧸', medal: '4️⃣'
+    emoji: '🧸', medal: '🥉'
   },
   {
-    rank: 5, handle: 'ambercblyr3', name: '貢你妹', fullName: '貢你妹🍘',
+    rank: 4, handle: 'ambercblyr3', name: '貢你妹', fullName: '貢你妹🍘',
     url: 'https://www.tiktok.com/@ambercblyr3',
     thumb: 'assets/avatars/ambercblyr3.jpg',
-    emoji: '🍘', medal: '5️⃣'
+    emoji: '🍘', medal: '4️⃣'
+  },
+  {
+    rank: 5, handle: 'coco061688', name: '芊芊coco', fullName: '芊芊 coco🌸',
+    url: 'https://www.tiktok.com/@coco061688',
+    thumb: 'assets/avatars/coco061688.jpg',
+    emoji: '🌸', medal: '5️⃣'
   }
 ];
 
