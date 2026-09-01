@@ -451,12 +451,17 @@ function makeCarouselCard(s, i, _unused) {
          ${followersLabel}
        </div>`
     : '';
+  // 前 6 張立即載入（首屏），其餘 lazy load
+  const eager = i < 6;
   return `
     <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="streamer-card streamer-card-carousel" aria-label="${s.fullName}">
       <div class="streamer-tiktok-badge" title="TikTok 主播" aria-hidden="true">${tiktokSVG}</div>
       ${followerBadge}
       <div class="streamer-avatar-wrap">
         <img class="streamer-avatar-img" src="${s.thumb}" alt="${s.name}"
+          width="90" height="90"
+          loading="${eager ? 'eager' : 'lazy'}" decoding="async"
+          ${eager ? 'fetchpriority="high"' : ''}
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
         <div class="streamer-avatar-fallback" style="display:none;"><span>${s.emoji}</span></div>
         <div class="live-ring"></div>

@@ -707,35 +707,40 @@ ul  { list-style: none; }
   position: relative;
   overflow: hidden;
   padding: 8px 0 20px;
-  mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  /* 註：舊版用 mask-image 做左右淡出，會強制每幀重新合成遮罩導致 jank；
+     改用 .streamers-carousel-fade 兩側絕對定位漸層層達到相同視覺，且 GPU 友善。 */
 }
 .streamers-carousel-track {
   display: flex;
   gap: 18px;
   width: max-content;
   animation: streamersScroll 60s linear infinite;
+  /* 提示瀏覽器建立獨立 GPU compositing 層 */
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  contain: layout paint;
 }
 .streamers-carousel:hover .streamers-carousel-track {
   animation-play-state: paused;
 }
+/* 用 translate3d 觸發 GPU 加速；-50% 因 track 內容是原陣列 × 2 */
 @keyframes streamersScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }  /* 因為 track 內容是原陣列 × 2 */
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
-/* 側邊淡出遮罩（若不支援 mask，備援視覺） */
+/* 側邊淡出遮罩（絕對定位漸層，GPU 友善替代 mask-image） */
 .streamers-carousel-fade {
   position: absolute;
   top: 0; bottom: 0;
-  width: 80px;
+  width: 60px;
   pointer-events: none;
   z-index: 3;
 }
 .streamers-carousel-fade-left  { left: 0;  background: linear-gradient(90deg, var(--dark) 0%, transparent 100%); }
 .streamers-carousel-fade-right { right: 0; background: linear-gradient(270deg, var(--dark) 0%, transparent 100%); }
-@supports (mask-image: linear-gradient(to right, #000, #000)) or (-webkit-mask-image: linear-gradient(to right, #000, #000)) {
-  .streamers-carousel-fade { display: none; }
+@media (max-width: 480px) {
+  .streamers-carousel-fade { width: 32px; }
 }
 
 /* 輪播內卡片：固定寬度、避免因 grid stretch 變形 */
@@ -909,17 +914,20 @@ ul  { list-style: none; }
   font-size: 2.4rem; position: absolute; top: 0; left: 0;
 }
 
-/* Ring animation on hover */
+/* Ring animation on hover — 預設完全停用旋轉動畫（節省 24 張卡同時運算），
+   僅在 hover 時才啟用，避免輪播時 24 個 conic-gradient + mask 每幀重繪 */
 .live-ring {
   position: absolute; inset: -4px; border-radius: 50%;
   border: 2px solid var(--red); opacity: 0;
   transition: opacity 0.25s;
-  animation: ring-spin 3s linear infinite;
   background: conic-gradient(var(--red) 0deg, transparent 120deg, transparent 240deg, var(--red) 360deg);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px));
 }
-.streamer-card:hover .live-ring { opacity: 0.8; }
+.streamer-card:hover .live-ring {
+  opacity: 0.8;
+  animation: ring-spin 3s linear infinite;
+}
 @keyframes ring-spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
 /* Live badge */
