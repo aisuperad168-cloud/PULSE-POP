@@ -414,41 +414,32 @@ function makeCard(s, i, small = false) {
 }
 
 // ===== RENDER FEATURED STREAMERS =====
-// 首頁 (#streamersGrid): 橫向自動輪播 12 位 (5 新進 + 7 高粉)
-// 全部主播頁 (#streamersGridAll): 完整 grid 支援搜尋
+// 首頁 (#streamersGrid): 橫向自動輪播 12 位（粉絲數由高到低）
+// 全部主播頁 (#streamersGridAll): 完整 grid，依粉絲數由高到低排序，支援搜尋
 function renderStreamers(list) {
-  // 全部主播頁的完整 grid
+  // 全部主播頁的完整 grid（依粉絲數由高到低）
   const gridAll = document.getElementById('streamersGridAll');
   if (gridAll) {
     if (list.length === 0) {
       gridAll.innerHTML = '<div class="no-results">😅 找不到符合的主播，請嘗試其他關鍵字</div>';
     } else {
-      gridAll.innerHTML = list.map((s, i) => makeCardAll(s, i)).join('');
+      const sorted = [...list].sort((a, b) => (b.followers || 0) - (a.followers || 0));
+      gridAll.innerHTML = sorted.map((s, i) => makeCardAll(s, i)).join('');
     }
     return;
   }
 
-  // 首頁輪播（12 位：5 新進 + 7 高粉）
+  // 首頁輪播（12 位，粉絲數由高到低）
   const track = document.getElementById('streamersCarouselTrack');
   if (!track) return;
 
-  // 選 5 位新進（依 joinedAt 由新到舊）
-  const newOnes = streamers
-    .filter(s => s.isNew)
-    .sort((a, b) => (b.joinedAt || '').localeCompare(a.joinedAt || ''))
-    .slice(0, 5);
-  const newHandles = new Set(newOnes.map(s => s.handle));
-
-  // 選 7 位粉絲數最高（排除已入選新進的，避免重複）
-  const topOnes = streamers
-    .filter(s => !newHandles.has(s.handle))
+  const featured = [...streamers]
     .sort((a, b) => (b.followers || 0) - (a.followers || 0))
-    .slice(0, 7);
+    .slice(0, 12);
 
-  const featured = [...newOnes, ...topOnes];
   // 為了無縫循環輪播，把陣列複製一份
   const doubled = [...featured, ...featured];
-  track.innerHTML = doubled.map((s, i) => makeCarouselCard(s, i, i < featured.length && newHandles.has(s.handle))).join('');
+  track.innerHTML = doubled.map((s, i) => makeCarouselCard(s, i, false)).join('');
 }
 
 // 輪播用卡片（統一顯示 TikTok 徽章 + 粉絲數，不再顯示 NEW 標籤）
