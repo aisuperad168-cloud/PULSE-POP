@@ -878,36 +878,40 @@
     </div>
   </section>
 
-  <!-- ========== STREAMERS ========== -->
+  <!-- ========== STREAMERS (橫向自動輪播 · 5 新進 + 7 高粉 = 12 位) ========== -->
   <section class="streamers" id="streamers">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">OUR TALENT</span>
         <h2 class="section-title section-title-gradient">旗下優質主播</h2>
         <p class="section-desc">
-          精選優質再現主播陣容，完整旗下共
+          精選新進主播與人氣主播陣容，完整旗下共
           <strong style="color:#FF5444;font-weight:800;">300+</strong>
           位主播全天候直播中
         </p>
       </div>
 
-      <div class="streamer-controls">
-        <div class="search-box">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" id="searchInput" placeholder="搜尋主播名稱或帳號…" autocomplete="off" />
+      <!-- 橫向自動輪播 -->
+      <div class="streamers-carousel" aria-label="旗下主播輪播">
+        <div class="streamers-carousel-fade streamers-carousel-fade-left" aria-hidden="true"></div>
+        <div class="streamers-carousel-fade streamers-carousel-fade-right" aria-hidden="true"></div>
+        <div class="streamers-carousel-track" id="streamersCarouselTrack" role="list">
+          <!-- Rendered by JS (12 位 x 2 循環) -->
         </div>
       </div>
 
-      <div class="streamers-grid" id="streamersGrid">
-        <!-- Rendered by JS -->
-      </div>
-
       <div class="streamers-footer">
-        <p>⭐ 以上為精選優質再現主播，更多主播持續加入中</p>
-        <a href="#contact" class="btn-outline" style="margin-top:18px;display:inline-flex;">
-          我要加入主播陣容
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <p>⭐ 想看完整旗下 300+ 位主播陣容？點下方前往主播頁</p>
+        <div class="streamers-footer-cta">
+          <a href="/streamers/all/" class="btn-primary streamers-view-all">
+            觀看所有主播
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn-outline">
+            我要加入主播陣容
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>

@@ -127,7 +127,14 @@
     </image:image>
   </url>
 
-  <!-- ========== 主播詳細頁 ========== -->
+  <!-- ========== 主播頁 ========== -->
+
+  <url>
+    <loc>https://jdi-pulse.com/streamers/all/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
   <url>
     <loc>https://jdi-pulse.com/streamers/jack.html</loc>

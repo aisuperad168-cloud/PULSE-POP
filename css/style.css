@@ -700,6 +700,134 @@ ul  { list-style: none; }
   position: relative; z-index: 1;
 }
 
+/* ============================================
+   Streamers Carousel（首頁 / 全部主播頁 · 橫向自動輪播）
+   ============================================ */
+.streamers-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 8px 0 20px;
+  mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.streamers-carousel-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: streamersScroll 60s linear infinite;
+  will-change: transform;
+}
+.streamers-carousel:hover .streamers-carousel-track {
+  animation-play-state: paused;
+}
+@keyframes streamersScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }  /* 因為 track 內容是原陣列 × 2 */
+}
+/* 側邊淡出遮罩（若不支援 mask，備援視覺） */
+.streamers-carousel-fade {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  pointer-events: none;
+  z-index: 3;
+}
+.streamers-carousel-fade-left  { left: 0;  background: linear-gradient(90deg, var(--dark) 0%, transparent 100%); }
+.streamers-carousel-fade-right { right: 0; background: linear-gradient(270deg, var(--dark) 0%, transparent 100%); }
+@supports (mask-image: linear-gradient(to right, #000, #000)) or (-webkit-mask-image: linear-gradient(to right, #000, #000)) {
+  .streamers-carousel-fade { display: none; }
+}
+
+/* 輪播內卡片：固定寬度、避免因 grid stretch 變形 */
+.streamer-card-carousel {
+  flex: 0 0 200px;
+  width: 200px;
+  animation: none !important; /* 覆蓋 fadeUp，避免與輪播動畫衝突 */
+}
+
+/* 「新上線」徽章（NEW 標） */
+.streamer-new-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, #FF3B3B 0%, #FF5A00 100%);
+  box-shadow: 0 4px 12px rgba(255,59,59,0.4);
+  animation: newBadgePulse 2s ease-in-out infinite;
+}
+@keyframes newBadgePulse {
+  0%,100% { transform: scale(1); box-shadow: 0 4px 12px rgba(255,59,59,0.4); }
+  50%     { transform: scale(1.08); box-shadow: 0 6px 18px rgba(255,90,0,0.6); }
+}
+
+/* 脈動之星徽章 */
+.streamer-star-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #FFB800;
+  background: rgba(255, 184, 0, 0.12);
+  border: 1px solid rgba(255, 184, 0, 0.4);
+}
+.streamer-card-star:hover .streamer-star-badge {
+  background: rgba(255, 184, 0, 0.22);
+  color: #FFCC33;
+}
+
+/* 觀看所有主播 CTA container */
+.streamers-footer-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.streamers-view-all {
+  animation: viewAllGlow 3s ease-in-out infinite;
+}
+@keyframes viewAllGlow {
+  0%,100% { box-shadow: 0 4px 16px rgba(232,57,42,0.35); }
+  50%     { box-shadow: 0 6px 24px rgba(232,57,42,0.65); }
+}
+
+/* Mobile 微調輪播卡片寬度 */
+@media (max-width: 768px) {
+  .streamer-card-carousel {
+    flex: 0 0 168px;
+    width: 168px;
+  }
+  .streamers-carousel-track { gap: 14px; animation-duration: 45s; }
+  .streamers-footer-cta { flex-direction: column; align-items: stretch; }
+}
+@media (max-width: 480px) {
+  .streamer-card-carousel {
+    flex: 0 0 148px;
+    width: 148px;
+  }
+  .streamers-carousel-track { gap: 12px; animation-duration: 40s; }
+}
+
+/* 支援 prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .streamers-carousel-track { animation: none; }
+  .streamers-view-all       { animation: none; }
+  .streamer-new-badge       { animation: none; }
+}
+
 /* Streamer card */
 .streamer-card {
   display: flex; flex-direction: column; align-items: center;
