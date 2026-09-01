@@ -3,8 +3,66 @@
    Main JavaScript v4
 =========================== */
 
-// ===== STREAMER DATA (29 featured) =====
+// ===== STREAMER DATA (37 featured, incl. 8 newly onboarded 2026-09-01) =====
 const streamers = [
+  // ── 2026-09-01 新上線 8 位 ──
+  {
+    handle: 'ck8ritky', name: 'NN', fullName: 'NN💗',
+    url: 'https://www.tiktok.com/@ck8ritky',
+    thumb: 'assets/avatars/ck8ritky.jpg',
+    followers: 19900,
+    emoji: '💗'
+  },
+  {
+    handle: 'lala_tong_', name: '小寶貝', fullName: '小寶貝🐟🐷',
+    url: 'https://www.tiktok.com/@lala_tong_',
+    thumb: 'assets/avatars/lala_tong_.jpg',
+    followers: 3454,
+    emoji: '🐟'
+  },
+  {
+    handle: '_unrestrained_2', name: '滅鼠隊CEO', fullName: '滅鼠隊CEO🎮',
+    url: 'https://www.tiktok.com/@_unrestrained_2',
+    thumb: 'assets/avatars/_unrestrained_2.jpg',
+    followers: 2779,
+    emoji: '🎮'
+  },
+  {
+    handle: 'lzioicccc', name: 'VANE', fullName: 'VANE🔥🌶️',
+    url: 'https://www.tiktok.com/@lzioicccc',
+    thumb: 'assets/avatars/lzioicccc.jpg',
+    followers: 2362,
+    emoji: '🔥'
+  },
+  {
+    handle: 'rose.c_kaiwei0905', name: '兔寶', fullName: '兔寶🐇🤍',
+    url: 'https://www.tiktok.com/@rose.c_kaiwei0905',
+    thumb: 'assets/avatars/rose.c_kaiwei0905.jpg',
+    followers: 1371,
+    emoji: '🐇'
+  },
+  {
+    handle: 'queen_piau', name: '皇后飄', fullName: '皇后飄👑',
+    url: 'https://www.tiktok.com/@queen_piau',
+    thumb: 'assets/avatars/queen_piau.jpg',
+    followers: 544,
+    emoji: '👑'
+  },
+  {
+    handle: 'emily0907.65', name: '七七', fullName: '七七💜',
+    url: 'https://www.tiktok.com/@emily0907.65',
+    thumb: 'assets/avatars/emily0907.65.jpg',
+    followers: 365,
+    emoji: '💜'
+  },
+  {
+    handle: 'david__0219__', name: 'David', fullName: 'David🌹',
+    url: 'https://www.tiktok.com/@david__0219__',
+    thumb: 'assets/avatars/david__0219__.jpg',
+    followers: 260,
+    emoji: '🌹'
+  },
+  // ── 既有主播 ──
   {
     handle: 'zunwang5858518', name: '沐光', fullName: '沐光🍹',
     url: 'https://www.tiktok.com/@zunwang5858518',
