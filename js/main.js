@@ -552,21 +552,24 @@ function renderFeaturedStars() {
 
 function makeStarCard(s) {
   const followersLabel = formatFollowers(s.followers);
+  // 右上角只放粉絲數徽章（若有），避免與脈動之星 chip 重疊
   const followerBadge = followersLabel
     ? `<div class="streamer-followers-badge" title="TikTok 粉絲數">
          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
          ${followersLabel}
        </div>`
     : '';
+  // 脈動之星改為卡片內部 eyebrow chip（居中、置於頭像上方），與右上粉絲徽章解耦
+  const thumbSrc = s.thumb.startsWith('/') || /^https?:/.test(s.thumb) ? s.thumb : '/' + s.thumb;
   return `
     <a href="${s.profileUrl}" class="streamer-card streamer-card-carousel streamer-card-star" aria-label="${s.fullName}">
-      <div class="streamer-star-badge" title="脈動之星" aria-hidden="true">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
-        脈動之星
-      </div>
       ${followerBadge}
+      <div class="streamer-star-chip" title="脈動之星" aria-label="脈動之星">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+        <span>脈動之星</span>
+      </div>
       <div class="streamer-avatar-wrap">
-        <img class="streamer-avatar-img" src="/${s.thumb}" alt="${s.name}"
+        <img class="streamer-avatar-img" src="${thumbSrc}" alt="${s.name}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
         <div class="streamer-avatar-fallback" style="display:none;"><span>${s.emoji}</span></div>
         <div class="live-ring"></div>

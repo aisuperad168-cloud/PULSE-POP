@@ -766,12 +766,55 @@ ul  { list-style: none; }
   50%     { transform: scale(1.08); box-shadow: 0 6px 18px rgba(255,90,0,0.6); }
 }
 
-/* 脈動之星徽章 */
+/* 脈動之星卡片：金色細邊 + 微光，讓精選推薦更明顯 */
+.streamer-card-star {
+  /* 增加上方 padding，讓 chip 明顯落在粉絲徽章下方，不重疊 */
+  padding-top: 44px !important;
+  border-color: rgba(255, 184, 0, 0.35) !important;
+  box-shadow: 0 8px 24px rgba(255, 158, 31, 0.08), 0 0 0 1px rgba(255, 184, 0, 0.15) inset;
+}
+.streamer-card-star::after {
+  background: linear-gradient(90deg, #FFB800 0%, #FF9E1F 50%, #FFB800 100%) !important;
+}
+.streamer-card-star:hover {
+  border-color: rgba(255, 184, 0, 0.6) !important;
+  box-shadow: 0 24px 56px rgba(255, 158, 31, 0.28), 0 0 0 1px rgba(255, 184, 0, 0.35) inset !important;
+}
+
+/* 脈動之星 eyebrow chip（inline，置於頭像上方，與粉絲徽章解耦） */
+.streamer-star-chip {
+  align-self: center;      /* 在 flex column 中水平置中 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  max-width: 100%;
+  margin: 0 0 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #1A0F00;
+  background: linear-gradient(135deg, #FFD84D 0%, #FFA61F 100%);
+  box-shadow: 0 3px 10px rgba(255, 158, 31, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  position: relative;
+  z-index: 3;
+  white-space: nowrap;
+  animation: starChipShimmer 3s ease-in-out infinite;
+}
+.streamer-star-chip svg { flex-shrink: 0; }
+@keyframes starChipShimmer {
+  0%, 100% { box-shadow: 0 3px 10px rgba(255, 158, 31, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.15) inset; }
+  50%      { box-shadow: 0 5px 16px rgba(255, 184, 0, 0.6),  0 0 0 1px rgba(255, 255, 255, 0.3)  inset; }
+}
+.streamer-card-star:hover .streamer-star-chip {
+  transform: scale(1.05);
+  transition: transform 0.28s;
+}
+
+/* 舊 .streamer-star-badge（若他處還有引用，保持 inline 兼容，不再絕對定位） */
 .streamer-star-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 4;
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -782,10 +825,6 @@ ul  { list-style: none; }
   color: #FFB800;
   background: rgba(255, 184, 0, 0.12);
   border: 1px solid rgba(255, 184, 0, 0.4);
-}
-.streamer-card-star:hover .streamer-star-badge {
-  background: rgba(255, 184, 0, 0.22);
-  color: #FFCC33;
 }
 
 /* 觀看所有主播 CTA container */
@@ -826,6 +865,7 @@ ul  { list-style: none; }
   .streamers-carousel-track { animation: none; }
   .streamers-view-all       { animation: none; }
   .streamer-new-badge       { animation: none; }
+  .streamer-star-chip       { animation: none; }
 }
 
 /* Streamer card */
