@@ -709,6 +709,9 @@ ul  { list-style: none; }
   padding: 8px 0 20px;
   /* 註：舊版用 mask-image 做左右淡出，會強制每幀重新合成遮罩導致 jank；
      改用 .streamers-carousel-fade 兩側絕對定位漸層層達到相同視覺，且 GPU 友善。 */
+  /* content-visibility: auto 讓瀏覽器在畫面外時完全跳過渲染，動畫也會被暫停 */
+  content-visibility: auto;
+  contain-intrinsic-size: 260px;
 }
 .streamers-carousel-track {
   display: flex;
