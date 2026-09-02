@@ -10,11 +10,13 @@
   --lc-policy:    #25F4EE;   /* 活動政策 - 青藍 */
   --lc-tutorial:  #7B68EE;   /* 直播教學 - 紫色 */
   --lc-revenue:   #FFB84D;   /* 收益策略 - 金色 */
+  --lc-glory:     #22C55E;   /* 榮耀時刻 - 翡翠獎盃綠 */
 
   --lc-creator-glow:  rgba(254, 44, 85, 0.28);
   --lc-policy-glow:   rgba(37, 244, 238, 0.28);
   --lc-tutorial-glow: rgba(123, 104, 238, 0.28);
   --lc-revenue-glow:  rgba(255, 184, 77, 0.28);
+  --lc-glory-glow:    rgba(34, 197, 94, 0.28);
 }
 
 /* ---------- 主容器 ---------- */
@@ -213,6 +215,7 @@
 .lc-tag--policy   { background: rgba(37,244,238,0.15); color: var(--lc-policy);  border: 1px solid rgba(37,244,238,0.35); }
 .lc-tag--tutorial { background: rgba(123,104,238,0.15);color: var(--lc-tutorial);border: 1px solid rgba(123,104,238,0.35); }
 .lc-tag--revenue  { background: rgba(255,184,77,0.15); color: var(--lc-revenue); border: 1px solid rgba(255,184,77,0.35); }
+.lc-tag--glory    { background: rgba(34,197,94,0.15);  color: var(--lc-glory);   border: 1px solid rgba(34,197,94,0.35); }
 
 .lc-featured-title {
   font-size: 18px;
@@ -277,6 +280,7 @@
 .lc-category-card[data-cat="policy"]   { --_cat-color: var(--lc-policy); }
 .lc-category-card[data-cat="tutorial"] { --_cat-color: var(--lc-tutorial); }
 .lc-category-card[data-cat="revenue"]  { --_cat-color: var(--lc-revenue); }
+.lc-category-card[data-cat="glory"]    { --_cat-color: var(--lc-glory); }
 
 .lc-category-card:hover {
   transform: translateY(-3px);
@@ -287,6 +291,7 @@
 .lc-category-card[data-cat="policy"]:hover   { box-shadow: 0 12px 32px var(--lc-policy-glow); }
 .lc-category-card[data-cat="tutorial"]:hover { box-shadow: 0 12px 32px var(--lc-tutorial-glow); }
 .lc-category-card[data-cat="revenue"]:hover  { box-shadow: 0 12px 32px var(--lc-revenue-glow); }
+.lc-category-card[data-cat="glory"]:hover    { box-shadow: 0 12px 32px var(--lc-glory-glow); }
 
 .lc-cat-icon {
   font-size: 32px;
@@ -786,6 +791,7 @@
 .lc-subnav-item.active[data-cat="policy"]   { border-bottom-color: var(--lc-policy); }
 .lc-subnav-item.active[data-cat="tutorial"] { border-bottom-color: var(--lc-tutorial); }
 .lc-subnav-item.active[data-cat="revenue"]  { border-bottom-color: var(--lc-revenue); }
+.lc-subnav-item.active[data-cat="glory"]    { border-bottom-color: var(--lc-glory); }
 
 @media (max-width: 640px) {
   .lc-subnav { top: calc(60px + env(safe-area-inset-top)); margin-bottom: 24px; }
