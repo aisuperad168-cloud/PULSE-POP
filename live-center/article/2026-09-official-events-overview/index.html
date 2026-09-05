@@ -20,24 +20,41 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/css/style.css?v=20260901k" />
+<link rel="stylesheet" href="/css/style.css?v=20260901l" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
 <style>
   body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }
-  .ev-card { border: 1px solid rgba(37,244,238,0.25); border-radius: 12px; padding: 20px 24px; margin: 28px 0; background: rgba(37,244,238,0.04); }
-  .ev-card h3 { margin-top: 0; color: var(--lc-policy); }
-  .ev-card .ev-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; font-size: 14px; }
-  .ev-card .ev-tag { padding: 3px 10px; border-radius: 999px; background: rgba(37,244,238,0.12); color: var(--lc-policy); font-weight: 600; }
+  /* Prevent article body children from overflowing on narrow screens */
+  .lc-article-body { min-width: 0; }
+  .lc-article-body > * { max-width: 100%; }
+  /* Force wide tables into their own horizontal scroll container without pushing sibling widths */
+  .ev-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; margin: 24px 0; }
+  .ev-table-wrap table { border-collapse: collapse; font-size: 15px; width: 100%; min-width: 560px; }
+
+  .ev-card { box-sizing: border-box; max-width: 100%; border: 1px solid rgba(37,244,238,0.25); border-radius: 12px; padding: 20px 24px; margin: 28px 0; background: rgba(37,244,238,0.04); }
+  .ev-card h3 { margin-top: 0; color: var(--lc-policy); word-break: break-word; }
+  .ev-card .ev-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; font-size: 14px; min-width: 0; }
+  .ev-card .ev-tag { flex: 0 1 auto; padding: 3px 10px; border-radius: 999px; background: rgba(37,244,238,0.12); color: var(--lc-policy); font-weight: 600; white-space: nowrap; }
   .ev-card .ev-tag.gold { background: rgba(255,184,77,0.15); color: var(--lc-revenue); }
   .ev-card .ev-tag.rose { background: rgba(254,44,85,0.15); color: var(--lc-creator); }
-  .ev-card .ev-poster { margin: 12px 0 16px; border-radius: 8px; overflow: hidden; }
+  .ev-card .ev-poster { margin: 12px 0 16px; border-radius: 8px; overflow: hidden; max-width: 100%; }
   .ev-card .ev-poster img { display: block; width: 100%; height: auto; }
   .ev-card ul { padding-left: 20px; }
   .ev-card ul li { margin-bottom: 6px; }
   .ev-jdi-tip { margin-top: 14px; padding: 12px 16px; background: rgba(232,57,42,0.08); border-left: 3px solid #E8392A; border-radius: 0 6px 6px 0; font-size: 14.5px; }
-  .ev-tier-head { margin: 60px 0 24px; padding: 20px 24px; border-radius: 12px; background: linear-gradient(135deg, rgba(37,244,238,0.08), rgba(123,104,238,0.08)); border: 1px solid rgba(37,244,238,0.2); }
-  .ev-tier-head h2 { margin: 0 0 6px; color: var(--lc-policy); }
+  .ev-tier-head { box-sizing: border-box; max-width: 100%; margin: 60px 0 24px; padding: 20px 24px; border-radius: 12px; background: linear-gradient(135deg, rgba(37,244,238,0.08), rgba(123,104,238,0.08)); border: 1px solid rgba(37,244,238,0.2); }
+  .ev-tier-head h2 { margin: 0 0 6px; color: var(--lc-policy); word-break: break-word; }
   .ev-tier-head p { margin: 0; opacity: 0.85; font-size: 15px; }
+
+  @media (max-width: 640px) {
+    .ev-card { padding: 16px 14px; margin: 20px 0; }
+    .ev-card h3 { font-size: 17px; }
+    .ev-card .ev-meta { font-size: 12.5px; gap: 6px; }
+    .ev-card .ev-tag { padding: 2px 8px; }
+    .ev-tier-head { padding: 16px 14px; margin: 40px 0 16px; }
+    .ev-tier-head h2 { font-size: 20px; }
+    .ev-jdi-tip { padding: 10px 12px; font-size: 13.5px; }
+  }
 </style>
 
 <script type="application/ld+json">
@@ -155,8 +172,8 @@
 
       <h2>快速索引｜依 8 月鑽石收入分層</h2>
 
-      <div style="overflow-x:auto; margin: 24px 0;">
-        <table style="width:100%; border-collapse: collapse; font-size: 15px; min-width: 560px;">
+      <div class="ev-table-wrap">
+        <table>
           <thead>
             <tr style="background: rgba(37,244,238,0.15);">
               <th style="padding: 12px; text-align: left; border-bottom: 2px solid var(--lc-policy); color: var(--lc-policy); font-weight: 700;">層級</th>
@@ -240,7 +257,7 @@
           <li>KATE 限量彩妝禮盒、聯名獎牌、獎勵頭像框</li>
           <li><strong>FANDOM 系列最後一次盛典選拔資格</strong>（每個榜單前十）</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是 9 月「實體曝光價值最高」的活動 —— 中山站捷運版位 = 每天數十萬人潮的品牌認知。適合形象定位清楚、想長線發展的主播全力衝。粉絲團經營強的主播特別有優勢（30 積分 / 位）。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是 9 月「實體曝光價值最高」的活動 —— 中山站捷運版位 = 每天數十萬人潮的品牌認知。適合形象定位清楚、想長線發展的主播全力衝。粉絲團經營強的主播特別有優勢（30 積分 / 位）。</div>
       </div>
 
       <!-- 02 月滿盈金 -->
@@ -263,7 +280,7 @@
           <li>💎 每日抽獎最高獲得 <strong>1 萬鑽石</strong></li>
           <li>🏆 榜單 Top 3 獲得<strong>活動客製化個人形象冰箱貼</strong>（實體週邊）</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>「兩階段獎勵一致」= 中秋前後同一套策略可以重跑一次。第一階段當測試，第二階段當正式戰。中秋當週（9/23 前後）粉絲情緒 high，是全月最好衝的窗口。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>「兩階段獎勵一致」= 中秋前後同一套策略可以重跑一次。第一階段當測試，第二階段當正式戰。中秋當週（9/23 前後）粉絲情緒 high，是全月最好衝的窗口。</div>
       </div>
 
       <!-- 03 榮譽殿堂 -->
@@ -281,7 +298,7 @@
           <li>連續 3 週晉級 = 決賽穩定入場券</li>
           <li>核心權益：10 月線下晚宴（實體）+ 線上榮譽強曝光</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>晚宴 12 席是全台頂級主播的年度殿堂，屬於「錢多不一定能買到」的實體榮譽。想爭席位的主播請把每週晉級當「小型月賽」拆解 —— 週榜穩，總榜才有本錢決賽衝刺。運營可幫你排連麥、規劃指定禮物投放節奏。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>晚宴 12 席是全台頂級主播的年度殿堂，屬於「錢多不一定能買到」的實體榮譽。想爭席位的主播請把每週晉級當「小型月賽」拆解 —— 週榜穩，總榜才有本錢決賽衝刺。運營可幫你排連麥、規劃指定禮物投放節奏。</div>
       </div>
 
       <!-- 04 TW x MY -->
@@ -300,7 +317,7 @@
           <li>Top1–5：官方季度證書</li>
           <li>雙賽道疊加 = 送 1 個禮物同時累積 2 個榜單</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>雙賽道疊加是超值 CP 值機制，適合有穩定連麥搭檔的團播主播。9/25–9/30 是六天雙倍窗口，要衝就集中火力這六天。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>雙賽道疊加是超值 CP 值機制，適合有穩定連麥搭檔的團播主播。9/25–9/30 是六天雙倍窗口，要衝就集中火力這六天。</div>
       </div>
 
       <!-- 05 花澤香菜 -->
@@ -318,7 +335,7 @@
           <li>演出門票、簽名專輯、海量周邊、鑽石、光點卡等獎勵</li>
           <li>抽獎途徑降低門檻 —— 沒衝到擂主也有機會拿門票</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>ACG / 動漫 / 日系音樂類主播<strong>絕對不能錯過</strong> —— 後台採訪花澤香菜的原生內容素材，未來 6 個月都能剪片持續發酵。9/26 演唱會地點 Legacy Taipei（台北市中山區），得獎主播記得提前空出行程。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>ACG / 動漫 / 日系音樂類主播<strong>絕對不能錯過</strong> —— 後台採訪花澤香菜的原生內容素材，未來 6 個月都能剪片持續發酵。9/26 演唱會地點 Legacy Taipei（台北市中山區），得獎主播記得提前空出行程。</div>
       </div>
 
       <!-- ================== TIER 2: 頂級 ================== -->
@@ -342,7 +359,7 @@
           <li>與 TW × MY 極光星耀大賞（活動 4️⃣）雙賽道疊加，指定禮物 2× 同時累積</li>
           <li>連動安縵酒店品牌，實體出行 = 頂級品牌背書</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>安縵是全球奢華酒店天花板，這是「錢也不見得買得到體驗」等級的獎勵。台灣目標只有 Top 1，競爭極激烈 —— 建議搭配活動 4️⃣ 雙倍窗口一起衝，運營會協助排跨區連麥與粉絲動員。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>安縵是全球奢華酒店天花板，這是「錢也不見得買得到體驗」等級的獎勵。台灣目標只有 Top 1，競爭極激烈 —— 建議搭配活動 4️⃣ 雙倍窗口一起衝，運營會協助排跨區連麥與粉絲動員。</div>
       </div>
 
       <!-- 07 PK 對決王 -->
@@ -360,7 +377,7 @@
           <li><strong>一組（最頂組）決出 3 位對決王：</strong>「出發曼谷，合拍泰服風影片」（與安縵權益不疊加）</li>
           <li><strong>二組、三組加碼：</strong>台灣拍攝權益，3 位對決王與泰國主播「台灣合拍旗袍風短影片」</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>PK 強項的主播主戰場。一組獎勵與 LIVE VACATION 不可疊加 —— 要選其中一個當主目標，避免資源分散。二三組的「泰國主播來台合拍」也是很稀有的跨國內容素材。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>PK 強項的主播主戰場。一組獎勵與 LIVE VACATION 不可疊加 —— 要選其中一個當主目標，避免資源分散。二三組的「泰國主播來台合拍」也是很稀有的跨國內容素材。</div>
       </div>
 
       <!-- 08 躍升保級 -->
@@ -378,7 +395,7 @@
           <li>對已經在榮譽殿堂內的頂級主播，是穩定分數的保障戰</li>
           <li>對想擠進殿堂的主播，是最後一週衝刺的機會窗口</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>與活動 3️⃣ 榮譽殿堂並行 —— 前者是全月晉級戰，這個是月末衝刺補分機制。9 月最後一週的效益最大化：把 3️⃣ 決賽 + 6️⃣ LIVE VACATION + 8️⃣ 躍升保級三個一起排。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>與活動 3️⃣ 榮譽殿堂並行 —— 前者是全月晉級戰，這個是月末衝刺補分機制。9 月最後一週的效益最大化：把 3️⃣ 決賽 + 6️⃣ LIVE VACATION + 8️⃣ 躍升保級三個一起排。</div>
       </div>
 
       <!-- ================== TIER 3: 中階 ================== -->
@@ -402,7 +419,7 @@
           <li><strong>星光獎牌 + 證書 + 豪華禮盒</strong>獎勵</li>
           <li><strong>年度卡牌名額登場</strong>，參與爭奪星座代言人版面（年度長線曝光）</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>限處女座主播（8/23–9/22 生日）—— 這是自己星座唯一的一次機會，錯過等一年。分組衝刺機制對中階主播很友善，運營可協助配對相似體量的競爭對手做良性競爭。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>限處女座主播（8/23–9/22 生日）—— 這是自己星座唯一的一次機會，錯過等一年。分組衝刺機制對中階主播很友善，運營可協助配對相似體量的競爭對手做良性競爭。</div>
       </div>
 
       <!-- 10 Travel With Me -->
@@ -420,7 +437,7 @@
           <li>玩家透過送禮鑽石數爭奪「<strong>頭號粉絲</strong>」之位（觀眾也有參與感）</li>
           <li><strong>獎勵：主播形象客製化公仔</strong> + 鑽石</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>「主播客製公仔」是全月最有紀念價值的獎品之一 —— 3D 建模你的直播形象，永久收藏。門檻設在 10 金幣以上禮物很聰明，等於引導觀眾放棄「小電池類」轉打精緻小禮物 —— 對長期粉絲經營很有幫助。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>「主播客製公仔」是全月最有紀念價值的獎品之一 —— 3D 建模你的直播形象，永久收藏。門檻設在 10 金幣以上禮物很聰明，等於引導觀眾放棄「小電池類」轉打精緻小禮物 —— 對長期粉絲經營很有幫助。</div>
       </div>
 
       <!-- ================== TIER 4: 進階新人 ================== -->
@@ -444,7 +461,7 @@
           <li>TOP 直播主獲得<strong>秋季限定頭像框</strong>及鑽石獎勵</li>
           <li>週榜機制 = 每週都有翻盤機會，不用怕開頭沒衝好</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是 9 月整月的「基礎收益補血活動」—— 全月都可衝，不用擠時段。適合搭配活動 2️⃣ 月滿盈金一起做（中秋前後的禮物投放可雙賺）。運營會協助拆解四週節奏，避免衝刺過度早爆。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是 9 月整月的「基礎收益補血活動」—— 全月都可衝，不用擠時段。適合搭配活動 2️⃣ 月滿盈金一起做（中秋前後的禮物投放可雙賺）。運營會協助拆解四週節奏，避免衝刺過度早爆。</div>
       </div>
 
       <!-- ================== TIER 5: 真新人 ================== -->
@@ -468,7 +485,7 @@
           <li>限定頭像框 + 光點卡獎勵</li>
           <li><strong>總積分 Top 3 且當月營收達 20 萬鑽石</strong>：獲得<strong>榮耀獎牌</strong>（實體）</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是新人主播「一定要打」的活動，因為對手都是同層級 —— 資源相對平均。門檻很寬鬆（Top 30 就有獎），適合當<strong>第一個月找信心</strong>的成功體驗。JDI 有專屬運營陪跑新人組，需要的話 <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">LINE 諮詢</a>。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是新人主播「一定要打」的活動，因為對手都是同層級 —— 資源相對平均。門檻很寬鬆（Top 30 就有獎），適合當<strong>第一個月找信心</strong>的成功體驗。JDI 有專屬運營陪跑新人組，需要的話 <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">LINE 諮詢</a>。</div>
       </div>
 
       <!-- ================== TIER 6: 練手型 ================== -->
@@ -491,7 +508,7 @@
           <li>若<strong>在 PK 或連麥期間</strong>獲得，最高可拿<strong>三倍積分</strong></li>
           <li>5 天短打，門檻低</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>PK / 連麥主播的最佳加碼窗口 —— 平時打的 PK 場次直接翻 3 倍。可搭配活動 8️⃣ 榮譽殿堂週晉級一起做，一個禮物兩份收益。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>PK / 連麥主播的最佳加碼窗口 —— 平時打的 PK 場次直接翻 3 倍。可搭配活動 8️⃣ 榮譽殿堂週晉級一起做，一個禮物兩份收益。</div>
       </div>
 
       <!-- 14 全球巡禮非洲篇 -->
@@ -508,7 +525,7 @@
           <li>限定禮物有專屬視覺效果，適合當作直播間話題觸發器</li>
           <li>與粉絲共同「解鎖新禮物」= 社群感強烈</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>把「非洲」當直播主題梗來玩 —— 動物冷知識、非洲旅遊故事、非洲音樂舞蹈連結。內容型主播特別適合。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>把「非洲」當直播主題梗來玩 —— 動物冷知識、非洲旅遊故事、非洲音樂舞蹈連結。內容型主播特別適合。</div>
       </div>
 
       <!-- 15 台味爭霸戰 -->
@@ -525,7 +542,7 @@
           <li>與中秋時段完全重疊，禮物設計自帶節慶氛圍</li>
           <li>「最佳台味主播」稱號 = 在地形象加分項</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>台灣主題主播、美食類、生活類直播的最佳露臉舞台。可與活動 2️⃣ 月滿盈金 + 活動 4️⃣ TW×MY 三重疊加 —— 同一週送禮，三份積分。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>台灣主題主播、美食類、生活類直播的最佳露臉舞台。可與活動 2️⃣ 月滿盈金 + 活動 4️⃣ TW×MY 三重疊加 —— 同一週送禮，三份積分。</div>
       </div>
 
       <!-- ================== TIER 7: 教育型 ================== -->
@@ -549,7 +566,7 @@
           <li>即可抽 <strong>30 元現金</strong>，<strong>中獎率高達 80%</strong></li>
           <li><strong>多抽多得沒有上限</strong> —— 天天開播天天抽</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是<strong>本月 CP 值最誇張</strong>的活動，任何主播都該天天做。3 個任務對正常開播主播來說是「開播就達成」，等於平白多一份收入。JDI 師徒計畫的徒弟必打卡項目 —— 詳見 <a href="/live-center/article/mentor-program-2026/">師徒計畫招募</a>。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>這是<strong>本月 CP 值最誇張</strong>的活動，任何主播都該天天做。3 個任務對正常開播主播來說是「開播就達成」，等於平白多一份收入。JDI 師徒計畫的徒弟必打卡項目 —— 詳見 <a href="/live-center/article/mentor-program-2026/">師徒計畫招募</a>。</div>
       </div>
 
       <!-- 17 Go Live 這裡開始直播之旅 -->
@@ -566,7 +583,7 @@
           <li>做任務即有機會瓜分獎池、抽鑽石、贏閃光卡及專屬頭像框</li>
           <li>與活動 1️⃣6️⃣ 奪寶奇兵形成雙保底組合</li>
         </ul>
-        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>與奪寶奇兵並列「新人保底二連發」—— 每天開播前 5 分鐘先把兩個活動的任務完成，等於把「基本工資」領好再開始表演。</p>
+        <div class="ev-jdi-tip"><strong>💡 JDI 運營建議：</strong>與奪寶奇兵並列「新人保底二連發」—— 每天開播前 5 分鐘先把兩個活動的任務完成，等於把「基本工資」領好再開始表演。</div>
       </div>
 
       <!-- ================== 全月戰術 ================== -->
