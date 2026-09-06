@@ -33,8 +33,14 @@ export async function onRequestGet({ request, env }) {
     const contractNo = url.searchParams.get('no');
     const phoneLast4 = url.searchParams.get('phone_last4');
     const idLast4 = url.searchParams.get('id_last4');
+    // Admin 判定：
+    //   1. CF Access header → 強驗證（真 admin，可看敏感資料完整版）
+    //   2. URL admin=1 → 只用來跳過三因子（因為 admin 不知道乙方電話/身分證末 4）
+    //      → 沒 CF Access header 就當一般查看者處理（敏感欄位遮罩）
     const adminEmail = request.headers.get('Cf-Access-Authenticated-User-Email');
-    const isAdmin = !!adminEmail || url.searchParams.get('admin') === '1';
+    const adminFlag = url.searchParams.get('admin') === '1';
+    const isAdmin = !!adminEmail;
+    const skipThreeFactor = isAdmin || adminFlag;
 
     if (!contractNo) return json({ ok: false, error: '缺少合約編號' }, 400);
 
@@ -45,8 +51,8 @@ export async function onRequestGet({ request, env }) {
 
     if (!contract) return json({ ok: false, error: '找不到合約' }, 404);
 
-    // 若非 admin，需驗證三因子
-    if (!isAdmin) {
+    // 三因子驗證（admin=1 或 CF Access header 可跳過）
+    if (!skipThreeFactor) {
       if (!phoneLast4 || !idLast4) {
         return json({ ok: false, error: '需提供手機末 4 碼 + 身分證末 4 碼驗證' }, 401);
       }
@@ -55,9 +61,9 @@ export async function onRequestGet({ request, env }) {
       }
     }
 
-    // 抓附件（僅 admin 才回傳身分證圖，避免主播端 base64 太大）
+    // 抓附件（admin=1 或 CF Access admin 才回傳身分證圖，避免主播端 base64 太大）
     let attachments = [];
-    if (isAdmin) {
+    if (skipThreeFactor) {
       const a = await env.DB.prepare(
         `SELECT file_type, storage_url FROM sign_attachments WHERE contract_id = ?`
       ).bind(contract.id).all();
