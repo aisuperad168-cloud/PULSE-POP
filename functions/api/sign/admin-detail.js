@@ -6,6 +6,8 @@
  * ============================================================
  */
 
+import { requireAdmin, authFailedResponse } from './_auth.js';
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -25,8 +27,10 @@ export async function onRequestOptions() {
 
 export async function onRequestGet({ request, env }) {
   try {
-    const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email');
-    // MVP: 允許未受保護（後續啟用 Access 後可強制）
+    // ============ 強制認證 ============
+    const auth = await requireAdmin(request, env);
+    if (!auth.ok) return authFailedResponse(auth);
+    const userEmail = auth.email;
 
     const url = new URL(request.url);
     const id = url.searchParams.get('id');

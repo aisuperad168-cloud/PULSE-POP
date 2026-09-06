@@ -11,6 +11,8 @@
  * ============================================================
  */
 
+import { requireAdmin, authFailedResponse } from './_auth.js';
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -30,6 +32,11 @@ export async function onRequestOptions() {
 
 export async function onRequestPost({ request, env }) {
   try {
+    // ============ 強制認證 ============
+    const auth = await requireAdmin(request, env);
+    if (!auth.ok) return authFailedResponse(auth);
+    const userEmail = auth.email;
+
     const body = await request.json();
     const { contract_no, confirm } = body;
 
@@ -46,7 +53,6 @@ export async function onRequestPost({ request, env }) {
     if (!contract) return json({ ok: false, error: '找不到該合約' }, 404);
 
     const contractId = contract.id;
-    const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email') || 'admin';
     const ip = request.headers.get('CF-Connecting-IP') || '';
 
     // 依序刪除關聯資料

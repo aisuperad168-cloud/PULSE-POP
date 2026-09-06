@@ -4,8 +4,11 @@
  * ============================================================
  * 後台：列出所有合約（供 Jack 審核）
  * 保護：Cloudflare Access header (Cf-Access-Authenticated-User-Email)
+ *      + 硬 code / D1 白名單雙重檢查
  * ============================================================
  */
+
+import { requireAdmin, authFailedResponse } from './_auth.js';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -52,21 +55,11 @@ async function ensureTable(env) {
 export async function onRequestGet({ request, env }) {
   try {
     await ensureTable(env);
-    // ============ 檢查 Cloudflare Access header ============
-    const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email');
-    // MVP 階段：暫時允許未受 Access 保護（開發用）
-    // 生產環境務必啟用 Cloudflare Access
-    const isDev = !userEmail;
 
-    if (!isDev) {
-      // 檢查是否在 sign_admins 白名單
-      const admin = await env.DB.prepare(
-        `SELECT id, name, role FROM sign_admins WHERE email = ? AND active = 1`
-      ).bind(userEmail).first();
-      if (!admin) {
-        return json({ ok: false, error: '無權限存取後台' }, 403);
-      }
-    }
+    // ============ 強制認證：僅允許授權管理員 ============
+    const auth = await requireAdmin(request, env);
+    if (!auth.ok) return authFailedResponse(auth);
+    const userEmail = auth.email;
 
     // Query params
     const url = new URL(request.url);

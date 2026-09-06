@@ -8,6 +8,8 @@
  * ============================================================
  */
 
+import { requireAdmin, authFailedResponse } from './_auth.js';
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -27,7 +29,11 @@ export async function onRequestOptions() {
 
 export async function onRequestPost({ request, env }) {
   try {
-    const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email') || 'dev@jdi-pulse.com';
+    // ============ 強制認證 ============
+    const auth = await requireAdmin(request, env);
+    if (!auth.ok) return authFailedResponse(auth);
+    const userEmail = auth.email;
+
     const body = await request.json();
     const { contract_id, action, operator_name, operator_email, reject_reason } = body;
 
