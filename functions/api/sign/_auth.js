@@ -11,6 +11,7 @@
 // 如果 D1 表裡有 email 也算，兩邊 OR
 const HARDCODED_ADMIN_EMAILS = [
   'jack09201112@gmail.com',
+  'pulsepop9@gmail.com',
   // 加更多超級管理員 email...
 ];
 
