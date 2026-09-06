@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>合約檢視｜JDI 簽約系統</title>
+  <link rel="canonical" href="https://sign.jdi-pulse.com/contract-view/" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;700;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;700;900&display=swap" /></noscript>
+  <style>
+    /* ============ SCREEN STYLES ============ */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #e5e5e5; }
+    body {
+      font-family: 'Noto Serif TC', 'Noto Sans TC', -apple-system, serif;
+      color: #1a1a1a;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Toolbar (top action bar) */
+    .cv-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #0b0d12;
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .cv-toolbar-title {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .cv-toolbar-title .cv-no {
+      color: #25F4EE;
+      font-family: monospace;
+      margin-left: 8px;
+    }
+    .cv-toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cv-btn {
+      background: #FE2C55;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .cv-btn:hover { background: #b81e3f; }
+    .cv-btn-ghost {
+      background: transparent;
+      color: #a1a1aa;
+      border: 1px solid #3a3f4d;
+    }
+    .cv-btn-ghost:hover { background: #14171f; color: #fff; }
+
+    /* Contract paper */
+    .cv-page {
+      max-width: 800px;
+      margin: 24px auto;
+      background: #fff;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+      padding: 60px 64px;
+      min-height: calc(100vh - 100px);
+      position: relative;
+    }
+    @media (max-width: 640px) {
+      .cv-page { margin: 0; padding: 32px 24px; box-shadow: none; }
+    }
+
+    /* Header */
+    .cv-header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #FE2C55;
+      margin-bottom: 32px;
+    }
+    .cv-header-brand {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: #FE2C55;
+      margin-bottom: 8px;
+    }
+    .cv-header-title {
+      font-size: 26px;
+      font-weight: 900;
+      margin: 0 0 6px;
+      letter-spacing: 2px;
+    }
+    .cv-header-subtitle {
+      font-size: 12px;
+      color: #666;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 1px;
+    }
+    .cv-contract-no {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #999;
+      padding: 4px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Parties */
+    .cv-parties {
+      background: #fafafa;
+      padding: 18px 22px;
+      border-left: 4px solid #FE2C55;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+    .cv-parties p { margin: 6px 0; font-size: 15px; }
+    .cv-parties strong { color: #FE2C55; }
+
+    /* Article */
+    .cv-article { margin: 28px 0; }
+    .cv-article h2 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #FE2C55;
+      margin: 0 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .cv-article ol, .cv-article ul {
+      padding-left: 24px;
+      margin: 10px 0;
+    }
+    .cv-article li {
+      margin-bottom: 8px;
+      text-align: justify;
+    }
+    .cv-article p {
+      text-align: justify;
+      margin: 8px 0;
+    }
+    .cv-article strong { color: #000; font-weight: 700; }
+    .cv-highlight {
+      background: #fff9c4;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    /* Signature block */
+    .cv-signature-section {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 2px solid #333;
+    }
+    .cv-signature-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 20px;
+    }
+    @media (max-width: 640px) {
+      .cv-signature-block { grid-template-columns: 1fr; gap: 30px; }
+    }
+    .cv-signature-party h3 {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: #FE2C55;
+      margin: 0 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #ccc;
+    }
+    .cv-signature-party p {
+      margin: 6px 0;
+      font-size: 13px;
+    }
+    .cv-signature-party .cv-field-label {
+      display: inline-block;
+      width: 80px;
+      color: #999;
+    }
+    .cv-signature-party .cv-field-value {
+      color: #000;
+      font-weight: 600;
+    }
+
+    /* Signature image area */
+    .cv-signature-area {
+      margin-top: 18px;
+      padding: 14px;
+      background: #fafafa;
+      border-radius: 6px;
+      min-height: 100px;
+      position: relative;
+    }
+    .cv-signature-area-label {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 10px;
+      color: #999;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .cv-signature-img {
+      max-width: 100%;
+      max-height: 80px;
+      display: block;
+    }
+
+    /* 印刷章 (Jack side) */
+    .cv-stamp-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 18px;
+      padding: 14px;
+      background: #fafafa;
+      border-radius: 6px;
+    }
+    .cv-stamp {
+      width: 96px;
+      height: 96px;
+      flex-shrink: 0;
+    }
+    .cv-stamp-info {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 11px;
+      color: #666;
+      line-height: 1.6;
+    }
+    .cv-stamp-info strong {
+      display: block;
+      color: #b81e3f;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    /* Date footer */
+    .cv-date-footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 14px;
+      color: #333;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 3px;
+    }
+
+    /* Status watermark */
+    .cv-status-watermark {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-size: 96px;
+      font-weight: 900;
+      color: rgba(254, 44, 85, 0.06);
+      letter-spacing: 20px;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .cv-page > *:not(.cv-status-watermark) { position: relative; z-index: 1; }
+
+    /* Legal disclosure */
+    .cv-legal-notice {
+      margin-top: 32px;
+      padding: 16px 20px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 11px;
+      color: #666;
+      line-height: 1.7;
+    }
+    .cv-legal-notice strong { color: #333; }
+
+    /* Loading / Error */
+    .cv-loading, .cv-error {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 48px 32px;
+      background: #fff;
+      border-radius: 12px;
+      text-align: center;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .cv-error { color: #b81e3f; }
+    .cv-loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #eee;
+      border-top-color: #FE2C55;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      animation: cv-spin 0.8s linear infinite;
+    }
+    @keyframes cv-spin { to { transform: rotate(360deg); } }
+
+    /* Auth prompt (when 401) */
+    .cv-auth-prompt {
+      max-width: 460px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .cv-auth-prompt h2 { margin: 0 0 8px; color: #FE2C55; }
+    .cv-auth-prompt p { color: #666; font-size: 14px; margin: 0 0 20px; line-height: 1.7; }
+    .cv-auth-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 20px;
+      font-family: monospace;
+      letter-spacing: 6px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .cv-auth-input:focus {
+      outline: none;
+      border-color: #FE2C55;
+    }
+    .cv-auth-label {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .cv-auth-error {
+      color: #b81e3f;
+      font-size: 13px;
+      margin-bottom: 12px;
+      display: none;
+    }
+    .cv-auth-error.show { display: block; }
+    .cv-auth-submit {
+      width: 100%;
+      background: #FE2C55;
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .cv-auth-submit:hover { background: #b81e3f; }
+    .cv-auth-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ============ PRINT STYLES ============ */
+    @media print {
+      @page {
+        size: A4;
+        margin: 18mm 16mm 22mm 16mm;
+      }
+      html, body { background: #fff !important; margin: 0; }
+      body { font-size: 11pt; line-height: 1.7; color: #000; }
+      .cv-toolbar { display: none !important; }
+      .cv-loading, .cv-error, .cv-auth-prompt { display: none !important; }
+      .cv-page {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        min-height: auto;
+      }
+      .cv-header { border-bottom: 2px solid #000; }
+      .cv-header-brand { color: #000 !important; letter-spacing: 4px; }
+      .cv-header-title { font-size: 22pt; }
+      .cv-article h2 {
+        color: #000 !important;
+        border-bottom: 1px solid #000 !important;
+        font-size: 12pt;
+        page-break-after: avoid;
+      }
+      .cv-article { page-break-inside: avoid; }
+      .cv-parties {
+        background: #f9f9f9 !important;
+        border-left-color: #000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .cv-highlight {
+        background: #fffbc8 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .cv-signature-section {
+        page-break-inside: avoid;
+        margin-top: 40px;
+      }
+      .cv-signature-party h3 { color: #000 !important; }
+      .cv-signature-area, .cv-stamp-container {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+      }
+      .cv-stamp-info strong { color: #b81e3f !important; -webkit-print-color-adjust: exact; }
+      .cv-legal-notice {
+        background: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .cv-status-watermark {
+        color: rgba(254, 44, 85, 0.1) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cv-toolbar" id="toolbar">
+  <div class="cv-toolbar-title">
+    JDI Pulse Media · 直播經紀合約
+    <span class="cv-no" id="tbContractNo">—</span>
+  </div>
+  <div class="cv-toolbar-actions">
+    <button class="cv-btn cv-btn-ghost" onclick="window.close(); window.history.back();">← 返回</button>
+    <button class="cv-btn" id="printBtn" onclick="window.print()">
+      🖨️ 列印 / 存 PDF
+    </button>
+  </div>
+</div>
+
+<!-- Loading state -->
+<div class="cv-loading" id="loadingBox">
+  <div class="cv-loading-spinner"></div>
+  <p>載入合約中...</p>
+</div>
+
+<!-- Auth prompt (若沒帶認證參數) -->
+<div class="cv-auth-prompt" id="authPrompt" style="display:none;">
+  <h2>🔐 檢視合約需認證</h2>
+  <p>請輸入合約簽署時填寫的手機末 4 碼與身分證末 4 碼。</p>
+
+  <label class="cv-auth-label">合約編號</label>
+  <input type="text" id="authContractNo" class="cv-auth-input" placeholder="JDI-SIGN-..." style="font-size:14px; letter-spacing:1px; text-align:left; padding:12px 14px;" />
+
+  <label class="cv-auth-label">手機末 4 碼</label>
+  <input type="text" id="authPhone" class="cv-auth-input" maxlength="4" inputmode="numeric" placeholder="0000" />
+
+  <label class="cv-auth-label">身分證末 4 碼</label>
+  <input type="text" id="authId" class="cv-auth-input" maxlength="4" inputmode="numeric" placeholder="0000" />
+
+  <div class="cv-auth-error" id="authError"></div>
+  <button class="cv-auth-submit" id="authSubmit">檢視合約 →</button>
+</div>
+
+<!-- Error state -->
+<div class="cv-error" id="errorBox" style="display:none;">
+  <div style="font-size: 48px; margin-bottom: 12px;">⚠️</div>
+  <h2 style="margin:0 0 8px;">無法載入合約</h2>
+  <p id="errorMessage">—</p>
+  <a href="/sign/query/" style="color:#FE2C55; text-decoration:none; font-weight:700;">← 返回查詢頁</a>
+</div>
+
+<!-- Actual contract page -->
+<div class="cv-page" id="contractPage" style="display:none;">
+  <div class="cv-status-watermark" id="statusWatermark"></div>
+
+  <!-- Header -->
+  <div class="cv-header">
+    <div class="cv-header-brand">JDI PULSE MEDIA</div>
+    <h1 class="cv-header-title">直播專屬獨家經紀合約書</h1>
+    <div class="cv-header-subtitle">EXCLUSIVE LIVE-STREAMING TALENT MANAGEMENT AGREEMENT</div>
+    <div class="cv-contract-no" id="displayContractNo">—</div>
+  </div>
+
+  <!-- Parties -->
+  <div class="cv-parties">
+    <p><strong>立合約書人</strong></p>
+    <p>經紀方（以下簡稱甲方）：<strong>艾超數位傳媒有限公司</strong>（統一編號 60413705）</p>
+    <p>直播主／演藝人員（以下簡稱乙方）：<strong id="pv-real_name">—</strong>（藝名 <span id="pv-stage_name">—</span>）</p>
+  </div>
+
+  <p style="text-align:justify;">緣雙方為拓展直播事業，基於誠信與互惠原則，雙方同意訂定本直播經紀合約（以下簡稱「本合約」），條款如下：</p>
+
+  <div class="cv-article">
+    <h2>第一條：經紀權限與合作範圍</h2>
+    <ol>
+      <li><strong>直播領域獨家經紀：</strong>乙方同意於本合約存續期間內，委由甲方擔任其在全世界之「網路直播及因直播衍生之相關業務（包含但不限於各類平台直播、直播帶貨、直播活動出席）」之獨家經紀人。未經甲方事前書面同意，乙方不得自行或透過第三人接洽、從事上述直播相關業務，亦不得於任何競品平台開播。</li>
+      <li><strong>非直播領域豁免權（不干涉條款）：</strong>基於尊重乙方多元發展與獲利能力，若乙方從事與直播業務完全無關之其他合法商業、演藝或一般工作項目（例如：實體戲劇演出、出版書籍、非直播宣傳衍生之獨立平面拍攝、實體非直播類型之兼職或正職工作等），甲方同意不予干涉或阻擋。乙方可自行接洽與執行，惟前提是：
+        <ul>
+          <li>不得影響本合約約定之直播時數與甲方安排之既定直播相關行程。</li>
+          <li>不得損害甲方商譽或違反本合約之公眾形象規範。</li>
+          <li>該非直播項目不得直接使用甲方提供之直播專屬設備、版權素材或甲方出資製作之行銷資源。</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="cv-article">
+    <h2>第二條：肖像權授權與使用</h2>
+    <ol>
+      <li>乙方同意於本合約存續期間，無償授權甲方於「直播及衍生業務」之範圍內，使用乙方之姓名、藝名、肖像、影像、聲音等資料。</li>
+      <li>甲方得將上述授權內容，使用於本合約直播業務之宣傳、行銷、廣告贊助及各類媒體曝光。</li>
+      <li><strong>乙方獨立使用權：</strong>乙方於進行第一條第 2 款所列之「非直播領域」工作時，有權自行使用其個人肖像，甲方不予限制，惟乙方不得以甲方或甲方專屬直播頻道之名義進行不實背書。</li>
+    </ol>
+  </div>
+
+  <div class="cv-article">
+    <h2>第三條：智慧財產權歸屬</h2>
+    <ol>
+      <li>乙方於合約期間內，因履行本合約（即直播相關業務）所產生之直播內容、影片、錄音等著作，雙方同意以 <span class="cv-highlight">雙方共有</span> 為著作權人。</li>
+      <li>乙方於非直播領域自行創作或產生之作品，其智慧財產權完全歸乙方或其第三方合作對象所有，與甲方無涉。</li>
+    </ol>
+  </div>
+
+  <div class="cv-article">
+    <h2>第四條：雙方權利與義務</h2>
+    <ol>
+      <li>甲方負責為乙方接洽直播平台、提供直播技術指導及規劃直播發展，並維護乙方之公眾形象。</li>
+      <li><strong>乙方義務與開播規範：</strong>
+        <ul>
+          <li><strong>基本開播標準：</strong>乙方每月應於甲方指定平台完成至少 <strong>17 天</strong>，且總時數達 <strong>60 小時</strong>之有效直播。</li>
+          <li><strong>有效天數定義：</strong>單日（以每日凌晨 00:00 至 23:59 計算）直播時間須連續或累計達 1 小時（含）以上，始得計為「有效開播 1 天」。未達該單日最低時數標準者，其時數仍計入當月總時數，但不計入當月之有效天數。</li>
+          <li>乙方需積極配合甲方安排之相關會議與培訓。</li>
+          <li>應維持良好之公眾形象，合約期間內不得有涉毒、賭博、發表極端言論、或其他違反公序良俗及損害甲方商譽之行為。</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="cv-article">
+    <h2>第五條：收益分配與結算</h2>
+    <ol>
+      <li>雙方同意就本合約「直播及衍生業務」所生之各項收益，依下列機制進行分配與結算：
+        <ul>
+          <li><strong>平台內收益（平台打賞禮物等）：</strong>由乙方自行於直播平台後台進行收益提取，甲方不予干涉或抽成。</li>
+          <li><strong>平台外收益（甲方接洽之廠商合作、商業代言、業配等）：</strong>相關收益由雙方對拆，即甲方 50%，乙方 50%。</li>
+        </ul>
+      </li>
+      <li><strong>平台外收益結算日：</strong>如有前項所稱之平台外收益，雙方同意以每月 25 日進行結算。經雙方確認明細無誤後，甲方應將款項匯入乙方指定帳戶。<span class="cv-highlight">未來如有平台外收益，乙方應另行提供匯款帳號資訊。</span>所有收益結算均應依法扣繳相關稅額。</li>
+      <li><strong>非直播領域收益歸屬：</strong>依第一條第 2 款約定，乙方自行接洽之「與直播無關」之各項工作收入，全數歸乙方所有，甲方不參與任何抽成或分配。</li>
+    </ol>
+  </div>
+
+  <div class="cv-article">
+    <h2>第六條：保密協定</h2>
+    <p>雙方對於本合約之內容（尤其是直播分潤機制）及合作期間所知悉之他方商業機密負有嚴格之保密義務，無論合約存續期間或終止後，未經他方書面同意，不得洩漏予任何第三方。</p>
+  </div>
+
+  <div class="cv-article">
+    <h2>第七條：違約責任與合約終止</h2>
+    <ol>
+      <li>合約期間自 <span class="cv-highlight" id="pv-start_date">—</span> 起至 <span class="cv-highlight" id="pv-end_date">—</span> 止（共計 <span class="cv-highlight" id="pv-years">—</span> 年）。</li>
+      <li>若乙方違反「直播獨家」之規定（如私下在其他平台開播或私接直播相關業務），甲方應以書面通知限期改善。若逾期未改善，甲方得要求乙方支付新台幣<strong>陸拾萬元整（NT$ 600,000）</strong>之懲罰性違約金，並得逕行終止合約。</li>
+      <li>若乙方因重大負面新聞、道德瑕疵，或未達本合約約定之開播時數／天數屢勸不聽，導致合作平台封禁帳號或甲方利益受損，甲方有權立即終止合約並要求乙方承擔所有賠償責任。</li>
+    </ol>
+  </div>
+
+  <div class="cv-article">
+    <h2>第八條：管轄法院</h2>
+    <p>本合約之解釋與適用，以中華民國法律為準。若因本合約涉訟，雙方同意以<strong>臺灣臺中地方法院</strong>為第一審管轄法院。</p>
+  </div>
+
+  <!-- Signatures -->
+  <div class="cv-signature-section">
+    <div class="cv-signature-block">
+
+      <!-- 甲方 -->
+      <div class="cv-signature-party">
+        <h3>甲方（經紀方）</h3>
+        <p><span class="cv-field-label">公司名稱：</span><span class="cv-field-value">艾超數位傳媒有限公司</span></p>
+        <p><span class="cv-field-label">負責人：</span><span class="cv-field-value">謝典熼</span></p>
+        <p><span class="cv-field-label">統一編號：</span><span class="cv-field-value">60413705</span></p>
+        <p><span class="cv-field-label">聯絡地址：</span><span class="cv-field-value">台中市北屯區大連路三段 2 號</span></p>
+        <p id="operatorRow" style="display:none;"><span class="cv-field-label">負責運營：</span><span class="cv-field-value" id="pv-operator">—</span></p>
+
+        <!-- 印刷章 (SVG) -->
+        <div class="cv-stamp-container" id="stampContainer" style="display:none;">
+          <svg class="cv-stamp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <!-- 外圓 -->
+            <circle cx="100" cy="100" r="94" fill="none" stroke="#c62828" stroke-width="3" />
+            <circle cx="100" cy="100" r="88" fill="none" stroke="#c62828" stroke-width="1.5" />
+
+            <!-- 上方公司名（沿圓弧） -->
+            <defs>
+              <path id="stampArcTop" d="M 30,100 A 70,70 0 0 1 170,100" />
+              <path id="stampArcBottom" d="M 30,110 A 70,70 0 0 0 170,110" />
+            </defs>
+            <text fill="#c62828" font-family="'Noto Serif TC','Songti TC',serif" font-weight="900" font-size="15" letter-spacing="1.5">
+              <textPath href="#stampArcTop" startOffset="50%" text-anchor="middle">艾超數位傳媒有限公司</textPath>
+            </text>
+
+            <!-- 中央五角星 -->
+            <path d="M 100,58 L 106,76 L 125,76 L 110,88 L 116,106 L 100,95 L 84,106 L 90,88 L 75,76 L 94,76 Z"
+                  fill="#c62828" />
+
+            <!-- 中央文字 -->
+            <text x="100" y="128" text-anchor="middle" fill="#c62828"
+                  font-family="'Noto Serif TC','Songti TC',serif" font-weight="900" font-size="14" letter-spacing="1">合約專用章</text>
+
+            <!-- 下方統編（沿圓弧反向） -->
+            <text fill="#c62828" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="10" letter-spacing="2">
+              <textPath href="#stampArcBottom" startOffset="50%" text-anchor="middle">TAX ID: 60413705</textPath>
+            </text>
+          </svg>
+          <div class="cv-stamp-info">
+            <strong>✓ 甲方已用印</strong>
+            <span id="stampedAt">—</span><br />
+            經紀方負責人 謝典熼<br />
+            (電子印章 · 系統自動蓋印)
+          </div>
+        </div>
+      </div>
+
+      <!-- 乙方 -->
+      <div class="cv-signature-party">
+        <h3>乙方（直播主）</h3>
+        <p><span class="cv-field-label">姓名：</span><span class="cv-field-value" id="pv-real_name-2">—</span></p>
+        <p><span class="cv-field-label">藝名：</span><span class="cv-field-value" id="pv-stage_name-2">—</span></p>
+        <p><span class="cv-field-label">身分證：</span><span class="cv-field-value" id="pv-id_number">—</span></p>
+        <p><span class="cv-field-label">電話：</span><span class="cv-field-value" id="pv-phone">—</span></p>
+        <p><span class="cv-field-label">Email：</span><span class="cv-field-value" id="pv-email">—</span></p>
+        <p><span class="cv-field-label">聯絡地址：</span><span class="cv-field-value" id="pv-contact_address">—</span></p>
+        <p><span class="cv-field-label">戶籍地址：</span><span class="cv-field-value" id="pv-registered_address">—</span></p>
+
+        <!-- 乙方電子簽名 -->
+        <div class="cv-signature-area">
+          <div class="cv-signature-area-label">乙方簽名 · SIGNATURE</div>
+          <img id="signatureImg" class="cv-signature-img" src="" alt="乙方簽名" />
+          <div style="font-family:'Noto Sans TC',sans-serif;font-size:11px;color:#666;margin-top:6px;">
+            簽署時間：<span id="signedAt">—</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Date footer -->
+  <div class="cv-date-footer">
+    中華民國 <span id="rocDate">—</span>
+  </div>
+
+  <!-- Legal notice (evidence chain) -->
+  <div class="cv-legal-notice">
+    <strong>📜 電子簽章證據鏈</strong><br />
+    本合約依《中華民國電子簽章法》以電子文件形式訂立，系統已完整記錄以下證據：
+    <br />• 合約編號：<span id="ev-no">—</span>
+    <br />• 乙方閱讀完成時間：<span id="ev-read">—</span>
+    <br />• 乙方同意條款時間：<span id="ev-agree">—</span>
+    <br />• 乙方簽署時間：<span id="ev-signed">—</span>
+    <br />• 乙方簽署 IP：<span id="ev-ip">—</span>
+    <br />• 甲方用印時間：<span id="ev-stamped">—</span>
+    <br /><br />
+    此電子合約與紙本合約具有同等法律效力。任何一方於合約期間內對他方隱私、資料及機密均有保密義務。
+  </div>
+</div>
+
+<script src="/js/sign/contract-view.js?v=20260906a"></script>
+</body>
+</html>

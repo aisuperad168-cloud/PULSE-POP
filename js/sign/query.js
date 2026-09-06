@@ -91,8 +91,12 @@
 
     let html = `<h2 style="color: #fff; font-size: 20px; margin: 8px 0 16px;">📋 您的合約（${contracts.length} 筆）</h2>`;
 
+    const phoneLast4 = document.getElementById('phone_last4').value.trim();
+    const idLast4 = document.getElementById('id_last4').value.trim();
+
     for (const c of contracts) {
       const s = STATUS_INFO[c.status] || STATUS_INFO.pending;
+      const viewUrl = `/sign/contract-view/?no=${encodeURIComponent(c.contract_no)}&phone_last4=${phoneLast4}&id_last4=${idLast4}`;
       html += `
         <div class="sign-card" style="border-left: 3px solid ${s.color};">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 12px; flex-wrap: wrap;">
@@ -118,6 +122,12 @@
             <tr><td style="color: var(--sign-text-mute);">送出時間</td><td style="color: var(--sign-text-mute); font-size: 12px;">${c.created_at}</td></tr>
             ${c.approved_at ? `<tr><td style="color: var(--sign-text-mute);">核准時間</td><td style="color: var(--sign-success); font-size: 12px;">${c.approved_at}</td></tr>` : ''}
           </table>
+
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--sign-border);">
+            <a href="${viewUrl}" target="_blank" rel="noopener" class="sign-btn sign-btn-primary" style="width: 100%; text-align: center; padding: 10px 16px; font-size: 14px;">
+              📄 查看 / 列印合約 PDF →
+            </a>
+          </div>
         </div>
       `;
     }

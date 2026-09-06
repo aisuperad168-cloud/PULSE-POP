@@ -192,15 +192,22 @@
       `;
 
       // Footer buttons
+      const viewUrl = `/sign/contract-view/?no=${encodeURIComponent(c.contract_no)}&admin=1`;
+      const viewBtn = `<a href="${viewUrl}" target="_blank" rel="noopener" class="sign-btn sign-btn-secondary">📄 查看合約 PDF</a>`;
+
       if (c.status === 'pending') {
         modalFooter.innerHTML = `
+          ${viewBtn}
           <button class="sign-btn sign-btn-ghost" id="rejectBtn">↩️ 退回補件</button>
           <button class="sign-btn sign-btn-primary" id="approveBtn">✅ 核准並蓋章</button>
         `;
         document.getElementById('approveBtn').addEventListener('click', () => showApproveForm(c));
         document.getElementById('rejectBtn').addEventListener('click', () => showRejectForm(c.id));
       } else {
-        modalFooter.innerHTML = `<button class="sign-btn sign-btn-ghost" onclick="document.getElementById('detailModal').classList.remove('show')">關閉</button>`;
+        modalFooter.innerHTML = `
+          ${viewBtn}
+          <button class="sign-btn sign-btn-ghost" onclick="document.getElementById('detailModal').classList.remove('show')">關閉</button>
+        `;
       }
 
     } catch (err) {

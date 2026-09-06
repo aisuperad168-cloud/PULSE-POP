@@ -32,6 +32,7 @@ import * as signQuery from './functions/api/sign/query.js';
 import * as signAdminList from './functions/api/sign/admin-list.js';
 import * as signAdminDetail from './functions/api/sign/admin-detail.js';
 import * as signAdminApprove from './functions/api/sign/admin-approve.js';
+import * as signGetContract from './functions/api/sign/get-contract.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -47,6 +48,7 @@ const API_ROUTES = {
   '/api/sign/admin-list': signAdminList,
   '/api/sign/admin-detail': signAdminDetail,
   '/api/sign/admin-approve': signAdminApprove,
+  '/api/sign/get-contract': signGetContract,
 };
 
 export default {

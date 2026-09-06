@@ -71,7 +71,8 @@ export async function onRequestPost({ request, env }) {
         JSON.stringify({ operator_name, operator_email })
       ).run();
 
-      // 寄完成通知信給主播
+      // 寄完成通知信給主播（含合約檢視連結）
+      const viewLink = `https://jdi-pulse.com/sign/contract-view/?no=${encodeURIComponent(contract.contract_no)}&phone_last4=${contract.phone_last4}&id_last4=${contract.id_number_last4}`;
       const emailR = await sendEmail(env, {
         to: contract.email,
         subject: `【JDI 脈動傳媒】✓ 合約已核准 · ${contract.contract_no}`,
@@ -81,6 +82,7 @@ export async function onRequestPost({ request, env }) {
           stageName: contract.stage_name,
           operatorName: operator_name,
           approvedAt: now,
+          viewLink,
         }),
       });
 
@@ -171,7 +173,7 @@ async function sendEmail(env, { to, subject, html }) {
   }
 }
 
-function buildApprovedEmail({ contractNo, realName, stageName, operatorName, approvedAt }) {
+function buildApprovedEmail({ contractNo, realName, stageName, operatorName, approvedAt, viewLink }) {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8" /></head>
 <body style="font-family: 'Noto Sans TC', sans-serif; background: #f5f5f5; padding: 32px 16px; margin: 0;">
   <div style="max-width: 560px; margin: 0 auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
@@ -182,7 +184,7 @@ function buildApprovedEmail({ contractNo, realName, stageName, operatorName, app
     <div style="padding: 32px 24px;">
       <p style="color: #333; font-size: 15px;"><strong>${realName}</strong>（藝名：${stageName}）您好，</p>
       <p style="color: #555; font-size: 14px; line-height: 1.7;">
-        恭喜！您與 JDI 脈動傳媒的直播經紀合約已由甲方負責人 Jack 完成審核與簽章。
+        恭喜！您與 JDI 脈動傳媒的直播經紀合約已由甲方負責人 Jack 完成審核與用印。
       </p>
       <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 3px solid #22c55e;">
         <p style="margin: 0; font-size: 13px; color: #555;">合約編號</p>
@@ -196,8 +198,14 @@ function buildApprovedEmail({ contractNo, realName, stageName, operatorName, app
         接下來運營團隊會主動聯繫您，開始直播培訓與規劃。有任何問題請透過 LINE 或 Email 聯絡運營。
       </p>
       <div style="text-align: center; margin: 28px 0 12px;">
-        <a href="https://jdi-pulse.com/sign/query/" style="display: inline-block; background: #FE2C55; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px;">查看合約 →</a>
+        <a href="${viewLink}" style="display: inline-block; background: #FE2C55; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 15px;">
+          📄 檢視 / 下載合約 PDF →
+        </a>
       </div>
+      <p style="text-align: center; color: #999; font-size: 12px; line-height: 1.6; margin-top: 16px;">
+        提示：開啟後可點右上角「列印 / 存 PDF」，<br />
+        iPhone Safari 用戶請點「分享 → 儲存到檔案」
+      </p>
     </div>
     <div style="background: #f9f9f9; padding: 20px 24px; text-align: center; color: #999; font-size: 11px; line-height: 1.6; border-top: 1px solid #eee;">
       本信件由 JDI 脈動傳媒簽約系統自動寄發。<br /><a href="mailto:contract@jdi-pulse.com" style="color: #FE2C55;">contract@jdi-pulse.com</a>
