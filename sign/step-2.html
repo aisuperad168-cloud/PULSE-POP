@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Step 2 · 基本資料｜JDI 簽約系統</title>
+  <link rel="canonical" href="https://sign.jdi-pulse.com/step-2" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906a" />
+</head>
+<body class="sign-body">
+
+<header class="sign-topbar">
+  <a href="/sign/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">CONTRACT SIGNING SYSTEM</span>
+    </span>
+  </a>
+  <a href="/sign/query/" class="sign-topbar-link">查詢合約進度 →</a>
+</header>
+
+<nav class="sign-steps">
+  <div class="sign-steps-inner">
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">閱讀合約</div></div>
+    <div class="sign-step active" data-step="2"><div class="sign-step-num">2</div><div class="sign-step-label">基本資料</div></div>
+    <div class="sign-step" data-step="3"><div class="sign-step-num">3</div><div class="sign-step-label">合約條件</div></div>
+    <div class="sign-step" data-step="4"><div class="sign-step-num">4</div><div class="sign-step-label">身分證上傳</div></div>
+    <div class="sign-step" data-step="5"><div class="sign-step-num">5</div><div class="sign-step-label">合約預覽</div></div>
+    <div class="sign-step" data-step="6"><div class="sign-step-num">6</div><div class="sign-step-label">電子簽名</div></div>
+  </div>
+</nav>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">STEP 2 / 6</div>
+    <h1 class="sign-hero-title">基本資料</h1>
+    <p class="sign-hero-subtitle">
+      請填寫真實資料。此資料會用於合約書並僅用於本合約用途，
+      <strong>全程加密傳輸與儲存</strong>。
+    </p>
+  </section>
+
+  <section class="sign-card">
+    <form id="basicInfoForm" novalidate>
+
+      <!-- 姓名 -->
+      <div class="sign-form-grid">
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="real_name">
+            真實姓名<span class="sign-required">*</span>
+          </label>
+          <input type="text" id="real_name" name="real_name" class="sign-form-input"
+                 placeholder="請填寫身分證上的本名" required autocomplete="name" />
+          <div class="sign-form-error" id="err-real_name"></div>
+        </div>
+
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="stage_name">
+            藝名 / 直播暱稱<span class="sign-required">*</span>
+          </label>
+          <input type="text" id="stage_name" name="stage_name" class="sign-form-input"
+                 placeholder="例：VANE" required maxlength="30" />
+          <div class="sign-form-error" id="err-stage_name"></div>
+        </div>
+      </div>
+
+      <!-- 身分證 & 生日 -->
+      <div class="sign-form-grid">
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="id_number">
+            身分證字號<span class="sign-required">*</span>
+          </label>
+          <input type="text" id="id_number" name="id_number" class="sign-form-input"
+                 placeholder="A123456789" required maxlength="10"
+                 style="text-transform: uppercase;" autocomplete="off" />
+          <div class="sign-form-hint">1 位英文字母 + 9 位數字（本欄位加密儲存）</div>
+          <div class="sign-form-error" id="err-id_number"></div>
+        </div>
+
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="birthday">
+            出生年月日<span class="sign-required">*</span>
+          </label>
+          <input type="date" id="birthday" name="birthday" class="sign-form-input"
+                 required max="" autocomplete="bday" />
+          <div class="sign-form-error" id="err-birthday"></div>
+        </div>
+      </div>
+
+      <!-- 聯絡電話 & Email -->
+      <div class="sign-form-grid">
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="phone">
+            聯絡電話<span class="sign-required">*</span>
+          </label>
+          <input type="tel" id="phone" name="phone" class="sign-form-input"
+                 placeholder="0912345678" required autocomplete="tel"
+                 pattern="09\d{8}" maxlength="10" />
+          <div class="sign-form-hint">台灣手機格式（10 位數字，以 09 開頭）</div>
+          <div class="sign-form-error" id="err-phone"></div>
+        </div>
+
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="email">
+            聯絡 Email<span class="sign-required">*</span>
+          </label>
+          <input type="email" id="email" name="email" class="sign-form-input"
+                 placeholder="your@email.com" required autocomplete="email" />
+          <div class="sign-form-hint">合約進度、完成通知會寄到此信箱</div>
+          <div class="sign-form-error" id="err-email"></div>
+        </div>
+      </div>
+
+      <!-- 聯絡地址 -->
+      <div class="sign-form-group">
+        <label class="sign-form-label" for="contact_address">
+          聯絡地址<span class="sign-required">*</span>
+        </label>
+        <input type="text" id="contact_address" name="contact_address" class="sign-form-input"
+               placeholder="例：台北市中山區南京東路二段 XX 號 X 樓"
+               required maxlength="100" autocomplete="street-address" />
+        <div class="sign-form-error" id="err-contact_address"></div>
+      </div>
+
+      <!-- 戶籍地址 -->
+      <div class="sign-form-group">
+        <label class="sign-form-label" for="registered_address">
+          戶籍地址<span class="sign-required">*</span>
+        </label>
+        <input type="text" id="registered_address" name="registered_address" class="sign-form-input"
+               placeholder="請填寫身分證上的戶籍地址"
+               required maxlength="100" />
+        <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--sign-text-mute); margin-top: 8px; cursor: pointer;">
+          <input type="checkbox" id="sameAsContact" style="cursor: pointer;" />
+          <span>同聯絡地址</span>
+        </label>
+        <div class="sign-form-error" id="err-registered_address"></div>
+      </div>
+
+      <div class="sign-alert sign-alert-info">
+        <strong>🔒 隱私保護：</strong>身分證字號欄位在資料庫採 AES-256 加密儲存。
+        僅在產生合約 PDF 時解密使用，運營團隊在後台看到的是遮蔽版本（如 A12****789）。
+      </div>
+
+      <div class="sign-nav-row">
+        <a href="/sign/" class="sign-btn sign-btn-ghost">← 上一步</a>
+        <button type="submit" class="sign-btn sign-btn-primary">繼續下一步 →</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="/js/sign/step2-basic-info.js?v=20260906a"></script>
+</body>
+</html>

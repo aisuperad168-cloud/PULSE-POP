@@ -1,0 +1,742 @@
+/* ============================================================
+ * JDI Pulse Media · Sign System Styles
+ * ============================================================ */
+
+/* ============ RESET & BASE ============ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+.sign-body {
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  background: #0b0d12;
+  color: #e4e4e7;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Colors */
+:root {
+  --sign-primary: #FE2C55;
+  --sign-primary-dim: #b81e3f;
+  --sign-accent: #25F4EE;
+  --sign-bg: #0b0d12;
+  --sign-bg-elev: #14171f;
+  --sign-bg-card: #1a1d26;
+  --sign-border: #2a2f3d;
+  --sign-text: #e4e4e7;
+  --sign-text-dim: #a1a1aa;
+  --sign-text-mute: #71717a;
+  --sign-success: #22c55e;
+  --sign-warning: #f59e0b;
+  --sign-danger: #ef4444;
+}
+
+/* ============ TOP BAR ============ */
+.sign-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: linear-gradient(90deg, #0e1017 0%, #14171f 100%);
+  border-bottom: 1px solid var(--sign-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+}
+.sign-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--sign-text);
+}
+.sign-brand-logo { height: 36px; width: auto; }
+.sign-brand-txt { display: flex; flex-direction: column; line-height: 1.15; }
+.sign-brand-zh { font-size: 15px; font-weight: 800; letter-spacing: 0.5px; }
+.sign-brand-en { font-size: 10px; font-weight: 500; color: var(--sign-text-mute); letter-spacing: 1.5px; }
+.sign-topbar-link {
+  color: var(--sign-accent);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border: 1px solid var(--sign-accent);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+.sign-topbar-link:hover { background: rgba(37, 244, 238, 0.1); }
+
+@media (max-width: 640px) {
+  .sign-topbar { padding: 12px 16px; }
+  .sign-brand-logo { height: 28px; }
+  .sign-brand-zh { font-size: 13px; }
+  .sign-brand-en { font-size: 9px; }
+  .sign-topbar-link { padding: 6px 10px; font-size: 12px; }
+}
+
+/* ============ STEP INDICATOR ============ */
+.sign-steps {
+  background: var(--sign-bg-elev);
+  border-bottom: 1px solid var(--sign-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sign-steps::-webkit-scrollbar { display: none; }
+.sign-steps-inner {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  min-width: max-content;
+  padding: 16px 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.sign-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sign-text-mute);
+  font-size: 13px;
+  font-weight: 500;
+  flex-shrink: 0;
+  position: relative;
+}
+.sign-step:not(:last-child)::after {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 2px;
+  background: var(--sign-border);
+  margin: 0 12px;
+}
+.sign-step-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--sign-bg-card);
+  border: 1.5px solid var(--sign-border);
+  color: var(--sign-text-mute);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.sign-step.active { color: var(--sign-primary); }
+.sign-step.active .sign-step-num {
+  background: var(--sign-primary);
+  border-color: var(--sign-primary);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(254, 44, 85, 0.15);
+}
+.sign-step.done .sign-step-num {
+  background: var(--sign-success);
+  border-color: var(--sign-success);
+  color: #fff;
+}
+.sign-step.done { color: var(--sign-success); }
+@media (max-width: 640px) {
+  .sign-steps-inner { padding: 12px 16px; }
+  .sign-step-label { display: none; }
+  .sign-step:not(:last-child)::after { width: 20px; margin: 0 8px; }
+}
+
+/* ============ MAIN ============ */
+.sign-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+@media (max-width: 640px) {
+  .sign-main { padding: 24px 16px 60px; }
+}
+
+/* ============ HERO ============ */
+.sign-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.sign-hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--sign-accent);
+  background: rgba(37, 244, 238, 0.08);
+  border: 1px solid rgba(37, 244, 238, 0.3);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+.sign-hero-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+.sign-hero-subtitle {
+  font-size: 15px;
+  color: var(--sign-text-dim);
+  margin: 0 0 24px;
+  line-height: 1.75;
+}
+.sign-hero-subtitle strong { color: var(--sign-primary); }
+.sign-hero-tips {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.sign-hero-tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--sign-text-dim);
+  background: var(--sign-bg-card);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--sign-border);
+}
+.sign-hero-tip-icon { font-size: 16px; }
+@media (max-width: 640px) {
+  .sign-hero-title { font-size: 24px; }
+  .sign-hero-subtitle { font-size: 14px; }
+  .sign-hero-tip { font-size: 12px; padding: 6px 12px; }
+}
+
+/* ============ CARD ============ */
+.sign-card {
+  background: var(--sign-bg-card);
+  border: 1px solid var(--sign-border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+@media (max-width: 640px) {
+  .sign-card { padding: 20px 16px; border-radius: 12px; }
+}
+
+/* ============ CONTRACT READING ============ */
+.sign-contract-reading { padding: 0; overflow: hidden; }
+.sign-contract-scroll {
+  max-height: 560px;
+  overflow-y: auto;
+  padding: 32px;
+  scroll-behavior: smooth;
+  border-bottom: 2px solid var(--sign-border);
+}
+.sign-contract-scroll::-webkit-scrollbar { width: 8px; }
+.sign-contract-scroll::-webkit-scrollbar-track { background: var(--sign-bg); }
+.sign-contract-scroll::-webkit-scrollbar-thumb { background: var(--sign-border); border-radius: 4px; }
+.sign-contract-scroll::-webkit-scrollbar-thumb:hover { background: var(--sign-text-mute); }
+
+@media (max-width: 640px) {
+  .sign-contract-scroll { max-height: 460px; padding: 20px 16px; }
+}
+
+.sign-contract-header {
+  text-align: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--sign-border);
+  margin-bottom: 24px;
+}
+.sign-contract-logo {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--sign-primary);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.sign-contract-h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+.sign-contract-parties {
+  background: var(--sign-bg-elev);
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--sign-accent);
+}
+.sign-contract-parties p { margin: 6px 0; font-size: 14px; }
+.sign-contract-preamble {
+  font-size: 14px;
+  color: var(--sign-text-dim);
+  line-height: 1.85;
+  margin: 0 0 24px;
+  padding: 12px 16px;
+  background: rgba(37, 244, 238, 0.05);
+  border-radius: 8px;
+}
+.sign-contract-article { margin-bottom: 24px; }
+.sign-contract-h2 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--sign-primary);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(254, 44, 85, 0.2);
+}
+.sign-contract-article ol, .sign-contract-article ul {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.sign-contract-article li {
+  font-size: 14px;
+  color: var(--sign-text);
+  line-height: 1.85;
+  margin-bottom: 8px;
+}
+.sign-contract-article li strong { color: #fff; }
+.sign-contract-article p {
+  font-size: 14px;
+  color: var(--sign-text);
+  line-height: 1.85;
+}
+.sign-contract-highlight {
+  background: rgba(37, 244, 238, 0.15);
+  color: var(--sign-accent) !important;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.sign-contract-signatures-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px dashed var(--sign-border);
+}
+.sign-contract-signature-block {
+  background: var(--sign-bg-elev);
+  padding: 16px;
+  border-radius: 8px;
+}
+.sign-contract-signature-block p {
+  font-size: 13px;
+  margin: 4px 0;
+  color: var(--sign-text-dim);
+}
+.sign-contract-signature-block p strong { color: var(--sign-primary); font-size: 14px; }
+@media (max-width: 640px) {
+  .sign-contract-signatures-preview { grid-template-columns: 1fr; }
+}
+
+.sign-contract-end-marker {
+  margin-top: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(37, 244, 238, 0.05) 100%);
+  border: 2px solid var(--sign-success);
+  border-radius: 12px;
+  text-align: center;
+}
+.sign-contract-end-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--sign-success);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.sign-contract-end-text {
+  color: var(--sign-text);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.7;
+}
+.sign-contract-end-text strong { color: var(--sign-success); }
+
+/* ============ PROGRESS BAR ============ */
+.sign-progress-bar-wrap {
+  padding: 16px 28px;
+  background: var(--sign-bg-elev);
+  position: relative;
+}
+.sign-progress-bar {
+  height: 6px;
+  background: var(--sign-border);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.sign-progress-bar::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: linear-gradient(90deg, var(--sign-primary) 0%, var(--sign-accent) 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.sign-progress-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--sign-text-mute);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ============ CONSENT ============ */
+.sign-consent-card { text-align: left; }
+.sign-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  padding: 16px 18px;
+  background: var(--sign-bg-elev);
+  border-radius: 12px;
+  border: 2px solid var(--sign-border);
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+.sign-checkbox-row:hover:not(.sign-checkbox-disabled) {
+  border-color: var(--sign-primary);
+}
+.sign-checkbox-row.sign-checkbox-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.sign-checkbox-row input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.sign-checkbox-mark {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--sign-border);
+  background: var(--sign-bg);
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: all 0.2s;
+}
+.sign-checkbox-row input:checked ~ .sign-checkbox-mark {
+  background: var(--sign-primary);
+  border-color: var(--sign-primary);
+}
+.sign-checkbox-row input:checked ~ .sign-checkbox-mark::after {
+  content: '';
+  position: absolute;
+  left: 6px; top: 2px;
+  width: 6px; height: 11px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.sign-checkbox-text { flex: 1; }
+.sign-checkbox-text strong {
+  display: block;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.sign-checkbox-hint {
+  font-size: 13px;
+  color: var(--sign-text-mute);
+}
+
+/* ============ BUTTONS ============ */
+.sign-nav-row {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.sign-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.sign-btn-primary {
+  background: linear-gradient(135deg, var(--sign-primary) 0%, var(--sign-primary-dim) 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(254, 44, 85, 0.35);
+}
+.sign-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(254, 44, 85, 0.5);
+}
+.sign-btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.sign-btn-ghost {
+  background: transparent;
+  color: var(--sign-text-dim);
+  border: 1px solid var(--sign-border);
+}
+.sign-btn-ghost:hover {
+  background: var(--sign-bg-elev);
+  color: var(--sign-text);
+}
+.sign-btn-secondary {
+  background: var(--sign-bg-elev);
+  color: var(--sign-text);
+  border: 1px solid var(--sign-border);
+}
+.sign-btn-secondary:hover {
+  background: var(--sign-bg-card);
+  border-color: var(--sign-accent);
+}
+
+@media (max-width: 640px) {
+  .sign-nav-row { flex-direction: column-reverse; }
+  .sign-btn { width: 100%; padding: 14px 20px; }
+}
+
+/* ============ INFO FOOTER ============ */
+.sign-info-footer {
+  text-align: center;
+  padding: 24px 20px;
+  color: var(--sign-text-mute);
+  font-size: 12px;
+  line-height: 1.85;
+}
+.sign-info-footer a {
+  color: var(--sign-accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--sign-accent);
+}
+
+/* ============ FORM (通用表單元件) ============ */
+.sign-form-group { margin-bottom: 20px; }
+.sign-form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sign-text);
+  margin-bottom: 8px;
+}
+.sign-form-label .sign-required {
+  color: var(--sign-primary);
+  margin-left: 3px;
+}
+.sign-form-hint {
+  font-size: 12px;
+  color: var(--sign-text-mute);
+  margin-top: 6px;
+}
+.sign-form-input, .sign-form-select, .sign-form-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--sign-bg);
+  border: 1.5px solid var(--sign-border);
+  border-radius: 10px;
+  color: var(--sign-text);
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.sign-form-input:focus, .sign-form-select:focus, .sign-form-textarea:focus {
+  outline: none;
+  border-color: var(--sign-primary);
+  background: var(--sign-bg-elev);
+  box-shadow: 0 0 0 3px rgba(254, 44, 85, 0.15);
+}
+.sign-form-input.error, .sign-form-select.error {
+  border-color: var(--sign-danger);
+  background: rgba(239, 68, 68, 0.05);
+}
+.sign-form-error {
+  font-size: 12px;
+  color: var(--sign-danger);
+  margin-top: 6px;
+  display: none;
+}
+.sign-form-error.show { display: block; }
+
+.sign-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 640px) {
+  .sign-form-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ============ RADIO CARDS ============ */
+.sign-radio-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .sign-radio-cards { grid-template-columns: 1fr; }
+}
+.sign-radio-card {
+  position: relative;
+  padding: 16px 14px;
+  background: var(--sign-bg);
+  border: 2px solid var(--sign-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.sign-radio-card:hover { border-color: var(--sign-accent); }
+.sign-radio-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.sign-radio-card-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  margin: 4px 0;
+}
+.sign-radio-card-desc {
+  font-size: 12px;
+  color: var(--sign-text-mute);
+}
+.sign-radio-card:has(input:checked) {
+  border-color: var(--sign-primary);
+  background: rgba(254, 44, 85, 0.08);
+  box-shadow: 0 0 0 3px rgba(254, 44, 85, 0.15);
+}
+.sign-radio-card:has(input:checked) .sign-radio-card-title {
+  color: var(--sign-primary);
+}
+
+/* ============ FILE UPLOAD ============ */
+.sign-file-upload {
+  display: block;
+  padding: 24px 20px;
+  background: var(--sign-bg);
+  border: 2px dashed var(--sign-border);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.sign-file-upload:hover {
+  border-color: var(--sign-accent);
+  background: var(--sign-bg-elev);
+}
+.sign-file-upload input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  cursor: pointer;
+}
+.sign-file-upload-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  display: block;
+}
+.sign-file-upload-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sign-text);
+  margin-bottom: 4px;
+}
+.sign-file-upload-hint {
+  font-size: 12px;
+  color: var(--sign-text-mute);
+}
+.sign-file-upload.has-file {
+  border-style: solid;
+  border-color: var(--sign-success);
+  background: rgba(34, 197, 94, 0.05);
+}
+.sign-file-preview {
+  margin-top: 12px;
+  max-width: 200px;
+  max-height: 140px;
+  border-radius: 8px;
+  border: 1px solid var(--sign-border);
+  display: none;
+}
+.sign-file-preview.show { display: block; margin: 12px auto 0; }
+
+/* ============ ALERT ============ */
+.sign-alert {
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin: 16px 0;
+  line-height: 1.6;
+  border: 1px solid;
+}
+.sign-alert-info { background: rgba(37, 244, 238, 0.08); border-color: rgba(37, 244, 238, 0.3); color: var(--sign-accent); }
+.sign-alert-warning { background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.3); color: var(--sign-warning); }
+.sign-alert-success { background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.3); color: var(--sign-success); }
+.sign-alert-danger { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.3); color: var(--sign-danger); }
+
+/* ============ SIGNATURE PAD ============ */
+.sign-signature-pad {
+  position: relative;
+  background: #fff;
+  border: 2px dashed var(--sign-border);
+  border-radius: 12px;
+  overflow: hidden;
+  touch-action: none;
+}
+.sign-signature-canvas {
+  display: block;
+  width: 100%;
+  height: 200px;
+  cursor: crosshair;
+  background: #fff;
+}
+.sign-signature-hint {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: #999;
+  pointer-events: none;
+}
+.sign-signature-hint.hide { display: none; }
+.sign-signature-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--sign-bg-elev);
+  border-top: 1px solid var(--sign-border);
+}
+.sign-signature-clear {
+  background: transparent;
+  color: var(--sign-text-dim);
+  border: 1px solid var(--sign-border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.sign-signature-clear:hover { background: var(--sign-bg-card); color: var(--sign-text); }
+.sign-signature-status {
+  font-size: 12px;
+  color: var(--sign-text-mute);
+}
+.sign-signature-status.signed { color: var(--sign-success); }

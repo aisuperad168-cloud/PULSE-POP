@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Step 4 · 身分證上傳｜JDI 簽約系統</title>
+  <link rel="canonical" href="https://sign.jdi-pulse.com/step-4" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906a" />
+</head>
+<body class="sign-body">
+
+<header class="sign-topbar">
+  <a href="/sign/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">CONTRACT SIGNING SYSTEM</span>
+    </span>
+  </a>
+  <a href="/sign/query/" class="sign-topbar-link">查詢合約進度 →</a>
+</header>
+
+<nav class="sign-steps">
+  <div class="sign-steps-inner">
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">閱讀合約</div></div>
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">基本資料</div></div>
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">合約條件</div></div>
+    <div class="sign-step active" data-step="4"><div class="sign-step-num">4</div><div class="sign-step-label">身分證上傳</div></div>
+    <div class="sign-step" data-step="5"><div class="sign-step-num">5</div><div class="sign-step-label">合約預覽</div></div>
+    <div class="sign-step" data-step="6"><div class="sign-step-num">6</div><div class="sign-step-label">電子簽名</div></div>
+  </div>
+</nav>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">STEP 4 / 6</div>
+    <h1 class="sign-hero-title">身分證上傳</h1>
+    <p class="sign-hero-subtitle">
+      為驗證身份，請上傳身分證<strong>正反面</strong>清晰照片。
+    </p>
+  </section>
+
+  <section class="sign-card">
+    <form id="uploadForm" novalidate>
+
+      <div class="sign-form-grid">
+        <!-- 正面 -->
+        <div class="sign-form-group">
+          <label class="sign-form-label">
+            身分證「正面」<span class="sign-required">*</span>
+          </label>
+          <label class="sign-file-upload" id="uploadFront">
+            <input type="file" id="id_front" name="id_front" accept="image/jpeg,image/png,image/webp" required />
+            <span class="sign-file-upload-icon">📇</span>
+            <div class="sign-file-upload-title" id="frontTitle">選擇檔案或拖曳到此</div>
+            <div class="sign-file-upload-hint">JPG / PNG / WebP，最大 5 MB</div>
+            <img class="sign-file-preview" id="frontPreview" alt="身分證正面預覽" />
+          </label>
+          <div class="sign-form-error" id="err-id_front"></div>
+        </div>
+
+        <!-- 反面 -->
+        <div class="sign-form-group">
+          <label class="sign-form-label">
+            身分證「反面」<span class="sign-required">*</span>
+          </label>
+          <label class="sign-file-upload" id="uploadBack">
+            <input type="file" id="id_back" name="id_back" accept="image/jpeg,image/png,image/webp" required />
+            <span class="sign-file-upload-icon">📇</span>
+            <div class="sign-file-upload-title" id="backTitle">選擇檔案或拖曳到此</div>
+            <div class="sign-file-upload-hint">JPG / PNG / WebP，最大 5 MB</div>
+            <img class="sign-file-preview" id="backPreview" alt="身分證反面預覽" />
+          </label>
+          <div class="sign-form-error" id="err-id_back"></div>
+        </div>
+      </div>
+
+      <div class="sign-alert sign-alert-info">
+        <strong>📋 上傳規範：</strong>
+        <ul style="margin: 8px 0 0; padding-left: 20px;">
+          <li>確保四個角完整、字跡清晰、無反光遮擋</li>
+          <li>建議使用亮處拍攝，避免陰影</li>
+          <li>照片會加密儲存，僅授權運營於審核時查看</li>
+        </ul>
+      </div>
+
+      <div class="sign-alert sign-alert-warning">
+        <strong>🔒 資料使用聲明：</strong>
+        您上傳的身分證僅用於本合約的身份驗證用途。
+        JDI 脈動傳媒不會將此資料用於任何其他用途或提供給第三方。
+        合約終止後 6 個月，將依規定銷毀相關檔案。
+      </div>
+
+      <div class="sign-nav-row">
+        <a href="/sign/step-3.html" class="sign-btn sign-btn-ghost">← 上一步</a>
+        <button type="submit" class="sign-btn sign-btn-primary" id="submitBtn">繼續下一步 →</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="/js/sign/step4-upload.js?v=20260906a"></script>
+</body>
+</html>

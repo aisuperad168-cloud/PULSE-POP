@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>後台 · 合約審核｜JDI 簽約系統</title>
+  <link rel="canonical" href="https://sign.jdi-pulse.com/admin/" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906a" />
+  <style>
+    .admin-topbar-badge {
+      background: var(--sign-primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 1.5px;
+      margin-left: 8px;
+    }
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) { .admin-stats { grid-template-columns: repeat(2, 1fr); } }
+    .admin-stat {
+      background: var(--sign-bg-card);
+      border: 1px solid var(--sign-border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .admin-stat:hover { border-color: var(--sign-accent); }
+    .admin-stat.active { border-color: var(--sign-primary); background: rgba(254,44,85,0.08); }
+    .admin-stat-num { font-size: 24px; font-weight: 900; color: #fff; }
+    .admin-stat-label { font-size: 11px; color: var(--sign-text-mute); margin-top: 4px; letter-spacing: 1px; }
+    .admin-search-row {
+      display: flex; gap: 10px; margin-bottom: 20px;
+      align-items: center; flex-wrap: wrap;
+    }
+    .admin-search { flex: 1; min-width: 200px; }
+    .admin-list {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .admin-list-item {
+      background: var(--sign-bg-card);
+      border: 1px solid var(--sign-border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 20px;
+      align-items: center;
+    }
+    .admin-list-item:hover {
+      border-color: var(--sign-accent);
+      transform: translateY(-1px);
+    }
+    .admin-list-item-info { display: flex; flex-direction: column; gap: 4px; }
+    .admin-list-item-name { color: #fff; font-weight: 700; font-size: 15px; }
+    .admin-list-item-meta { color: var(--sign-text-mute); font-size: 12px; }
+    .admin-list-item-code { font-family: monospace; color: var(--sign-accent); font-size: 12px; }
+    .admin-list-item-status {
+      padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap;
+    }
+    .status-pending { background: rgba(245,158,11,0.15); color: var(--sign-warning); }
+    .status-approved { background: rgba(34,197,94,0.15); color: var(--sign-success); }
+    .status-rejected { background: rgba(239,68,68,0.15); color: var(--sign-danger); }
+
+    /* Modal */
+    .admin-modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      overflow-y: auto;
+      padding: 40px 16px;
+    }
+    .admin-modal-backdrop.show { display: flex; }
+    .admin-modal {
+      background: var(--sign-bg-card);
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .admin-modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 24px; border-bottom: 1px solid var(--sign-border);
+      background: var(--sign-bg-elev);
+    }
+    .admin-modal-title { color: #fff; font-size: 18px; font-weight: 800; margin: 0; }
+    .admin-modal-close {
+      background: transparent; border: none; color: var(--sign-text-mute);
+      font-size: 24px; cursor: pointer; line-height: 1;
+    }
+    .admin-modal-body { padding: 24px; max-height: 70vh; overflow-y: auto; }
+    .admin-modal-footer {
+      padding: 16px 24px; border-top: 1px solid var(--sign-border);
+      display: flex; gap: 10px; justify-content: flex-end;
+      background: var(--sign-bg-elev);
+      flex-wrap: wrap;
+    }
+
+    .admin-detail-row {
+      display: grid; grid-template-columns: 130px 1fr; gap: 8px 16px;
+      font-size: 13px; padding: 8px 0; border-bottom: 1px dashed var(--sign-border);
+    }
+    .admin-detail-row:last-child { border-bottom: none; }
+    .admin-detail-label { color: var(--sign-text-mute); font-weight: 600; }
+    .admin-detail-value { color: var(--sign-text); }
+
+    .admin-attachment-thumb {
+      max-width: 200px; max-height: 130px;
+      border-radius: 6px; border: 1px solid var(--sign-border);
+      cursor: pointer;
+      margin: 6px 6px 0 0;
+    }
+    .admin-signature-img {
+      background: #fff; padding: 10px;
+      max-width: 300px; border-radius: 6px; margin-top: 6px;
+    }
+  </style>
+</head>
+<body class="sign-body">
+
+<header class="sign-topbar">
+  <a href="/sign/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">CONTRACT SIGNING SYSTEM</span>
+    </span>
+    <span class="admin-topbar-badge">ADMIN</span>
+  </a>
+  <div style="font-size: 12px; color: var(--sign-text-mute);" id="adminEmail">—</div>
+</header>
+
+<main class="sign-main" style="max-width: 1100px;">
+
+  <section class="sign-hero" style="text-align: left;">
+    <div class="sign-hero-eyebrow">CONTRACT REVIEW</div>
+    <h1 class="sign-hero-title" style="font-size: 28px;">合約審核後台</h1>
+    <p class="sign-hero-subtitle">審核主播提交的簽約申請、填入運營資訊並完成合約。</p>
+  </section>
+
+  <!-- Stats -->
+  <div class="admin-stats">
+    <div class="admin-stat active" data-status="all">
+      <div class="admin-stat-num" id="stat-all">0</div>
+      <div class="admin-stat-label">ALL 全部</div>
+    </div>
+    <div class="admin-stat" data-status="pending">
+      <div class="admin-stat-num" id="stat-pending" style="color: var(--sign-warning);">0</div>
+      <div class="admin-stat-label">PENDING 待審</div>
+    </div>
+    <div class="admin-stat" data-status="approved">
+      <div class="admin-stat-num" id="stat-approved" style="color: var(--sign-success);">0</div>
+      <div class="admin-stat-label">APPROVED 已核准</div>
+    </div>
+    <div class="admin-stat" data-status="rejected">
+      <div class="admin-stat-num" id="stat-rejected" style="color: var(--sign-danger);">0</div>
+      <div class="admin-stat-label">REJECTED 已退回</div>
+    </div>
+    <div class="admin-stat" data-status="expired">
+      <div class="admin-stat-num" id="stat-expired" style="color: var(--sign-text-mute);">0</div>
+      <div class="admin-stat-label">EXPIRED 已到期</div>
+    </div>
+  </div>
+
+  <div class="admin-search-row">
+    <input type="text" class="sign-form-input admin-search" id="searchInput" placeholder="搜尋合約編號 / 姓名 / 電話..." />
+    <button class="sign-btn sign-btn-secondary" id="refreshBtn">🔄 重新整理</button>
+  </div>
+
+  <div class="admin-list" id="contractList">
+    <div style="text-align: center; padding: 60px 20px; color: var(--sign-text-mute);">載入中...</div>
+  </div>
+
+</main>
+
+<!-- Detail Modal -->
+<div class="admin-modal-backdrop" id="detailModal">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title" id="modalTitle">合約詳情</h2>
+      <button class="admin-modal-close" id="modalClose">×</button>
+    </div>
+    <div class="admin-modal-body" id="modalBody">載入中...</div>
+    <div class="admin-modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<script src="/js/sign/admin.js?v=20260906a"></script>
+</body>
+</html>

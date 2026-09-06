@@ -27,6 +27,11 @@ import * as streamerTestHandler from './functions/api/streamer-test-submit.js';
 import * as rookieTestHandler from './functions/api/rookie-test-submit.js';
 import * as careersHandler from './functions/api/careers-submit.js';
 import * as venuesHandler from './functions/api/venues-submit.js';
+import * as signSubmit from './functions/api/sign/submit.js';
+import * as signQuery from './functions/api/sign/query.js';
+import * as signAdminList from './functions/api/sign/admin-list.js';
+import * as signAdminDetail from './functions/api/sign/admin-detail.js';
+import * as signAdminApprove from './functions/api/sign/admin-approve.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -36,6 +41,12 @@ const API_ROUTES = {
   '/api/rookie-test-submit': rookieTestHandler,
   '/api/careers-submit': careersHandler,
   '/api/venues-submit': venuesHandler,
+  // 簽約系統
+  '/api/sign/submit': signSubmit,
+  '/api/sign/query': signQuery,
+  '/api/sign/admin-list': signAdminList,
+  '/api/sign/admin-detail': signAdminDetail,
+  '/api/sign/admin-approve': signAdminApprove,
 };
 
 export default {

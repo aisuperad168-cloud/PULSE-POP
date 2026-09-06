@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Step 3 · 合約條件｜JDI 簽約系統</title>
+  <link rel="canonical" href="https://sign.jdi-pulse.com/step-3" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906a" />
+</head>
+<body class="sign-body">
+
+<header class="sign-topbar">
+  <a href="/sign/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">CONTRACT SIGNING SYSTEM</span>
+    </span>
+  </a>
+  <a href="/sign/query/" class="sign-topbar-link">查詢合約進度 →</a>
+</header>
+
+<nav class="sign-steps">
+  <div class="sign-steps-inner">
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">閱讀合約</div></div>
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">基本資料</div></div>
+    <div class="sign-step active" data-step="3"><div class="sign-step-num">3</div><div class="sign-step-label">合約條件</div></div>
+    <div class="sign-step" data-step="4"><div class="sign-step-num">4</div><div class="sign-step-label">身分證上傳</div></div>
+    <div class="sign-step" data-step="5"><div class="sign-step-num">5</div><div class="sign-step-label">合約預覽</div></div>
+    <div class="sign-step" data-step="6"><div class="sign-step-num">6</div><div class="sign-step-label">電子簽名</div></div>
+  </div>
+</nav>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">STEP 3 / 6</div>
+    <h1 class="sign-hero-title">合約條件選擇</h1>
+    <p class="sign-hero-subtitle">
+      請選擇你希望的合約年限和生效日期。此設定將寫入合約書。
+    </p>
+  </section>
+
+  <section class="sign-card">
+    <form id="contractTermsForm" novalidate>
+
+      <!-- 合約年限 -->
+      <div class="sign-form-group">
+        <label class="sign-form-label">
+          合約年限<span class="sign-required">*</span>
+        </label>
+        <div class="sign-form-hint" style="margin-top: 0; margin-bottom: 12px;">
+          選擇你希望與 JDI 脈動傳媒的合約年限。
+        </div>
+        <div class="sign-radio-cards">
+          <label class="sign-radio-card">
+            <input type="radio" name="contract_years" value="1" required />
+            <div class="sign-radio-card-title">1 年</div>
+            <div class="sign-radio-card-desc">短期合作，快速試水溫</div>
+          </label>
+          <label class="sign-radio-card">
+            <input type="radio" name="contract_years" value="2" required />
+            <div class="sign-radio-card-title">2 年</div>
+            <div class="sign-radio-card-desc">中期，穩定成長</div>
+          </label>
+          <label class="sign-radio-card">
+            <input type="radio" name="contract_years" value="3" required />
+            <div class="sign-radio-card-title">3 年</div>
+            <div class="sign-radio-card-desc">長期深度合作 · 推薦</div>
+          </label>
+        </div>
+        <div class="sign-form-error" id="err-contract_years"></div>
+      </div>
+
+      <!-- 生效日 -->
+      <div class="sign-form-group">
+        <label class="sign-form-label" for="contract_start_date">
+          合約生效日<span class="sign-required">*</span>
+        </label>
+        <input type="date" id="contract_start_date" name="contract_start_date"
+               class="sign-form-input" required />
+        <div class="sign-form-hint">
+          可選擇今日或未來日期。實際生效以甲方（JDI）核准當日為準，此處為建議日期。
+        </div>
+        <div class="sign-form-error" id="err-contract_start_date"></div>
+      </div>
+
+      <!-- 到期日顯示（自動計算） -->
+      <div class="sign-alert sign-alert-info" id="endDatePreview" style="display: none;">
+        <strong>📅 合約到期日：</strong><span id="endDateText">—</span>
+      </div>
+
+      <!-- 合約重要條款重申 -->
+      <div class="sign-alert sign-alert-warning">
+        <strong>⚠️ 進入下一步前請再次確認：</strong>
+        <ul style="margin: 8px 0 0; padding-left: 20px;">
+          <li>本合約為 <strong>直播獨家經紀</strong>，簽約期間不得於其他平台開播</li>
+          <li>每月最低 <strong>17 天 × 60 小時</strong>直播</li>
+          <li>平台內打賞收益 <strong>主播自行提取</strong>，公會不抽成</li>
+          <li>平台外收益（業配等）<strong>50/50 拆分</strong></li>
+          <li>違約金 <strong>NT$ 600,000</strong></li>
+        </ul>
+      </div>
+
+      <div class="sign-nav-row">
+        <a href="/sign/step-2.html" class="sign-btn sign-btn-ghost">← 上一步</a>
+        <button type="submit" class="sign-btn sign-btn-primary">繼續下一步 →</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="/js/sign/step3-terms.js?v=20260906a"></script>
+</body>
+</html>
