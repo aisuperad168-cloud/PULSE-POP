@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>查詢合約進度｜JDI 公會合作合約</title>
+  <link rel="canonical" href="https://ops.jdi-pulse.com/query/" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906d" />
+  <link rel="stylesheet" href="/css/ops/ops.css?v=20260906a" />
+</head>
+<body class="sign-body ops-body">
+
+<header class="sign-topbar">
+  <a href="/ops/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">GUILD COOPERATION CONTRACT</span>
+    </span>
+  </a>
+  <a href="/ops/" class="sign-topbar-link">開始簽約 →</a>
+</header>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">CONTRACT LOOKUP</div>
+    <h1 class="sign-hero-title">查詢合約進度</h1>
+    <p class="sign-hero-subtitle">
+      請輸入您簽約時填寫的<strong>電話末 4 碼</strong>及<strong>統編／身分證末 4 碼</strong>。
+    </p>
+  </section>
+
+  <section class="sign-card" id="lookupCard">
+    <form id="opsQueryForm" novalidate>
+
+      <div class="sign-form-grid">
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="phone_last4">
+            聯絡電話末 4 碼<span class="sign-required">*</span>
+          </label>
+          <input type="text" id="phone_last4" name="phone_last4" class="sign-form-input"
+                 placeholder="例：5678" required maxlength="4" inputmode="numeric" pattern="\d{4}"
+                 autocomplete="off" style="letter-spacing: 8px; font-size: 20px; text-align: center; font-family: monospace;" />
+          <div class="sign-form-error" id="err-phone_last4"></div>
+        </div>
+
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="tax_id_last4">
+            統編／身分證末 4 碼<span class="sign-required">*</span>
+          </label>
+          <input type="text" id="tax_id_last4" name="tax_id_last4" class="sign-form-input"
+                 placeholder="例：5678" required maxlength="4"
+                 autocomplete="off" style="letter-spacing: 8px; font-size: 20px; text-align: center; font-family: monospace; text-transform: uppercase;" />
+          <div class="sign-form-hint">公司填統編末 4 碼；個人填身分證末 4 碼</div>
+          <div class="sign-form-error" id="err-tax_id_last4"></div>
+        </div>
+      </div>
+
+      <div class="sign-alert sign-alert-info">
+        <strong>💡 提示：</strong>此為雙因子查詢，需同時比對成功才會顯示合約。若忘記填寫時使用的電話或統編／身分證，請聯絡 <a href="mailto:contract@jdi-pulse.com">contract@jdi-pulse.com</a>。
+      </div>
+
+      <div class="sign-nav-row">
+        <a href="/ops/" class="sign-btn sign-btn-ghost">← 開始新簽約</a>
+        <button type="submit" class="sign-btn sign-btn-primary" id="queryBtn">
+          <span id="queryBtnText">查詢合約 →</span>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section id="resultCard" style="display: none;">
+    <div id="resultContent"></div>
+  </section>
+
+</main>
+
+<script src="/js/ops/query.js?v=20260906a"></script>
+</body>
+</html>

@@ -13,6 +13,63 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
   <link rel="stylesheet" href="/css/sign/sign.css?v=20260906d" />
   <style>
+    /* Tab bar (主播 / 運營) - sticky 置頂 */
+    .admin-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--sign-bg-elev);
+      border: 1px solid var(--sign-border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 16px;
+      position: sticky;
+      top: 60px;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+    }
+    .admin-tab {
+      flex: 1;
+      padding: 10px 16px;
+      text-align: center;
+      background: transparent;
+      color: var(--sign-text-mute);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .admin-tab.active[data-tab="streamer"] {
+      background: linear-gradient(135deg, #FE2C55 0%, #b81e3f 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(254,44,85,0.3);
+    }
+    .admin-tab.active[data-tab="ops"] {
+      background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+    }
+    .admin-tab-badge {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      min-width: 20px;
+      text-align: center;
+    }
+    .admin-tab:not(.active) .admin-tab-badge {
+      background: var(--sign-bg-card);
+      color: var(--sign-text-mute);
+    }
+
     .admin-topbar-badge {
       background: var(--sign-primary);
       color: #fff;
@@ -41,6 +98,8 @@
     }
     .admin-stat:hover { border-color: var(--sign-accent); }
     .admin-stat.active { border-color: var(--sign-primary); background: rgba(254,44,85,0.08); }
+    body.tab-ops .admin-stat.active { border-color: #6366f1; background: rgba(99,102,241,0.08); }
+    body.tab-ops .admin-stat:hover { border-color: #a5b4fc; }
     .admin-stat-num { font-size: 24px; font-weight: 900; color: #fff; }
     .admin-stat-label { font-size: 11px; color: var(--sign-text-mute); margin-top: 4px; letter-spacing: 1px; }
     .admin-search-row {
@@ -156,8 +215,20 @@
   <section class="sign-hero" style="text-align: left;">
     <div class="sign-hero-eyebrow">CONTRACT REVIEW</div>
     <h1 class="sign-hero-title" style="font-size: 28px;">合約審核後台</h1>
-    <p class="sign-hero-subtitle">審核主播提交的簽約申請、填入運營資訊並完成合約。</p>
+    <p class="sign-hero-subtitle">審核主播與運營合作合約，填入運營／甲方資訊並完成合約。</p>
   </section>
+
+  <!-- Tabs 主播 / 運營 -->
+  <div class="admin-tabs" id="tabsBar">
+    <button class="admin-tab active" data-tab="streamer">
+      🎬 主播合約
+      <span class="admin-tab-badge" id="tabBadgeStreamer">0</span>
+    </button>
+    <button class="admin-tab" data-tab="ops">
+      🤝 運營合約
+      <span class="admin-tab-badge" id="tabBadgeOps">0</span>
+    </button>
+  </div>
 
   <!-- Stats -->
   <div class="admin-stats">
@@ -206,6 +277,6 @@
   </div>
 </div>
 
-<script src="/js/sign/admin.js?v=20260906d"></script>
+<script src="/js/sign/admin.js?v=20260906e"></script>
 </body>
 </html>

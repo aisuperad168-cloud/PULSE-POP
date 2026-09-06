@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Step 3 · 合作條件｜JDI 公會合作合約</title>
+  <link rel="canonical" href="https://ops.jdi-pulse.com/step-3" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906d" />
+  <link rel="stylesheet" href="/css/ops/ops.css?v=20260906a" />
+</head>
+<body class="sign-body ops-body">
+
+<header class="sign-topbar">
+  <a href="/ops/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">GUILD COOPERATION CONTRACT</span>
+    </span>
+  </a>
+  <a href="/ops/query/" class="sign-topbar-link">查詢合約進度 →</a>
+</header>
+
+<nav class="sign-steps">
+  <div class="sign-steps-inner">
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">閱讀合約</div></div>
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">基本資料</div></div>
+    <div class="sign-step active"><div class="sign-step-num">3</div><div class="sign-step-label">合作條件</div></div>
+    <div class="sign-step"><div class="sign-step-num">4</div><div class="sign-step-label">簽名送出</div></div>
+  </div>
+</nav>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">STEP 3 / 4</div>
+    <h1 class="sign-hero-title">合作條件</h1>
+    <p class="sign-hero-subtitle">
+      請選擇合作期間。合約自完成簽署當日起生效（依合約第 17 條）。
+    </p>
+  </section>
+
+  <section class="sign-card">
+    <form id="opsTermsForm">
+
+      <div class="ops-form-section-title">📅 合作期間</div>
+      <p style="font-size: 13px; color: var(--sign-text-dim); margin-bottom: 12px;">
+        依合約第十七條約定，合約自完成簽署之日起生效。合作期間 2 選 1：
+      </p>
+
+      <div class="ops-party-select">
+        <label class="ops-party-option">
+          <input type="radio" name="contract_years" value="2" required />
+          <div class="ops-party-icon">📆</div>
+          <div class="ops-party-title">綁定 2 年</div>
+          <div class="ops-party-hint">
+            穩定合作<br />
+            適合新開始合作
+          </div>
+        </label>
+        <label class="ops-party-option">
+          <input type="radio" name="contract_years" value="3" required />
+          <div class="ops-party-icon">🗓️</div>
+          <div class="ops-party-title">綁定 3 年</div>
+          <div class="ops-party-hint">
+            長期合作<br />
+            適合成熟運營夥伴
+          </div>
+        </label>
+      </div>
+      <div class="sign-form-error" id="err-contract_years"></div>
+
+      <!-- 自動計算預覽 -->
+      <div class="sign-alert sign-alert-info" id="datePreview" style="display:none;">
+        <div style="font-size: 13px; margin-bottom: 8px;"><strong>📌 生效與到期日（系統於送出時鎖定）</strong></div>
+        <table style="width: 100%; font-size: 14px; line-height: 1.8;">
+          <tr>
+            <td style="color: var(--sign-text-mute); width: 100px;">生效日期</td>
+            <td><strong id="previewStart" style="color: var(--sign-accent);">—</strong></td>
+          </tr>
+          <tr>
+            <td style="color: var(--sign-text-mute);">到期日期</td>
+            <td><strong id="previewEnd">—</strong></td>
+          </tr>
+          <tr>
+            <td style="color: var(--sign-text-mute);">服務手續費</td>
+            <td><span class="ops-fee-display" id="previewFee">—</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 合約重要條款回顧 -->
+      <div style="margin-top: 24px; padding: 16px 20px; background: var(--sign-bg-elev); border-radius: 8px; border-left: 3px solid var(--sign-warning);">
+        <div style="font-size: 13px; font-weight: 700; color: var(--sign-warning); margin-bottom: 8px;">⚠️ 重要條款提醒</div>
+        <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: var(--sign-text-dim); line-height: 1.8;">
+          <li>結算週期：<strong style="color: var(--sign-text);">T+2 月，每月 25 日撥款</strong></li>
+          <li>分潤比例：依有效主播數（1 人以上 50%／8 人以上 60%／15 人以上 75%）</li>
+          <li>異議期限：收到結算資料 <strong>5 日</strong>內須以書面提出，逾期視同承認</li>
+          <li>保密義務：合約終止後<strong>繼續有效 2 年</strong></li>
+          <li>管轄法院：<strong>臺灣臺中地方法院</strong>（第一審）</li>
+        </ul>
+      </div>
+
+      <div class="sign-nav-row">
+        <a href="/ops/step-2.html" class="sign-btn sign-btn-ghost">← 上一步</a>
+        <button type="submit" class="sign-btn sign-btn-primary">繼續下一步 →</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="/js/ops/step3-terms.js?v=20260906a"></script>
+</body>
+</html>

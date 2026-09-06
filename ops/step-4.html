@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Step 4 · 簽名送出｜JDI 公會合作合約</title>
+  <link rel="canonical" href="https://ops.jdi-pulse.com/step-4" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906d" />
+  <link rel="stylesheet" href="/css/ops/ops.css?v=20260906a" />
+</head>
+<body class="sign-body ops-body">
+
+<header class="sign-topbar">
+  <a href="/ops/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">GUILD COOPERATION CONTRACT</span>
+    </span>
+  </a>
+  <a href="/ops/query/" class="sign-topbar-link">查詢合約進度 →</a>
+</header>
+
+<nav class="sign-steps">
+  <div class="sign-steps-inner">
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">閱讀合約</div></div>
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">基本資料</div></div>
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">合作條件</div></div>
+    <div class="sign-step active"><div class="sign-step-num">4</div><div class="sign-step-label">簽名送出</div></div>
+  </div>
+</nav>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">STEP 4 / 4 · 最後一步</div>
+    <h1 class="sign-hero-title">確認資料 + 電子簽名</h1>
+    <p class="sign-hero-subtitle">
+      請確認以下資料後手寫簽名並送出。簽署完成後合約立即生效。
+    </p>
+  </section>
+
+  <!-- ============ 資料確認 ============ -->
+  <section class="sign-card">
+    <div class="ops-form-section-title">📋 資料確認</div>
+
+    <div id="dataPreview"></div>
+
+    <div style="margin-top: 12px;">
+      <a href="/ops/step-2.html" class="sign-btn sign-btn-ghost sign-btn-sm">✏️ 修改基本資料</a>
+      <a href="/ops/step-3.html" class="sign-btn sign-btn-ghost sign-btn-sm">✏️ 修改合作期間</a>
+    </div>
+  </section>
+
+  <!-- ============ 電子簽名 ============ -->
+  <section class="sign-card">
+    <div class="ops-form-section-title">✍️ 電子簽名（乙方）</div>
+
+    <p style="font-size: 13px; color: var(--sign-text-dim); margin-bottom: 12px;">
+      請在下方簽名區<strong>手寫您的姓名或簽名</strong>。建議使用觸控裝置直接手寫，或使用滑鼠繪製。
+    </p>
+
+    <div class="sign-form-group">
+      <label class="sign-form-label" id="sigLabel">乙方簽名<span class="sign-required">*</span></label>
+      <div class="sign-signature-pad">
+        <canvas class="sign-signature-canvas" id="sigCanvas"></canvas>
+        <div class="sign-signature-hint" id="sigHint">請於此處手寫簽名</div>
+        <div class="sign-signature-actions">
+          <button type="button" class="sign-signature-clear" id="sigClear">清除重簽</button>
+          <div class="sign-signature-status" id="sigStatus">尚未簽名</div>
+        </div>
+      </div>
+      <div class="sign-form-error" id="err-signature"></div>
+    </div>
+
+    <div class="sign-alert sign-alert-info">
+      <strong>📜 電子簽章法律效力聲明：</strong>
+      <ul style="margin: 8px 0 0; padding-left: 20px;">
+        <li>依據中華民國《電子簽章法》第 2 條、第 4 條規定，本合約以電子文件形式訂立</li>
+        <li>雙方同意採用手寫電子簽章方式簽署，具與紙本簽章同等法律效力</li>
+        <li>系統將自動記錄：簽署時間、IP、瀏覽器指紋，作為證據保存</li>
+      </ul>
+    </div>
+
+    <label class="sign-checkbox-row" id="finalConsentLabel">
+      <input type="checkbox" id="finalConsent" />
+      <span class="sign-checkbox-mark"></span>
+      <span class="sign-checkbox-text">
+        <strong>我確認並同意以下事項</strong><br />
+        <span style="font-size: 13px; color: var(--sign-text-dim);">
+          我已完整閱讀並理解本合約全部條款，所提供之個人／公司資料真實無誤，
+          且以上簽名為本人（或本公司授權代表人）親自簽署。同意本合約以電子形式成立生效。
+        </span>
+      </span>
+    </label>
+
+    <div id="submitError" class="sign-alert sign-alert-danger" style="display:none; margin-top: 12px;"></div>
+
+    <div class="sign-nav-row">
+      <a href="/ops/step-3.html" class="sign-btn sign-btn-ghost">← 上一步</a>
+      <button type="button" class="sign-btn sign-btn-primary" id="finalSubmit" disabled>
+        <span id="submitBtnText">送出合約簽署 →</span>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<script src="/js/ops/step4-sign.js?v=20260906a"></script>
+</body>
+</html>

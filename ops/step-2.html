@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Step 2 · 基本資料｜JDI 公會合作合約</title>
+  <link rel="canonical" href="https://ops.jdi-pulse.com/step-2" />
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906d" />
+  <link rel="stylesheet" href="/css/ops/ops.css?v=20260906a" />
+</head>
+<body class="sign-body ops-body">
+
+<header class="sign-topbar">
+  <a href="/ops/" class="sign-brand">
+    <img src="/assets/logo_jdi_transparent.png" alt="JDI" class="sign-brand-logo" />
+    <span class="sign-brand-txt">
+      <span class="sign-brand-zh">JDI 脈動傳媒</span>
+      <span class="sign-brand-en">GUILD COOPERATION CONTRACT</span>
+    </span>
+  </a>
+  <a href="/ops/query/" class="sign-topbar-link">查詢合約進度 →</a>
+</header>
+
+<nav class="sign-steps">
+  <div class="sign-steps-inner">
+    <div class="sign-step done"><div class="sign-step-num">✓</div><div class="sign-step-label">閱讀合約</div></div>
+    <div class="sign-step active"><div class="sign-step-num">2</div><div class="sign-step-label">基本資料</div></div>
+    <div class="sign-step"><div class="sign-step-num">3</div><div class="sign-step-label">合作條件</div></div>
+    <div class="sign-step"><div class="sign-step-num">4</div><div class="sign-step-label">簽名送出</div></div>
+  </div>
+</nav>
+
+<main class="sign-main">
+
+  <section class="sign-hero">
+    <div class="sign-hero-eyebrow">STEP 2 / 4</div>
+    <h1 class="sign-hero-title">基本資料</h1>
+    <p class="sign-hero-subtitle">
+      請填寫真實資料。此資料會用於合約書與撥款作業，<strong>全程加密傳輸與儲存</strong>。
+    </p>
+  </section>
+
+  <section class="sign-card">
+    <form id="opsInfoForm" novalidate>
+
+      <!-- ============ 身份類別選擇 ============ -->
+      <div class="ops-form-section-title">📋 身份類別</div>
+      <p style="font-size: 13px; color: var(--sign-text-dim); margin-bottom: 12px;">
+        請選擇您的合作身份，選擇後將出現對應的欄位。
+      </p>
+      <div class="ops-party-select">
+        <label class="ops-party-option">
+          <input type="radio" name="party_type" value="company" required />
+          <div class="ops-party-icon">🏢</div>
+          <div class="ops-party-title">經紀公司</div>
+          <div class="ops-party-hint">
+            服務手續費 <strong style="color:var(--ops-primary);">10%</strong><br />
+            請款方式：發票
+          </div>
+        </label>
+        <label class="ops-party-option">
+          <input type="radio" name="party_type" value="individual" required />
+          <div class="ops-party-icon">👤</div>
+          <div class="ops-party-title">個人運營</div>
+          <div class="ops-party-hint">
+            服務手續費 <strong style="color:var(--ops-primary);">15%</strong><br />
+            請款方式：勞務報酬單
+          </div>
+        </label>
+      </div>
+      <div class="sign-form-error" id="err-party_type"></div>
+
+      <!-- ============ 動態顯示：公司或個人資料 ============ -->
+      <div id="entityFields" style="display:none;">
+
+        <div class="ops-form-section-title" id="entitySectionTitle">📝 基本資料</div>
+
+        <div class="sign-form-grid">
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="entity_name">
+              <span id="entityNameLabel">名稱／姓名</span><span class="sign-required">*</span>
+            </label>
+            <input type="text" id="entity_name" name="entity_name" class="sign-form-input"
+                   placeholder="請填寫" required autocomplete="organization" />
+            <div class="sign-form-hint" id="entityNameHint"></div>
+            <div class="sign-form-error" id="err-entity_name"></div>
+          </div>
+
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="tax_id">
+              <span id="taxIdLabel">統一編號 / 身分證字號</span><span class="sign-required">*</span>
+            </label>
+            <input type="text" id="tax_id" name="tax_id" class="sign-form-input"
+                   placeholder="" required style="text-transform: uppercase;" autocomplete="off" />
+            <div class="sign-form-hint" id="taxIdHint"></div>
+            <div class="sign-form-error" id="err-tax_id"></div>
+          </div>
+        </div>
+
+        <div class="sign-form-grid">
+          <div class="sign-form-group" id="representativeGroup" style="display:none;">
+            <label class="sign-form-label" for="representative">
+              代表人／負責人<span class="sign-required" id="representativeReq">*</span>
+            </label>
+            <input type="text" id="representative" name="representative" class="sign-form-input"
+                   placeholder="請填寫代表人姓名" autocomplete="name" />
+            <div class="sign-form-error" id="err-representative"></div>
+          </div>
+
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="job_title">
+              職稱
+              <span style="color:var(--sign-text-mute); font-size:11px; font-weight:400;">（選填）</span>
+            </label>
+            <input type="text" id="job_title" name="job_title" class="sign-form-input"
+                   placeholder="例：執行長 / 經紀人" maxlength="30" />
+            <div class="sign-form-error" id="err-job_title"></div>
+          </div>
+        </div>
+
+        <div class="sign-form-group">
+          <label class="sign-form-label" for="address">
+            <span id="addressLabel">聯絡地址</span><span class="sign-required">*</span>
+          </label>
+          <input type="text" id="address" name="address" class="sign-form-input"
+                 placeholder="例：台北市中山區南京東路二段 XX 號 X 樓"
+                 required maxlength="100" autocomplete="street-address" />
+          <div class="sign-form-error" id="err-address"></div>
+        </div>
+
+        <div class="sign-form-grid">
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="phone">
+              聯絡電話<span class="sign-required">*</span>
+            </label>
+            <input type="tel" id="phone" name="phone" class="sign-form-input"
+                   placeholder="0912345678" required autocomplete="tel"
+                   pattern="09\d{8}" maxlength="10" />
+            <div class="sign-form-hint">台灣手機（10 位數字，以 09 開頭）</div>
+            <div class="sign-form-error" id="err-phone"></div>
+          </div>
+
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="email">
+              電子信箱<span class="sign-required">*</span>
+            </label>
+            <input type="email" id="email" name="email" class="sign-form-input"
+                   placeholder="your@email.com" required autocomplete="email" />
+            <div class="sign-form-hint">合約進度、完成通知會寄到此信箱</div>
+            <div class="sign-form-error" id="err-email"></div>
+          </div>
+        </div>
+
+        <!-- ============ 銀行帳戶資訊 ============ -->
+        <div class="ops-form-section-title">💰 銀行帳戶（結算撥款用）</div>
+        <div class="ops-bank-hint">
+          <strong>提醒：</strong>此帳戶為每月 25 日 T+2 結算款項的撥款帳戶。銀行帳號在資料庫加密儲存，後台預設遮罩顯示，僅在需要撥款時解遮。
+        </div>
+
+        <div class="sign-form-grid">
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="bank_name">
+              銀行名稱<span class="sign-required">*</span>
+            </label>
+            <input type="text" id="bank_name" name="bank_name" class="sign-form-input"
+                   placeholder="例：台新銀行" required maxlength="30" />
+            <div class="sign-form-error" id="err-bank_name"></div>
+          </div>
+
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="bank_branch">
+              分行<span class="sign-required">*</span>
+            </label>
+            <input type="text" id="bank_branch" name="bank_branch" class="sign-form-input"
+                   placeholder="例：南京東路分行" required maxlength="30" />
+            <div class="sign-form-error" id="err-bank_branch"></div>
+          </div>
+        </div>
+
+        <div class="sign-form-grid">
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="bank_account">
+              銀行帳號<span class="sign-required">*</span>
+            </label>
+            <input type="text" id="bank_account" name="bank_account" class="sign-form-input"
+                   placeholder="請輸入純數字，不含符號" required
+                   pattern="[0-9\s\-]{6,25}" inputmode="numeric" autocomplete="off" />
+            <div class="sign-form-hint">6-20 位數字（可含空格或短橫線，系統會自動清理）</div>
+            <div class="sign-form-error" id="err-bank_account"></div>
+          </div>
+
+          <div class="sign-form-group">
+            <label class="sign-form-label" for="bank_account_name">
+              戶名<span class="sign-required">*</span>
+            </label>
+            <input type="text" id="bank_account_name" name="bank_account_name" class="sign-form-input"
+                   placeholder="必須與銀行帳戶登記戶名完全相同" required maxlength="30" />
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--sign-text-mute); margin-top: 8px; cursor: pointer;">
+              <input type="checkbox" id="sameAsEntity" style="cursor: pointer;" />
+              <span id="sameAsEntityLabel">同公司名稱／姓名</span>
+            </label>
+            <div class="sign-form-error" id="err-bank_account_name"></div>
+          </div>
+        </div>
+
+        <!-- ============ 公司大小章上傳（僅公司顯示）============ -->
+        <div id="stampSection" style="display:none;">
+          <div class="ops-form-section-title">🖋 公司大小章</div>
+          <p style="font-size: 13px; color: var(--sign-text-dim); margin-bottom: 12px;">
+            請上傳一張 <strong>公司大小章合體 PNG 圖檔</strong>（透明底或白底皆可）。此章將顯示於合約簽署欄乙方位置。
+          </p>
+
+          <label class="ops-stamp-uploader" id="stampUploader" for="companyStampInput">
+            <div id="stampPlaceholder">
+              <div style="font-size: 40px; margin-bottom: 8px;">📤</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--sign-text); margin-bottom: 6px;">點擊上傳公司大小章</div>
+              <div class="ops-stamp-hint">
+                建議規格：PNG 透明底，400×400 以上<br />
+                最大檔案：5 MB
+              </div>
+            </div>
+            <div id="stampPreviewWrap" style="display:none;">
+              <img id="stampPreview" class="ops-stamp-preview" src="" alt="公司大小章預覽" />
+              <div style="font-size: 13px; color: var(--sign-success); margin-top: 8px;">
+                ✓ <span id="stampFileName">檔案已上傳</span>
+                <button type="button" id="stampRemove" style="background:none; border:none; color:var(--sign-danger); cursor:pointer; margin-left:8px; font-size:12px; text-decoration:underline;">移除</button>
+              </div>
+            </div>
+            <input type="file" id="companyStampInput" accept="image/png,image/jpeg,image/webp" style="display:none;" />
+          </label>
+          <div class="sign-form-error" id="err-company_stamp"></div>
+        </div>
+
+      </div>
+
+      <div class="sign-alert sign-alert-info">
+        <strong>🔒 隱私保護：</strong>統編／身分證字號、銀行帳號等敏感資料以加密方式儲存。後台預設遮罩顯示，僅在必要時解遮並記錄稽核。
+      </div>
+
+      <div class="sign-nav-row">
+        <a href="/ops/" class="sign-btn sign-btn-ghost">← 上一步</a>
+        <button type="submit" class="sign-btn sign-btn-primary">繼續下一步 →</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="/js/ops/step2-basic-info.js?v=20260906a"></script>
+</body>
+</html>

@@ -9,32 +9,34 @@
  *
  * 為什麼不用 Pages Functions 自動路由？
  *   因為現在部署為 Worker（非 Pages），需要自己接 /api/* 路由。
- *
- * 路由對應表：
- *   POST   /api/quiz-submit           → functions/api/quiz-submit.js
- *   POST   /api/contact-submit        → functions/api/contact-submit.js
- *   POST   /api/streamer-test-submit  → functions/api/streamer-test-submit.js
- *   POST   /api/rookie-test-submit    → functions/api/rookie-test-submit.js
- *   POST   /api/careers-submit        → functions/api/careers-submit.js
- *   （每個都同時支援 OPTIONS for CORS）
  * ============================================================
  */
 
-// 動態 import handlers（Cloudflare Workers 支援 ES modules）
+// 通用表單 handlers
 import * as quizHandler from './functions/api/quiz-submit.js';
 import * as contactHandler from './functions/api/contact-submit.js';
 import * as streamerTestHandler from './functions/api/streamer-test-submit.js';
 import * as rookieTestHandler from './functions/api/rookie-test-submit.js';
 import * as careersHandler from './functions/api/careers-submit.js';
 import * as venuesHandler from './functions/api/venues-submit.js';
+
+// 主播端簽約系統 (/sign/*)
 import * as signSubmit from './functions/api/sign/submit.js';
 import * as signQuery from './functions/api/sign/query.js';
 import * as signAdminList from './functions/api/sign/admin-list.js';
 import * as signAdminDetail from './functions/api/sign/admin-detail.js';
 import * as signAdminApprove from './functions/api/sign/admin-approve.js';
-import * as signGetContract from './functions/api/sign/get-contract.js';
 import * as signAdminDelete from './functions/api/sign/admin-delete.js';
-import * as signWhoami from './functions/api/sign/whoami.js';
+import * as signGetContract from './functions/api/sign/get-contract.js';
+
+// 運營端簽約系統 (/ops/*)
+import * as opsSubmit from './functions/api/ops/submit.js';
+import * as opsQuery from './functions/api/ops/query.js';
+import * as opsGetContract from './functions/api/ops/get-contract.js';
+import * as opsAdminList from './functions/api/ops/admin-list.js';
+import * as opsAdminDetail from './functions/api/ops/admin-detail.js';
+import * as opsAdminApprove from './functions/api/ops/admin-approve.js';
+import * as opsAdminDelete from './functions/api/ops/admin-delete.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -44,7 +46,8 @@ const API_ROUTES = {
   '/api/rookie-test-submit': rookieTestHandler,
   '/api/careers-submit': careersHandler,
   '/api/venues-submit': venuesHandler,
-  // 簽約系統
+
+  // 主播端簽約系統
   '/api/sign/submit': signSubmit,
   '/api/sign/query': signQuery,
   '/api/sign/admin-list': signAdminList,
@@ -52,7 +55,15 @@ const API_ROUTES = {
   '/api/sign/admin-approve': signAdminApprove,
   '/api/sign/admin-delete': signAdminDelete,
   '/api/sign/get-contract': signGetContract,
-  '/api/sign/whoami': signWhoami,  // 診斷用：顯示登入 email
+
+  // 運營端簽約系統
+  '/api/ops/submit': opsSubmit,
+  '/api/ops/query': opsQuery,
+  '/api/ops/get-contract': opsGetContract,
+  '/api/ops/admin-list': opsAdminList,
+  '/api/ops/admin-detail': opsAdminDetail,
+  '/api/ops/admin-approve': opsAdminApprove,
+  '/api/ops/admin-delete': opsAdminDelete,
 };
 
 export default {
@@ -61,22 +72,28 @@ export default {
     const path = url.pathname;
     const hostname = url.hostname;
 
-    // ============ 0. sign.jdi-pulse.com 子網域：自動轉主站 /sign/ ============
-    // 目的：讓主播直接記 sign.jdi-pulse.com 就好，不用背 /sign/xxx
-    //   sign.jdi-pulse.com/           → jdi-pulse.com/sign/
-    //   sign.jdi-pulse.com/query/     → jdi-pulse.com/sign/query/
-    //   sign.jdi-pulse.com/admin/     → jdi-pulse.com/sign/admin/
-    //   sign.jdi-pulse.com/sign/xxx   → jdi-pulse.com/sign/xxx (免疊路徑)
-    //   sign.jdi-pulse.com/api/sign/* → API 不 redirect，內部 forward
+    // ============ 0-A. sign.jdi-pulse.com 子網域 → 主站 /sign/ ============
     if (hostname === 'sign.jdi-pulse.com') {
-      // API 呼叫：不 redirect，直接讓後續路由處理（相對路徑無論來自哪個域都可用）
       if (path.startsWith('/api/')) {
-        // fall through to normal API handling
+        // API 呼叫 fall through
       } else {
-        // 頁面路徑：若尚未帶 /sign/ 前綴，補上
         let targetPath = path;
         if (!path.startsWith('/sign/') && path !== '/sign') {
           targetPath = '/sign' + (path === '/' ? '/' : path);
+        }
+        const targetUrl = 'https://jdi-pulse.com' + targetPath + url.search;
+        return Response.redirect(targetUrl, 301);
+      }
+    }
+
+    // ============ 0-B. ops.jdi-pulse.com 子網域 → 主站 /ops/ ============
+    if (hostname === 'ops.jdi-pulse.com') {
+      if (path.startsWith('/api/')) {
+        // API 呼叫 fall through
+      } else {
+        let targetPath = path;
+        if (!path.startsWith('/ops/') && path !== '/ops') {
+          targetPath = '/ops' + (path === '/' ? '/' : path);
         }
         const targetUrl = 'https://jdi-pulse.com' + targetPath + url.search;
         return Response.redirect(targetUrl, 301);
@@ -87,14 +104,10 @@ export default {
     const handler = API_ROUTES[path];
     if (handler) {
       const method = request.method.toUpperCase();
-
-      // 對應 Pages Functions 的 onRequest{Method} 命名
       const handlerName = `onRequest${method.charAt(0)}${method.slice(1).toLowerCase()}`;
-      // 例：POST → onRequestPost, OPTIONS → onRequestOptions
 
       if (typeof handler[handlerName] === 'function') {
         try {
-          // Pages Functions 的呼叫慣例：{ request, env, ctx, params, data, next, ...}
           return await handler[handlerName]({ request, env, ctx, params: {}, data: {} });
         } catch (err) {
           console.error(`[${path}] handler error:`, err);
@@ -110,7 +123,6 @@ export default {
           );
         }
       } else {
-        // Method not allowed
         return new Response(
           JSON.stringify({ ok: false, error: `Method ${method} not allowed on ${path}` }),
           {
@@ -128,14 +140,7 @@ export default {
       }
     }
 
-    // ============ 2. AI/Search 抓取用的關鍵靜態檔案：防 SPA fallback ============
-    // wrangler.toml 的 not_found_handling = "single-page-application" 會讓
-    // 找不到的檔案 fallback 到 index.html body。這對 HTML 頁面沒問題，但對
-    // llms.txt / sitemap.xml / brand-entities.json 這種給 bot 抓的檔案是災難：
-    // header 是 text/plain 但 body 是整個 index.html HTML。
-    //
-    // 解法：這些檔案先明確 fetch，若 assets 回傳的 content-type 是 HTML
-    // 就代表發生了 fallback，此時我們直接回 404，不要騙 AI/bot。
+    // ============ 2. 關鍵靜態檔案：防 SPA fallback ============
     const CRITICAL_STATIC_FILES = new Set([
       '/llms.txt',
       '/robots.txt',
@@ -145,8 +150,6 @@ export default {
     if (CRITICAL_STATIC_FILES.has(path)) {
       const resp = await env.ASSETS.fetch(request);
       const ct = resp.headers.get('content-type') || '';
-      // 若 assets 誤 fallback 到 index.html（body 是 HTML），
-      // 明確回傳 404 避免給 bot 錯誤內容
       if (ct.includes('text/html')) {
         return new Response(
           `File not found: ${path}\n\nThis file is expected to be served as a static asset.\nIf you see this message in production, the deployment is misconfigured.\n`,
@@ -163,8 +166,6 @@ export default {
     }
 
     // ============ 3. 其他靜態資源交給 Assets ============
-    // env.ASSETS 由 wrangler.toml 的 [assets] 綁定提供
-    // 它會自動處理：找到對應 HTML、404 fallback、_redirects 等
     return env.ASSETS.fetch(request);
   },
 };
