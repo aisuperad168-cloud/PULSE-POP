@@ -12,6 +12,14 @@
 #   路徑一行、header 縮排兩空白、順序 = 「特定 → 通用」
 # ============================================================
 
+# ------------ 全站安全 / SEO headers（Core Web Vitals 加分） ------------
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
 # ------------ API 動態端點：完全不 cache ------------
 /api/*
   Cache-Control: no-store, no-cache, must-revalidate

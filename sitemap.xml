@@ -5,8 +5,8 @@
 
   <url>
     <loc>https://jdi-pulse.com/</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/" />
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/" />
@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/join</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/join" />
@@ -39,7 +39,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/partnership</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/partnership" />
@@ -99,7 +99,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/faq</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/faq" />
@@ -114,7 +114,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/quiz</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/quiz" />
@@ -213,23 +213,45 @@
     </image:image>
   </url>
 
+  <!-- ========== 直播中心 Live Center Hub + 分類 ========== -->
+
   <url>
     <loc>https://jdi-pulse.com/live-center/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/" />
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/" />
     <image:image>
       <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
-      <image:title>直播中心｜JDI 脈動傳媒 · 主播成長、平台政策、直播教學、收益策略</image:title>
+      <image:title>直播中心｜JDI 脈動傳媒 · 主播成長、平台政策、直播教學、收益策略、榮耀時刻</image:title>
     </image:image>
   </url>
 
   <url>
+    <loc>https://jdi-pulse.com/live-center/creator/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/creator/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/creator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/creator/" />
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/policy/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/policy/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/policy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/policy/" />
+  </url>
+
+  <url>
     <loc>https://jdi-pulse.com/live-center/tutorial/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/tutorial/" />
@@ -238,8 +260,137 @@
   </url>
 
   <url>
+    <loc>https://jdi-pulse.com/live-center/revenue/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/revenue/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/revenue/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/revenue/" />
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/glory/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/glory/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/glory/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/glory/" />
+  </url>
+
+  <!-- ========== 直播中心文章 · 招募/活動政策（高優先） ========== -->
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/vtuber-national-team-recruitment/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/vtuber-national-team-recruitment/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/vtuber-national-team-recruitment/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/vtuber-national-team-recruitment/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/vtuber-hero-vs.jpg</image:loc>
+      <image:title>台灣 VTuber 國家隊招募中｜限量 20 名專業培訓</image:title>
+      <image:caption>JDI 脈動傳媒啟動「台灣 VTuber 國家隊」計畫，首批 20 名 IP 菁英火熱招募中。46-53% 抽成或審核保底，5 大 IP 定位 × 4 大培訓優勢。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/voice-only-streamer-recruitment/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/voice-only-streamer-recruitment/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/voice-only-streamer-recruitment/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/voice-only-streamer-recruitment/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/voice-recruit-hero.jpg</image:loc>
+      <image:title>不露臉語音主播培訓計畫招募中｜22 天團隊作戰</image:title>
+      <image:caption>JDI 脈動傳媒 22 天不露臉語音主播培訓計畫 —— 主要收入來自粉絲禮物抽成，另有 NT$ 200/hr 三層審核保底獎金。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/mentor-program-2026/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/mentor-program-2026/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/mentor-program-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/mentor-program-2026/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/mentor-program-hero.jpg</image:loc>
+      <image:title>師徒計畫招募中｜學姐親帶你走向直播巔峰</image:title>
+      <image:caption>JDI 脈動傳媒師徒計畫招募中！本屆公會大使多多綠、芮娜、米姥思親自陪跑新人主播，實戰帶單、開播陪播、菜單設計一對一指導。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/2026-09-official-events-overview/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/2026-09-official-events-overview/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/2026-09-official-events-overview/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/2026-09-official-events-overview/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/2026-09-events/00-hero.jpg</image:loc>
+      <image:title>TikTok LIVE 2026 年 9 月官方活動總覽｜17 個活動一次看</image:title>
+      <image:caption>TikTok LIVE 2026 年 9 月台灣官方活動全整理：FANDOM KING、月滿盈、DJ PK、Halloween Countdown 等 17 檔活動、5 個資格層級一次看懂。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/2026-q2-tiktok-live-payout-update/</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/2026-q2-tiktok-live-payout-update/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/2026-q2-tiktok-live-payout-update/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/2026-q2-tiktok-live-payout-update/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/payout-update-hero.jpg</image:loc>
+      <image:title>2026 Q2 TikTok LIVE 主播分潤方案更新重點</image:title>
+      <image:caption>TikTok LIVE 2026 Q2 主播分潤方案有哪些變化？公會端拆解本季 3 大重點、對主播實際影響一次看。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ========== 直播中心文章 · 教學/收益策略 ========== -->
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/tiktok-live-12-red-lines-guide/</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/tiktok-live-12-red-lines-guide/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/tiktok-live-12-red-lines-guide/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/tiktok-live-12-red-lines-guide/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/red-lines-hero.jpg</image:loc>
+      <image:title>新手避雷實戰教學：TikTok 直播間 12 條紅線一次看懂</image:title>
+      <image:caption>TikTok 直播為什麼會被限流、封營收？公會運營團隊白話整理 LMG 10 條 + FYF 標準，避免踩雷。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/live-menu-and-viewer-wishes-guide/</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/live-menu-and-viewer-wishes-guide/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/live-menu-and-viewer-wishes-guide/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/live-menu-and-viewer-wishes-guide/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/menu-and-viewer-wishes-hero.jpg</image:loc>
+      <image:title>直播菜單高轉換設計 × TikTok「觀眾心願」實戰解析</image:title>
+      <image:caption>從菜單型主播的 4 大底層邏輯、金字塔定價，到 TikTok 官方「觀眾心願」功能實戰整合。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://jdi-pulse.com/live-center/article/yycam-tikfinity-menu-streamer-combo/</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/yycam-tikfinity-menu-streamer-combo/" />
@@ -254,7 +405,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/live-center/article/how-to-leave-tiktok-guild/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/how-to-leave-tiktok-guild/" />
@@ -268,10 +419,87 @@
   </url>
 
   <url>
+    <loc>https://jdi-pulse.com/live-center/article/live-pk-benefits-guide/</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/live-pk-benefits-guide/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/live-pk-benefits-guide/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/live-pk-benefits-guide/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/live-pk-hero.jpg</image:loc>
+      <image:title>為什麼主播要打 PK？直播 PK 的好處與實用技巧</image:title>
+      <image:caption>直播 PK 不只是比輸贏，更能提升節奏、擴大曝光、訓練實戰能力。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/gift-psychology-4-techniques/</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/gift-psychology-4-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/gift-psychology-4-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/gift-psychology-4-techniques/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/gift-hero.jpg</image:loc>
+      <image:title>禮物心理學：4 個讓觀眾主動送禮的技巧</image:title>
+      <image:caption>觀眾送禮不是靠拜託出來的。4 個從心理學出發、讓觀眾主動送禮的實戰技巧。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/3000-budget-live-streaming-setup/</loc>
+    <lastmod>2026-04-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/3000-budget-live-streaming-setup/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/3000-budget-live-streaming-setup/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/3000-budget-live-streaming-setup/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/setup-hero.jpg</image:loc>
+      <image:title>開播必備 5 大設備清單：新手 3000 元也能開播</image:title>
+      <image:caption>剛開始直播不需要花大錢！新手 5 大必備設備清單，3000 元也能開播。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ========== 直播中心文章 · 主播故事/榮耀時刻 ========== -->
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/rookie-to-golden-hour-in-6-months/</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/rookie-to-golden-hour-in-6-months/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/rookie-to-golden-hour-in-6-months/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/rookie-to-golden-hour-in-6-months/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/rookie-hero.jpg</image:loc>
+      <image:title>從素人到黃金時段：一位 JDI 主播的 6 個月成長軌跡</image:title>
+      <image:caption>從完全零經驗、每晚 3 個觀眾，到穩定卡進 TikTok LIVE 黃金時段 —— 這是 JDI 主播的 6 個月成長軌跡。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/august-2026-allstar-top3/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/august-2026-allstar-top3/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/august-2026-allstar-top3/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/august-2026-allstar-top3/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/august-2026-allstar-leaderboard.jpg</image:loc>
+      <image:title>JDI 脈動傳媒榮獲 8 月 All Star 夢幻賽道組第三名</image:title>
+      <image:caption>2026 年 8 月 All Star 公會賽戰報 —— JDI-Pulse_TW 於夢幻賽道組以 11,297,369 分榮登第三名。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://jdi-pulse.com/live-center/article/livestream-is-a-micro-startup/</loc>
     <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.75</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/livestream-is-a-micro-startup/" />
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/livestream-is-a-micro-startup/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/livestream-is-a-micro-startup/" />
