@@ -39,8 +39,15 @@
   document.getElementById('pv-contact_address').textContent = fmt(basicInfo.contact_address);
   document.getElementById('pv-registered_address').textContent = fmt(basicInfo.registered_address);
 
-  document.getElementById('pv-start_date').textContent = `民國 ${rocDate(terms.contract_start_date)}`;
-  document.getElementById('pv-end_date').textContent = `民國 ${rocDate(terms.contract_end_date)}`;
+  // 預覽日期：假設隔日生效（後端會用相同邏輯，實際簽署時間點）
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const end = new Date(tomorrow);
+  end.setFullYear(end.getFullYear() + terms.contract_years);
+  end.setDate(end.getDate() - 1);
+
+  document.getElementById('pv-start_date').textContent = `民國 ${rocDate(tomorrow.toISOString().split('T')[0])}`;
+  document.getElementById('pv-end_date').textContent = `民國 ${rocDate(end.toISOString().split('T')[0])}`;
   document.getElementById('pv-years').textContent = terms.contract_years;
 
   document.getElementById('pv-roc-date').textContent = rocDate(new Date().toISOString().split('T')[0]);

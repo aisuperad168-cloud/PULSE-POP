@@ -82,6 +82,9 @@ export async function onRequestPost({ request, env }) {
           stageName: contract.stage_name,
           operatorName: operator_name,
           approvedAt: now,
+          startDate: contract.contract_start_date,
+          endDate: contract.contract_end_date,
+          contractYears: contract.contract_years,
           viewLink,
         }),
       });
@@ -173,7 +176,7 @@ async function sendEmail(env, { to, subject, html }) {
   }
 }
 
-function buildApprovedEmail({ contractNo, realName, stageName, operatorName, approvedAt, viewLink }) {
+function buildApprovedEmail({ contractNo, realName, stageName, operatorName, approvedAt, startDate, endDate, contractYears, viewLink }) {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8" /></head>
 <body style="font-family: 'Noto Sans TC', sans-serif; background: #f5f5f5; padding: 32px 16px; margin: 0;">
   <div style="max-width: 560px; margin: 0 auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
@@ -188,11 +191,15 @@ function buildApprovedEmail({ contractNo, realName, stageName, operatorName, app
       </p>
       <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 3px solid #22c55e;">
         <p style="margin: 0; font-size: 13px; color: #555;">合約編號</p>
-        <p style="margin: 6px 0; font-size: 20px; font-weight: 900; color: #22c55e; font-family: monospace;">${contractNo}</p>
-        <p style="margin: 10px 0 0; font-size: 13px; color: #666;">
-          您的專屬運營經紀：<strong>${operatorName}</strong><br />
-          核准時間：${new Date(approvedAt).toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })}
-        </p>
+        <p style="margin: 6px 0 14px; font-size: 20px; font-weight: 900; color: #22c55e; font-family: monospace;">${contractNo}</p>
+
+        <table style="width: 100%; font-size: 13px; color: #555; border-collapse: collapse;">
+          <tr><td style="padding: 3px 0; color: #999; width: 90px;">生效日期</td><td style="padding: 3px 0; font-weight: 700; color: #16a34a;">${startDate}（隔日 00:00 起）</td></tr>
+          <tr><td style="padding: 3px 0; color: #999;">到期日期</td><td style="padding: 3px 0; font-weight: 700;">${endDate}</td></tr>
+          <tr><td style="padding: 3px 0; color: #999;">合約年限</td><td style="padding: 3px 0; font-weight: 700;">${contractYears} 年</td></tr>
+          <tr><td style="padding: 3px 0; color: #999;">運營經紀</td><td style="padding: 3px 0; font-weight: 700;">${operatorName}</td></tr>
+          <tr><td style="padding: 3px 0; color: #999;">核准時間</td><td style="padding: 3px 0;">${new Date(approvedAt).toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })}</td></tr>
+        </table>
       </div>
       <p style="color: #555; font-size: 14px; line-height: 1.7;">
         接下來運營團隊會主動聯繫您，開始直播培訓與規劃。有任何問題請透過 LINE 或 Email 聯絡運營。

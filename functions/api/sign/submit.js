@@ -108,7 +108,7 @@ export async function onRequestPost({ request, env }) {
     const required = [
       'real_name', 'stage_name', 'id_number', 'phone', 'email',
       'contact_address', 'registered_address',
-      'contract_years', 'contract_start_date', 'contract_end_date',
+      'contract_years',
       'id_front', 'id_back', 'signature_data',
       'signed_at', 'agreed_at',
     ];
@@ -120,6 +120,22 @@ export async function onRequestPost({ request, env }) {
     if (!/^09\d{8}$/.test(body.phone)) return json({ ok: false, error: '手機格式錯誤' }, 400);
     if (!/^[A-Z][1-2]\d{8}$/.test(body.id_number)) return json({ ok: false, error: '身分證字號格式錯誤' }, 400);
     if (![1, 2, 3].includes(Number(body.contract_years))) return json({ ok: false, error: '合約年限錯誤' }, 400);
+
+    // ============ 生效日 = 簽署當日隔日 00:00（伺服器計算，防欺騙）============
+    // 用 Asia/Taipei 時區的「今天」+1 天
+    const nowTW = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);  // UTC+8
+    const tomorrowTW = new Date(nowTW);
+    tomorrowTW.setUTCDate(tomorrowTW.getUTCDate() + 1);
+    const startDateStr = tomorrowTW.toISOString().split('T')[0];  // YYYY-MM-DD
+
+    const endTW = new Date(tomorrowTW);
+    endTW.setUTCFullYear(endTW.getUTCFullYear() + Number(body.contract_years));
+    endTW.setUTCDate(endTW.getUTCDate() - 1);  // 到期日 = 生效日 + N 年 - 1 天
+    const endDateStr = endTW.toISOString().split('T')[0];
+
+    // 覆寫 body 中的日期（永遠以伺服器為準）
+    body.contract_start_date = startDateStr;
+    body.contract_end_date = endDateStr;
 
     // ============ 2. 產生合約編號（隨機碼版）============
     // 格式：JDI-SIGN-{YYMMDD}-{6位隨機碼}
@@ -335,8 +351,8 @@ function buildSubmittedEmail({ contractNo, realName, stageName, years, startDate
 
       <table style="width: 100%; font-size: 14px; color: #555; border-collapse: collapse;">
         <tr><td style="padding: 6px 0; color: #999;">合約年限</td><td style="padding: 6px 0; font-weight: 700;">${years} 年</td></tr>
-        <tr><td style="padding: 6px 0; color: #999;">預計生效日</td><td style="padding: 6px 0; font-weight: 700;">${startDate}</td></tr>
-        <tr><td style="padding: 6px 0; color: #999;">預計到期日</td><td style="padding: 6px 0; font-weight: 700;">${endDate}</td></tr>
+        <tr><td style="padding: 6px 0; color: #999;">生效日期</td><td style="padding: 6px 0; font-weight: 700;">${startDate} <span style="font-size: 12px; color: #999;">（簽署隔日 00:00 起）</span></td></tr>
+        <tr><td style="padding: 6px 0; color: #999;">到期日期</td><td style="padding: 6px 0; font-weight: 700;">${endDate}</td></tr>
         <tr><td style="padding: 6px 0; color: #999;">狀態</td><td style="padding: 6px 0; font-weight: 700; color: #f59e0b;">⏳ 待甲方審核</td></tr>
       </table>
 

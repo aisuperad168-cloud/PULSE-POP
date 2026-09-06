@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
-  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906b" />
+  <link rel="stylesheet" href="/css/sign/sign.css?v=20260906c" />
 </head>
 <body class="sign-body">
 
@@ -78,22 +78,22 @@
         <div class="sign-form-error" id="err-contract_years"></div>
       </div>
 
-      <!-- 生效日 -->
-      <div class="sign-form-group">
-        <label class="sign-form-label" for="contract_start_date">
-          合約生效日<span class="sign-required">*</span>
-        </label>
-        <input type="date" id="contract_start_date" name="contract_start_date"
-               class="sign-form-input" required />
-        <div class="sign-form-hint">
-          可選擇今日或未來日期。實際生效以甲方（JDI）核准當日為準，此處為建議日期。
-        </div>
-        <div class="sign-form-error" id="err-contract_start_date"></div>
+      <!-- 生效日說明（不需主播填寫）-->
+      <div class="sign-alert sign-alert-info" style="line-height: 1.75;">
+        <strong>📅 合約生效日期規則：</strong><br />
+        本合約於乙方（主播）完成電子簽署之<strong style="color: var(--sign-accent);">「隔日 00:00」</strong>正式生效，
+        並自動由系統計算到期日。
+        <br /><br />
+        <span style="font-size: 12px; color: var(--sign-text-mute);">
+          範例：若您 9/6（週日）完成簽署 → 合約於 9/7（週一）00:00 生效
+          <br />（1 天緩衝期作為雙方確認時間，符合一般合約慣例）
+        </span>
       </div>
 
-      <!-- 到期日顯示（自動計算） -->
-      <div class="sign-alert sign-alert-info" id="endDatePreview" style="display: none;">
-        <strong>📅 合約到期日：</strong><span id="endDateText">—</span>
+      <!-- 到期日預覽（自動計算：明天為起點 + N 年 - 1 天）-->
+      <div class="sign-alert sign-alert-success" id="endDatePreview" style="display: none; line-height: 1.75;">
+        <strong>⏰ 依您的選擇，本合約預計期間：</strong><br />
+        <span id="endDateText">—</span>
       </div>
 
       <!-- 合約重要條款重申 -->
@@ -117,6 +117,6 @@
 
 </main>
 
-<script src="/js/sign/step3-terms.js?v=20260906b"></script>
+<script src="/js/sign/step3-terms.js?v=20260906c"></script>
 </body>
 </html>
