@@ -44,7 +44,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
 <link rel="stylesheet" href="/css/style.css?v=20260901p" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
 <style>
@@ -59,7 +60,7 @@
 <nav class="site-nav" data-active="live-center" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
@@ -140,7 +141,7 @@
         <!-- Featured 1: 榮耀時刻（8 月 All Star 季軍 - 最新最有話題） -->
         <a href="/live-center/article/august-2026-allstar-top3/" class="lc-featured-card">
           <div class="lc-featured-cover lc-featured-cover--photo">
-            <img src="/assets/live-center/august-2026-allstar-leaderboard.jpg" alt="八月 All Star 公會賽夢幻賽道排行榜 - JDI 脈動傳媒榮獲第三名" loading="lazy" width="1024" height="902" />
+            <picture><source srcset="/assets/live-center/august-2026-allstar-leaderboard.webp" type="image/webp"/><img src="/assets/live-center/august-2026-allstar-leaderboard.jpg" alt="八月 All Star 公會賽夢幻賽道排行榜 - JDI 脈動傳媒榮獲第三名" loading="lazy" width="1024" height="902"  /></picture>
           </div>
           <div class="lc-featured-body">
             <span class="lc-tag lc-tag--glory">🏆 榮耀時刻</span>
@@ -155,7 +156,7 @@
         <!-- Featured 2: 活動政策（不露臉語音主播招募 - 最新招募 HOT） -->
         <a href="/live-center/article/voice-only-streamer-recruitment/" class="lc-featured-card">
           <div class="lc-featured-cover lc-featured-cover--photo">
-            <img src="/assets/live-center/voice-recruit-hero.jpg" alt="不露臉語音主播 22 天培訓計畫招募主視覺" loading="lazy" width="819" height="1024" />
+            <picture><source srcset="/assets/live-center/voice-recruit-hero.webp" type="image/webp"/><img src="/assets/live-center/voice-recruit-hero.jpg" alt="不露臉語音主播 22 天培訓計畫招募主視覺" loading="lazy" width="819" height="1024"  /></picture>
           </div>
           <div class="lc-featured-body">
             <span class="lc-tag lc-tag--policy">📢 活動政策</span>
@@ -170,7 +171,7 @@
         <!-- Featured 3: 活動政策（師徒計畫招募 - 最新 & HOT） -->
         <a href="/live-center/article/mentor-program-2026/" class="lc-featured-card">
           <div class="lc-featured-cover lc-featured-cover--photo">
-            <img src="/assets/live-center/mentor-program-hero.jpg" alt="師徒計畫招募海報｜本屆公會大使多多綠、芮娜、米姥思" loading="lazy" width="1024" height="576" />
+            <picture><source srcset="/assets/live-center/mentor-program-hero.webp" type="image/webp"/><img src="/assets/live-center/mentor-program-hero.jpg" alt="師徒計畫招募海報｜本屆公會大使多多綠、芮娜、米姥思" loading="lazy" width="1024" height="576"  /></picture>
           </div>
           <div class="lc-featured-body">
             <span class="lc-tag lc-tag--policy">📢 活動政策</span>
@@ -243,7 +244,7 @@
 
         <a href="/live-center/article/vtuber-national-team-recruitment/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/vtuber-hero-vs.jpg" alt="台灣 VTuber 國家隊招募主視覺 · 五大 IP 形象 · 限量 20 名" loading="lazy" width="683" height="1024" />
+            <picture><source srcset="/assets/live-center/vtuber-hero-vs.webp" type="image/webp"/><img src="/assets/live-center/vtuber-hero-vs.jpg" alt="台灣 VTuber 國家隊招募主視覺 · 五大 IP 形象 · 限量 20 名" loading="lazy" width="683" height="1024"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">產官發力 · 國家級戰略｜JDI 脈動傳媒啟動「台灣 VTuber 國家隊」計畫，限量 20 名</h3>
@@ -257,7 +258,7 @@
 
         <a href="/live-center/article/voice-only-streamer-recruitment/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/voice-recruit-hero.jpg" alt="不露臉語音主播 22 天培訓計畫招募主視覺" loading="lazy" width="819" height="1024" />
+            <picture><source srcset="/assets/live-center/voice-recruit-hero.webp" type="image/webp"/><img src="/assets/live-center/voice-recruit-hero.jpg" alt="不露臉語音主播 22 天培訓計畫招募主視覺" loading="lazy" width="819" height="1024"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">不露臉語音主播培訓計畫招募中｜22 天團隊作戰，一起達標一起領獎</h3>
@@ -271,7 +272,7 @@
 
         <a href="/live-center/article/august-2026-allstar-top3/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/august-2026-allstar-leaderboard.jpg" alt="八月 All Star 公會賽夢幻賽道排行榜 - JDI 脈動傳媒榮獲第三名" loading="lazy" width="1024" height="902" />
+            <picture><source srcset="/assets/live-center/august-2026-allstar-leaderboard.webp" type="image/webp"/><img src="/assets/live-center/august-2026-allstar-leaderboard.jpg" alt="八月 All Star 公會賽夢幻賽道排行榜 - JDI 脈動傳媒榮獲第三名" loading="lazy" width="1024" height="902"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">JDI 脈動傳媒榮獲 8 月 All Star 夢幻賽道組第三名</h3>
@@ -285,7 +286,7 @@
 
         <a href="/live-center/article/mentor-program-2026/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/mentor-program-hero.jpg" alt="師徒計畫招募海報｜本屆公會大使多多綠、芮娜、米姥思" loading="lazy" width="1024" height="576" />
+            <picture><source srcset="/assets/live-center/mentor-program-hero.webp" type="image/webp"/><img src="/assets/live-center/mentor-program-hero.jpg" alt="師徒計畫招募海報｜本屆公會大使多多綠、芮娜、米姥思" loading="lazy" width="1024" height="576"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">師徒計畫�  <h3 class="lc-list-title">師徒計畫招募中｜學姐親帶你走向直播巔峰</h3>
@@ -313,7 +314,7 @@
 
         <a href="/live-center/article/yycam-tikfinity-menu-streamer-combo/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/yycam-tikfinity-hero.jpg" alt="YYCam Pro × TikFinity 桌機推流 TikTok LIVE 示意圖" loading="lazy" width="1024" height="683" />
+            <picture><source srcset="/assets/live-center/yycam-tikfinity-hero.webp" type="image/webp"/><img src="/assets/live-center/yycam-tikfinity-hero.jpg" alt="YYCam Pro × TikFinity 桌機推流 TikTok LIVE 示意圖" loading="lazy" width="1024" height="683"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">YYCam Pro × TikFinity：菜單主播「視覺 + 互動」神組合完整實戰教學</h3>
@@ -327,7 +328,7 @@
 
         <a href="/live-center/article/how-to-leave-tiktok-guild/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/leave-guild-hero.jpg" alt="TikTok 直播公會退會流程完整教學封面" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/leave-guild-hero.webp" type="image/webp"/><img src="/assets/live-center/leave-guild-hero.jpg" alt="TikTok 直播公會退會流程完整教學封面" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">TikTok 直播公會怎麼退出？完整教學一次看懂</h3>
@@ -341,7 +342,7 @@
 
         <a href="/live-center/article/live-pk-benefits-guide/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/live-pk-hero.jpg" alt="直播 PK 情境示意圖" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/live-pk-hero.webp" type="image/webp"/><img src="/assets/live-center/live-pk-hero.jpg" alt="直播 PK 情境示意圖" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">為什麼主播要打 PK？直播 PK 的好處與實用技巧</h3>
@@ -355,7 +356,7 @@
 
         <a href="/live-center/article/tiktok-live-12-red-lines-guide/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/red-lines-hero.jpg" alt="TikTok 直播合規新手避雷指南封面" loading="lazy" width="1600" height="900" />
+            <picture><source srcset="/assets/live-center/red-lines-hero.webp" type="image/webp"/><img src="/assets/live-center/red-lines-hero.jpg" alt="TikTok 直播合規新手避雷指南封面" loading="lazy" width="1600" height="900"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">新手避雷實戰教學：TikTok 直播間 12 條紅線一次看懂（LMG + FYF 完整解析）</h3>
@@ -369,7 +370,7 @@
 
         <a href="/live-center/article/live-menu-and-viewer-wishes-guide/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/menu-and-viewer-wishes-hero.jpg" alt="TikTok 直播菜單與觀眾心願功能實戰示意圖" loading="lazy" width="1376" height="768" />
+            <picture><source srcset="/assets/live-center/menu-and-viewer-wishes-hero.webp" type="image/webp"/><img src="/assets/live-center/menu-and-viewer-wishes-hero.jpg" alt="TikTok 直播菜單與觀眾心願功能實戰示意圖" loading="lazy" width="1376" height="768"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">實戰教學：直播菜單的高轉換設計指南與 TikTok「觀眾心願」實戰解析</h3>
@@ -383,7 +384,7 @@
 
         <a href="/live-center/article/rookie-to-golden-hour-in-6-months/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/rookie-hero.jpg" alt="新人主播在家中工作室開播" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/rookie-hero.webp" type="image/webp"/><img src="/assets/live-center/rookie-hero.jpg" alt="新人主播在家中工作室開播" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">從素人到黃金時段：一位新人主播的 6 個月成長路徑</h3>
@@ -397,7 +398,7 @@
 
         <a href="/live-center/article/2026-q2-tiktok-live-payout-update/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/payout-update-hero.jpg" alt="分潤更新數據儀表板俯拍" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/payout-update-hero.webp" type="image/webp"/><img src="/assets/live-center/payout-update-hero.jpg" alt="分潤更新數據儀表板俯拍" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">2026 Q2 TikTok LIVE 主播分潤方案更新重點</h3>
@@ -411,7 +412,7 @@
 
         <a href="/live-center/article/livestream-is-a-micro-startup/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/micro-startup-hero.jpg" alt="娛樂主播在家中工作室以創業者姿態經營直播間" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/micro-startup-hero.webp" type="image/webp"/><img src="/assets/live-center/micro-startup-hero.jpg" alt="娛樂主播在家中工作室以創業者姿態經營直播間" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">為什麼說「開播」就是一場創業？揭開娛樂主播的底層邏輯</h3>
@@ -425,7 +426,7 @@
 
         <a href="/live-center/article/3000-budget-live-streaming-setup/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/setup-hero.jpg" alt="新手直播設備平拍：麥克風、環形燈、腳架" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/setup-hero.webp" type="image/webp"/><img src="/assets/live-center/setup-hero.jpg" alt="新手直播設備平拍：麥克風、環形燈、腳架" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">開播必備 5 大設備清單：新手 3000 元也能開播</h3>
@@ -439,7 +440,7 @@
 
         <a href="/live-center/article/gift-psychology-4-techniques/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/gift-hero.jpg" alt="手機直播間虛擬禮物與愛心特效" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/gift-hero.webp" type="image/webp"/><img src="/assets/live-center/gift-hero.jpg" alt="手機直播間虛擬禮物與愛心特效" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">粉絲送禮心理學：讓觀眾主動掉禮物的 4 個技巧</h3>
@@ -478,7 +479,7 @@
     <!-- Layer 1: 4-column top -->
     <div class="site-footer-top">
       <div class="site-footer-brand">
-        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
         <p class="site-footer-tagline">脈動不息，熱情傳播</p>
         <p class="site-footer-desc">TikTok LIVE 官方合作經紀公會，台灣 300+ 優質主播的家。</p>
         <div class="site-footer-social">

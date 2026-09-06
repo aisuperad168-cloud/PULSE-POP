@@ -17,9 +17,11 @@
 <meta property="article:section" content="主播專欄" />
 
 <link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+<link rel="preload" as="image" href="/assets/live-center/micro-startup-hero.webp" type="image/webp" fetchpriority="high" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
 <link rel="stylesheet" href="/css/style.css?v=20260901p" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
 <style>body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }</style>
@@ -62,7 +64,7 @@
 <nav class="site-nav" data-active="live-center" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
@@ -137,7 +139,7 @@
       <h1 class="lc-article-title">為什麼說「開播」就是一場創業？揭開娛樂主播的底層邏輯</h1>
       <p class="lc-article-subtitle">許多人以為直播只是打開鏡頭聊聊天，但事實上，娛樂主播其實就是一種微型創業。從「跟平台租場地」到「賣互動與情緒價值」，這篇用創業思維，帶你重新理解娛樂主播的底層邏輯。</p>
       <div class="lc-article-cover lc-article-cover--photo">
-        <img src="/assets/live-center/micro-startup-hero.jpg" alt="娛樂主播在家中工作室以創業者姿態經營直播間情境示意圖" loading="eager" width="1280" height="714" />
+        <picture><source srcset="/assets/live-center/micro-startup-hero.webp" type="image/webp"/><img src="/assets/live-center/micro-startup-hero.jpg" alt="娛樂主播在家中工作室以創業者姿態經營直播間情境示意圖" loading="eager" width="1280" height="714"  /></picture>
       </div>
       <span class="lc-article-cover-caption">直播就是微型創業 · 情境示意圖</span>
     </header>
@@ -248,7 +250,7 @@
       <div class="lc-related-grid">
         <a href="/live-center/article/rookie-to-golden-hour-in-6-months/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/rookie-hero.jpg" alt="新人主播在家中工作室開播" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/rookie-hero.webp" type="image/webp"/><img src="/assets/live-center/rookie-hero.jpg" alt="新人主播在家中工作室開播" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">從素人到黃金時段：一位新人主播的 6 個月成長路徑</h3>
@@ -261,7 +263,7 @@
         </a>
         <a href="/live-center/article/gift-psychology-4-techniques/" class="lc-list-item">
           <div class="lc-list-cover lc-list-cover--photo">
-            <img src="/assets/live-center/gift-hero.jpg" alt="手機直播間虛擬禮物特效" loading="lazy" width="1280" height="714" />
+            <picture><source srcset="/assets/live-center/gift-hero.webp" type="image/webp"/><img src="/assets/live-center/gift-hero.jpg" alt="手機直播間虛擬禮物特效" loading="lazy" width="1280" height="714"  /></picture>
           </div>
           <div class="lc-list-body">
             <h3 class="lc-list-title">禮物心理學：4 個讓觀眾主動送禮的技巧</h3>
@@ -283,7 +285,7 @@
     <!-- Layer 1: 4-column top -->
     <div class="site-footer-top">
       <div class="site-footer-brand">
-        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
         <p class="site-footer-tagline">脈動不息，熱情傳播</p>
         <p class="site-footer-desc">TikTok LIVE 官方合作經紀公會，台灣 300+ 優質主播的家。</p>
         <div class="site-footer-social">

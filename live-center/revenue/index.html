@@ -17,7 +17,8 @@
 <link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
 <link rel="stylesheet" href="/css/style.css?v=20260901p" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
 <style>body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }</style>
@@ -88,7 +89,7 @@
 <nav class="site-nav" data-active="live-center" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
@@ -163,7 +164,7 @@
     <div class="lc-list">
       <a href="/live-center/article/live-menu-and-viewer-wishes-guide/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/menu-and-viewer-wishes-hero.jpg" alt="TikTok 直播菜單與觀眾心願功能實戰示意圖" loading="lazy" width="1376" height="768" />
+          <picture><source srcset="/assets/live-center/menu-and-viewer-wishes-hero.webp" type="image/webp"/><img src="/assets/live-center/menu-and-viewer-wishes-hero.jpg" alt="TikTok 直播菜單與觀眾心願功能實戰示意圖" loading="lazy" width="1376" height="768"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">實戰教學：直播菜單的高轉換設計指南與 TikTok「觀眾心願」實戰解析</h3>
@@ -176,7 +177,7 @@
       </a>
       <a href="/live-center/article/gift-psychology-4-techniques/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/gift-hero.jpg" alt="手機直播間虛擬禮物與愛心特效" loading="lazy" width="1280" height="714" />
+          <picture><source srcset="/assets/live-center/gift-hero.webp" type="image/webp"/><img src="/assets/live-center/gift-hero.jpg" alt="手機直播間虛擬禮物與愛心特效" loading="lazy" width="1280" height="714"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">禮物心理學：4 個讓觀眾主動送禮的技巧</h3>
@@ -206,7 +207,7 @@
     <!-- Layer 1: 4-column top -->
     <div class="site-footer-top">
       <div class="site-footer-brand">
-        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
         <p class="site-footer-tagline">脈動不息，熱情傳播</p>
         <p class="site-footer-desc">TikTok LIVE 官方合作經紀公會，台灣 300+ 優質主播的家。</p>
         <div class="site-footer-social">

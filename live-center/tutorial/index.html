@@ -17,7 +17,8 @@
 <link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
 <link rel="stylesheet" href="/css/style.css?v=20260901p" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
 <style>body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }</style>
@@ -88,7 +89,7 @@
 <nav class="site-nav" data-active="live-center" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
@@ -163,7 +164,7 @@
     <div class="lc-list">
       <a href="/live-center/article/tiktok-live-12-red-lines-guide/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/red-lines-hero.jpg" alt="TikTok 直播合規新手避雷指南封面" loading="lazy" width="1600" height="900" />
+          <picture><source srcset="/assets/live-center/red-lines-hero.webp" type="image/webp"/><img src="/assets/live-center/red-lines-hero.jpg" alt="TikTok 直播合規新手避雷指南封面" loading="lazy" width="1600" height="900"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">新手避雷實戰教學：TikTok 直播間 12 條紅線一次看懂（LMG + FYF 完整解析）</h3>
@@ -176,7 +177,7 @@
       </a>
       <a href="/live-center/article/yycam-tikfinity-menu-streamer-combo/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/yycam-tikfinity-hero.jpg" alt="YYCam Pro × TikFinity 桌機推流 TikTok LIVE 示意圖" loading="lazy" width="1024" height="683" />
+          <picture><source srcset="/assets/live-center/yycam-tikfinity-hero.webp" type="image/webp"/><img src="/assets/live-center/yycam-tikfinity-hero.jpg" alt="YYCam Pro × TikFinity 桌機推流 TikTok LIVE 示意圖" loading="lazy" width="1024" height="683"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">YYCam Pro × TikFinity：菜單主播「視覺 + 互動」神組合完整實戰教學</h3>
@@ -189,7 +190,7 @@
       </a>
       <a href="/live-center/article/how-to-leave-tiktok-guild/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/leave-guild-hero.jpg" alt="TikTok 直播公會退會流程完整教學封面" loading="lazy" width="1280" height="714" />
+          <picture><source srcset="/assets/live-center/leave-guild-hero.webp" type="image/webp"/><img src="/assets/live-center/leave-guild-hero.jpg" alt="TikTok 直播公會退會流程完整教學封面" loading="lazy" width="1280" height="714"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">TikTok 直播公會怎麼退出？完整教學一次看懂</h3>
@@ -202,7 +203,7 @@
       </a>
       <a href="/live-center/article/live-pk-benefits-guide/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/live-pk-hero.jpg" alt="直播 PK 情境示意圖" loading="lazy" width="1280" height="714" />
+          <picture><source srcset="/assets/live-center/live-pk-hero.webp" type="image/webp"/><img src="/assets/live-center/live-pk-hero.jpg" alt="直播 PK 情境示意圖" loading="lazy" width="1280" height="714"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">為什麼主播要打 PK？直播 PK 的好處與實用技巧</h3>
@@ -215,7 +216,7 @@
       </a>
       <a href="/live-center/article/3000-budget-live-streaming-setup/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/setup-hero.jpg" alt="新手直播設備平拍" loading="lazy" width="1280" height="714" />
+          <picture><source srcset="/assets/live-center/setup-hero.webp" type="image/webp"/><img src="/assets/live-center/setup-hero.jpg" alt="新手直播設備平拍" loading="lazy" width="1280" height="714"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">開播必備 5 大設備清單：新手 3000 元也能開播</h3>
@@ -245,7 +246,7 @@
     <!-- Layer 1: 4-column top -->
     <div class="site-footer-top">
       <div class="site-footer-brand">
-        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
         <p class="site-footer-tagline">脈動不息，熱情傳播</p>
         <p class="site-footer-desc">TikTok LIVE 官方合作經紀公會，台灣 300+ 優質主播的家。</p>
         <div class="site-footer-social">

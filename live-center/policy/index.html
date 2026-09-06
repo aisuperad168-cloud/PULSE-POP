@@ -17,7 +17,8 @@
 <link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
 <link rel="stylesheet" href="/css/style.css?v=20260901p" />
 <link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
 <style>body { font-family: 'Noto Sans TC', -apple-system, sans-serif; margin: 0; }</style>
@@ -88,7 +89,7 @@
 <nav class="site-nav" data-active="live-center" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
@@ -172,7 +173,7 @@
     <div class="lc-list">
       <a href="/live-center/article/vtuber-national-team-recruitment/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/vtuber-hero-vs.jpg" alt="台灣 VTuber 國家隊招募主視覺 · 五大 IP 形象 · 限量 20 名" loading="lazy" width="683" height="1024" />
+          <picture><source srcset="/assets/live-center/vtuber-hero-vs.webp" type="image/webp"/><img src="/assets/live-center/vtuber-hero-vs.jpg" alt="台灣 VTuber 國家隊招募主視覺 · 五大 IP 形象 · 限量 20 名" loading="lazy" width="683" height="1024"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">產官發力 · 國家級戰略｜JDI 脈動傳媒啟動「台灣 VTuber 國家隊」計畫，限量 20 名</h3>
@@ -185,7 +186,7 @@
       </a>
       <a href="/live-center/article/voice-only-streamer-recruitment/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/voice-recruit-hero.jpg" alt="不露臉語音主播 22 天培訓計畫招募主視覺" loading="lazy" width="819" height="1024" />
+          <picture><source srcset="/assets/live-center/voice-recruit-hero.webp" type="image/webp"/><img src="/assets/live-center/voice-recruit-hero.jpg" alt="不露臉語音主播 22 天培訓計畫招募主視覺" loading="lazy" width="819" height="1024"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">不露臉語音主播培訓計畫招募中｜22 天團隊作戰，一起達標一起領獎</h3>
@@ -211,7 +212,7 @@
       </a>
       <a href="/live-center/article/mentor-program-2026/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/mentor-program-hero.jpg" alt="師徒計畫招募海報｜本屆公會大使多多綠、芮娜、米姥思" loading="lazy" width="1024" height="576" />
+          <picture><source srcset="/assets/live-center/mentor-program-hero.webp" type="image/webp"/><img src="/assets/live-center/mentor-program-hero.jpg" alt="師徒計畫招募海報｜本屆公會大使多多綠、芮娜、米姥思" loading="lazy" width="1024" height="576"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">師徒計畫招募中｜學姐親帶你走向直播巔峰</h3>
@@ -224,7 +225,7 @@
       </a>
       <a href="/live-center/article/2026-q2-tiktok-live-payout-update/" class="lc-list-item">
         <div class="lc-list-cover lc-list-cover--photo">
-          <img src="/assets/live-center/payout-update-hero.jpg" alt="分潤更新數據儀表板俯拍" loading="lazy" width="1280" height="714" />
+          <picture><source srcset="/assets/live-center/payout-update-hero.webp" type="image/webp"/><img src="/assets/live-center/payout-update-hero.jpg" alt="分潤更新數據儀表板俯拍" loading="lazy" width="1280" height="714"  /></picture>
         </div>
         <div class="lc-list-body">
           <h3 class="lc-list-title">2026 Q2 TikTok LIVE 主播分潤方案更新重點</h3>
@@ -254,7 +255,7 @@
     <!-- Layer 1: 4-column top -->
     <div class="site-footer-top">
       <div class="site-footer-brand">
-        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
         <p class="site-footer-tagline">脈動不息，熱情傳播</p>
         <p class="site-footer-desc">TikTok LIVE 官方合作經紀公會，台灣 300+ 優質主播的家。</p>
         <div class="site-footer-social">

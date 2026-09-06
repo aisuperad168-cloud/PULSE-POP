@@ -256,10 +256,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" /></noscript>
   <link rel="stylesheet" href="css/style.css?v=20260901p" />
-  <link rel="stylesheet" href="css/streamer-test.css?v=20260820a" />
   <link rel="stylesheet" href="/css/site-chrome.css?v=20260831a" />
+  <!-- streamer-test.css: 首頁未直接使用，改為非阻塞延後載入 -->
+  <link rel="preload" as="style" href="css/streamer-test.css?v=20260820a" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="css/streamer-test.css?v=20260820a" /></noscript>
 </head>
 <body>
 
@@ -268,7 +271,7 @@
 <nav class="site-nav" data-active="home" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
@@ -340,7 +343,7 @@
 
           <!-- Slide 2: 芮娜 RN0503 (聊天互動型 PK 主播) -->
           <a href="streamers/rena.html" class="ad-slide" data-slide="1">
-            <img src="assets/ad_02_rena.png" alt="TikTokLive 優質主播 芮娜 RN0503｜聊天互動型 PK 主播・15:00 開播" class="ad-slide-img" />
+            <img src="assets/ad_02_rena.png" alt="TikTokLive 優質主播 芮娜 RN0503｜聊天互動型 PK 主播・15:00 開播" class="ad-slide-img" loading="lazy"/>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform">
@@ -355,7 +358,7 @@
 
           <!-- Slide 3: 多多綠 157 (療癒系菜單主播) -->
           <a href="streamers/duoduolyu.html" class="ad-slide" data-slide="2">
-            <img src="assets/ad_03_duoduolyu.png" alt="TikTokLive 優質主播 多多綠 157｜療癒系菜單主播・中午 12:00 & 晚上 21:30 開播" class="ad-slide-img" />
+            <img src="assets/ad_03_duoduolyu.png" alt="TikTokLive 優質主播 多多綠 157｜療癒系菜單主播・中午 12:00 & 晚上 21:30 開播" class="ad-slide-img" loading="lazy"/>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform">
@@ -370,7 +373,7 @@
 
           <!-- Slide 4: 米姥思 MI (粵語/華語 實力派聊天主播) -->
           <a href="streamers/mimosi.html" class="ad-slide" data-slide="3">
-            <img src="assets/ad_04_mimosi.png" alt="TikTokLive 優質主播 米姥思 MI｜粵語/華語 實力派聊天主播・21:00 開播" class="ad-slide-img" />
+            <img src="assets/ad_04_mimosi.png" alt="TikTokLive 優質主播 米姥思 MI｜粵語/華語 實力派聊天主播・21:00 開播" class="ad-slide-img" loading="lazy"/>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform">
@@ -385,7 +388,7 @@
 
           <!-- Slide 5: 馬妹 (唱跳型主播 · 氣質迷人) -->
           <a href="streamers/mamei.html" class="ad-slide" data-slide="4">
-            <img src="assets/ad_05_mamei.png" alt="TikTokLive 優質主播 馬妹｜唱跳型主播・氣質迷人・23:00 開播" class="ad-slide-img" />
+            <img src="assets/ad_05_mamei.png" alt="TikTokLive 優質主播 馬妹｜唱跳型主播・氣質迷人・23:00 開播" class="ad-slide-img" loading="lazy"/>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform">
@@ -400,7 +403,7 @@
 
           <!-- Slide 6: 元承烈 37 (歌唱型主播 · SINGER) -->
           <a href="streamers/yuanchenglie.html" class="ad-slide" data-slide="5">
-            <img src="assets/ad_06_yuanchenglie.png" alt="TikTokLive 優質主播 元承烈 37｜歌唱型主播 SINGER・23:00 開播" class="ad-slide-img" />
+            <img src="assets/ad_06_yuanchenglie.png" alt="TikTokLive 優質主播 元承烈 37｜歌唱型主播 SINGER・23:00 開播" class="ad-slide-img" loading="lazy"/>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform">
@@ -415,7 +418,7 @@
 
           <!-- Slide 7: 芊芊 coco (舞蹈、唱歌、聊天主播) -->
           <a href="streamers/coco.html" class="ad-slide" data-slide="6">
-            <img src="assets/ad_07_coco.png" alt="TikTokLive 優質主播 芊芊 coco｜舞蹈、唱歌、聊天主播・18:30 - 20:00 開播" class="ad-slide-img" />
+            <img src="assets/ad_07_coco.png" alt="TikTokLive 優質主播 芊芊 coco｜舞蹈、唱歌、聊天主播・18:30 - 20:00 開播" class="ad-slide-img" loading="lazy"/>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform">
@@ -489,7 +492,7 @@
 
           <!-- Article 1: 直播教學 · PK 攻略 -->
           <a href="/live-center/article/live-pk-benefits-guide/" class="ad-slide article-slide" data-slide="0">
-            <img src="/assets/live-center/live-pk-hero.jpg" alt="為什麼主播要打 PK？直播 PK 的好處與實用技巧 · 直播中心" class="ad-slide-img" loading="lazy" />
+            <picture><source srcset="/assets/live-center/live-pk-hero.webp" type="image/webp"/><img src="/assets/live-center/live-pk-hero.jpg" alt="為什麼主播要打 PK？直播 PK 的好處與實用技巧 · 直播中心" class="ad-slide-img" loading="lazy"  /></picture>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform article-slide-tag article-slide-tag--tutorial">📚 直播教學</span>
@@ -501,7 +504,7 @@
 
           <!-- Article 2: 主播專欄 · 素人到黃金時段 -->
           <a href="/live-center/article/rookie-to-golden-hour-in-6-months/" class="ad-slide article-slide" data-slide="1">
-            <img src="/assets/live-center/rookie-hero.jpg" alt="從素人到黃金時段：一位 JDI 主播的 6 個月成長軌跡 · 主播專欄" class="ad-slide-img" loading="lazy" />
+            <picture><source srcset="/assets/live-center/rookie-hero.webp" type="image/webp"/><img src="/assets/live-center/rookie-hero.jpg" alt="從素人到黃金時段：一位 JDI 主播的 6 個月成長軌跡 · 主播專欄" class="ad-slide-img" loading="lazy"  /></picture>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform article-slide-tag article-slide-tag--creator">🎨 主播專欄</span>
@@ -513,7 +516,7 @@
 
           <!-- Article 3: 活動政策 · 分潤更新 -->
           <a href="/live-center/article/2026-q2-tiktok-live-payout-update/" class="ad-slide article-slide" data-slide="2">
-            <img src="/assets/live-center/payout-update-hero.jpg" alt="2026 Q2 TikTok LIVE 主播分潤方案更新重點 · 活動政策" class="ad-slide-img" loading="lazy" />
+            <picture><source srcset="/assets/live-center/payout-update-hero.webp" type="image/webp"/><img src="/assets/live-center/payout-update-hero.jpg" alt="2026 Q2 TikTok LIVE 主播分潤方案更新重點 · 活動政策" class="ad-slide-img" loading="lazy"  /></picture>
             <div class="ad-slide-overlay">
               <div class="ad-slide-info">
                 <span class="ad-slide-platform article-slide-tag article-slide-tag--policy">📢 活動政策</span>
@@ -602,7 +605,7 @@
         <div class="about-visual">
           <div class="mascot-wrap mascot-wrap-lg">
             <div class="mascot-halo"></div>
-            <img src="assets/mascot_transparent.png" alt="PulsePop 吉祥物" class="about-mascot" />
+            <img src="assets/mascot_transparent.png" alt="PulsePop 吉祥物" class="about-mascot" loading="lazy"/>
           </div>
         </div>
 
@@ -703,7 +706,7 @@
     <div class="container">
       <div class="join-inner">
         <div class="join-mascot">
-          <img src="assets/mascot_transparent.png" alt="PulsePop 吉祥物" />
+          <img src="assets/mascot_transparent.png" alt="PulsePop 吉祥物" loading="lazy"/>
         </div>
         <div class="join-content">
           <span class="section-tag">JOIN US</span>
@@ -802,7 +805,7 @@
           <div class="platform-card-inner">
             <div class="pcard-top">
               <div class="pcard-icon douyin-icon-bg pcard-icon-img">
-                <img src="assets/douyin_live.png" alt="抖音直播" />
+                <img src="assets/douyin_live.png" alt="抖音直播" loading="lazy"/>
               </div>
               <div class="pcard-live-badge">直播</div>
             </div>
@@ -841,7 +844,7 @@
           <div class="platform-card-inner">
             <div class="pcard-top">
               <div class="pcard-icon seventeen-icon-bg pcard-icon-img">
-                <img src="assets/17live.png" alt="17LIVE" />
+                <img src="assets/17live.png" alt="17LIVE" loading="lazy"/>
               </div>
               <div class="pcard-live-badge">LIVE</div>
             </div>
@@ -930,7 +933,7 @@
         <!-- Left info -->
         <div class="contact-info">
           <div class="cinfo-logo">
-            <img src="assets/logo_jdi_transparent.png?v=20260820c" alt="JDI Pulse MEDIA Logo" />
+            <img src="assets/logo_jdi_transparent.png?v=20260820c" alt="JDI Pulse MEDIA Logo" loading="lazy"/>
           </div>
           <h3>JDI 脈動傳媒 · JDI PULSE MEDIA</h3>
           <p>專業直播 MCN 機構<br/>致力打造最強主播生態圈</p>
@@ -1020,7 +1023,7 @@
     <!-- Layer 1: 4-column top -->
     <div class="site-footer-top">
       <div class="site-footer-brand">
-        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+        <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
         <p class="site-footer-tagline">脈動不息，熱情傳播</p>
         <p class="site-footer-desc">TikTok LIVE 官方合作經紀公會，台灣 300+ 優質主播的家。</p>
         <div class="site-footer-social">
