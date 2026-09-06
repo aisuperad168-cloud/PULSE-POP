@@ -37,7 +37,6 @@ import * as opsAdminList from './functions/api/ops/admin-list.js';
 import * as opsAdminDetail from './functions/api/ops/admin-detail.js';
 import * as opsAdminApprove from './functions/api/ops/admin-approve.js';
 import * as opsAdminDelete from './functions/api/ops/admin-delete.js';
-import * as opsAdminPurgeTest from './functions/api/ops/admin-purge-test.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -65,7 +64,6 @@ const API_ROUTES = {
   '/api/ops/admin-detail': opsAdminDetail,
   '/api/ops/admin-approve': opsAdminApprove,
   '/api/ops/admin-delete': opsAdminDelete,
-  '/api/ops/admin-purge-test': opsAdminPurgeTest,
 };
 
 export default {
