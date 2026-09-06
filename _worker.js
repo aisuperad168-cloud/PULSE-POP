@@ -34,6 +34,7 @@ import * as signAdminDetail from './functions/api/sign/admin-detail.js';
 import * as signAdminApprove from './functions/api/sign/admin-approve.js';
 import * as signGetContract from './functions/api/sign/get-contract.js';
 import * as signAdminDelete from './functions/api/sign/admin-delete.js';
+import * as signWhoami from './functions/api/sign/whoami.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -51,6 +52,7 @@ const API_ROUTES = {
   '/api/sign/admin-approve': signAdminApprove,
   '/api/sign/admin-delete': signAdminDelete,
   '/api/sign/get-contract': signGetContract,
+  '/api/sign/whoami': signWhoami,  // 診斷用：顯示登入 email
 };
 
 export default {
