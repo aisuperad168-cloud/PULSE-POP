@@ -24,6 +24,37 @@
   const modalFooter = document.getElementById('modalFooter');
   const modalClose = document.getElementById('modalClose');
   const adminEmail = document.getElementById('adminEmail');
+  const adminUserMenu = document.getElementById('adminUserMenu');
+  const adminUserBtn = document.getElementById('adminUserBtn');
+  const adminUserAvatar = document.getElementById('adminUserAvatar');
+  const adminUserAvatar2 = document.getElementById('adminUserAvatar2');
+  const adminUserDropdownEmail = document.getElementById('adminUserDropdownEmail');
+
+  // ============ 帳號選單開合 ============
+  if (adminUserBtn && adminUserMenu) {
+    adminUserBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      adminUserMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!adminUserMenu.contains(e.target)) {
+        adminUserMenu.classList.remove('open');
+      }
+    });
+    // Esc 關閉
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') adminUserMenu.classList.remove('open');
+    });
+  }
+
+  function updateAdminIdentity(email) {
+    if (!email) return;
+    const firstChar = email.trim().charAt(0).toUpperCase();
+    if (adminEmail) adminEmail.textContent = email;
+    if (adminUserAvatar) adminUserAvatar.textContent = firstChar;
+    if (adminUserAvatar2) adminUserAvatar2.textContent = firstChar;
+    if (adminUserDropdownEmail) adminUserDropdownEmail.textContent = email;
+  }
 
   // ============ Tab 切換 ============
   document.querySelectorAll('.admin-tab').forEach(el => {
@@ -125,7 +156,7 @@
       if (!data.ok) throw new Error(data.error || '載入失敗');
 
       allContracts = data.contracts;
-      adminEmail.textContent = data.admin_email || '';
+      updateAdminIdentity(data.admin_email || '');
 
       const stats = data.stats || {};
       const total = Object.values(stats).reduce((a, b) => a + b, 0);
