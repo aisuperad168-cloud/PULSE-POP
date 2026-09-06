@@ -121,19 +121,40 @@ export async function onRequestPost({ request, env }) {
     if (!/^[A-Z][1-2]\d{8}$/.test(body.id_number)) return json({ ok: false, error: '身分證字號格式錯誤' }, 400);
     if (![1, 2, 3].includes(Number(body.contract_years))) return json({ ok: false, error: '合約年限錯誤' }, 400);
 
-    // ============ 2. 產生合約編號 ============
+    // ============ 2. 產生合約編號（隨機碼版）============
+    // 格式：JDI-SIGN-{YYMMDD}-{6位隨機碼}
+    // 隨機碼字元集：排除易混淆字 0/O/1/I/L (共 30 種字元, 30^6 = 7.29 億組合)
     const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
-    const datePart = `${y}${m}${d}`;
+    const yy = String(now.getFullYear()).slice(-2);   // 26
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const datePart = `${yy}${mm}${dd}`;               // 260926
 
-    // 當日流水
-    const countRow = await env.DB.prepare(
-      `SELECT COUNT(*) as c FROM sign_contracts WHERE contract_no LIKE ?`
-    ).bind(`JDI-SIGN-${datePart}-%`).first();
-    const seq = String((countRow?.c || 0) + 1).padStart(4, '0');
-    const contractNo = `JDI-SIGN-${datePart}-${seq}`;
+    const CHARSET = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';  // 30 chars
+    const CHARSET_LEN = CHARSET.length;
+    let contractNo = null;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      // Web Crypto API：真隨機
+      const bytes = new Uint8Array(6);
+      crypto.getRandomValues(bytes);
+      const random6 = Array.from(bytes)
+        .map(b => CHARSET[b % CHARSET_LEN])
+        .join('');
+      const candidate = `JDI-SIGN-${datePart}-${random6}`;
+
+      // 檢查是否碰撞
+      const existing = await env.DB.prepare(
+        `SELECT 1 FROM sign_contracts WHERE contract_no = ?`
+      ).bind(candidate).first();
+
+      if (!existing) {
+        contractNo = candidate;
+        break;
+      }
+    }
+    if (!contractNo) {
+      return json({ ok: false, error: '系統繁忙，請稍後再試' }, 503);
+    }
 
     // ============ 3. 抓客戶端 IP ============
     const ip = request.headers.get('CF-Connecting-IP') ||
