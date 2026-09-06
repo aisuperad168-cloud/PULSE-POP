@@ -24,8 +24,34 @@ export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
+async function ensureTable(env) {
+  await env.DB.prepare(`
+    CREATE TABLE IF NOT EXISTS sign_contracts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      contract_no TEXT NOT NULL UNIQUE,
+      contract_type TEXT NOT NULL DEFAULT 'streamer',
+      real_name TEXT NOT NULL, stage_name TEXT NOT NULL,
+      id_number TEXT NOT NULL, id_number_last4 TEXT NOT NULL,
+      phone TEXT NOT NULL, phone_last4 TEXT NOT NULL,
+      email TEXT NOT NULL, birthday TEXT,
+      contact_address TEXT NOT NULL, registered_address TEXT NOT NULL,
+      contract_years INTEGER NOT NULL,
+      contract_start_date TEXT NOT NULL, contract_end_date TEXT NOT NULL,
+      signature_data TEXT NOT NULL,
+      signed_at TEXT NOT NULL, signed_ip TEXT NOT NULL, signed_ua TEXT,
+      read_scrolled_at TEXT, agreed_at TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      approved_at TEXT, approved_by TEXT,
+      operator_name TEXT, operator_email TEXT,
+      jack_signature_applied_at TEXT, rejection_reason TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now', '+8 hours')),
+      updated_at TEXT NOT NULL DEFAULT (datetime('now', '+8 hours'))
+    )`).run();
+}
+
 export async function onRequestGet({ request, env }) {
   try {
+    await ensureTable(env);
     // ============ 檢查 Cloudflare Access header ============
     const userEmail = request.headers.get('Cf-Access-Authenticated-User-Email');
     // MVP 階段：暫時允許未受 Access 保護（開發用）
