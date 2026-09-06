@@ -194,9 +194,11 @@
       // Footer buttons
       const viewUrl = `/sign/contract-view/?no=${encodeURIComponent(c.contract_no)}&admin=1`;
       const viewBtn = `<a href="${viewUrl}" target="_blank" rel="noopener" class="sign-btn sign-btn-secondary">📄 查看合約 PDF</a>`;
+      const deleteBtn = `<button class="sign-btn sign-btn-ghost" id="deleteBtn" style="color: var(--sign-danger); border-color: var(--sign-danger);" title="刪除合約（不可恢復）">🗑️</button>`;
 
       if (c.status === 'pending') {
         modalFooter.innerHTML = `
+          ${deleteBtn}
           ${viewBtn}
           <button class="sign-btn sign-btn-ghost" id="rejectBtn">↩️ 退回補件</button>
           <button class="sign-btn sign-btn-primary" id="approveBtn">✅ 核准並蓋章</button>
@@ -205,10 +207,12 @@
         document.getElementById('rejectBtn').addEventListener('click', () => showRejectForm(c.id));
       } else {
         modalFooter.innerHTML = `
+          ${deleteBtn}
           ${viewBtn}
           <button class="sign-btn sign-btn-ghost" onclick="document.getElementById('detailModal').classList.remove('show')">關閉</button>
         `;
       }
+      document.getElementById('deleteBtn').addEventListener('click', () => confirmDelete(c.contract_no, c.real_name));
 
     } catch (err) {
       modalBody.innerHTML = `<div class="sign-alert sign-alert-danger">⚠️ ${err.message}</div>`;
@@ -286,6 +290,30 @@
         alert('⚠️ ' + (data.error || '失敗'));
       }
     });
+  }
+
+  function confirmDelete(contractNo, realName) {
+    const answer = prompt(
+      `⚠️ 確定要刪除合約嗎？\n\n合約編號：${contractNo}\n主播姓名：${realName}\n\n此操作【不可恢復】，會刪除所有關聯資料（附件、稽核紀錄、Email 紀錄）。\n\n請將完整合約編號貼入下方確認：`
+    );
+    if (!answer) return;
+    if (answer.trim() !== contractNo) {
+      alert('❌ 合約編號不符，取消刪除');
+      return;
+    }
+    fetch('/api/sign/admin-delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contract_no: contractNo, confirm: contractNo }),
+    }).then(r => r.json()).then(data => {
+      if (data.ok) {
+        alert('✓ ' + data.message);
+        modal.classList.remove('show');
+        loadList();
+      } else {
+        alert('⚠️ ' + (data.error || '刪除失敗'));
+      }
+    }).catch(err => alert('⚠️ ' + err.message));
   }
 
   function escapeHtml(s) {

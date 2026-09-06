@@ -33,6 +33,7 @@ import * as signAdminList from './functions/api/sign/admin-list.js';
 import * as signAdminDetail from './functions/api/sign/admin-detail.js';
 import * as signAdminApprove from './functions/api/sign/admin-approve.js';
 import * as signGetContract from './functions/api/sign/get-contract.js';
+import * as signAdminDelete from './functions/api/sign/admin-delete.js';
 
 // ============ API 路由表 ============
 const API_ROUTES = {
@@ -48,6 +49,7 @@ const API_ROUTES = {
   '/api/sign/admin-list': signAdminList,
   '/api/sign/admin-detail': signAdminDetail,
   '/api/sign/admin-approve': signAdminApprove,
+  '/api/sign/admin-delete': signAdminDelete,
   '/api/sign/get-contract': signGetContract,
 };
 
@@ -55,6 +57,29 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+    const hostname = url.hostname;
+
+    // ============ 0. sign.jdi-pulse.com 子網域：自動轉主站 /sign/ ============
+    // 目的：讓主播直接記 sign.jdi-pulse.com 就好，不用背 /sign/xxx
+    //   sign.jdi-pulse.com/           → jdi-pulse.com/sign/
+    //   sign.jdi-pulse.com/query/     → jdi-pulse.com/sign/query/
+    //   sign.jdi-pulse.com/admin/     → jdi-pulse.com/sign/admin/
+    //   sign.jdi-pulse.com/sign/xxx   → jdi-pulse.com/sign/xxx (免疊路徑)
+    //   sign.jdi-pulse.com/api/sign/* → API 不 redirect，內部 forward
+    if (hostname === 'sign.jdi-pulse.com') {
+      // API 呼叫：不 redirect，直接讓後續路由處理（相對路徑無論來自哪個域都可用）
+      if (path.startsWith('/api/')) {
+        // fall through to normal API handling
+      } else {
+        // 頁面路徑：若尚未帶 /sign/ 前綴，補上
+        let targetPath = path;
+        if (!path.startsWith('/sign/') && path !== '/sign') {
+          targetPath = '/sign' + (path === '/' ? '/' : path);
+        }
+        const targetUrl = 'https://jdi-pulse.com' + targetPath + url.search;
+        return Response.redirect(targetUrl, 301);
+      }
+    }
 
     // ============ 1. API 路由處理 ============
     const handler = API_ROUTES[path];
