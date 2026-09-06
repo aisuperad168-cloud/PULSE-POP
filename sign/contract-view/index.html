@@ -197,11 +197,12 @@
     .cv-signature-party .cv-field-label {
       display: inline-block;
       width: 80px;
-      color: #999;
+      color: #555;               /* was #999 - too faded */
+      font-weight: 500;
     }
     .cv-signature-party .cv-field-value {
       color: #000;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* Signature image area */
@@ -226,32 +227,52 @@
       display: block;
     }
 
-    /* 印刷章 (Jack side) */
+    /* 印刷章 + Jack 簽名區塊 */
     .cv-stamp-container {
-      display: flex;
-      align-items: center;
-      gap: 16px;
       margin-top: 18px;
-      padding: 14px;
+      padding: 20px 16px 14px;
       background: #fafafa;
       border-radius: 6px;
+      position: relative;
     }
-    .cv-stamp {
-      width: 96px;
-      height: 96px;
-      flex-shrink: 0;
+    .cv-stamp-imgs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      min-height: 130px;
+    }
+    .cv-jack-signature {
+      max-width: 180px;
+      max-height: 100px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .cv-company-stamp {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
     }
     .cv-stamp-info {
       font-family: 'Noto Sans TC', sans-serif;
       font-size: 11px;
-      color: #666;
-      line-height: 1.6;
+      color: #555;
+      line-height: 1.7;
+      text-align: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ddd;
     }
     .cv-stamp-info strong {
-      display: block;
       color: #b81e3f;
       font-size: 12px;
-      margin-bottom: 3px;
+      margin-right: 6px;
+    }
+    @media (max-width: 640px) {
+      .cv-stamp-imgs { gap: 12px; }
+      .cv-jack-signature { max-width: 140px; max-height: 80px; }
+      .cv-company-stamp { width: 90px; height: 90px; }
     }
 
     /* Date footer */
@@ -420,6 +441,13 @@
         border: 1px solid #ccc !important;
       }
       .cv-stamp-info strong { color: #b81e3f !important; -webkit-print-color-adjust: exact; }
+      .cv-company-stamp, .cv-jack-signature {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      .cv-signature-party .cv-field-label { color: #333 !important; }
+      .cv-signature-party .cv-field-value { color: #000 !important; }
       .cv-legal-notice {
         background: #f5f5f5 !important;
         -webkit-print-color-adjust: exact;
@@ -593,40 +621,17 @@
         <p><span class="cv-field-label">聯絡地址：</span><span class="cv-field-value">台中市北屯區大連路三段 2 號</span></p>
         <p id="operatorRow" style="display:none;"><span class="cv-field-label">負責運營：</span><span class="cv-field-value" id="pv-operator">—</span></p>
 
-        <!-- 印刷章 (SVG) -->
+        <!-- 印刷章 + Jack 中文簽名 (核准後自動顯示) -->
         <div class="cv-stamp-container" id="stampContainer" style="display:none;">
-          <svg class="cv-stamp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-            <!-- 外圓 -->
-            <circle cx="100" cy="100" r="94" fill="none" stroke="#c62828" stroke-width="3" />
-            <circle cx="100" cy="100" r="88" fill="none" stroke="#c62828" stroke-width="1.5" />
-
-            <!-- 上方公司名（沿圓弧） -->
-            <defs>
-              <path id="stampArcTop" d="M 30,100 A 70,70 0 0 1 170,100" />
-              <path id="stampArcBottom" d="M 30,110 A 70,70 0 0 0 170,110" />
-            </defs>
-            <text fill="#c62828" font-family="'Noto Serif TC','Songti TC',serif" font-weight="900" font-size="15" letter-spacing="1.5">
-              <textPath href="#stampArcTop" startOffset="50%" text-anchor="middle">艾超數位傳媒有限公司</textPath>
-            </text>
-
-            <!-- 中央五角星 -->
-            <path d="M 100,58 L 106,76 L 125,76 L 110,88 L 116,106 L 100,95 L 84,106 L 90,88 L 75,76 L 94,76 Z"
-                  fill="#c62828" />
-
-            <!-- 中央文字 -->
-            <text x="100" y="128" text-anchor="middle" fill="#c62828"
-                  font-family="'Noto Serif TC','Songti TC',serif" font-weight="900" font-size="14" letter-spacing="1">合約專用章</text>
-
-            <!-- 下方統編（沿圓弧反向） -->
-            <text fill="#c62828" font-family="'JetBrains Mono',monospace" font-weight="700" font-size="10" letter-spacing="2">
-              <textPath href="#stampArcBottom" startOffset="50%" text-anchor="middle">TAX ID: 60413705</textPath>
-            </text>
-          </svg>
+          <div class="cv-stamp-imgs">
+            <img class="cv-jack-signature" src="/assets/sign/jack-signature-cn.png?v=20260906a" alt="謝典熼 簽名" />
+            <img class="cv-company-stamp" src="/assets/sign/company-stamp.png?v=20260906a" alt="艾超數位傳媒有限公司 合約專用章" />
+          </div>
           <div class="cv-stamp-info">
             <strong>✓ 甲方已用印</strong>
-            <span id="stampedAt">—</span><br />
-            經紀方負責人 謝典熼<br />
-            (電子印章 · 系統自動蓋印)
+            <span id="stampedAt">—</span>
+            <br />
+            經紀方負責人 謝典熼 親簽 · 艾超數位傳媒有限公司 用印
           </div>
         </div>
       </div>
