@@ -324,7 +324,7 @@ function buildSubmittedEmail({ contractNo, realName, stageName, years, startDate
       </div>
 
       <div style="text-align: center; margin: 28px 0 12px;">
-        <a href="https://sign.jdi-pulse.com/query/" style="display: inline-block; background: #25F4EE; color: #000; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px;">
+        <a href="https://jdi-pulse.com/sign/query/" style="display: inline-block; background: #25F4EE; color: #000; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px;">
           查詢合約進度 →
         </a>
       </div>
@@ -357,7 +357,7 @@ function buildAdminNotifyEmail({ contractNo, realName, stageName, phone, email, 
       <tr><td style="color: #999;">年限</td><td>${years} 年</td></tr>
     </table>
     <div style="text-align: center; margin-top: 24px;">
-      <a href="https://sign.jdi-pulse.com/admin/" style="display: inline-block; background: #FE2C55; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700;">
+      <a href="https://jdi-pulse.com/sign/admin/" style="display: inline-block; background: #FE2C55; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700;">
         進入後台審核 →
       </a>
     </div>

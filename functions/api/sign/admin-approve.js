@@ -196,7 +196,7 @@ function buildApprovedEmail({ contractNo, realName, stageName, operatorName, app
         接下來運營團隊會主動聯繫您，開始直播培訓與規劃。有任何問題請透過 LINE 或 Email 聯絡運營。
       </p>
       <div style="text-align: center; margin: 28px 0 12px;">
-        <a href="https://sign.jdi-pulse.com/query/" style="display: inline-block; background: #FE2C55; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px;">查看合約 →</a>
+        <a href="https://jdi-pulse.com/sign/query/" style="display: inline-block; background: #FE2C55; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px;">查看合約 →</a>
       </div>
     </div>
     <div style="background: #f9f9f9; padding: 20px 24px; text-align: center; color: #999; font-size: 11px; line-height: 1.6; border-top: 1px solid #eee;">
@@ -240,7 +240,7 @@ function buildRejectedEmail({ contractNo, realName, reason }) {
       </div>
       <p style="color: #555; font-size: 14px;">請重新填寫並提交合約，或聯絡 <a href="mailto:contract@jdi-pulse.com">contract@jdi-pulse.com</a> 詢問。</p>
       <div style="text-align: center; margin-top: 20px;">
-        <a href="https://sign.jdi-pulse.com/" style="display: inline-block; background: #FE2C55; color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">重新簽約 →</a>
+        <a href="https://jdi-pulse.com/sign/" style="display: inline-block; background: #FE2C55; color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700;">重新簽約 →</a>
       </div>
     </div>
   </div>
