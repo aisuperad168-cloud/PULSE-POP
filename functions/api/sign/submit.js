@@ -121,17 +121,24 @@ export async function onRequestPost({ request, env }) {
     if (!/^[A-Z][1-2]\d{8}$/.test(body.id_number)) return json({ ok: false, error: '身分證字號格式錯誤' }, 400);
     if (![1, 2, 3].includes(Number(body.contract_years))) return json({ ok: false, error: '合約年限錯誤' }, 400);
 
-    // ============ 生效日 = 簽署當日隔日 00:00（伺服器計算，防欺騙）============
-    // 用 Asia/Taipei 時區的「今天」+1 天
-    const nowTW = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);  // UTC+8
-    const tomorrowTW = new Date(nowTW);
-    tomorrowTW.setUTCDate(tomorrowTW.getUTCDate() + 1);
-    const startDateStr = tomorrowTW.toISOString().split('T')[0];  // YYYY-MM-DD
+    // ============ 生效日 = 簽署當日隔日 00:00（Asia/Taipei 時區）============
+    // 用台北時區字串解析，避免 toISOString() 轉回 UTC 導致偏差
+    const nowTW_str = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Taipei' });
+    // 格式："2026-09-06, 22:09:12"
+    const [datePart_TW] = nowTW_str.split(',');   // "2026-09-06"
+    const [ty, tm, td] = datePart_TW.split('-').map(Number);
 
-    const endTW = new Date(tomorrowTW);
-    endTW.setUTCFullYear(endTW.getUTCFullYear() + Number(body.contract_years));
-    endTW.setUTCDate(endTW.getUTCDate() - 1);  // 到期日 = 生效日 + N 年 - 1 天
-    const endDateStr = endTW.toISOString().split('T')[0];
+    // 簽署隔日
+    const tomorrow = new Date(Date.UTC(ty, tm - 1, td + 1));  // +1 day
+    const startDateStr = tomorrow.toISOString().split('T')[0];  // YYYY-MM-DD
+
+    // 到期日 = 生效日 + N 年 - 1 天
+    const end = new Date(Date.UTC(
+      ty + Number(body.contract_years),
+      tm - 1,
+      td + 1 - 1   // 生效日的前一天當到期日
+    ));
+    const endDateStr = end.toISOString().split('T')[0];
 
     // 覆寫 body 中的日期（永遠以伺服器為準）
     body.contract_start_date = startDateStr;
