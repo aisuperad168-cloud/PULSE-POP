@@ -78,9 +78,12 @@
     </div>
   `;
 
-  // Sig label 顯示乙方名稱
+  // Sig label：
+  //   個人 → 顯示姓名（entity_name）
+  //   公司 → 顯示代表人姓名（representative）；公司名已透過大小章表達
+  const signerName = f.party_type === 'company' ? f.representative : f.entity_name;
   document.getElementById('sigLabel').innerHTML =
-    `乙方簽名（${esc(f.entity_name)}${f.representative ? ' · ' + esc(f.representative) : ''}）<span class="sign-required">*</span>`;
+    `乙方簽名（${esc(signerName)}）<span class="sign-required">*</span>`;
 
   // ============ Canvas 簽名 ============
   const canvas = document.getElementById('sigCanvas');

@@ -103,6 +103,7 @@
 
 /* Company stamp uploader */
 .ops-stamp-uploader {
+  display: block;
   border: 2px dashed var(--sign-border);
   border-radius: 12px;
   padding: 24px;
@@ -110,6 +111,9 @@
   background: var(--sign-bg-elev);
   transition: all 0.2s;
   cursor: pointer;
+  /* 隱藏內部 <input type="file"> 的原生外框（iOS Safari 會渲染綠邊）*/
+  position: relative;
+  overflow: hidden;
 }
 .ops-stamp-uploader:hover {
   border-color: var(--ops-primary);
@@ -118,6 +122,19 @@
   border-style: solid;
   border-color: var(--sign-success);
   background: rgba(34, 197, 94, 0.05);
+}
+/* 徹底藏掉 file input（iOS Safari 即使 display:none 也可能露邊，用絕對定位塞到看不見）*/
+.ops-stamp-uploader input[type="file"] {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  border: none !important;
+  outline: none !important;
+  background: none !important;
 }
 .ops-stamp-preview {
   max-width: 200px;
