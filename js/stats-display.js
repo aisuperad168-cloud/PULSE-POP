@@ -142,42 +142,10 @@
     </div>
   `;
 
-  // ============ 動畫計數器（只改 textContent，不動 DOM 結構，超快）============
-  function animateNumber(el, target, duration = 1200) {
-    // 若尊重 reduced motion 或 target 太小，直接顯示不動畫
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion || target < 100) {
-      el.textContent = target.toLocaleString('en-US');
-      return;
-    }
-
-    const start = 0;
-    const startTime = performance.now();
-    const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
-    let lastRendered = -1;
-
-    function tick(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutQuart(progress);
-      const current = Math.round(start + (target - start) * eased);
-      // 只有數字變了才 render，避免每幀重繪相同值
-      if (current !== lastRendered) {
-        el.textContent = current.toLocaleString('en-US');
-        lastRendered = current;
-      }
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  // ============ 拉資料 + 觸發動畫 ============
-  let animated = false;  // 保險：只播一次
-  function playAnimation(views, talents) {
-    if (animated) return;
-    animated = true;
-    animateNumber(document.getElementById('jdi-stat-views'), views);
-    animateNumber(document.getElementById('jdi-stat-talents'), talents);
+  // ============ 直接顯示數字（無動畫，避免任何卡頓）============
+  function renderNumbers(views, talents) {
+    document.getElementById('jdi-stat-views').textContent = views.toLocaleString('en-US');
+    document.getElementById('jdi-stat-talents').textContent = talents.toLocaleString('en-US');
   }
 
   async function loadAndAnimate() {
@@ -190,27 +158,7 @@
         talents = data.signed_talents || talents;
       }
     } catch (err) { /* fallback 用基礎值 */ }
-
-    // 先檢查是否已經在視窗內（避免 IntersectionObserver 延遲）
-    const rect = container.getBoundingClientRect();
-    const inView = rect.top < window.innerHeight && rect.bottom > 0;
-
-    if (inView) {
-      // 已在視窗，立刻播
-      playAnimation(views, talents);
-    } else if ('IntersectionObserver' in window) {
-      // 未在視窗，等滾到時播
-      const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-          playAnimation(views, talents);
-          observer.disconnect();
-        }
-      }, { threshold: 0.2, rootMargin: '0px 0px -100px 0px' });
-      observer.observe(container);
-    } else {
-      // 舊瀏覽器 fallback
-      playAnimation(views, talents);
-    }
+    renderNumbers(views, talents);
   }
 
   // ============ 累加瀏覽數（背景，不阻塞）============
