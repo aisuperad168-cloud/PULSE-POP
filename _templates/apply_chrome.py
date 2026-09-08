@@ -76,12 +76,36 @@ def replace_primary_nav(html: str, active: str) -> tuple[str, str]:
     return html[:m.start()] + new_nav + html[m.end():], "ok"
 
 
+SITE_NAV_MARKER_RE = re.compile(r'<nav\s+class="site-nav"[^>]*>', re.DOTALL)
+SITE_FOOTER_MARKER_RE = re.compile(r'<footer\s+class="site-footer"[^>]*>', re.DOTALL)
+SITE_NAV_BLOCK_RE = re.compile(r'<nav\s+class="site-nav"[^>]*>.*?</nav>\s*\n?', re.DOTALL)
+SITE_FOOTER_BLOCK_RE = re.compile(r'<footer\s+class="site-footer"[^>]*>.*?</footer>\s*\n?', re.DOTALL)
+NAV_HAMBURGER_SCRIPT_RE = re.compile(
+    r'<!-- ={6,} SITE NAV[^>]*={6,} -->\s*\n?|'
+    r'<script>\s*//\s*Mobile hamburger toggle\s*\n\s*\(function\(\)\{.*?\}\)\(\);\s*</script>\s*\n?',
+    re.DOTALL,
+)
+FOOTER_MARKER_COMMENT_RE = re.compile(r'<!-- ={6,} SITE FOOTER[^>]*={6,} -->\s*\n?')
+
+
 def insert_nav_after_body(html: str, active: str) -> tuple[str, str]:
-    """Insert nav right after <body ...> opening tag."""
+    """Insert nav right after <body ...> opening tag.
+    Idempotent: if a site-nav already exists in the page, replace it
+    (plus its marker comment + hamburger script) instead of inserting again.
+    """
+    new_nav = render_nav(active)
+    if SITE_NAV_MARKER_RE.search(html):
+        # Strip existing site-nav block(s), marker comments and hamburger scripts,
+        # then insert the fresh nav once after <body>.
+        html = SITE_NAV_BLOCK_RE.sub('', html)
+        html = NAV_HAMBURGER_SCRIPT_RE.sub('', html)
+        m = re.search(r'<body\b[^>]*>', html)
+        if not m:
+            return html, "no-body"
+        return html[:m.end()] + "\n" + new_nav + html[m.end():], "replaced"
     m = re.search(r'<body\b[^>]*>', html)
     if not m:
         return html, "no-body"
-    new_nav = render_nav(active)
     return html[:m.end()] + "\n" + new_nav + html[m.end():], "ok"
 
 
@@ -93,8 +117,15 @@ def replace_footer(html: str) -> tuple[str, str]:
 
 
 def insert_footer_before_body_end(html: str) -> tuple[str, str]:
+    """Insert unified footer before </body>.
+    Idempotent: if a site-footer already exists, replace it instead of appending.
+    """
     if '</body>' not in html:
         return html, "no-body-end"
+    if SITE_FOOTER_MARKER_RE.search(html):
+        html = SITE_FOOTER_BLOCK_RE.sub('', html)
+        html = FOOTER_MARKER_COMMENT_RE.sub('', html)
+        return html.replace('</body>', FOOTER_TPL + "\n</body>", 1), "replaced"
     return html.replace('</body>', FOOTER_TPL + "\n</body>", 1), "ok"
 
 
@@ -179,7 +210,7 @@ PAGES = [
     ("venues.html", "join", "standard"),
     ("about-companies.html", "home", "standard"),
     ("quiz.html", "test", "standard"),
-    # partnership.html already done in previous commit
+    ("partnership.html", "partnership", "standard"),
 
     # Live center hub + subhubs
     ("live-center/index.html", "live-center", "standard"),
@@ -197,6 +228,9 @@ PAGES = [
     ("live-center/article/livestream-is-a-micro-startup/index.html", "live-center", "standard"),
     ("live-center/article/rookie-to-golden-hour-in-6-months/index.html", "live-center", "standard"),
     ("live-center/article/yycam-tikfinity-menu-streamer-combo/index.html", "live-center", "standard"),
+
+    # Streamers list page — has a standard nav+footer, replace mode
+    ("streamers/all/index.html", "home", "standard"),
 
     # Streamers (7) — insert both, preserving streamer-nav mini back button
     ("streamers/coco.html", "home", "streamers"),

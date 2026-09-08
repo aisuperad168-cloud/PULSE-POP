@@ -13,10 +13,20 @@
   const consentCheckbox = document.getElementById('consentCheckbox');
   const consentLabel = document.getElementById('consentLabel');
   const consentHint = document.getElementById('consentHint');
+  const policyCheckbox = document.getElementById('policyCheckbox');
   const nextBtn = document.getElementById('nextBtn');
 
   let hasReachedEnd = false;
   let scrolledAt = null;
+  let policyAgreedAt = null;
+
+  function bothAgreed() {
+    return consentCheckbox && consentCheckbox.checked
+        && policyCheckbox  && policyCheckbox.checked;
+  }
+  function refreshNextBtn() {
+    if (nextBtn) nextBtn.disabled = !bothAgreed();
+  }
 
   function updateProgress() {
     if (!scrollEl) return;
@@ -44,28 +54,49 @@
     consentHint.textContent = '請勾選確認閱讀';
   }
 
+  function persistSession() {
+    const raw = sessionStorage.getItem('opsSession');
+    const prev = raw ? (function(){ try{ return JSON.parse(raw); }catch(e){ return {}; } })() : {};
+    const sessionData = Object.assign({}, prev, {
+      step: 1,
+      scrolledAt: scrolledAt,
+      agreedAt: consentCheckbox && consentCheckbox.checked
+        ? (prev.agreedAt || new Date().toISOString())
+        : null,
+      policyAgreedAt: policyCheckbox && policyCheckbox.checked
+        ? (policyAgreedAt || new Date().toISOString())
+        : null,
+      userAgent: navigator.userAgent,
+    });
+    sessionStorage.setItem('opsSession', JSON.stringify(sessionData));
+  }
+
   consentCheckbox.addEventListener('change', function() {
     if (this.checked) {
-      const agreedAt = new Date().toISOString();
-      const sessionData = {
-        step: 1,
-        scrolledAt: scrolledAt,
-        agreedAt: agreedAt,
-        userAgent: navigator.userAgent,
-      };
-      sessionStorage.setItem('opsSession', JSON.stringify(sessionData));
-      nextBtn.disabled = false;
-      consentHint.textContent = '✓ 已確認閱讀，可繼續下一步';
+      consentHint.textContent = '✓ 已確認閱讀合約';
       consentHint.style.color = 'var(--sign-success)';
     } else {
-      nextBtn.disabled = true;
       consentHint.textContent = '請勾選確認閱讀';
       consentHint.style.color = '';
     }
+    persistSession();
+    refreshNextBtn();
   });
 
+  if (policyCheckbox) {
+    policyCheckbox.addEventListener('change', function() {
+      if (this.checked && !policyAgreedAt) {
+        policyAgreedAt = new Date().toISOString();
+      } else if (!this.checked) {
+        policyAgreedAt = null;
+      }
+      persistSession();
+      refreshNextBtn();
+    });
+  }
+
   nextBtn.addEventListener('click', function() {
-    if (!consentCheckbox.checked) return;
+    if (!bothAgreed()) return;
     window.location.href = '/ops/step-2.html';
   });
 
