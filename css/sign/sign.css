@@ -450,6 +450,22 @@ html, body { margin: 0; padding: 0; }
   color: var(--sign-text-mute);
 }
 
+/* Inline links inside checkbox labels (e.g. 《隱私權政策》《服務條款》) */
+.sign-checkbox-text a,
+.sign-checkbox-text a:visited {
+  color: var(--sign-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  font-weight: 700;
+  transition: color 0.15s ease;
+}
+.sign-checkbox-text a:hover,
+.sign-checkbox-text a:focus {
+  color: #ff5a7f;
+  text-decoration-thickness: 2px;
+}
+
 /* ============ BUTTONS ============ */
 .sign-nav-row {
   display: flex;
