@@ -117,21 +117,24 @@
     @media print {
       .jdi-stats-wrap { display: none; }
     }
+    /* 預留高度：避免內容載入時整頁 layout shift（CLS）*/
+    #jdi-stats-bar { min-height: 180px; }
+    @media (max-width: 640px) { #jdi-stats-bar { min-height: 200px; } }
   `;
   document.head.appendChild(style);
 
-  // ============ 建 HTML 結構（先放 placeholder）============
+  // ============ 建 HTML 結構（用分離的 num-value + plus 節點，動畫只改 textContent 更快）============
   container.innerHTML = `
     <div class="jdi-stats-wrap" role="region" aria-label="JDI 脈動傳媒 · 數據概覽">
       <div class="jdi-stats-inner">
         <div class="jdi-stat-item">
-          <span class="jdi-stat-num" id="jdi-stat-views" data-target="0">0<span class="jdi-stat-plus">+</span></span>
+          <span class="jdi-stat-num"><span id="jdi-stat-views">31,978</span><span class="jdi-stat-plus">+</span></span>
           <span class="jdi-stat-label">累計瀏覽人次</span>
           <span class="jdi-stat-label-en">TOTAL PAGE VIEWS</span>
         </div>
         <div class="jdi-stat-divider" aria-hidden="true"></div>
         <div class="jdi-stat-item">
-          <span class="jdi-stat-num" id="jdi-stat-talents" data-target="0">0<span class="jdi-stat-plus">+</span></span>
+          <span class="jdi-stat-num"><span id="jdi-stat-talents">328</span><span class="jdi-stat-plus">+</span></span>
           <span class="jdi-stat-label">已簽約主播 / 藝人</span>
           <span class="jdi-stat-label-en">SIGNED TALENTS</span>
         </div>
@@ -139,49 +142,74 @@
     </div>
   `;
 
-  // ============ 動畫計數器 ============
-  function animateNumber(el, target, duration = 1500) {
+  // ============ 動畫計數器（只改 textContent，不動 DOM 結構，超快）============
+  function animateNumber(el, target, duration = 1200) {
+    // 若尊重 reduced motion 或 target 太小，直接顯示不動畫
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || target < 100) {
+      el.textContent = target.toLocaleString('en-US');
+      return;
+    }
+
     const start = 0;
     const startTime = performance.now();
-    // easeOutQuart: 前段快後段慢的滾動感
     const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
+    let lastRendered = -1;
 
     function tick(now) {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeOutQuart(progress);
       const current = Math.round(start + (target - start) * eased);
-      el.innerHTML = current.toLocaleString('en-US') + '<span class="jdi-stat-plus">+</span>';
+      // 只有數字變了才 render，避免每幀重繪相同值
+      if (current !== lastRendered) {
+        el.textContent = current.toLocaleString('en-US');
+        lastRendered = current;
+      }
       if (progress < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   }
 
   // ============ 拉資料 + 觸發動畫 ============
+  let animated = false;  // 保險：只播一次
+  function playAnimation(views, talents) {
+    if (animated) return;
+    animated = true;
+    animateNumber(document.getElementById('jdi-stat-views'), views);
+    animateNumber(document.getElementById('jdi-stat-talents'), talents);
+  }
+
   async function loadAndAnimate() {
+    let views = 31978, talents = 328;
     try {
       const res = await fetch('/api/stats/public');
       const data = await res.json();
+      if (data.ok || data.views) {
+        views = data.views || views;
+        talents = data.signed_talents || talents;
+      }
+    } catch (err) { /* fallback 用基礎值 */ }
 
-      const views = data.views || 31978;
-      const talents = data.signed_talents || 328;
+    // 先檢查是否已經在視窗內（避免 IntersectionObserver 延遲）
+    const rect = container.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
 
-      // 用 IntersectionObserver：滾到才播動畫（也順便觸發計數）
+    if (inView) {
+      // 已在視窗，立刻播
+      playAnimation(views, talents);
+    } else if ('IntersectionObserver' in window) {
+      // 未在視窗，等滾到時播
       const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            animateNumber(document.getElementById('jdi-stat-views'), views);
-            animateNumber(document.getElementById('jdi-stat-talents'), talents);
-            observer.disconnect();
-          }
-        });
-      }, { threshold: 0.3 });
+        if (entries[0].isIntersecting) {
+          playAnimation(views, talents);
+          observer.disconnect();
+        }
+      }, { threshold: 0.2, rootMargin: '0px 0px -100px 0px' });
       observer.observe(container);
-
-    } catch (err) {
-      // 出錯直接顯示基礎值
-      document.getElementById('jdi-stat-views').innerHTML = '31,978<span class="jdi-stat-plus">+</span>';
-      document.getElementById('jdi-stat-talents').innerHTML = '328<span class="jdi-stat-plus">+</span>';
+    } else {
+      // 舊瀏覽器 fallback
+      playAnimation(views, talents);
     }
   }
 
