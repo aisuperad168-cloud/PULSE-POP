@@ -165,6 +165,14 @@
       sessionStorage.setItem('signCompletedNo', contractNo);
 
       // 跳到完成頁
+      // 追蹤合約送出成功
+      if (window.jdiTrack) {
+        window.jdiTrack('contract_submitted', {
+          contract_type: 'streamer',
+          contract_years: payload.contract_years,
+        });
+      }
+
       window.location.href = `/sign/done.html?no=${encodeURIComponent(contractNo)}`;
     } catch (err) {
       submitError.textContent = '⚠️ ' + (err.message || '送出失敗，請稍後再試');

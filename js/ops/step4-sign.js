@@ -229,6 +229,16 @@
       sessionStorage.removeItem('opsSession');
       sessionStorage.setItem('opsCompletedNo', contractNo);
 
+      // 追蹤合約送出成功
+      if (window.jdiTrack) {
+        window.jdiTrack('contract_submitted', {
+          contract_type: 'ops',
+          party_type: f.party_type,
+          contract_years: f.contract_years,
+          service_fee_rate: feeRate,
+        });
+      }
+
       window.location.href = `/ops/done.html?no=${encodeURIComponent(contractNo)}`;
     } catch (err) {
       submitError.textContent = '⚠️ ' + (err.message || '送出失敗，請稍後再試');
