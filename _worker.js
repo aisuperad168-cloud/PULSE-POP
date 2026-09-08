@@ -38,6 +38,10 @@ import * as opsAdminDetail from './functions/api/ops/admin-detail.js';
 import * as opsAdminApprove from './functions/api/ops/admin-approve.js';
 import * as opsAdminDelete from './functions/api/ops/admin-delete.js';
 
+// 公開統計數字（首頁數字條）
+import * as statsPublic from './functions/api/stats/public.js';
+import * as statsIncrement from './functions/api/stats/increment.js';
+
 // ============ API 路由表 ============
 const API_ROUTES = {
   '/api/quiz-submit': quizHandler,
@@ -64,6 +68,10 @@ const API_ROUTES = {
   '/api/ops/admin-detail': opsAdminDetail,
   '/api/ops/admin-approve': opsAdminApprove,
   '/api/ops/admin-delete': opsAdminDelete,
+
+  // 公開統計
+  '/api/stats/public': statsPublic,
+  '/api/stats/increment': statsIncrement,
 };
 
 export default {
