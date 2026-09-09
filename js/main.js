@@ -627,11 +627,15 @@ function initNavbar() {
 }
 
 // ===== COUNTER =====
+// 註：HTML 內已寫入實際目標值（讓爬蟲/AI 能直接讀取）；
+//     動畫時先從 0 開始 tween 到目標，僅為視覺呈現。
 function animateCounter(el) {
   const target = parseInt(el.dataset.target, 10);
+  if (!Number.isFinite(target) || target <= 0) return;
   const steps  = 1800 / 16;
   const inc    = target / steps;
   let cur = 0;
+  el.textContent = '0';
   const t = setInterval(() => {
     cur += inc;
     if (cur >= target) { el.textContent = target; clearInterval(t); }
@@ -639,8 +643,20 @@ function animateCounter(el) {
   }, 16);
 }
 function initCounters() {
+  // 若使用者已啟用「減少動態效果」偏好，直接顯示目標值不做動畫
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); } });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        if (reduceMotion) {
+          const t = parseInt(e.target.dataset.target, 10);
+          if (Number.isFinite(t)) e.target.textContent = t;
+        } else {
+          animateCounter(e.target);
+        }
+        obs.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.5 });
   document.querySelectorAll('.stat-num').forEach(el => obs.observe(el));
 }
