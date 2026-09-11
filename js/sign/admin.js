@@ -57,6 +57,9 @@
   }
 
   // ============ Tab 切換 ============
+  const tabPanelContracts = document.getElementById('tabPanelContracts');
+  const tabPanelNewsletter = document.getElementById('tabPanelNewsletter');
+
   document.querySelectorAll('.admin-tab').forEach(el => {
     el.addEventListener('click', () => {
       const t = el.dataset.tab;
@@ -64,18 +67,37 @@
       currentTab = t;
       document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
       el.classList.add('active');
+
+      // Switch panel visibility
+      const isNewsletter = (currentTab === 'newsletter');
+      if (tabPanelContracts) tabPanelContracts.style.display = isNewsletter ? 'none' : '';
+      if (tabPanelNewsletter) tabPanelNewsletter.style.display = isNewsletter ? '' : 'none';
+
       document.body.classList.toggle('tab-ops', currentTab === 'ops');
+      document.body.classList.toggle('tab-newsletter', isNewsletter);
+
+      if (isNewsletter) {
+        // 觸發 admin-newsletter.js 載入邏輯
+        if (window.jdiNewsletterAdmin && window.jdiNewsletterAdmin.load) {
+          window.jdiNewsletterAdmin.load();
+        }
+        return;
+      }
+
       currentStatus = 'all';
       document.querySelectorAll('.admin-stat').forEach(x => x.classList.remove('active'));
-      document.querySelector('.admin-stat[data-status="all"]').classList.add('active');
+      const allStat = document.querySelector('.admin-stat[data-status="all"]');
+      if (allStat) allStat.classList.add('active');
       loadList();
     });
   });
 
-  // Init from URL param ?type=ops
+  // Init from URL param ?type=ops or ?type=newsletter, or hash #newsletter
   const urlType = new URLSearchParams(location.search).get('type');
   if (urlType === 'ops') {
     document.querySelector('.admin-tab[data-tab="ops"]').click();
+  } else if (urlType === 'newsletter' || location.hash === '#newsletter') {
+    document.querySelector('.admin-tab[data-tab="newsletter"]').click();
   }
 
   document.querySelectorAll('.admin-stat').forEach(el => {

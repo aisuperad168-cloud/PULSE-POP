@@ -144,6 +144,8 @@
 }
 </script>
   <script src="/js/analytics.js?v=20260906" defer></script>
+  <link rel="stylesheet" href="/css/newsletter.css?v=20260911a" />
+  <script src="/js/newsletter-subscribe.js?v=20260911a" defer></script>
 </head>
 <body>
 
@@ -418,6 +420,32 @@
       <h3>退會會影響帳號或粉絲嗎？</h3>
       <p>不會。退會只是解除主播與公會之間的合作關係，你的 TikTok 帳號、粉絲、作品、直播權限都仍然屬於你本人，可以繼續獨立經營，或加入新的公會。</p>
     </div>
+
+    <!-- ============ Newsletter Subscribe Box (可重複使用) ============ -->
+<!-- Include: css/newsletter.css + js/newsletter-subscribe.js -->
+<section class="jdi-nl-box" aria-label="訂閱直播中心電子報">
+  <div class="jdi-nl-eyebrow">📮 WEEKLY NEWSLETTER</div>
+  <h2 class="jdi-nl-title">新文章第一時間收到</h2>
+  <p class="jdi-nl-desc">
+    每週一寄送上週精選 —— 平台演算法、直播技巧、分潤策略、法規紅線。
+    沒有廣告、沒有推銷，只有實戰乾貨。隨時可一鍵取消訂閱。
+  </p>
+  <form class="jdi-nl-form" data-source="website" novalidate>
+    <input type="email"
+           class="jdi-nl-input"
+           name="email"
+           placeholder="you@example.com"
+           required
+           autocomplete="email"
+           inputmode="email"
+           aria-label="Email 信箱" />
+    <input type="text" class="jdi-nl-hp" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <button type="submit" class="jdi-nl-btn">訂閱</button>
+  </form>
+  <p class="jdi-nl-privacy">
+    我們遵守 <a href="/privacy-policy.html">《隱私權政策》</a>，只寄電子報、不做任何廣告或轉售。
+  </p>
+</section>
 
     <div class="lc-article-cta">
       <h3 class="lc-article-cta-title">正在考慮轉會？先來聊聊，不簽約也沒關係</h3>

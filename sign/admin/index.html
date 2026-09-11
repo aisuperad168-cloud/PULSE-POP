@@ -55,6 +55,12 @@
       color: #fff;
       box-shadow: 0 2px 8px rgba(99,102,241,0.3);
     }
+    .admin-tab.active[data-tab="newsletter"] {
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+    }
+
     .admin-tab-badge {
       background: rgba(255,255,255,0.25);
       color: #fff;
@@ -407,7 +413,7 @@
     <p class="sign-hero-subtitle">審核主播與運營合作合約，填入運營／甲方資訊並完成合約。</p>
   </section>
 
-  <!-- Tabs 主播 / 運營 -->
+  <!-- Tabs 主播 / 運營 / 電子報 -->
   <div class="admin-tabs" id="tabsBar">
     <button class="admin-tab active" data-tab="streamer">
       🎬 主播合約
@@ -417,42 +423,120 @@
       🤝 運營合約
       <span class="admin-tab-badge" id="tabBadgeOps">0</span>
     </button>
+    <button class="admin-tab" data-tab="newsletter">
+      📮 電子報
+      <span class="admin-tab-badge" id="tabBadgeNewsletter">0</span>
+    </button>
   </div>
 
-  <!-- Stats -->
-  <div class="admin-stats">
-    <div class="admin-stat active" data-status="all">
-      <div class="admin-stat-num" id="stat-all">0</div>
-      <div class="admin-stat-label">ALL 全部</div>
+  <!-- ============ Contracts Panel (streamer / ops tabs 共用) ============ -->
+  <div class="tab-panel tab-panel--contracts" id="tabPanelContracts">
+    <!-- Stats -->
+    <div class="admin-stats">
+      <div class="admin-stat active" data-status="all">
+        <div class="admin-stat-num" id="stat-all">0</div>
+        <div class="admin-stat-label">ALL 全部</div>
+      </div>
+      <div class="admin-stat" data-status="pending">
+        <div class="admin-stat-num" id="stat-pending" style="color: var(--sign-warning);">0</div>
+        <div class="admin-stat-label">PENDING 待審</div>
+      </div>
+      <div class="admin-stat" data-status="approved">
+        <div class="admin-stat-num" id="stat-approved" style="color: var(--sign-success);">0</div>
+        <div class="admin-stat-label">APPROVED 已核准</div>
+      </div>
+      <div class="admin-stat" data-status="rejected">
+        <div class="admin-stat-num" id="stat-rejected" style="color: var(--sign-danger);">0</div>
+        <div class="admin-stat-label">REJECTED 已退回</div>
+      </div>
+      <div class="admin-stat" data-status="expired">
+        <div class="admin-stat-num" id="stat-expired" style="color: var(--sign-text-mute);">0</div>
+        <div class="admin-stat-label">EXPIRED 已到期</div>
+      </div>
     </div>
-    <div class="admin-stat" data-status="pending">
-      <div class="admin-stat-num" id="stat-pending" style="color: var(--sign-warning);">0</div>
-      <div class="admin-stat-label">PENDING 待審</div>
+
+    <div class="admin-search-row">
+      <input type="text" class="sign-form-input admin-search" id="searchInput" placeholder="搜尋合約編號 / 姓名 / 電話..." />
+      <button class="sign-btn sign-btn-secondary" id="refreshBtn">🔄 重新整理</button>
     </div>
-    <div class="admin-stat" data-status="approved">
-      <div class="admin-stat-num" id="stat-approved" style="color: var(--sign-success);">0</div>
-      <div class="admin-stat-label">APPROVED 已核准</div>
-    </div>
-    <div class="admin-stat" data-status="rejected">
-      <div class="admin-stat-num" id="stat-rejected" style="color: var(--sign-danger);">0</div>
-      <div class="admin-stat-label">REJECTED 已退回</div>
-    </div>
-    <div class="admin-stat" data-status="expired">
-      <div class="admin-stat-num" id="stat-expired" style="color: var(--sign-text-mute);">0</div>
-      <div class="admin-stat-label">EXPIRED 已到期</div>
+
+    <div class="admin-list" id="contractList">
+      <div style="text-align: center; padding: 60px 20px; color: var(--sign-text-mute);">載入中...</div>
     </div>
   </div>
 
-  <div class="admin-search-row">
-    <input type="text" class="sign-form-input admin-search" id="searchInput" placeholder="搜尋合約編號 / 姓名 / 電話..." />
-    <button class="sign-btn sign-btn-secondary" id="refreshBtn">🔄 重新整理</button>
-  </div>
+  <!-- ============ Newsletter Panel ============ -->
+  <div class="tab-panel tab-panel--newsletter" id="tabPanelNewsletter" style="display:none;">
+    <!-- 統計 -->
+    <div class="admin-stats" id="nlStats">
+      <div class="admin-stat"><div class="admin-stat-num" id="nlStatTotal">0</div><div class="admin-stat-label">總訂閱者</div></div>
+      <div class="admin-stat"><div class="admin-stat-num" id="nlStatConfirmed" style="color:var(--sign-success);">0</div><div class="admin-stat-label">已確認</div></div>
+      <div class="admin-stat"><div class="admin-stat-num" id="nlStatPending" style="color:var(--sign-warning);">0</div><div class="admin-stat-label">待確認</div></div>
+      <div class="admin-stat"><div class="admin-stat-num" id="nlStatUnsub" style="color:var(--sign-text-mute);">0</div><div class="admin-stat-label">已退訂</div></div>
+    </div>
 
-  <div class="admin-list" id="contractList">
-    <div style="text-align: center; padding: 60px 20px; color: var(--sign-text-mute);">載入中...</div>
+    <!-- 待推送排程 -->
+    <div class="admin-search-row" style="align-items:center; gap:12px;">
+      <h3 style="margin:0; font-size:16px; flex:1;">📅 待推送排程</h3>
+      <button class="sign-btn sign-btn-secondary" id="nlRefreshBtn">🔄 重新整理</button>
+      <button class="sign-btn sign-btn-secondary" id="nlImportBtn">📥 批量匯入</button>
+    </div>
+    <div class="admin-list" id="nlBroadcastList">
+      <div style="text-align:center; padding:32px 20px; color:var(--sign-text-mute);">載入中...</div>
+    </div>
+
+    <!-- 訂閱者列表 -->
+    <div class="admin-search-row" style="margin-top:24px; align-items:center; gap:12px;">
+      <h3 style="margin:0; font-size:16px; flex:1;">👥 訂閱者名單</h3>
+      <select id="nlFilterStatus" class="sign-form-input" style="max-width:150px; padding:8px 12px;">
+        <option value="all">全部狀態</option>
+        <option value="confirmed" selected>已確認</option>
+        <option value="pending">待確認</option>
+        <option value="unsubscribed">已退訂</option>
+      </select>
+      <input type="text" class="sign-form-input" id="nlSearchInput" placeholder="搜尋 email..." style="max-width:200px;" />
+    </div>
+    <div class="admin-list" id="nlSubscriberList">
+      <div style="text-align:center; padding:32px 20px; color:var(--sign-text-mute);">載入中...</div>
+    </div>
   </div>
 
 </main>
+
+<!-- ============ Newsletter Import Modal ============ -->
+<div class="admin-modal-backdrop" id="nlImportModal">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title">📥 批量匯入 Email</h2>
+      <button class="admin-modal-close" id="nlImportClose">×</button>
+    </div>
+    <div class="admin-modal-body">
+      <p style="font-size:13px; color:var(--sign-text-mute); margin:0 0 12px; line-height:1.7;">
+        貼上要匯入的 email（每行一個），系統會自動去重、驗證格式。<br/>
+        若勾選「寄送再度徵求同意信」，系統會逐一寄信讓對方選擇是否加入（合規流程）。
+      </p>
+      <label style="display:block; margin:12px 0 4px; font-size:13px; font-weight:600;">來源標籤（source）</label>
+      <select id="nlImportSource" class="sign-form-input">
+        <option value="meta_ads">Meta 廣告名單</option>
+        <option value="manual_import">手動匯入</option>
+        <option value="quiz_legacy">舊測驗名單</option>
+      </select>
+      <label style="display:block; margin:12px 0 4px; font-size:13px; font-weight:600;">來源詳細（source_detail，可選）</label>
+      <input type="text" id="nlImportSourceDetail" class="sign-form-input" placeholder="例：2026-09 Meta 廣告 Campaign A" />
+      <label style="display:block; margin:12px 0 4px; font-size:13px; font-weight:600;">Email 清單（每行一個）</label>
+      <textarea id="nlImportEmails" class="sign-form-input" rows="10" style="font-family:monospace; font-size:13px;" placeholder="user1@example.com&#10;user2@example.com&#10;..."></textarea>
+      <label style="display:flex; align-items:center; gap:8px; margin-top:14px; cursor:pointer;">
+        <input type="checkbox" id="nlImportSendReeng" checked style="width:16px; height:16px;" />
+        <span style="font-size:13px;"><strong>寄送再度徵求同意信</strong>（推薦；合規做法）</span>
+      </label>
+      <div id="nlImportResult" style="margin-top:16px; padding:12px; border-radius:8px; display:none;"></div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="sign-btn sign-btn-secondary" id="nlImportCancel">取消</button>
+      <button class="sign-btn sign-btn-primary" id="nlImportSubmit">開始匯入</button>
+    </div>
+  </div>
+</div>
 
 <!-- Detail Modal -->
 <div class="admin-modal-backdrop" id="detailModal">
@@ -466,6 +550,7 @@
   </div>
 </div>
 
-<script src="/js/sign/admin.js?v=20260906f"></script>
+<script src="/js/sign/admin.js?v=20260911a"></script>
+<script src="/js/sign/admin-newsletter.js?v=20260911a"></script>
 </body>
 </html>

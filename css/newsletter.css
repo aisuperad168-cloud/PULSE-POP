@@ -1,0 +1,145 @@
+/**
+ * ============================================================
+ * JDI Newsletter · 訂閱表單樣式
+ * ============================================================
+ * 統一元件：.jdi-nl-box
+ * 支援深色（文章底部）與亮色（hub 頁面）兩種主題
+ * ============================================================
+ */
+
+.jdi-nl-box {
+  max-width: 720px;
+  margin: 48px auto;
+  padding: 32px 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(254,44,85,0.06) 0%, rgba(37,244,238,0.06) 100%);
+  border: 1px solid rgba(254,44,85,0.15);
+  text-align: center;
+  color: #1a1a1a;
+  box-sizing: border-box;
+}
+.jdi-nl-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #FE2C55;
+  background: rgba(254,44,85,0.1);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.jdi-nl-title {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 900;
+  color: #111827;
+  margin: 8px 0 6px;
+  line-height: 1.4;
+}
+.jdi-nl-desc {
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.75;
+  margin: 8px auto 20px;
+  max-width: 520px;
+}
+.jdi-nl-form {
+  display: flex;
+  gap: 10px;
+  max-width: 480px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.jdi-nl-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 16px;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #fff;
+  color: #111;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+.jdi-nl-input:focus {
+  border-color: #FE2C55;
+  box-shadow: 0 0 0 3px rgba(254,44,85,0.12);
+}
+.jdi-nl-input::placeholder { color: #9ca3af; }
+.jdi-nl-input:disabled { background:#f3f4f6; color:#9ca3af; cursor:not-allowed; }
+.jdi-nl-btn {
+  padding: 12px 24px;
+  background: #FE2C55;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.jdi-nl-btn:hover:not(:disabled) { background: #e01f47; transform: translateY(-1px); }
+.jdi-nl-btn:active:not(:disabled) { transform: translateY(0); }
+.jdi-nl-btn:disabled { background:#d1d5db; cursor:not-allowed; }
+
+.jdi-nl-privacy {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 14px;
+  line-height: 1.7;
+}
+.jdi-nl-privacy a { color: #FE2C55; text-decoration: underline; }
+
+/* Honeypot: 隱藏但機器人會填 */
+.jdi-nl-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 訊息回饋 */
+.jdi-nl-msg {
+  margin-top: 16px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  display: none;
+  text-align: left;
+}
+.jdi-nl-msg.show { display: block; }
+.jdi-nl-msg.success {
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: #065f46;
+}
+.jdi-nl-msg.error {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.25);
+  color: #991b1b;
+}
+
+/* ===== 深色主題（用在文章底部深色背景時）===== */
+.jdi-nl-box.jdi-nl-dark {
+  background: linear-gradient(135deg, rgba(254,44,85,0.12) 0%, rgba(37,244,238,0.08) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+}
+.jdi-nl-box.jdi-nl-dark .jdi-nl-title { color: #fff; }
+.jdi-nl-box.jdi-nl-dark .jdi-nl-desc { color: rgba(255,255,255,0.75); }
+.jdi-nl-box.jdi-nl-dark .jdi-nl-privacy { color: rgba(255,255,255,0.55); }
+.jdi-nl-box.jdi-nl-dark .jdi-nl-privacy a { color: #7ff8f4; }
+
+/* Responsive */
+@media (max-width: 520px) {
+  .jdi-nl-box { padding: 24px 18px; margin: 32px auto; }
+  .jdi-nl-form { flex-direction: column; }
+  .jdi-nl-btn { width: 100%; }
+}
