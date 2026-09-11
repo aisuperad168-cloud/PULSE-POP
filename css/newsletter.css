@@ -2,8 +2,8 @@
  * ============================================================
  * JDI Newsletter · 訂閱表單樣式
  * ============================================================
- * 統一元件：.jdi-nl-box
- * 支援深色（文章底部）與亮色（hub 頁面）兩種主題
+ * 預設：深色主題（適用於 live-center 深色背景頁面）
+ * .jdi-nl-light 修飾：亮色主題（用在白色背景頁面）
  * ============================================================
  */
 
@@ -12,10 +12,10 @@
   margin: 48px auto;
   padding: 32px 28px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(254,44,85,0.06) 0%, rgba(37,244,238,0.06) 100%);
-  border: 1px solid rgba(254,44,85,0.15);
+  background: linear-gradient(135deg, rgba(254,44,85,0.12) 0%, rgba(37,244,238,0.08) 100%);
+  border: 1px solid rgba(255,255,255,0.12);
   text-align: center;
-  color: #1a1a1a;
+  color: #fff;
   box-sizing: border-box;
 }
 .jdi-nl-eyebrow {
@@ -24,7 +24,7 @@
   font-weight: 900;
   letter-spacing: 3px;
   color: #FE2C55;
-  background: rgba(254,44,85,0.1);
+  background: rgba(254,44,85,0.18);
   padding: 6px 14px;
   border-radius: 999px;
   margin-bottom: 12px;
@@ -32,13 +32,13 @@
 .jdi-nl-title {
   font-size: clamp(20px, 3vw, 24px);
   font-weight: 900;
-  color: #111827;
+  color: #ffffff;
   margin: 8px 0 6px;
   line-height: 1.4;
 }
 .jdi-nl-desc {
   font-size: 14px;
-  color: #4b5563;
+  color: rgba(255,255,255,0.78);
   line-height: 1.75;
   margin: 8px auto 20px;
   max-width: 520px;
@@ -88,11 +88,12 @@
 
 .jdi-nl-privacy {
   font-size: 11px;
-  color: #6b7280;
+  color: rgba(255,255,255,0.55);
   margin-top: 14px;
   line-height: 1.7;
 }
-.jdi-nl-privacy a { color: #FE2C55; text-decoration: underline; }
+.jdi-nl-privacy a { color: #ff5a7f; text-decoration: underline; }
+.jdi-nl-privacy a:hover { color: #FE2C55; }
 
 /* Honeypot: 隱藏但機器人會填 */
 .jdi-nl-hp {
@@ -126,16 +127,17 @@
   color: #991b1b;
 }
 
-/* ===== 深色主題（用在文章底部深色背景時）===== */
-.jdi-nl-box.jdi-nl-dark {
-  background: linear-gradient(135deg, rgba(254,44,85,0.12) 0%, rgba(37,244,238,0.08) 100%);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #fff;
+/* ===== 亮色主題修飾（若某頁面是白色背景，加 .jdi-nl-light class）===== */
+.jdi-nl-box.jdi-nl-light {
+  background: linear-gradient(135deg, rgba(254,44,85,0.06) 0%, rgba(37,244,238,0.06) 100%);
+  border: 1px solid rgba(254,44,85,0.15);
+  color: #1a1a1a;
 }
-.jdi-nl-box.jdi-nl-dark .jdi-nl-title { color: #fff; }
-.jdi-nl-box.jdi-nl-dark .jdi-nl-desc { color: rgba(255,255,255,0.75); }
-.jdi-nl-box.jdi-nl-dark .jdi-nl-privacy { color: rgba(255,255,255,0.55); }
-.jdi-nl-box.jdi-nl-dark .jdi-nl-privacy a { color: #7ff8f4; }
+.jdi-nl-box.jdi-nl-light .jdi-nl-title { color: #111827; }
+.jdi-nl-box.jdi-nl-light .jdi-nl-desc { color: #4b5563; }
+.jdi-nl-box.jdi-nl-light .jdi-nl-privacy { color: #6b7280; }
+.jdi-nl-box.jdi-nl-light .jdi-nl-privacy a { color: #FE2C55; }
+.jdi-nl-box.jdi-nl-light .jdi-nl-eyebrow { background: rgba(254,44,85,0.1); }
 
 /* Responsive */
 @media (max-width: 520px) {
