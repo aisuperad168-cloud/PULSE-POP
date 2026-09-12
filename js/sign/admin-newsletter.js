@@ -104,7 +104,7 @@
           importResult.style.background = 'rgba(239,68,68,0.08)';
           importResult.style.color = '#991b1b';
           importResult.style.border = '1px solid rgba(239,68,68,0.25)';
-          importResult.textContent = '❌ ' + (data.error?.message || '匯入失敗');
+          importResult.textContent = '❌ ' + extractError(data, resp);
           importResult.style.display = 'block';
         }
       } catch (e) {
@@ -119,14 +119,22 @@
     });
   }
 
+  // 統一取出錯誤訊息（相容 error 是字串 or 物件兩種格式）
+  function extractError(data, resp) {
+    if (!data) return `HTTP ${resp?.status || '?'} (無回應內容)`;
+    if (typeof data.error === 'string') return data.error;
+    if (data.error?.message) return data.error.message;
+    return `HTTP ${resp?.status || '?'}`;
+  }
+
   // ---------- Load broadcasts ----------
   async function loadBroadcasts() {
     if (!broadcastList) return;
     broadcastList.innerHTML = '<div style="text-align:center; padding:20px; color:var(--sign-text-mute);">載入中...</div>';
     try {
       const resp = await fetch(`${API_BASE}/admin-broadcasts?limit=20`);
-      const data = await resp.json();
-      if (!data.ok) throw new Error(data.error?.message || 'failed');
+      const data = await resp.json().catch(() => null);
+      if (!data || !data.ok) throw new Error(extractError(data, resp));
       const items = data.items || [];
       if (!items.length) {
         broadcastList.innerHTML = '<div style="text-align:center; padding:32px 20px; color:var(--sign-text-mute);">目前沒有排程 / 歷史推送記錄</div>';
@@ -200,12 +208,12 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ broadcast_id: id }),
       });
-      const data = await resp.json();
-      if (data.ok) {
+      const data = await resp.json().catch(() => null);
+      if (data && data.ok) {
         alert('✅ 已取消');
         loadBroadcasts();
       } else {
-        alert('❌ ' + (data.error?.message || '取消失敗'));
+        alert('❌ ' + extractError(data, resp));
       }
     } catch (e) { alert('網路錯誤：' + e.message); }
   }
@@ -218,13 +226,13 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ broadcast_id: id, force_run: true }),
       });
-      const data = await resp.json();
-      if (data.ok) {
+      const data = await resp.json().catch(() => null);
+      if (data && data.ok) {
         alert(`✅ 已寄送\n收件人 ${data.recipient_count} · 成功 ${data.success_count} · 失敗 ${data.fail_count}`);
         loadBroadcasts();
         loadSubscribers();
       } else {
-        alert('❌ ' + (data.error?.message || '寄送失敗'));
+        alert('❌ ' + extractError(data, resp));
       }
     } catch (e) { alert('網路錯誤：' + e.message); }
   }
@@ -240,8 +248,8 @@
       if (search) params.set('search', search);
 
       const resp = await fetch(`${API_BASE}/admin-list?${params}`);
-      const data = await resp.json();
-      if (!data.ok) throw new Error(data.error?.message || 'failed');
+      const data = await resp.json().catch(() => null);
+      if (!data || !data.ok) throw new Error(extractError(data, resp));
 
       if (data.stats) {
         if (stats.total) stats.total.textContent = data.stats.total || 0;
