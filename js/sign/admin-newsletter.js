@@ -82,9 +82,14 @@
           importResult.style.background = 'rgba(16,185,129,0.1)';
           importResult.style.color = '#065f46';
           importResult.style.border = '1px solid rgba(16,185,129,0.3)';
-          const sentLine = mode === 'direct'
-            ? `· 歡迎信寄送: ✅ ${data.welcome_sent || 0} · ❌ ${data.welcome_failed || 0}`
-            : `· 再度徵求同意信寄送: ✅ ${data.reengagement_sent || 0} · ❌ ${data.reengagement_failed || 0}`;
+          const isBackground = data.email_dispatch === 'background';
+          const sentLine = isBackground
+            ? (mode === 'direct'
+                ? '· 歡迎信：📮 已排入背景寄送佇列（1-2 分鐘內寄達）'
+                : '· 再度徵求同意信：📮 已排入背景寄送佇列（1-2 分鐘內寄達）')
+            : (mode === 'direct'
+                ? `· 歡迎信寄送: ✅ ${data.welcome_sent || 0} · ❌ ${data.welcome_failed || 0}`
+                : `· 再度徵求同意信寄送: ✅ ${data.reengagement_sent || 0} · ❌ ${data.reengagement_failed || 0}`);
           const statusHint = mode === 'direct'
             ? '<em style="color:#065f46;">→ 訂閱者已標記為「已確認」，週報寄送時會直接收到 📮</em>'
             : '<em style="color:#065f46;">→ 訂閱者為「待確認」，收件人點確認連結後才會加入名單</em>';

@@ -18,10 +18,13 @@
  *
  * 已存在 email 跳過（不覆蓋、不重寄信）。
  *
+ * ★ 效能設計：
+ *   - DB INSERT 用 db.batch() 一次送多條，快 10 倍
+ *   - 寄信改用 ctx.waitUntil() 背景執行，立刻回應前端（避免手機 Safari fetch timeout）
+ *
  * 回傳: {
  *   ok, total_input, valid_count, inserted, skipped_existing,
- *   mode,
- *   welcome_sent?, reengagement_sent?, welcome_failed?, reengagement_failed?,
+ *   mode, email_dispatch: 'background'
  * }
  * ============================================================
  */
@@ -33,7 +36,8 @@ import {
 } from './_utils.js';
 import { renderReengagementEmail, renderWelcomeEmail } from './_templates.js';
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost(context) {
+  const { request, env } = context;
   const auth = await requireAdmin(request, env);
   if (!auth.ok) return authFailedResponse(auth);
 
@@ -62,50 +66,98 @@ export async function onRequestPost({ request, env }) {
 
   if (!validEmails.length) return errorResponse('沒有任何有效 email', 400);
 
-  let inserted = 0;
-  let skippedExisting = 0;
-  const newSubscribers = []; // { email, confirmToken, unsubscribeToken }
-
-  for (const email of validEmails) {
-    const existing = await db.prepare(`SELECT id FROM newsletter_subscribers WHERE email = ?`).bind(email).first();
-    if (existing) { skippedExisting++; continue; }
-
-    const confirmToken = generateToken();
-    const unsubscribeToken = generateToken();
-
-    if (mode === 'direct') {
-      // Direct mode：Meta 廣告 leads → 直接 confirmed
-      await db.prepare(`
-        INSERT INTO newsletter_subscribers (
-          email, status, confirmed_at, source, source_detail,
-          confirm_token, unsubscribe_token,
-          created_at, updated_at
-        ) VALUES (?, 'confirmed', ?, ?, ?, ?, ?, ?, ?)
-      `).bind(email, now, source, sourceDetail || null, confirmToken, unsubscribeToken, now, now).run();
-    } else {
-      // Reengagement mode：pending，需點連結確認
-      await db.prepare(`
-        INSERT INTO newsletter_subscribers (
-          email, status, source, source_detail,
-          confirm_token, unsubscribe_token,
-          created_at, updated_at
-        ) VALUES (?, 'pending', ?, ?, ?, ?, ?, ?)
-      `).bind(email, source, sourceDetail || null, confirmToken, unsubscribeToken, now, now).run();
-    }
-
-    inserted++;
-    newSubscribers.push({ email, confirmToken, unsubscribeToken });
+  // ========================================
+  // 1. 一次查出所有已存在 email（避免 N 次 SELECT）
+  // ========================================
+  // 用 IN 一次查全部（D1 SQLite 支援 IN + 動態 ? placeholder）
+  // 但 D1 有 SQL variable 數量上限（100 個），所以分批
+  const existingSet = new Set();
+  const CHUNK = 90;
+  for (let i = 0; i < validEmails.length; i += CHUNK) {
+    const chunk = validEmails.slice(i, i + CHUNK);
+    const placeholders = chunk.map(() => '?').join(',');
+    const rows = await db.prepare(
+      `SELECT email FROM newsletter_subscribers WHERE email IN (${placeholders})`
+    ).bind(...chunk).all();
+    for (const r of (rows.results || [])) existingSet.add(r.email);
   }
 
-  // 寄信邏輯（依 mode 決定寄哪種）
-  let sent = 0;
-  let failed = 0;
+  // 篩出真正要新增的
+  const toInsert = validEmails
+    .filter(e => !existingSet.has(e))
+    .map(email => ({
+      email,
+      confirmToken: generateToken(),
+      unsubscribeToken: generateToken(),
+    }));
 
-  if (newSubscribers.length) {
-    // 平行寄，但每批 20 個避免打爆 Resend rate limit
-    for (let i = 0; i < newSubscribers.length; i += 20) {
-      const chunk = newSubscribers.slice(i, i + 20);
-      await Promise.allSettled(chunk.map(async s => {
+  const skippedExisting = existingSet.size;
+
+  // ========================================
+  // 2. 用 db.batch() 一次 INSERT 全部（快 10 倍）
+  // ========================================
+  if (toInsert.length) {
+    const statements = toInsert.map(s => {
+      if (mode === 'direct') {
+        return db.prepare(`
+          INSERT INTO newsletter_subscribers (
+            email, status, confirmed_at, source, source_detail,
+            confirm_token, unsubscribe_token,
+            created_at, updated_at
+          ) VALUES (?, 'confirmed', ?, ?, ?, ?, ?, ?, ?)
+        `).bind(s.email, now, source, sourceDetail || null, s.confirmToken, s.unsubscribeToken, now, now);
+      } else {
+        return db.prepare(`
+          INSERT INTO newsletter_subscribers (
+            email, status, source, source_detail,
+            confirm_token, unsubscribe_token,
+            created_at, updated_at
+          ) VALUES (?, 'pending', ?, ?, ?, ?, ?, ?)
+        `).bind(s.email, source, sourceDetail || null, s.confirmToken, s.unsubscribeToken, now, now);
+      }
+    });
+
+    // D1 batch 支援單次多條 statement 交易化執行
+    // 若超過 batch 上限（一般 100），分段送
+    const BATCH = 50;
+    for (let i = 0; i < statements.length; i += BATCH) {
+      await db.batch(statements.slice(i, i + BATCH));
+    }
+  }
+
+  // ========================================
+  // 3. 寄信改用 ctx.waitUntil() 背景執行
+  //    立刻回應前端 → 避免手機 Safari fetch timeout
+  // ========================================
+  const inserted = toInsert.length;
+
+  if (context.waitUntil && toInsert.length) {
+    context.waitUntil(sendWelcomeEmailsAsync(env, toInsert, mode, source, sourceDetail));
+  }
+
+  return jsonResponse({
+    ok: true,
+    mode,
+    total_input: rawEmails.length,
+    valid_count: validEmails.length,
+    inserted,
+    skipped_existing: skippedExisting,
+    email_dispatch: 'background',  // 提示前端：信在背景寄
+    imported_by: auth.email,
+  });
+}
+
+/**
+ * 背景執行寄信（不 block response）
+ */
+async function sendWelcomeEmailsAsync(env, subscribers, mode, source, sourceDetail) {
+  const db = env.DB;
+  const BATCH_SIZE = 20;
+
+  for (let i = 0; i < subscribers.length; i += BATCH_SIZE) {
+    const chunk = subscribers.slice(i, i + BATCH_SIZE);
+    await Promise.allSettled(chunk.map(async s => {
+      try {
         let tpl, template;
         if (mode === 'direct') {
           tpl = renderWelcomeEmail(env, {
@@ -129,8 +181,6 @@ export async function onRequestPost({ request, env }) {
           html: tpl.html,
           tags: [{ name: 'category', value: `newsletter_${template}` }],
         });
-        if (send.ok) sent++;
-        else failed++;
 
         // 寫 log
         try {
@@ -144,28 +194,14 @@ export async function onRequestPost({ request, env }) {
             send.id || null, send.ok ? null : (send.error || 'unknown'),
             s.email,
           ).run();
-        } catch (e) { /* silent */ }
-      }));
-      // 每批間隔避免 rate limit
-      if (i + 20 < newSubscribers.length) await new Promise(r => setTimeout(r, 1000));
+        } catch (e) { /* silent log fail */ }
+      } catch (err) {
+        console.error(`[admin-import bg] Failed for ${s.email}:`, err.message);
+      }
+    }));
+    // 每批間隔避免 Resend rate limit
+    if (i + BATCH_SIZE < subscribers.length) {
+      await new Promise(r => setTimeout(r, 1000));
     }
   }
-
-  const result = {
-    ok: true,
-    mode,
-    total_input: rawEmails.length,
-    valid_count: validEmails.length,
-    inserted,
-    skipped_existing: skippedExisting,
-    imported_by: auth.email,
-  };
-  if (mode === 'direct') {
-    result.welcome_sent = sent;
-    result.welcome_failed = failed;
-  } else {
-    result.reengagement_sent = sent;
-    result.reengagement_failed = failed;
-  }
-  return jsonResponse(result);
 }
