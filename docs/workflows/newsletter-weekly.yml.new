@@ -26,26 +26,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 100  # 抓多一點 commit history
+          fetch-depth: 100
 
       - name: Scan for new articles
         id: scan
         run: |
           set -e
-
-          # 方法 1: 用 git log 找 7 天內新增的 article/*/index.html
           SINCE=$(date -u -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ)
           echo "Scanning articles since $SINCE"
 
-          # --diff-filter=A = 只算新增 / --name-only = 只印檔名
           git log --since="$SINCE" --diff-filter=A --name-only --pretty=format: -- 'live-center/article/*/index.html' \
             | grep -v '^$' | sort -u > /tmp/new_articles.txt || true
 
-          # 方法 2: 若強制 slug 有指定，加進去（測試用）
           FORCE_SLUGS="${{ inputs.force_include_slugs }}"
           if [ -n "$FORCE_SLUGS" ]; then
             echo "$FORCE_SLUGS" | tr ',' '\n' | while read slug; do
-              slug=$(echo "$slug" | xargs)  # trim
+              slug=$(echo "$slug" | xargs)
               if [ -n "$slug" ]; then
                 echo "live-center/article/$slug/index.html" >> /tmp/new_articles.txt
               fi
@@ -57,7 +53,6 @@ jobs:
           cat /tmp/new_articles.txt || echo "(empty)"
           echo "============================="
 
-          # 用 python 解析 meta（用 stdin 傳檔案清單，避免 heredoc 變數展開問題）
           python3 - < /tmp/new_articles.txt > /tmp/articles.json <<'PYEOF'
           import json, re, sys
           from pathlib import Path
@@ -129,10 +124,19 @@ jobs:
         env:
           CRON_SECRET: ${{ secrets.NEWSLETTER_CRON_SECRET }}
           DELAY_MIN: ${{ inputs.delay_minutes || '30' }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         run: |
           if [ -z "$CRON_SECRET" ]; then
             echo "❌ NEWSLETTER_CRON_SECRET not set in repo secrets"
             exit 1
+          fi
+
+          # 準備 CF Access headers（若有設定 Service Token）
+          CF_HEADERS=()
+          if [ -n "$CF_ACCESS_CLIENT_ID" ] && [ -n "$CF_ACCESS_CLIENT_SECRET" ]; then
+            CF_HEADERS=(-H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET")
+            echo "✓ Using CF Access Service Token"
           fi
 
           ARTICLES='${{ steps.scan.outputs.articles_json }}'
@@ -145,12 +149,24 @@ jobs:
           RESPONSE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/schedule-weekly' \
             -H "X-Cron-Secret: $CRON_SECRET" \
             -H 'Content-Type: application/json' \
+            "${CF_HEADERS[@]}" \
+            -w '\n---HTTP_CODE:%{http_code}' \
             -d "$PAYLOAD")
-          echo "Response: $RESPONSE"
 
-          OK=$(echo "$RESPONSE" | jq -r '.ok')
+          HTTP_CODE=$(echo "$RESPONSE" | grep -oE '---HTTP_CODE:[0-9]+' | cut -d: -f2)
+          BODY=$(echo "$RESPONSE" | sed 's/---HTTP_CODE:[0-9]*$//')
+
+          echo "HTTP Code: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "301" ]; then
+            echo "⚠️ 被 Cloudflare Access 擋掉，請確認 CF_ACCESS_CLIENT_ID/SECRET 有設 + Access Application 有 Service Auth policy"
+            exit 1
+          fi
+
+          OK=$(echo "$BODY" | jq -r '.ok')
           if [ "$OK" != "true" ]; then
-            SKIPPED=$(echo "$RESPONSE" | jq -r '.skipped // false')
+            SKIPPED=$(echo "$BODY" | jq -r '.skipped // false')
             if [ "$SKIPPED" = "true" ]; then
               echo "⚠️ Skipped (already sent or pending exists) — this is not an error"
               exit 0

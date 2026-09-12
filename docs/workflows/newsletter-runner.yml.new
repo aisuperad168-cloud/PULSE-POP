@@ -19,17 +19,28 @@ jobs:
       - name: Trigger broadcast-run API
         env:
           CRON_SECRET: ${{ secrets.NEWSLETTER_CRON_SECRET }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         run: |
           if [ -z "$CRON_SECRET" ]; then
             echo "❌ NEWSLETTER_CRON_SECRET not set"
             exit 1
           fi
 
+          # 準備 CF Access headers（若有設定）
+          CF_HEADERS=()
+          if [ -n "$CF_ACCESS_CLIENT_ID" ] && [ -n "$CF_ACCESS_CLIENT_SECRET" ]; then
+            CF_HEADERS=(-H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET")
+            echo "✓ Using CF Access Service Token"
+          else
+            echo "⚠️ CF_ACCESS_CLIENT_ID/SECRET not set (若端點被 Access 保護會 302)"
+          fi
+
           # 呼叫 admin-broadcast-run（不帶 broadcast_id → 自動找到期 pending）
-          # -w '%{http_code}' 分離 body 與 HTTP status
           RESPONSE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/admin-broadcast-run' \
             -H "X-Cron-Secret: $CRON_SECRET" \
             -H 'Content-Type: application/json' \
+            "${CF_HEADERS[@]}" \
             -w '\n---HTTP_CODE:%{http_code}' \
             -d '{}')
 
@@ -39,22 +50,21 @@ jobs:
           echo "HTTP Code: $HTTP_CODE"
           echo "Response body: $BODY"
 
-          # 情境 1: CF Access 擋掉（302 重定向到登入頁）
+          # 情境 1: CF Access 擋掉（302 重定向）
           if [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "301" ]; then
-            echo "⚠️ Endpoint 被 Cloudflare Access 保護，X-Cron-Secret 無法通過"
-            echo "→ 請到 Cloudflare Zero Trust 把 /api/newsletter/admin-broadcast-run 從保護清單移除"
-            echo "→ 該端點內建 X-Cron-Secret 認證，本來就不需要 CF Access"
-            # 不當失敗，避免每 5 分鐘寄一封錯誤信
-            exit 0
+            echo "⚠️ 被 Cloudflare Access 擋掉。請確認："
+            echo "  1. CF_ACCESS_CLIENT_ID / CF_ACCESS_CLIENT_SECRET GitHub Secrets 有設"
+            echo "  2. Cloudflare Access Application 有加 Service Auth policy 允許此 token"
+            exit 0  # graceful skip，不寄錯誤信
           fi
 
           # 情境 2: 非 200
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "❌ HTTP $HTTP_CODE (unexpected)"
+            echo "❌ HTTP $HTTP_CODE"
             exit 1
           fi
 
-          # 情境 3: 200 但 body 不是有效 JSON（極少見）
+          # 情境 3: 非 JSON
           if ! echo "$BODY" | jq . > /dev/null 2>&1; then
             echo "❌ Response is not valid JSON"
             exit 1
@@ -62,7 +72,6 @@ jobs:
 
           OK=$(echo "$BODY" | jq -r '.ok // false')
           if [ "$OK" != "true" ]; then
-            # 若是 no pending 或已被 admin 手動觸發，非錯誤
             MSG=$(echo "$BODY" | jq -r '.message // ""')
             case "$MSG" in
               *"No pending"*|*"no pending"*|*"not_yet_scheduled"*)
@@ -80,7 +89,6 @@ jobs:
           STATUS=$(echo "$BODY" | jq -r '.final_status // "unknown"')
           echo "✅ Broadcast executed: recipients=$RECIPIENTS success=$SUCCESS failed=$FAILED status=$STATUS"
 
-          # 如果全 fail 或部分 fail，log 出來但不當失敗（避免噪音信）
           if [ "$STATUS" = "failed" ] || [ "$STATUS" = "partial" ]; then
             FIRST_ERR=$(echo "$BODY" | jq -r '.first_error // "unknown"')
             echo "⚠️ Broadcast had failures. First error: $FIRST_ERR"
