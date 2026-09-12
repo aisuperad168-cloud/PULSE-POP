@@ -20,7 +20,7 @@ export async function onRequestGet({ request, env }) {
 
   // 所有已推過的文章
   const articlesSent = await db.prepare(`
-    SELECT id, article_slug, broadcast_id, sent_at
+    SELECT id, article_slug, broadcast_id, first_included_at
     FROM newsletter_articles_sent ORDER BY id DESC LIMIT 50
   `).all();
 
