@@ -146,15 +146,16 @@ jobs:
             '{articles: $articles, delay_minutes: ($delay | tonumber), triggered_by: "github_action"}')
 
           echo "Calling schedule-weekly API..."
-          RESPONSE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/schedule-weekly' \
+          # 使用 -o 分離 body 到臨時檔，避免 grep 誤解 ---HTTP_CODE 前綴
+          HTTP_CODE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/schedule-weekly' \
             -H "X-Cron-Secret: $CRON_SECRET" \
             -H 'Content-Type: application/json' \
             "${CF_HEADERS[@]}" \
-            -w '\n---HTTP_CODE:%{http_code}' \
+            -o /tmp/response.body \
+            -w '%{http_code}' \
             -d "$PAYLOAD")
 
-          HTTP_CODE=$(echo "$RESPONSE" | grep -oE '---HTTP_CODE:[0-9]+' | cut -d: -f2)
-          BODY=$(echo "$RESPONSE" | sed 's/---HTTP_CODE:[0-9]*$//')
+          BODY=$(cat /tmp/response.body)
 
           echo "HTTP Code: $HTTP_CODE"
           echo "Response: $BODY"
@@ -180,5 +181,3 @@ jobs:
         run: |
           echo "🔍 Dry run mode: scanned but did not call API"
           echo "Found ${{ steps.scan.outputs.article_count }} new articles"
-
-          
