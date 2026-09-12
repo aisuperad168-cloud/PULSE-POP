@@ -512,12 +512,11 @@
     </div>
     <div class="admin-modal-body">
       <p style="font-size:13px; color:var(--sign-text-mute); margin:0 0 12px; line-height:1.7;">
-        貼上要匯入的 email（每行一個），系統會自動去重、驗證格式。<br/>
-        若勾選「寄送再度徵求同意信」，系統會逐一寄信讓對方選擇是否加入（合規流程）。
+        貼上要匯入的 email（每行一個），系統會自動去重、驗證格式。
       </p>
       <label style="display:block; margin:12px 0 4px; font-size:13px; font-weight:600;">來源標籤（source）</label>
       <select id="nlImportSource" class="sign-form-input">
-        <option value="meta_ads">Meta 廣告名單</option>
+        <option value="meta_ads">Meta 廣告名單（Lead Ads）</option>
         <option value="manual_import">手動匯入</option>
         <option value="quiz_legacy">舊測驗名單</option>
       </select>
@@ -525,10 +524,24 @@
       <input type="text" id="nlImportSourceDetail" class="sign-form-input" placeholder="例：2026-09 Meta 廣告 Campaign A" />
       <label style="display:block; margin:12px 0 4px; font-size:13px; font-weight:600;">Email 清單（每行一個）</label>
       <textarea id="nlImportEmails" class="sign-form-input" rows="10" style="font-family:monospace; font-size:13px;" placeholder="user1@example.com&#10;user2@example.com&#10;..."></textarea>
-      <label style="display:flex; align-items:center; gap:8px; margin-top:14px; cursor:pointer;">
-        <input type="checkbox" id="nlImportSendReeng" checked style="width:16px; height:16px;" />
-        <span style="font-size:13px;"><strong>寄送再度徵求同意信</strong>（推薦；合規做法）</span>
-      </label>
+
+      <div style="margin-top:16px; padding:14px; background:rgba(37,244,238,0.06); border:1px solid rgba(37,244,238,0.2); border-radius:8px;">
+        <div style="font-size:13px; font-weight:700; margin-bottom:8px; color:var(--sign-text-dim, #4b5563);">📌 匯入模式</div>
+        <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; padding:6px 0;">
+          <input type="checkbox" id="nlImportSendReeng" checked style="width:16px; height:16px; margin-top:2px; flex-shrink:0;" />
+          <span style="font-size:13px; line-height:1.7;">
+            <strong style="color:#10b981;">✅ 直接訂閱（推薦給 Meta 廣告 leads）</strong><br/>
+            <span style="color:var(--sign-text-mute);">對方已在 Meta 廣告主動填寫表單 = 已 opt-in，可直接標記為「已確認」並寄歡迎信，下次週報就會收到。</span>
+          </span>
+        </label>
+        <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; padding:6px 0; margin-top:6px;">
+          <span style="font-size:13px; line-height:1.7; padding-left:26px;">
+            <strong style="color:#f59e0b;">📬 取消勾選 = 再度徵求同意</strong><br/>
+            <span style="color:var(--sign-text-mute);">來源不明或舊名單。標記為「待確認」，寄確認信讓對方點連結後才生效。</span>
+          </span>
+        </label>
+      </div>
+
       <div id="nlImportResult" style="margin-top:16px; padding:12px; border-radius:8px; display:none;"></div>
     </div>
     <div class="admin-modal-footer">
@@ -551,6 +564,6 @@
 </div>
 
 <script src="/js/sign/admin.js?v=20260911a"></script>
-<script src="/js/sign/admin-newsletter.js?v=20260911a"></script>
+<script src="/js/sign/admin-newsletter.js?v=20260912a"></script>
 </body>
 </html>

@@ -53,7 +53,14 @@
       if (!emails.length) { alert('沒有偵測到有效 email'); return; }
       if (emails.length > 5000) { alert('單次最多 5000 筆'); return; }
 
-      if (!confirm(`即將匯入 ${emails.length} 筆 email。\n來源: ${importSource.value}\n${importSendReeng.checked ? '✓ 將寄再度徵求同意信' : '✗ 不寄信，只入庫'}\n\n確定執行？`)) return;
+      // 依 checkbox 決定匯入模式（勾＝直接訂閱、不勾＝需二次確認）
+      const isDirect = importSendReeng.checked;
+      const mode = isDirect ? 'direct' : 'reengagement';
+      const modeLabel = isDirect
+        ? '✅ 直接訂閱（Meta 廣告等已 opt-in 來源，寄歡迎信）'
+        : '📬 再度徵求同意（來源不明或舊名單，寄確認信讓對方點連結）';
+
+      if (!confirm(`即將匯入 ${emails.length} 筆 email\n\n模式: ${modeLabel}\n來源: ${importSource.value}\n\n確定執行？`)) return;
 
       importSubmit.disabled = true;
       importSubmit.textContent = '處理中…';
@@ -67,7 +74,7 @@
             emails,
             source: importSource.value,
             source_detail: importSourceDetail.value || null,
-            send_reengagement: importSendReeng.checked,
+            import_mode: mode,
           }),
         });
         const data = await resp.json();
@@ -75,13 +82,20 @@
           importResult.style.background = 'rgba(16,185,129,0.1)';
           importResult.style.color = '#065f46';
           importResult.style.border = '1px solid rgba(16,185,129,0.3)';
+          const sentLine = mode === 'direct'
+            ? `· 歡迎信寄送: ✅ ${data.welcome_sent || 0} · ❌ ${data.welcome_failed || 0}`
+            : `· 再度徵求同意信寄送: ✅ ${data.reengagement_sent || 0} · ❌ ${data.reengagement_failed || 0}`;
+          const statusHint = mode === 'direct'
+            ? '<em style="color:#065f46;">→ 訂閱者已標記為「已確認」，週報寄送時會直接收到 📮</em>'
+            : '<em style="color:#065f46;">→ 訂閱者為「待確認」，收件人點確認連結後才會加入名單</em>';
           importResult.innerHTML = `
             <strong>✅ 匯入完成</strong><br/>
             · 輸入: ${data.total_input} 筆<br/>
             · 有效 email: ${data.valid_count} 筆<br/>
             · 新增入庫: ${data.inserted} 筆<br/>
             · 已存在跳過: ${data.skipped_existing} 筆<br/>
-            ${importSendReeng.checked ? `· 再度徵求同意信寄送: ✅ ${data.reengagement_sent} · ❌ ${data.reengagement_failed}<br/>` : ''}
+            ${sentLine}<br/>
+            <br/>${statusHint}
           `;
           importResult.style.display = 'block';
           importEmails.value = '';

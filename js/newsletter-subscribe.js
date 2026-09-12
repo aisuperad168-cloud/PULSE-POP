@@ -56,8 +56,12 @@
         if (data.ok) {
           if (data.status === 'already_subscribed') {
             showMsg(msgEl, 'success', '✅ 這個信箱已訂閱過了，感謝支持！');
+          } else if (data.status === 'resubscribed') {
+            showMsg(msgEl, 'success', '🎉 歡迎回來！你已重新訂閱 JDI 直播中心電子報');
+            emailInput.value = '';
           } else {
-            showMsg(msgEl, 'success', '📬 確認信已寄到你的信箱！請點擊信中的確認連結完成訂閱（若沒收到請檢查垃圾信匣）');
+            // 'subscribed' 或其他成功狀態
+            showMsg(msgEl, 'success', '🎉 訂閱成功！歡迎信已寄到你的信箱 📬');
             emailInput.value = '';
           }
           // 追蹤 GA4 event（若已載入）
