@@ -1,13 +1,10 @@
 name: Newsletter Broadcast Runner
 
-# 每 5 分鐘掃一次，若有 scheduled_at 到期的 broadcast 就執行寄送
-# 也支援手動觸發
 on:
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
-# 避免並發（一次只跑一個）
 concurrency:
   group: newsletter-runner
   cancel-in-progress: false
@@ -16,6 +13,31 @@ jobs:
   run-due:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug secrets presence
+        env:
+          CRON_SECRET: ${{ secrets.NEWSLETTER_CRON_SECRET }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          echo "=== Secret Presence Check (values masked) ==="
+          if [ -z "$CRON_SECRET" ]; then
+            echo "❌ NEWSLETTER_CRON_SECRET is EMPTY"
+          else
+            echo "✓ NEWSLETTER_CRON_SECRET: set (length=${#CRON_SECRET})"
+          fi
+          if [ -z "$CF_ACCESS_CLIENT_ID" ]; then
+            echo "❌ CF_ACCESS_CLIENT_ID is EMPTY"
+          else
+            echo "✓ CF_ACCESS_CLIENT_ID: set (length=${#CF_ACCESS_CLIENT_ID})"
+            # 印出前 8 字元讓我們看格式對不對
+            echo "  first 8 chars: ${CF_ACCESS_CLIENT_ID:0:8}..."
+          fi
+          if [ -z "$CF_ACCESS_CLIENT_SECRET" ]; then
+            echo "❌ CF_ACCESS_CLIENT_SECRET is EMPTY"
+          else
+            echo "✓ CF_ACCESS_CLIENT_SECRET: set (length=${#CF_ACCESS_CLIENT_SECRET})"
+          fi
+
       - name: Trigger broadcast-run API
         env:
           CRON_SECRET: ${{ secrets.NEWSLETTER_CRON_SECRET }}
@@ -27,44 +49,35 @@ jobs:
             exit 1
           fi
 
-          # 準備 CF Access headers（若有設定）
-          CF_HEADERS=()
-          if [ -n "$CF_ACCESS_CLIENT_ID" ] && [ -n "$CF_ACCESS_CLIENT_SECRET" ]; then
-            CF_HEADERS=(-H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET")
-            echo "✓ Using CF Access Service Token"
-          else
-            echo "⚠️ CF_ACCESS_CLIENT_ID/SECRET not set (若端點被 Access 保護會 302)"
-          fi
-
-          # 呼叫 admin-broadcast-run（不帶 broadcast_id → 自動找到期 pending）
-          RESPONSE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/admin-broadcast-run' \
+          echo "=== Calling API ==="
+          # 用臨時檔案分離 headers 和 body 避免混淆
+          HTTP_CODE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/admin-broadcast-run' \
             -H "X-Cron-Secret: $CRON_SECRET" \
+            -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+            -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
             -H 'Content-Type: application/json' \
-            "${CF_HEADERS[@]}" \
-            -w '\n---HTTP_CODE:%{http_code}' \
+            -o /tmp/response.body \
+            -w '%{http_code}' \
             -d '{}')
 
-          HTTP_CODE=$(echo "$RESPONSE" | grep -oE '---HTTP_CODE:[0-9]+' | cut -d: -f2)
-          BODY=$(echo "$RESPONSE" | sed 's/---HTTP_CODE:[0-9]*$//')
-
           echo "HTTP Code: $HTTP_CODE"
-          echo "Response body: $BODY"
+          echo "--- Response body ---"
+          cat /tmp/response.body
+          echo ""
+          echo "--- End of body ---"
 
-          # 情境 1: CF Access 擋掉（302 重定向）
           if [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "301" ]; then
-            echo "⚠️ 被 Cloudflare Access 擋掉。請確認："
-            echo "  1. CF_ACCESS_CLIENT_ID / CF_ACCESS_CLIENT_SECRET GitHub Secrets 有設"
-            echo "  2. Cloudflare Access Application 有加 Service Auth policy 允許此 token"
-            exit 0  # graceful skip，不寄錯誤信
+            echo "⚠️ 被 Cloudflare Access 擋掉（HTTP $HTTP_CODE）"
+            echo "→ 請確認 CF Access policy 有加 Service Auth"
+            exit 0
           fi
 
-          # 情境 2: 非 200
           if [ "$HTTP_CODE" != "200" ]; then
             echo "❌ HTTP $HTTP_CODE"
             exit 1
           fi
 
-          # 情境 3: 非 JSON
+          BODY=$(cat /tmp/response.body)
           if ! echo "$BODY" | jq . > /dev/null 2>&1; then
             echo "❌ Response is not valid JSON"
             exit 1
@@ -81,6 +94,14 @@ jobs:
             esac
             echo "❌ Unexpected error: $BODY"
             exit 1
+          fi
+
+          # ok=true 情境: 可能是 broadcast 已執行、或 no pending
+          RAN=$(echo "$BODY" | jq -r '.ran // 1')
+          MSG=$(echo "$BODY" | jq -r '.message // ""')
+          if [ "$RAN" = "0" ]; then
+            echo "ℹ️ $MSG"
+            exit 0
           fi
 
           RECIPIENTS=$(echo "$BODY" | jq -r '.recipient_count // 0')
