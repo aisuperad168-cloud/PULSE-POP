@@ -525,6 +525,21 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/tiktok-guild-3-contract-traps/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/tiktok-guild-3-contract-traps/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/tiktok-guild-3-contract-traps/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/tiktok-guild-3-contract-traps/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/tiktok-guild-contract-hero.jpg</image:loc>
+      <image:title>加入 TikTok 公會好嗎？素人主播最常踩的 3 個合約坑</image:title>
+      <image:caption>素人簽約前一定要看的 3 大陷阱：高抽成低標倒扣、天價違約金與帳號扣押、賣身契式獨家綁約與競業禁止。附 3 大自保原則與 4 大合理性判準。</image:caption>
+    </image:image>
+  </url>
+
   <!-- ============ Legal Pages ============ -->
   <url>
     <loc>https://jdi-pulse.com/privacy-policy.html</loc>
