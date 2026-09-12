@@ -53,6 +53,7 @@ import * as nlScheduleWeekly from './functions/api/newsletter/schedule-weekly.js
 import * as nlAdminEmailLogs from './functions/api/newsletter/admin-email-logs.js';
 import * as nlAdminRetryFailed from './functions/api/newsletter/admin-retry-failed.js';
 import * as nlAdminPreviewDigest from './functions/api/newsletter/admin-preview-digest.js';
+import * as nlAdminDiagnostics from './functions/api/newsletter/admin-diagnostics.js';
 // 動態路徑：/api/newsletter/confirm/{token} 和 /api/newsletter/unsubscribe/{token}
 import * as nlConfirm from './functions/api/newsletter/confirm/[token].js';
 import * as nlUnsubscribe from './functions/api/newsletter/unsubscribe/[token].js';
@@ -99,6 +100,7 @@ const API_ROUTES = {
   '/api/newsletter/admin-email-logs': nlAdminEmailLogs,
   '/api/newsletter/admin-retry-failed': nlAdminRetryFailed,
   '/api/newsletter/admin-preview-digest': nlAdminPreviewDigest,
+  '/api/newsletter/admin-diagnostics': nlAdminDiagnostics,
 };
 
 export default {
