@@ -53,7 +53,7 @@ export async function onRequestGet({ request, env }) {
   // 篩選後結果
   const rows = await db.prepare(`
     SELECT id, subscriber_id, to_email, template, subject, status,
-           resend_id, error_message, created_at
+           resend_id, error_message, sent_at
     FROM newsletter_email_logs
     ${whereSql}
     ORDER BY id DESC
