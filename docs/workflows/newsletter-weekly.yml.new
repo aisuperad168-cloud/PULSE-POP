@@ -1,0 +1,166 @@
+name: Newsletter Weekly Digest
+# 每週一台灣時間 11:00 = UTC 週一 03:00
+# 加上手動觸發（workflow_dispatch）
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '只掃描不排程（true / false）'
+        required: false
+        default: 'false'
+      delay_minutes:
+        description: 'buffer 分鐘數（預設 30）'
+        required: false
+        default: '30'
+      force_include_slugs:
+        description: '強制包含這些 slug（逗號分隔，測試用）'
+        required: false
+        default: ''
+
+jobs:
+  scan-and-schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 100  # 抓多一點 commit history
+
+      - name: Scan for new articles
+        id: scan
+        run: |
+          set -e
+
+          # 方法 1: 用 git log 找 7 天內新增的 article/*/index.html
+          SINCE=$(date -u -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ)
+          echo "Scanning articles since $SINCE"
+
+          # --diff-filter=A = 只算新增 / --name-only = 只印檔名
+          git log --since="$SINCE" --diff-filter=A --name-only --pretty=format: -- 'live-center/article/*/index.html' \
+            | grep -v '^$' | sort -u > /tmp/new_articles.txt || true
+
+          # 方法 2: 若強制 slug 有指定，加進去（測試用）
+          FORCE_SLUGS="${{ inputs.force_include_slugs }}"
+          if [ -n "$FORCE_SLUGS" ]; then
+            echo "$FORCE_SLUGS" | tr ',' '\n' | while read slug; do
+              slug=$(echo "$slug" | xargs)  # trim
+              if [ -n "$slug" ]; then
+                echo "live-center/article/$slug/index.html" >> /tmp/new_articles.txt
+              fi
+            done
+            sort -u /tmp/new_articles.txt -o /tmp/new_articles.txt
+          fi
+
+          echo "==== Article files found ===="
+          cat /tmp/new_articles.txt || echo "(empty)"
+          echo "============================="
+
+          # 用 python 解析 meta（用 stdin 傳檔案清單，避免 heredoc 變數展開問題）
+          python3 - < /tmp/new_articles.txt > /tmp/articles.json <<'PYEOF'
+          import json, re, sys
+          from pathlib import Path
+
+          new_list = [line.strip() for line in sys.stdin if line.strip()]
+          articles = []
+          for rel in new_list:
+              p = Path(rel)
+              if not p.exists():
+                  print(f"[skip] not found: {rel}", file=sys.stderr)
+                  continue
+
+              html = p.read_text(encoding='utf-8')
+              slug = p.parent.name
+
+              def extract(pattern, default=''):
+                  m = re.search(pattern, html)
+                  return m.group(1).strip() if m else default
+
+              title = extract(r'<title>([^<｜|]+)')
+              desc = extract(r'<meta name="description" content="([^"]+)"')[:200]
+              date = extract(r'<meta property="article:published_time" content="([^"]+)"')
+              hero = extract(r'<meta property="og:image" content="[^"]*(/assets/[^"]+)"')
+
+              category = '📚 直播中心'
+              m = re.search(r'lc-tag lc-tag--(\w+)', html)
+              if m:
+                  cat_map = {
+                      'creator': '🎨 主播專欄',
+                      'policy': '📢 活動政策',
+                      'tutorial': '📚 直播教學',
+                      'revenue': '💰 收益策略',
+                      'glory': '🏆 榮耀時刻',
+                  }
+                  category = cat_map.get(m.group(1), category)
+
+              articles.append({
+                  'slug': slug,
+                  'title': title,
+                  'description': desc,
+                  'date': date,
+                  'hero': hero,
+                  'category': category,
+              })
+          print(json.dumps(articles, ensure_ascii=False, indent=2))
+          PYEOF
+
+          echo "==== Parsed articles JSON ===="
+          cat /tmp/articles.json
+          echo "============================="
+
+          ARTICLE_COUNT=$(jq 'length' /tmp/articles.json)
+          echo "article_count=$ARTICLE_COUNT"
+          echo "article_count=$ARTICLE_COUNT" >> $GITHUB_OUTPUT
+          {
+            echo "articles_json<<EOFJSON"
+            cat /tmp/articles.json
+            echo "EOFJSON"
+          } >> $GITHUB_OUTPUT
+
+      - name: Notify no new articles
+        if: steps.scan.outputs.article_count == '0'
+        run: |
+          echo "本週無新文章，跳過寄送。"
+          echo "TIP: 用 workflow_dispatch 的 force_include_slugs 欄位可測試指定 slug"
+
+      - name: Call schedule-weekly API
+        if: steps.scan.outputs.article_count != '0' && inputs.dry_run != 'true'
+        env:
+          CRON_SECRET: ${{ secrets.NEWSLETTER_CRON_SECRET }}
+          DELAY_MIN: ${{ inputs.delay_minutes || '30' }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "❌ NEWSLETTER_CRON_SECRET not set in repo secrets"
+            exit 1
+          fi
+
+          ARTICLES='${{ steps.scan.outputs.articles_json }}'
+          PAYLOAD=$(jq -n \
+            --argjson articles "$ARTICLES" \
+            --arg delay "$DELAY_MIN" \
+            '{articles: $articles, delay_minutes: ($delay | tonumber), triggered_by: "github_action"}')
+
+          echo "Calling schedule-weekly API..."
+          RESPONSE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/schedule-weekly' \
+            -H "X-Cron-Secret: $CRON_SECRET" \
+            -H 'Content-Type: application/json' \
+            -d "$PAYLOAD")
+          echo "Response: $RESPONSE"
+
+          OK=$(echo "$RESPONSE" | jq -r '.ok')
+          if [ "$OK" != "true" ]; then
+            SKIPPED=$(echo "$RESPONSE" | jq -r '.skipped // false')
+            if [ "$SKIPPED" = "true" ]; then
+              echo "⚠️ Skipped (already sent or pending exists) — this is not an error"
+              exit 0
+            fi
+            echo "❌ schedule-weekly API returned non-OK"
+            exit 1
+          fi
+
+      - name: Dry run summary
+        if: inputs.dry_run == 'true'
+        run: |
+          echo "🔍 Dry run mode: scanned but did not call API"
+          echo "Found ${{ steps.scan.outputs.article_count }} new articles"
