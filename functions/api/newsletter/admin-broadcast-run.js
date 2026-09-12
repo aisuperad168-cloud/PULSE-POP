@@ -128,15 +128,43 @@ export async function onRequestPost({ request, env }) {
   // 呼叫 Resend batch
   const batchResult = await sendResendBatch(env, emailsPayload);
 
-  // 記錄每封 log（僅記 failed 節省 D1 rows；successful 只更新 subscriber counters）
   const finishedAt = taipeiNow();
   const successCount = batchResult.sent;
   const failCount = batchResult.failed;
 
-  // 更新訂閱者計數（batch UPDATE）
-  const successEmails = batchResult.results.filter(r => r.ok).map(r => r.to[0]);
+  // ==================================================
+  // 記錄每封 email 的 log（成功 + 失敗都記，方便追蹤真實狀況）
+  // ==================================================
+  // 建立 subject 引用
+  const subjectRef = `週報 - ${weekLabel}`;
+
+  // 記錄成功寄送
+  const successResults = batchResult.results.filter(r => r.ok);
+  for (const s of successResults) {
+    try {
+      await db.prepare(`
+        INSERT INTO newsletter_email_logs (broadcast_id, subscriber_id, to_email, template, subject, status, resend_id)
+        SELECT ?, id, ?, 'weekly_digest', ?, 'sent', ?
+        FROM newsletter_subscribers WHERE email = ?
+      `).bind(broadcast.id, s.to[0], subjectRef, s.id || null, s.to[0]).run();
+    } catch (e) { /* silent */ }
+  }
+
+  // 記錄失敗
+  const failedResults = batchResult.results.filter(r => !r.ok);
+  for (const f of failedResults) {
+    try {
+      await db.prepare(`
+        INSERT INTO newsletter_email_logs (broadcast_id, subscriber_id, to_email, template, subject, status, error_message)
+        SELECT ?, id, ?, 'weekly_digest', ?, 'failed', ?
+        FROM newsletter_subscribers WHERE email = ?
+      `).bind(broadcast.id, f.to[0], subjectRef, f.error || 'unknown', f.to[0]).run();
+    } catch (e) { /* silent */ }
+  }
+
+  // 更新訂閱者計數（只有成功的才 +1）
+  const successEmails = successResults.map(r => r.to[0]);
   if (successEmails.length) {
-    // D1 沒支援 WHERE IN with binding array，拆成小批（100/次）
     for (let i = 0; i < successEmails.length; i += 50) {
       const chunk = successEmails.slice(i, i + 50);
       const placeholders = chunk.map(() => '?').join(',');
@@ -148,39 +176,51 @@ export async function onRequestPost({ request, env }) {
     }
   }
 
-  // 記錄失敗 log
-  const failedResults = batchResult.results.filter(r => !r.ok);
-  for (const f of failedResults) {
-    try {
-      await db.prepare(`
-        INSERT INTO newsletter_email_logs (broadcast_id, subscriber_id, to_email, template, subject, status, error_message)
-        VALUES (?, NULL, ?, 'weekly_digest', ?, 'failed', ?)
-      `).bind(broadcast.id, f.to[0], `週報 - ${weekLabel}`, f.error || 'unknown').run();
-    } catch (e) { /* silent */ }
+  // ==================================================
+  // 只有「至少 1 封成功」才記錄 articles_sent
+  // 否則下次 workflow 掃描還會抓到這篇（避免全 fail 時誤登記已推過）
+  // ==================================================
+  if (successCount > 0) {
+    for (const a of articles) {
+      try {
+        await db.prepare(`
+          INSERT OR IGNORE INTO newsletter_articles_sent (article_slug, broadcast_id, first_included_at)
+          VALUES (?, ?, ?)
+        `).bind(a.slug, broadcast.id, finishedAt).run();
+      } catch (e) { /* silent */ }
+    }
   }
 
-  // 記錄 articles_sent（避免重複推）
-  for (const a of articles) {
-    try {
-      await db.prepare(`
-        INSERT OR IGNORE INTO newsletter_articles_sent (article_slug, broadcast_id, first_included_at)
-        VALUES (?, ?, ?)
-      `).bind(a.slug, broadcast.id, finishedAt).run();
-    } catch (e) { /* silent */ }
+  // ==================================================
+  // 收尾：更準確的 status 判斷
+  // - 全部成功 → sent
+  // - 全部失敗 → failed
+  // - 部分成功 → partial（新增的 status）
+  // ==================================================
+  let finalStatus;
+  let errorSummary = null;
+  if (failCount === 0) {
+    finalStatus = 'sent';
+  } else if (successCount === 0) {
+    finalStatus = 'failed';
+    // 取第一個 error 當摘要（通常同批全同錯誤，例如 daily quota）
+    errorSummary = failedResults[0]?.error || 'unknown';
+  } else {
+    finalStatus = 'partial';  // 部分成功
+    errorSummary = `${failCount}/${subscribers.length} failed. First error: ${failedResults[0]?.error || 'unknown'}`;
   }
 
-  // 收尾
   await db.prepare(`
     UPDATE newsletter_broadcasts
     SET status=?, finished_at=?, recipient_count=?, success_count=?, fail_count=?, error_summary=?
     WHERE id=?
   `).bind(
-    failCount === 0 ? 'sent' : (successCount === 0 ? 'failed' : 'sent'),
+    finalStatus,
     finishedAt,
     subscribers.length,
     successCount,
     failCount,
-    failCount ? `${failCount} failed out of ${subscribers.length}` : null,
+    errorSummary,
     broadcast.id,
   ).run();
 
@@ -190,9 +230,13 @@ export async function onRequestPost({ request, env }) {
     recipient_count: subscribers.length,
     success_count: successCount,
     fail_count: failCount,
+    final_status: finalStatus,  // ← 新欄位：sent / partial / failed
+    error_summary: errorSummary,
     articles_count: articles.length,
     triggered_by: actorEmail,
     finished_at: finishedAt,
+    // 第一個錯誤訊息（方便前端顯示）
+    first_error: failedResults[0]?.error || null,
   });
 }
 

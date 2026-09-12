@@ -89,6 +89,13 @@ export async function sendResendEmail(env, { to, subject, html, text, from, repl
 
 // ---------- Resend Batch API ----------
 // 一次最多 100 封；超過需分批。回傳 { ok, sent, failed, results[] }
+//
+// ★ 關鍵：Resend batch 有 3 種失敗情境要處理：
+//   1. HTTP 429/402 - Daily Quota / Rate limit（整批 fail，整體 HTTP 錯）
+//   2. HTTP 200 + data.data 中個別 item 有 error 欄位（部分 fail）
+//   3. HTTP 200 + data 沒 data.data 陣列（可能是 quota 中途撞牆，Resend 回不同格式）
+//
+// 舊版 bug: resp.ok=true 就整批當成功 → 撞 quota 時後台顯示已寄送，實際沒寄。
 export async function sendResendBatch(env, emails) {
   const RESEND_API_KEY = env.RESEND_API_KEY;
   if (!RESEND_API_KEY) throw new Error('Missing RESEND_API_KEY');
@@ -112,17 +119,52 @@ export async function sendResendBatch(env, emails) {
     });
     const data = await resp.json().catch(() => ({}));
 
-    if (resp.ok && Array.isArray(data.data)) {
-      // 成功
-      data.data.forEach((r, idx) => {
-        results.push({ ok: true, id: r.id, to: chunk[idx].to });
-        sent++;
+    if (!resp.ok) {
+      // 情境 1: HTTP 錯（429 rate limit、402 quota、5xx server error）
+      // Resend 錯誤訊息可能在 data.message 或 data.error
+      const topErrorMsg = data.message || data.error || `HTTP ${resp.status}`;
+      chunk.forEach(email => {
+        results.push({
+          ok: false,
+          to: email.to,
+          error: topErrorMsg,
+          http_status: resp.status,
+        });
+        failed++;
+      });
+    } else if (!Array.isArray(data.data)) {
+      // 情境 3: HTTP 200 但格式不對（極少見）
+      chunk.forEach(email => {
+        results.push({
+          ok: false,
+          to: email.to,
+          error: data.message || 'Unexpected response format from Resend',
+        });
+        failed++;
       });
     } else {
-      // 整批失敗
-      chunk.forEach(email => {
-        results.push({ ok: false, to: email.to, error: data.message || `HTTP ${resp.status}` });
-        failed++;
+      // 情境 2: HTTP 200 + data.data 陣列 → 檢查每個 item 個別 error
+      data.data.forEach((r, idx) => {
+        if (r && r.error) {
+          // 個別 email 失敗（Resend 有時候會這樣回）
+          results.push({
+            ok: false,
+            to: chunk[idx].to,
+            error: r.error.message || r.error || 'unknown item error',
+          });
+          failed++;
+        } else if (r && r.id) {
+          results.push({ ok: true, id: r.id, to: chunk[idx].to });
+          sent++;
+        } else {
+          // 有 item 但沒 id 也沒 error（不應該發生）
+          results.push({
+            ok: false,
+            to: chunk[idx].to,
+            error: 'no id or error in response item',
+          });
+          failed++;
+        }
       });
     }
 

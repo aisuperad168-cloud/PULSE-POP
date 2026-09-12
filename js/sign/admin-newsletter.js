@@ -155,6 +155,9 @@
       broadcastList.querySelectorAll('[data-action="run"]').forEach(btn => {
         btn.addEventListener('click', () => runBroadcast(parseInt(btn.dataset.id, 10)));
       });
+      broadcastList.querySelectorAll('[data-action="retry"]').forEach(btn => {
+        btn.addEventListener('click', () => retryBroadcast(parseInt(btn.dataset.id, 10)));
+      });
     } catch (e) {
       broadcastList.innerHTML = `<div style="text-align:center; padding:32px 20px; color:var(--sign-danger);">載入失敗：${e.message}</div>`;
     }
@@ -165,6 +168,7 @@
       pending: { label: '⏰ 待執行', color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
       sending: { label: '🚀 執行中', color: '#3b82f6', bg: 'rgba(59,130,246,0.1)' },
       sent:    { label: '✅ 已寄送', color: '#10b981', bg: 'rgba(16,185,129,0.1)' },
+      partial: { label: '⚠️ 部分成功', color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' },
       failed:  { label: '❌ 失敗',   color: '#ef4444', bg: 'rgba(239,68,68,0.1)' },
       cancelled:{ label: '⛔ 已取消', color: '#6b7280', bg: 'rgba(107,114,128,0.1)' },
     };
@@ -173,16 +177,27 @@
     const articlesPreview = articles.slice(0, 3).map(a => `<li>${escapeHtml(a.title || a.slug)}</li>`).join('')
       + (articles.length > 3 ? `<li style="color:var(--sign-text-mute);">…還有 ${articles.length - 3} 篇</li>` : '');
 
-    const actions = b.status === 'pending' ? `
-      <div style="display:flex; gap:8px; margin-top:8px;">
-        <button class="sign-btn sign-btn-primary" data-action="run" data-id="${b.id}" style="padding:6px 14px; font-size:12px;">立即寄送</button>
-        <button class="sign-btn sign-btn-secondary" data-action="cancel" data-id="${b.id}" style="padding:6px 14px; font-size:12px;">取消</button>
-      </div>
-    ` : '';
+    let actions = '';
+    if (b.status === 'pending') {
+      actions = `
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button class="sign-btn sign-btn-primary" data-action="run" data-id="${b.id}" style="padding:6px 14px; font-size:12px;">立即寄送</button>
+          <button class="sign-btn sign-btn-secondary" data-action="cancel" data-id="${b.id}" style="padding:6px 14px; font-size:12px;">取消</button>
+        </div>
+      `;
+    } else if ((b.status === 'partial' || b.status === 'failed') && b.fail_count > 0) {
+      actions = `
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button class="sign-btn sign-btn-primary" data-action="retry" data-id="${b.id}" style="padding:6px 14px; font-size:12px;">🔁 重寄失敗名單 (${b.fail_count})</button>
+        </div>
+      `;
+    }
 
-    const meta = b.status === 'sent' ? `
+    const showMeta = ['sent', 'partial', 'failed'].includes(b.status);
+    const meta = showMeta ? `
       <div style="font-size:12px; color:var(--sign-text-mute); margin-top:4px;">
-        收件 ${b.recipient_count} · 成功 ${b.success_count} · 失敗 ${b.fail_count}
+        收件 ${b.recipient_count} · 成功 <strong style="color:#10b981;">${b.success_count}</strong> · 失敗 <strong style="color:#ef4444;">${b.fail_count}</strong>
+        ${b.error_summary ? `<br/>⚠️ ${escapeHtml(b.error_summary)}` : ''}
       </div>` : '';
 
     return `
@@ -225,6 +240,39 @@
     } catch (e) { alert('網路錯誤：' + e.message); }
   }
 
+  async function retryBroadcast(id) {
+    if (!confirm(`重寄 broadcast #${id} 的失敗名單？\n\n系統會找出此次未成功的訂閱者，重新用 Resend 寄一次。\n\n⚠️ 若 Resend 每日配額還沒重置，仍會失敗，請等隔天再試。`)) return;
+    try {
+      const resp = await fetch(`${API_BASE}/admin-broadcast-retry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ broadcast_id: id }),
+      });
+      const data = await resp.json().catch(() => null);
+      if (data && data.ok) {
+        let msg = `重寄結果 (broadcast #${id})\n\n`
+          + `· 補寄 ${data.retried} 位\n`
+          + `· 成功: ${data.retry_sent}\n`
+          + `· 失敗: ${data.retry_failed}\n`
+          + `· 新狀態: ${data.new_status}\n`
+          + `· 累計成功: ${data.new_success_total} / ${data.new_success_total + data.new_fail_total}`;
+        if (data.first_error) {
+          msg += `\n\n第一個錯誤:\n${data.first_error}`;
+          if (data.first_error.includes('quota') || data.first_error.includes('Quota') || data.first_error.includes('daily')) {
+            msg += '\n\n💡 Resend 免費版每日 100 封上限，等隔天配額重置再試';
+          }
+        }
+        alert(msg);
+        loadBroadcasts();
+        loadSubscribers();
+      } else {
+        alert('❌ ' + extractError(data, resp));
+      }
+    } catch (e) {
+      alert('網路錯誤：' + e.message);
+    }
+  }
+
   async function runBroadcast(id) {
     if (!confirm(`⚠️ 確定立即寄送排程 #${id}？這會馬上寄給所有已確認訂閱者，無法撤回。`)) return;
     try {
@@ -235,7 +283,25 @@
       });
       const data = await resp.json().catch(() => null);
       if (data && data.ok) {
-        alert(`✅ 已寄送\n收件人 ${data.recipient_count} · 成功 ${data.success_count} · 失敗 ${data.fail_count}`);
+        // 依 final_status 顯示不同 icon 與提示
+        let icon = '✅';
+        let statusLabel = '已寄送';
+        if (data.final_status === 'failed') {
+          icon = '❌';
+          statusLabel = '全部失敗';
+        } else if (data.final_status === 'partial') {
+          icon = '⚠️';
+          statusLabel = '部分寄送';
+        }
+        let msg = `${icon} ${statusLabel}\n\n`
+          + `收件人 ${data.recipient_count} · 成功 ${data.success_count} · 失敗 ${data.fail_count}`;
+        if (data.first_error) {
+          msg += `\n\n第一個錯誤原因:\n${data.first_error}`;
+          if (data.first_error.includes('quota') || data.first_error.includes('Quota') || data.first_error.includes('daily')) {
+            msg += '\n\n💡 提示：Resend 免費版每日 100 封上限，可到 resend.com/settings/billing 升級 Pro ($20/月 = 50,000 封)';
+          }
+        }
+        alert(msg);
         loadBroadcasts();
         loadSubscribers();
       } else {
