@@ -22,6 +22,7 @@
   const refreshBtn = document.getElementById('nlRefreshBtn');
   const importBtn = document.getElementById('nlImportBtn');
   const retryFailedBtn = document.getElementById('nlRetryFailedBtn');
+  const previewDigestBtn = document.getElementById('nlPreviewDigestBtn');
   const filterStatus = document.getElementById('nlFilterStatus');
   const searchInput = document.getElementById('nlSearchInput');
 
@@ -339,6 +340,35 @@
       } finally {
         retryFailedBtn.disabled = false;
         retryFailedBtn.textContent = '🔁 重寄失敗信';
+      }
+    });
+  }
+
+  // ---------- Preview weekly digest ----------
+  if (previewDigestBtn) {
+    previewDigestBtn.addEventListener('click', async () => {
+      const email = prompt('寄週報預覽信到哪個 email？\n（留空 = 寄給你自己的 admin 帳號）', '') || '';
+      const trimmed = email.trim();
+      if (!confirm(`即將寄一封「[預覽] 週報信」到 ${trimmed || '你自己的 admin email'}\n\n這只是預覽，不會動到其他訂閱者。確定？`)) return;
+      previewDigestBtn.disabled = true;
+      previewDigestBtn.textContent = '寄送中…';
+      try {
+        const resp = await fetch(`${API_BASE}/admin-preview-digest`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(trimmed ? { to_email: trimmed } : {}),
+        });
+        const data = await resp.json().catch(() => null);
+        if (data && data.ok) {
+          alert(`${data.message}\n\n主旨：${data.subject}\n包含文章：${data.articles_count} 篇\n\n請去信箱看看（可能在垃圾郵件夾）`);
+        } else {
+          alert('❌ ' + extractError(data, resp));
+        }
+      } catch (e) {
+        alert('網路錯誤：' + e.message);
+      } finally {
+        previewDigestBtn.disabled = false;
+        previewDigestBtn.textContent = '👀 預覽週報信';
       }
     });
   }
