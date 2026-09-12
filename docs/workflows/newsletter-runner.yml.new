@@ -1,0 +1,87 @@
+name: Newsletter Broadcast Runner
+
+# 每 5 分鐘掃一次，若有 scheduled_at 到期的 broadcast 就執行寄送
+# 也支援手動觸發
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+# 避免並發（一次只跑一個）
+concurrency:
+  group: newsletter-runner
+  cancel-in-progress: false
+
+jobs:
+  run-due:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger broadcast-run API
+        env:
+          CRON_SECRET: ${{ secrets.NEWSLETTER_CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "❌ NEWSLETTER_CRON_SECRET not set"
+            exit 1
+          fi
+
+          # 呼叫 admin-broadcast-run（不帶 broadcast_id → 自動找到期 pending）
+          # -w '%{http_code}' 分離 body 與 HTTP status
+          RESPONSE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/admin-broadcast-run' \
+            -H "X-Cron-Secret: $CRON_SECRET" \
+            -H 'Content-Type: application/json' \
+            -w '\n---HTTP_CODE:%{http_code}' \
+            -d '{}')
+
+          HTTP_CODE=$(echo "$RESPONSE" | grep -oE '---HTTP_CODE:[0-9]+' | cut -d: -f2)
+          BODY=$(echo "$RESPONSE" | sed 's/---HTTP_CODE:[0-9]*$//')
+
+          echo "HTTP Code: $HTTP_CODE"
+          echo "Response body: $BODY"
+
+          # 情境 1: CF Access 擋掉（302 重定向到登入頁）
+          if [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "301" ]; then
+            echo "⚠️ Endpoint 被 Cloudflare Access 保護，X-Cron-Secret 無法通過"
+            echo "→ 請到 Cloudflare Zero Trust 把 /api/newsletter/admin-broadcast-run 從保護清單移除"
+            echo "→ 該端點內建 X-Cron-Secret 認證，本來就不需要 CF Access"
+            # 不當失敗，避免每 5 分鐘寄一封錯誤信
+            exit 0
+          fi
+
+          # 情境 2: 非 200
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ HTTP $HTTP_CODE (unexpected)"
+            exit 1
+          fi
+
+          # 情境 3: 200 但 body 不是有效 JSON（極少見）
+          if ! echo "$BODY" | jq . > /dev/null 2>&1; then
+            echo "❌ Response is not valid JSON"
+            exit 1
+          fi
+
+          OK=$(echo "$BODY" | jq -r '.ok // false')
+          if [ "$OK" != "true" ]; then
+            # 若是 no pending 或已被 admin 手動觸發，非錯誤
+            MSG=$(echo "$BODY" | jq -r '.message // ""')
+            case "$MSG" in
+              *"No pending"*|*"no pending"*|*"not_yet_scheduled"*)
+                echo "ℹ️ Nothing to do: $MSG"
+                exit 0
+                ;;
+            esac
+            echo "❌ Unexpected error: $BODY"
+            exit 1
+          fi
+
+          RECIPIENTS=$(echo "$BODY" | jq -r '.recipient_count // 0')
+          SUCCESS=$(echo "$BODY" | jq -r '.success_count // 0')
+          FAILED=$(echo "$BODY" | jq -r '.fail_count // 0')
+          STATUS=$(echo "$BODY" | jq -r '.final_status // "unknown"')
+          echo "✅ Broadcast executed: recipients=$RECIPIENTS success=$SUCCESS failed=$FAILED status=$STATUS"
+
+          # 如果全 fail 或部分 fail，log 出來但不當失敗（避免噪音信）
+          if [ "$STATUS" = "failed" ] || [ "$STATUS" = "partial" ]; then
+            FIRST_ERR=$(echo "$BODY" | jq -r '.first_error // "unknown"')
+            echo "⚠️ Broadcast had failures. First error: $FIRST_ERR"
+          fi
