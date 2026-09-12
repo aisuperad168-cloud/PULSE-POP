@@ -182,6 +182,8 @@ async function sendWelcomeEmailsAsync(env, subscribers, mode, source, sourceDeta
           tags: [{ name: 'category', value: `newsletter_${template}` }],
         });
 
+        const nowIso = new Date().toISOString();
+
         // 寫 log
         try {
           await db.prepare(`
@@ -195,8 +197,27 @@ async function sendWelcomeEmailsAsync(env, subscribers, mode, source, sourceDeta
             s.email,
           ).run();
         } catch (e) { /* silent log fail */ }
+
+        // 寄信成功 → UPDATE emails_sent + last_email_at
+        if (send.ok) {
+          try {
+            await db.prepare(`
+              UPDATE newsletter_subscribers
+              SET emails_sent = emails_sent + 1, last_email_at = ?, updated_at = ?
+              WHERE email = ?
+            `).bind(nowIso, nowIso, s.email).run();
+          } catch (e) { /* silent */ }
+        }
       } catch (err) {
         console.error(`[admin-import bg] Failed for ${s.email}:`, err.message);
+        // 即使 sendResendEmail throw（例如 Missing RESEND_API_KEY），也寫 log
+        try {
+          await db.prepare(`
+            INSERT INTO newsletter_email_logs (subscriber_id, to_email, template, subject, status, resend_id, error_message)
+            SELECT id, ?, ?, ?, 'failed', NULL, ?
+            FROM newsletter_subscribers WHERE email = ?
+          `).bind(s.email, mode === 'direct' ? 'welcome' : 'reengagement', '(exception)', err.message, s.email).run();
+        } catch (_) { /* silent */ }
       }
     }));
     // 每批間隔避免 Resend rate limit
