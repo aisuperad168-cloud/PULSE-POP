@@ -149,10 +149,14 @@ export async function onRequestPost(context) {
 
 /**
  * 背景執行寄信（不 block response）
+ *
+ * Rate limit 控制：Resend 免費方案 10 req/sec 上限
+ * 策略：每批 8 封平行送 + 每批間隔 1.2 秒 → 6.6 req/sec，安全值
  */
 async function sendWelcomeEmailsAsync(env, subscribers, mode, source, sourceDetail) {
   const db = env.DB;
-  const BATCH_SIZE = 20;
+  const BATCH_SIZE = 8;          // ↓ 20 → 8（避開 Resend 10/sec 限制）
+  const BATCH_INTERVAL_MS = 1200; // ↑ 1000 → 1200（多留 buffer）
 
   for (let i = 0; i < subscribers.length; i += BATCH_SIZE) {
     const chunk = subscribers.slice(i, i + BATCH_SIZE);
@@ -222,7 +226,7 @@ async function sendWelcomeEmailsAsync(env, subscribers, mode, source, sourceDeta
     }));
     // 每批間隔避免 Resend rate limit
     if (i + BATCH_SIZE < subscribers.length) {
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, BATCH_INTERVAL_MS));
     }
   }
 }

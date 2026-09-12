@@ -51,6 +51,7 @@ import * as nlAdminBroadcastCancel from './functions/api/newsletter/admin-broadc
 import * as nlAdminBroadcastRun from './functions/api/newsletter/admin-broadcast-run.js';
 import * as nlScheduleWeekly from './functions/api/newsletter/schedule-weekly.js';
 import * as nlAdminEmailLogs from './functions/api/newsletter/admin-email-logs.js';
+import * as nlAdminRetryFailed from './functions/api/newsletter/admin-retry-failed.js';
 // 動態路徑：/api/newsletter/confirm/{token} 和 /api/newsletter/unsubscribe/{token}
 import * as nlConfirm from './functions/api/newsletter/confirm/[token].js';
 import * as nlUnsubscribe from './functions/api/newsletter/unsubscribe/[token].js';
@@ -95,6 +96,7 @@ const API_ROUTES = {
   '/api/newsletter/admin-broadcast-run': nlAdminBroadcastRun,
   '/api/newsletter/schedule-weekly': nlScheduleWeekly,
   '/api/newsletter/admin-email-logs': nlAdminEmailLogs,
+  '/api/newsletter/admin-retry-failed': nlAdminRetryFailed,
 };
 
 export default {

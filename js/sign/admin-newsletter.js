@@ -21,6 +21,7 @@
   const subscriberList = document.getElementById('nlSubscriberList');
   const refreshBtn = document.getElementById('nlRefreshBtn');
   const importBtn = document.getElementById('nlImportBtn');
+  const retryFailedBtn = document.getElementById('nlRetryFailedBtn');
   const filterStatus = document.getElementById('nlFilterStatus');
   const searchInput = document.getElementById('nlSearchInput');
 
@@ -302,6 +303,34 @@
   function formatDate(iso) {
     if (!iso) return '-';
     return String(iso).replace('T', ' ').slice(0, 16);
+  }
+
+  // ---------- Retry failed emails ----------
+  if (retryFailedBtn) {
+    retryFailedBtn.addEventListener('click', async () => {
+      if (!confirm('確定重寄「上次因 rate limit 失敗」的歡迎信？\n\n系統會自動找出 email_logs 中失敗且尚未補寄成功的訂閱者，重新寄送。')) return;
+      retryFailedBtn.disabled = true;
+      retryFailedBtn.textContent = '重寄中…';
+      try {
+        const resp = await fetch(`${API_BASE}/admin-retry-failed`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ template: 'welcome', limit: 500 }),
+        });
+        const data = await resp.json().catch(() => null);
+        if (data && data.ok) {
+          alert(`✅ ${data.message}\n\n信會在 1-2 分鐘內陸續寄達，之後可回來按「🔄 重新整理」查看已寄封數。`);
+          loadSubscribers();
+        } else {
+          alert('❌ ' + extractError(data, resp));
+        }
+      } catch (e) {
+        alert('網路錯誤：' + e.message);
+      } finally {
+        retryFailedBtn.disabled = false;
+        retryFailedBtn.textContent = '🔁 重寄失敗信';
+      }
+    });
   }
 
   // ---------- Events ----------
