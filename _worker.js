@@ -42,6 +42,18 @@ import * as opsAdminDelete from './functions/api/ops/admin-delete.js';
 import * as statsPublic from './functions/api/stats/public.js';
 import * as statsIncrement from './functions/api/stats/increment.js';
 
+// 電子報系統 (/newsletter/*)
+import * as nlSubscribe from './functions/api/newsletter/subscribe.js';
+import * as nlAdminList from './functions/api/newsletter/admin-list.js';
+import * as nlAdminImport from './functions/api/newsletter/admin-import.js';
+import * as nlAdminBroadcasts from './functions/api/newsletter/admin-broadcasts.js';
+import * as nlAdminBroadcastCancel from './functions/api/newsletter/admin-broadcast-cancel.js';
+import * as nlAdminBroadcastRun from './functions/api/newsletter/admin-broadcast-run.js';
+import * as nlScheduleWeekly from './functions/api/newsletter/schedule-weekly.js';
+// 動態路徑：/api/newsletter/confirm/{token} 和 /api/newsletter/unsubscribe/{token}
+import * as nlConfirm from './functions/api/newsletter/confirm/[token].js';
+import * as nlUnsubscribe from './functions/api/newsletter/unsubscribe/[token].js';
+
 // ============ API 路由表 ============
 const API_ROUTES = {
   '/api/quiz-submit': quizHandler,
@@ -72,6 +84,15 @@ const API_ROUTES = {
   // 公開統計
   '/api/stats/public': statsPublic,
   '/api/stats/increment': statsIncrement,
+
+  // 電子報系統
+  '/api/newsletter/subscribe': nlSubscribe,
+  '/api/newsletter/admin-list': nlAdminList,
+  '/api/newsletter/admin-import': nlAdminImport,
+  '/api/newsletter/admin-broadcasts': nlAdminBroadcasts,
+  '/api/newsletter/admin-broadcast-cancel': nlAdminBroadcastCancel,
+  '/api/newsletter/admin-broadcast-run': nlAdminBroadcastRun,
+  '/api/newsletter/schedule-weekly': nlScheduleWeekly,
 };
 
 export default {
@@ -108,7 +129,47 @@ export default {
       }
     }
 
-    // ============ 1. API 路由處理 ============
+    // ============ 1-A. 動態路徑：/api/newsletter/confirm/{token} 與 /unsubscribe/{token} ============
+    // 這兩個 token 是變數，用正則配對
+    const confirmMatch = path.match(/^\/api\/newsletter\/confirm\/([0-9a-f]{32})$/i);
+    if (confirmMatch) {
+      const method = request.method.toUpperCase();
+      const handlerName = `onRequest${method.charAt(0)}${method.slice(1).toLowerCase()}`;
+      if (typeof nlConfirm[handlerName] === 'function') {
+        try {
+          return await nlConfirm[handlerName]({
+            request, env, ctx,
+            params: { token: confirmMatch[1] },
+            data: {},
+          });
+        } catch (err) {
+          console.error(`[/api/newsletter/confirm] handler error:`, err);
+          return new Response('Server error: ' + err.message, { status: 500 });
+        }
+      }
+      return new Response('Method not allowed', { status: 405 });
+    }
+
+    const unsubMatch = path.match(/^\/api\/newsletter\/unsubscribe\/([0-9a-f]{32})$/i);
+    if (unsubMatch) {
+      const method = request.method.toUpperCase();
+      const handlerName = `onRequest${method.charAt(0)}${method.slice(1).toLowerCase()}`;
+      if (typeof nlUnsubscribe[handlerName] === 'function') {
+        try {
+          return await nlUnsubscribe[handlerName]({
+            request, env, ctx,
+            params: { token: unsubMatch[1] },
+            data: {},
+          });
+        } catch (err) {
+          console.error(`[/api/newsletter/unsubscribe] handler error:`, err);
+          return new Response('Server error: ' + err.message, { status: 500 });
+        }
+      }
+      return new Response('Method not allowed', { status: 405 });
+    }
+
+    // ============ 1. API 路由處理（靜態路徑）============
     const handler = API_ROUTES[path];
     if (handler) {
       const method = request.method.toUpperCase();
