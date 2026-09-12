@@ -1,9 +1,6 @@
 name: Newsletter Weekly Digest
-
 # 每週一台灣時間 11:00 = UTC 週一 03:00
 # 加上手動觸發（workflow_dispatch）
-on:
-
 on:
   schedule:
     - cron: '0 3 * * 1'
