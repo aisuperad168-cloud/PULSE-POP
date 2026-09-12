@@ -310,7 +310,7 @@
     retryFailedBtn.addEventListener('click', async () => {
       if (!confirm('確定重寄「上次因 rate limit 失敗」的歡迎信？\n\n系統會自動找出 email_logs 中失敗且尚未補寄成功的訂閱者，重新寄送。')) return;
       retryFailedBtn.disabled = true;
-      retryFailedBtn.textContent = '重寄中…';
+      retryFailedBtn.textContent = '重寄中… (可能需 10-30 秒)';
       try {
         const resp = await fetch(`${API_BASE}/admin-retry-failed`, {
           method: 'POST',
@@ -319,7 +319,17 @@
         });
         const data = await resp.json().catch(() => null);
         if (data && data.ok) {
-          alert(`✅ ${data.message}\n\n信會在 1-2 分鐘內陸續寄達，之後可回來按「🔄 重新整理」查看已寄封數。`);
+          let msg = `✅ ${data.message}`;
+          if (data.debug) {
+            msg += `\n\n診斷：\n· 失敗紀錄 email 數: ${data.debug.failed_unique || 0}\n`
+              + `· 已補寄成功數: ${data.debug.sent_unique || 0}\n`
+              + `· 本次需重寄: ${data.debug.need_retry || 0}\n`
+              + `· 找到對應訂閱者: ${data.debug.matched_subscribers || 0}`;
+          }
+          if (data.errors && data.errors.length) {
+            msg += `\n\n前 ${data.errors.length} 個錯誤:\n` + data.errors.join('\n');
+          }
+          alert(msg);
           loadSubscribers();
         } else {
           alert('❌ ' + extractError(data, resp));
