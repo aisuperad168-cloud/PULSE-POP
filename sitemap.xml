@@ -54,7 +54,7 @@
 
   <url>
     <loc>https://jdi-pulse.com/careers</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/careers" />
@@ -63,7 +63,47 @@
     <image:image>
       <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
       <image:title>加入我們｜JDI 脈動傳媒 — 主播經紀人・直播間店長・剪輯師・社群小編招募</image:title>
-      <image:caption>JDI 脈動傳媒 8 大職缺招募中：主播經紀人、招募 BD、剪輯師、直播間店長、直播工程師、化妝師、社群小編、行政人資。台北 · 全職 · 月薪 30-60K。</image:caption>
+      <image:caption>JDI 脈動傳媒 8 大職缺招募中：主播經紀人、招募 BD、剪輯師、直播間店長、直播工程師、化妝師、社群小編、行政人資。台中 · 全職 · 月薪 30-60K。</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Per-job landing pages (3 hot roles) -->
+  <url>
+    <loc>https://jdi-pulse.com/careers/streamer-agent/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/careers/streamer-agent/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>主播經紀人 職缺 · 月薪 33-45K｜JDI 脈動傳媒（台中／可遠端）</image:title>
+      <image:caption>1v1 對接 20-40 位 TikTok LIVE 主播、直播 KPI、業配媒合。歡迎跨產業轉職者。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/careers/live-studio-manager/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/careers/live-studio-manager/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>直播間店長 / 場控 職缺 · 月薪 40-55K + 夜班津貼｜JDI 脈動傳媒（台中）</image:title>
+      <image:caption>5-8 個直播間包廂運營、10-15 位主播班表排程。KTV / 夜店 / 攝影棚背景可轉職。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/careers/live-tech-engineer/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/careers/live-tech-engineer/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>直播技術工程師 職缺 · 月薪 40-60K｜JDI 脈動傳媒（台中｜OBS / vMix / 推流）</image:title>
+      <image:caption>維護 5-8 個直播間網路、OBS / vMix 推流設定、燈光音響調校。攝影棚 / 電視台可轉職。</image:caption>
     </image:image>
   </url>
 
