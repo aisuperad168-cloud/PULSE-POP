@@ -319,6 +319,53 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/glory/" />
   </url>
 
+  <!-- 產業職涯（求職者導向，2026-09-13 新增） -->
+  <url>
+    <loc>https://jdi-pulse.com/live-center/career/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/career/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/career/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/career/" />
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/streamer-agent-day-in-life/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/streamer-agent-day-in-life/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/streamer-agent-day-hero.jpg</image:loc>
+      <image:title>直播經紀人一天做什麼？在 JDI 的 8 小時實錄</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/join-guild-employee-vs-streamer/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/join-guild-employee-vs-streamer/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/employee-vs-streamer-hero.jpg</image:loc>
+      <image:title>加入直播公會當員工 vs 當主播，差別在哪？7 個面向完整比較</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/2026-live-industry-job-guide/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/2026-live-industry-job-guide/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/live-center/live-industry-job-guide-hero.jpg</image:loc>
+      <image:title>直播產業 2026 求職指南：8 大職缺薪資 &amp; 技能地圖</image:title>
+    </image:image>
+  </url>
+
   <!-- ========== 直播中心文章 · 招募/活動政策（高優先） ========== -->
 
   <url>
