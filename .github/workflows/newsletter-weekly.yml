@@ -53,7 +53,7 @@ jobs:
           cat /tmp/new_articles.txt || echo "(empty)"
           echo "============================="
 
-                    # 建立 Python 解析腳本 (寫到檔案，避免 heredoc + stdin 衝突)
+          # 建立 Python 解析腳本 (寫到檔案，避免 heredoc + stdin 衝突)
           # BUG history: 之前用 `python3 - < input <<'PYEOF' script PYEOF` 兩個 stdin
           # 導致 script 讀不到 input，所有 article 都被 skip，article_count 永遠 0。
           cat > /tmp/parse_articles.py <<'PYEOF'
@@ -109,6 +109,14 @@ jobs:
           # 執行 script，stdin 從檔案讀入 (不再有 heredoc 衝突)
           python3 /tmp/parse_articles.py < /tmp/new_articles.txt > /tmp/articles.json
 
+          echo "==== Parsed articles JSON ===="
+          cat /tmp/articles.json
+          echo "============================="
+
+          ARTICLE_COUNT=$(jq 'length' /tmp/articles.json)
+          echo "article_count=$ARTICLE_COUNT"
+          echo "article_count=$ARTICLE_COUNT" >> $GITHUB_OUTPUT
+          {
             echo "articles_json<<EOFJSON"
             cat /tmp/articles.json
             echo "EOFJSON"
@@ -129,56 +137,44 @@ jobs:
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         run: |
           if [ -z "$CRON_SECRET" ]; then
-            echo "❌ NEWSLETTER_CRON_SECRET not set in repo secrets"
+            echo "❌ NEWSLETTER_CRON_SECRET not set"
             exit 1
-          fi
-
-          # 準備 CF Access headers（若有設定 Service Token）
-          CF_HEADERS=()
-          if [ -n "$CF_ACCESS_CLIENT_ID" ] && [ -n "$CF_ACCESS_CLIENT_SECRET" ]; then
-            CF_HEADERS=(-H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET")
-            echo "✓ Using CF Access Service Token"
           fi
 
           ARTICLES='${{ steps.scan.outputs.articles_json }}'
           PAYLOAD=$(jq -n \
             --argjson articles "$ARTICLES" \
             --arg delay "$DELAY_MIN" \
-            '{articles: $articles, delay_minutes: ($delay | tonumber), triggered_by: "github_action"}')
+            '{articles: $articles, delay_minutes: ($delay | tonumber)}')
+
+          echo "==== Payload ===="
+          echo "$PAYLOAD" | jq .
+          echo "================="
 
           echo "Calling schedule-weekly API..."
-          # 使用 -o 分離 body 到臨時檔，避免 grep 誤解 ---HTTP_CODE 前綴
-          HTTP_CODE=$(curl -sS -X POST 'https://jdi-pulse.com/api/newsletter/schedule-weekly' \
+          # 使用 -o 分離 body 到臨時檔，避免 grep 誤解 ---HTTP_CODE 前綴為 CLI option
+          HTTP_CODE=$(curl -sS -o /tmp/response.body -w "%{http_code}" \
+            -X POST "https://jdi-pulse.com/api/newsletter/schedule-weekly" \
+            -H "Content-Type: application/json" \
             -H "X-Cron-Secret: $CRON_SECRET" \
-            -H 'Content-Type: application/json' \
-            "${CF_HEADERS[@]}" \
-            -o /tmp/response.body \
-            -w '%{http_code}' \
+            -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+            -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
             -d "$PAYLOAD")
 
           BODY=$(cat /tmp/response.body)
-
-          echo "HTTP Code: $HTTP_CODE"
+          echo "HTTP $HTTP_CODE"
           echo "Response: $BODY"
 
-          if [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "301" ]; then
-            echo "⚠️ 被 Cloudflare Access 擋掉，請確認 CF_ACCESS_CLIENT_ID/SECRET 有設 + Access Application 有 Service Auth policy"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ schedule-weekly API failed"
             exit 1
           fi
 
-          OK=$(echo "$BODY" | jq -r '.ok')
+          # 檢查回應內容
+          OK=$(echo "$BODY" | jq -r '.ok // false')
           if [ "$OK" != "true" ]; then
-            SKIPPED=$(echo "$BODY" | jq -r '.skipped // false')
-            if [ "$SKIPPED" = "true" ]; then
-              echo "⚠️ Skipped (already sent or pending exists) — this is not an error"
-              exit 0
-            fi
-            echo "❌ schedule-weekly API returned non-OK"
+            echo "❌ API returned ok=false"
             exit 1
           fi
 
-      - name: Dry run summary
-        if: inputs.dry_run == 'true'
-        run: |
-          echo "🔍 Dry run mode: scanned but did not call API"
-          echo "Found ${{ steps.scan.outputs.article_count }} new articles"
+          echo "✅ Weekly digest scheduled successfully"
