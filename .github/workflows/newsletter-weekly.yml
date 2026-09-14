@@ -53,11 +53,15 @@ jobs:
           cat /tmp/new_articles.txt || echo "(empty)"
           echo "============================="
 
-          python3 - < /tmp/new_articles.txt > /tmp/articles.json <<'PYEOF'
+                    # 建立 Python 解析腳本 (寫到檔案，避免 heredoc + stdin 衝突)
+          # BUG history: 之前用 `python3 - < input <<'PYEOF' script PYEOF` 兩個 stdin
+          # 導致 script 讀不到 input，所有 article 都被 skip，article_count 永遠 0。
+          cat > /tmp/parse_articles.py <<'PYEOF'
           import json, re, sys
           from pathlib import Path
 
           new_list = [line.strip() for line in sys.stdin if line.strip()]
+          print(f"[parse] received {len(new_list)} article paths from stdin", file=sys.stderr)
           articles = []
           for rel in new_list:
               p = Path(rel)
@@ -86,6 +90,7 @@ jobs:
                       'tutorial': '📚 直播教學',
                       'revenue': '💰 收益策略',
                       'glory': '🏆 榮耀時刻',
+                      'career':  '💼 產業職涯',
                   }
                   category = cat_map.get(m.group(1), category)
 
@@ -97,17 +102,13 @@ jobs:
                   'hero': hero,
                   'category': category,
               })
+          print(f"[parse] built {len(articles)} article objects", file=sys.stderr)
           print(json.dumps(articles, ensure_ascii=False, indent=2))
           PYEOF
 
-          echo "==== Parsed articles JSON ===="
-          cat /tmp/articles.json
-          echo "============================="
+          # 執行 script，stdin 從檔案讀入 (不再有 heredoc 衝突)
+          python3 /tmp/parse_articles.py < /tmp/new_articles.txt > /tmp/articles.json
 
-          ARTICLE_COUNT=$(jq 'length' /tmp/articles.json)
-          echo "article_count=$ARTICLE_COUNT"
-          echo "article_count=$ARTICLE_COUNT" >> $GITHUB_OUTPUT
-          {
             echo "articles_json<<EOFJSON"
             cat /tmp/articles.json
             echo "EOFJSON"
