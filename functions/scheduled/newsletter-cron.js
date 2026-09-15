@@ -40,8 +40,22 @@ async function callBroadcastRun(env, ctx) {
 }
 
 /**
+ * 週報排除的分類 (訂閱者主要是主播，不寄求職者導向內容給他們)
+ *
+ * 目前排除：
+ *   - career (產業職涯) — 這個分類是給求職者看的，寄給主播訂閱者不相關
+ *
+ * 如果之後有其他分類想排除，加到這個 Set 即可。
+ */
+const EXCLUDED_NEWSLETTER_CATEGORIES = new Set([
+  'career',   // 💼 產業職涯 (給求職者看，非主播)
+]);
+
+/**
  * 從 sitemap.xml 抓過去 7 天新增的 live-center 文章
  * 回傳 [{slug, title, description, date, hero, category}, ...]
+ *
+ * 注意：會過濾掉 EXCLUDED_NEWSLETTER_CATEGORIES 內的分類
  */
 async function scanRecentArticles(env) {
   // 讀取 sitemap.xml（靜態檔）
@@ -107,8 +121,10 @@ async function scanRecentArticles(env) {
 
       // 分類：從 lc-tag--{cat} 抓
       let category = '📚 直播中心';
+      let categoryKey = null;
       const catMatch = html.match(/lc-tag lc-tag--(\w+)/);
       if (catMatch) {
+        categoryKey = catMatch[1];
         const catMap = {
           creator: '🎨 主播專欄',
           policy: '📢 活動政策',
@@ -117,7 +133,13 @@ async function scanRecentArticles(env) {
           glory: '🏆 榮耀時刻',
           career: '💼 產業職涯',
         };
-        category = catMap[catMatch[1]] || category;
+        category = catMap[categoryKey] || category;
+      }
+
+      // 過濾掉不想寄給主播訂閱者的分類 (例如求職者導向的 career)
+      if (categoryKey && EXCLUDED_NEWSLETTER_CATEGORIES.has(categoryKey)) {
+        console.log(`[cron] Skip article ${item.slug} (excluded category: ${categoryKey})`);
+        continue;
       }
 
       articles.push({
