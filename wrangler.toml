@@ -29,6 +29,18 @@ html_handling = "auto-trailing-slash"
 # 沒這行的話 assets 會先攔截所有請求，/api/* 會被 SPA fallback 到 index.html
 run_worker_first = true
 
+# ============ Cron Triggers（取代 GitHub Actions 的 workflow schedules） ============
+# scheduled() handler 在 _worker.js，路由到 functions/scheduled/newsletter-cron.js
+#
+# 兩個 cron pattern (Cloudflare 用 UTC 時區)：
+#   - '*/5 * * * *'  每 5 分鐘 → broadcast-run (取代 newsletter-runner.yml)
+#   - '0 3 * * 1'    週一 UTC 03:00 (= 台灣 11:00) → 週報排程 (取代 newsletter-weekly.yml)
+[triggers]
+crons = [
+  "*/5 * * * *",
+  "0 3 * * 1"
+]
+
 # ============ 非機密環境變數（可 commit）============
 [vars]
 MAIL_FROM = "noreply@jdi-pulse.com"

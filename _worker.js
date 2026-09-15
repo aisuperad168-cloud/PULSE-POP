@@ -59,6 +59,9 @@ import * as nlAdminBroadcastRetry from './functions/api/newsletter/admin-broadca
 import * as nlConfirm from './functions/api/newsletter/confirm/[token].js';
 import * as nlUnsubscribe from './functions/api/newsletter/unsubscribe/[token].js';
 
+// Cloudflare Workers Cron (scheduled 事件處理，取代 GitHub Actions)
+import { handleScheduled as newsletterScheduled } from './functions/scheduled/newsletter-cron.js';
+
 // ============ API 路由表 ============
 const API_ROUTES = {
   '/api/quiz-submit': quizHandler,
@@ -246,5 +249,20 @@ export default {
 
     // ============ 3. 其他靜態資源交給 Assets ============
     return env.ASSETS.fetch(request);
+  },
+
+  /**
+   * ============================================================
+   * scheduled() - Cloudflare Workers Cron 觸發入口
+   * ============================================================
+   * 由 wrangler.toml 的 [triggers] crons 觸發：
+   *   - '*.5 * * * *'  (每 5 分鐘) → broadcast-run
+   *   - '0 3 * * 1'    (週一 UTC 03:00 = 台灣 11:00) → 週報排程
+   *
+   * 詳細邏輯見 functions/scheduled/newsletter-cron.js
+   * ============================================================
+   */
+  async scheduled(event, env, ctx) {
+    return await newsletterScheduled(event, env, ctx);
   },
 };
