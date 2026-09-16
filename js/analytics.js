@@ -7,6 +7,7 @@
  * 目前追蹤：
  *   1. Cloudflare Web Analytics (即時流量 / 隱私友善 / 無 cookie)
  *   2. Google Analytics 4 (深度事件追蹤 / 轉換分析)
+ *   3. Meta Pixel (Facebook / Instagram 廣告受眾建立 & 轉換追蹤)
  *
  * 隱私原則：
  *   - 敏感頁面（含身分證/銀行/合約檢視）→ 只追蹤 pageview，不追蹤欄位內容
@@ -24,6 +25,7 @@
   // ============ 設定 ============
   const CF_TOKEN = '2ebdcb57b2a64ae6b412fc6e2d606ce9';
   const GA_ID = 'G-74RJK20F2B';
+  const META_PIXEL_ID = '2246962252754517';
 
   // 敏感頁面白名單（只追蹤 pageview，不記詳細參數）
   const SENSITIVE_PATHS = [
@@ -76,7 +78,38 @@
     document.head.appendChild(s);
   })();
 
-  // ============ 3. 自訂事件追蹤 helper ============
+  // ============ 3. Meta Pixel (Facebook / Instagram) ============
+  // https://developers.facebook.com/docs/meta-pixel/
+  (function initMetaPixel() {
+    if (!META_PIXEL_ID) return;
+    // 官方 snippet (轉為 IIFE 安全版)
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;
+      n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+      t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
+    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', META_PIXEL_ID);
+    window.fbq('track', 'PageView');
+  })();
+
+  // 統一送出到 GA4 + Meta Pixel 的 helper
+  // 用法：fbqTrack('Lead', { content_name: 'LINE click' })
+  //       fbqTrack('CustomEvent', {...}, true)  ← 第三個參數 true 送 trackCustom
+  function fbqTrack(event, params, isCustom) {
+    if (!window.fbq) return;
+    try {
+      if (isCustom) {
+        window.fbq('trackCustom', event, params || {});
+      } else {
+        window.fbq('track', event, params || {});
+      }
+    } catch (e) { /* silent */ }
+  }
+
+  // ============ 4. 自訂事件追蹤 helper ============
   // 給其他 JS 呼叫：window.jdiTrack('event_name', { param: value })
   window.jdiTrack = function (eventName, params) {
     try {
@@ -84,9 +117,12 @@
     } catch (e) { /* 靜默失敗，不影響網站運作 */ }
   };
 
-  // ============ 4. 自動追蹤重要互動 ============
+  // 也對外暴露 fbqTrack，讓其他頁面 JS 可以主動觸發（例如訂閱成功回呼）
+  window.jdiFbqTrack = fbqTrack;
+
+  // ============ 5. 自動追蹤重要互動 ============
   document.addEventListener('DOMContentLoaded', function () {
-    // 4-1: LINE 按鈕點擊
+    // 5-1: LINE 按鈕點擊 → GA4 line_click + Meta Pixel Lead
     document.querySelectorAll('a[href*="line.me"], a[href*="line://"]').forEach(el => {
       el.addEventListener('click', () => {
         window.jdiTrack('line_click', {
@@ -94,30 +130,55 @@
           link_text: (el.textContent || '').trim().substring(0, 30),
           page_path: location.pathname,
         });
+        // Meta Pixel: LINE 諮詢 = 高意圖 Lead
+        fbqTrack('Lead', {
+          content_name: 'LINE Contact',
+          content_category: 'line_click',
+          source: location.pathname,
+        });
       });
     });
 
-    // 4-2: 電話按鈕點擊
+    // 5-2: 電話按鈕點擊 → GA4 phone_click + Meta Pixel Contact
     document.querySelectorAll('a[href^="tel:"]').forEach(el => {
       el.addEventListener('click', () => {
         window.jdiTrack('phone_click', {
           phone: el.getAttribute('href').replace('tel:', ''),
           page_path: location.pathname,
         });
+        fbqTrack('Contact', {
+          content_name: 'Phone Call',
+          content_category: 'phone_click',
+          source: location.pathname,
+        });
       });
     });
 
-    // 4-3: Email 點擊
+    // 5-3: Email 點擊 → GA4 email_click + Meta Pixel Contact
     document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
       el.addEventListener('click', () => {
         window.jdiTrack('email_click', {
           email: el.getAttribute('href').replace('mailto:', '').split('?')[0],
           page_path: location.pathname,
         });
+        fbqTrack('Contact', {
+          content_name: 'Email Contact',
+          content_category: 'email_click',
+          source: location.pathname,
+        });
       });
     });
 
-    // 4-4: 外部連結點擊
+    // 5-4: 主播測驗完成頁 → Meta Pixel CompleteRegistration
+    // 兩個測驗都導向 /streamer-test/thanks/
+    if (location.pathname.indexOf('/streamer-test/thanks') === 0) {
+      fbqTrack('CompleteRegistration', {
+        content_name: 'Streamer Test Complete',
+        status: true,
+      });
+    }
+
+    // 5-5: 外部連結點擊
     document.querySelectorAll('a[target="_blank"]').forEach(el => {
       const href = el.href || '';
       if (!href) return;
@@ -136,7 +197,7 @@
       } catch (e) { /* invalid URL */ }
     });
 
-    // 4-5: 表單送出（通用）
+    // 5-6: 表單送出（通用）
     document.querySelectorAll('form').forEach(form => {
       form.addEventListener('submit', () => {
         window.jdiTrack('form_submit', {
@@ -148,7 +209,7 @@
     });
   });
 
-  // ============ 5. 頁面停留時間追蹤 ============
+  // ============ 6. 頁面停留時間追蹤 ============
   let pageStart = Date.now();
   window.addEventListener('beforeunload', function () {
     const duration = Math.round((Date.now() - pageStart) / 1000);
