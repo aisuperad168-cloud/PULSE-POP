@@ -70,6 +70,18 @@
           } else if (window.gtag) {
             window.gtag('event', 'newsletter_subscribe_submit', { source });
           }
+          // 追蹤 Meta Pixel Subscribe（僅在真正新訂閱或重新訂閱時觸發）
+          if (data.status === 'subscribed' || data.status === 'resubscribed') {
+            if (window.jdiFbqTrack) {
+              window.jdiFbqTrack('Subscribe', {
+                content_name: 'Newsletter Subscribe',
+                content_category: source,
+                status: data.status,
+              });
+            } else if (window.fbq) {
+              window.fbq('track', 'Subscribe', { content_name: 'Newsletter Subscribe' });
+            }
+          }
         } else {
           showMsg(msgEl, 'error', (data.error && data.error.message) || '訂閱失敗，請稍後再試');
         }
