@@ -33,7 +33,7 @@ export async function onRequestGet({ request, env, params }) {
     return htmlResult({
       icon: '⚠️',
       title: '找不到這筆訂閱',
-      message: '可能是這個連結已失效。若你想確認訂閱狀態，可透過 <a href="mailto:pulsepop9@gmail.com">pulsepop9@gmail.com</a> 聯繫我們。',
+      message: '可能是這個連結已失效。若你想確認訂閱狀態，可透過 <a href="mailto:pulsepop@jdi-pulse.com">pulsepop@jdi-pulse.com</a> 聯繫我們。',
       env,
     });
   }

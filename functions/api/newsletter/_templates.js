@@ -193,7 +193,7 @@ export function renderUnsubscribedEmail(env, { email }) {
     <p style="font-size:13px; color:${TEXT_MUTE}; margin-top:24px;">
       如果是不小心點到退訂，可以回到<a href="${siteBase(env)}/live-center/">直播中心</a>再次訂閱。<br/>
       若有任何直播 / 合作問題，仍歡迎透過 LINE <a href="https://line.me/R/ti/p/@354ykfbp">@354ykfbp</a> 或 Email
-      <a href="mailto:pulsepop9@gmail.com">pulsepop9@gmail.com</a> 聯繫我們。
+      <a href="mailto:pulsepop@jdi-pulse.com">pulsepop@jdi-pulse.com</a> 聯繫我們。
     </p>
   `;
   return {
