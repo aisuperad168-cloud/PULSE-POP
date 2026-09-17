@@ -63,7 +63,7 @@
 
 **面試流程**：3 關（履歷 5 天內回覆 → 線上初試 30 分鐘 → 台中直播間複試 60-90 分鐘）
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -100,7 +100,7 @@
 - 勞健保、勞退提撥 6%、特休、年終 1-3 個月
 - 員工旅遊、免費員工餐
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -135,7 +135,7 @@
 - 勞健保、勞退提撥 6%、年終 1-3 個月
 - 遠端友善（每週 2 天到辦公室，其餘可遠端）
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -175,7 +175,7 @@
 
 **輪班時段**：早班 14:00-23:00 / 晚班 17:00-02:00（**目前無大夜班**）
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -216,7 +216,7 @@
 
 **技術棧**：OBS Studio · vMix · Blackmagic ATEM Mini Pro · Cisco Catalyst · Ubiquiti UniFi · Yamaha AG03 / GoXLR mini
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -252,7 +252,7 @@
 - 妝品採購決策參與權
 - 勞健保、勞退提撥 6%、特休、年終
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -288,7 +288,7 @@
 - 勞健保、勞退提撥 6%、年終 1-3 個月
 - 員工旅遊、直播間免費使用
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -322,7 +322,7 @@
 - 勞健保、勞退提撥 6%、特休、年終 1-3 個月
 - 員工旅遊、免費員工餐
 
-**聯絡方式**：pulsepop9@gmail.com｜LINE @354ykfbp
+**聯絡方式**：pulsepop@jdi-pulse.com｜LINE @354ykfbp
 
 ---
 
@@ -332,7 +332,7 @@
 
 - URL：https://www.cake.me/companies
 - 步驟：
-  1. 註冊「企業版」帳號（用 pulsepop9@gmail.com）
+  1. 註冊「企業版」帳號（用 pulsepop@jdi-pulse.com）
   2. 建立公司頁面：
      - 公司名稱：JDI 脈動傳媒
      - 公司英文名：JDI PULSE MEDIA
@@ -344,7 +344,7 @@
      - 公司 Logo：上傳 `assets/logo_jdi_pulse.png`
   3. 逐一新增 8 個職缺（複製上面 8 個職缺文案）
   4. 在職缺敘述最下方加：「詳細職缺說明：{landing page URL}」
-  5. 開啟「接收履歷通知」到 pulsepop9@gmail.com
+  5. 開啟「接收履歷通知」到 pulsepop@jdi-pulse.com
 - **時效**：24 小時內審核通過
 - **建議**：先發 3 個熱門職缺（經紀人 / 店長 / 工程師）測水溫，觀察一週投遞量再全發
 

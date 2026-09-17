@@ -55,7 +55,7 @@
 | **Logo** | 上傳 `assets/logo_jdi_pulse.png`（300x300 px 或更大） |
 | **Tagline** | TikTok LIVE 官方合作經紀公會 · 台灣 300+ 優質主播的家 |
 
-**驗證**：LinkedIn 會要求你用公司信箱驗證（例：`pulsepop9@gmail.com` 需要有 `@jdi-pulse.com` 域名 email 更佳）。若沒有域名 email，可能會被降權。
+**驗證**：LinkedIn 會要求你用公司信箱驗證（例：`pulsepop@jdi-pulse.com` 需要有 `@jdi-pulse.com` 域名 email 更佳）。若沒有域名 email，可能會被降權。
 
 ---
 
@@ -104,7 +104,7 @@ JDI 脈動傳媒是一家專注於 TikTok LIVE、17LIVE、陸抖三大平台的�
 
 ═══════════════════════════════════
 
-投遞履歷：pulsepop9@gmail.com
+投遞履歷：pulsepop@jdi-pulse.com
 LINE 諮詢：@354ykfbp
 完整職缺：https://jdi-pulse.com/careers
 ```
@@ -301,11 +301,11 @@ Day 0-5: 履歷篩選 → Day 6-12: 線上初試 30 分鐘
 
 📄 完整職缺說明：https://jdi-pulse.com/careers/streamer-agent/
 💬 有問題？LINE @354ykfbp
-📧 履歷投遞：pulsepop9@gmail.com
+📧 履歷投遞：pulsepop@jdi-pulse.com
 ```
 
 **Application settings**:
-- ✅ 收履歷到 `pulsepop9@gmail.com`
+- ✅ 收履歷到 `pulsepop@jdi-pulse.com`
 - ✅ 開啟 "Easy Apply"（LinkedIn 內建投遞）
 - 或加外部連結：`https://jdi-pulse.com/careers/streamer-agent/`
 

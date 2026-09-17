@@ -49,7 +49,7 @@ https://www.cake.me/companies
 
 如果你已經有個人 Cake 帳號可以直接用（切換到企業版），沒有的話新註冊：
 
-- Email：`pulsepop9@gmail.com`
+- Email：`pulsepop@jdi-pulse.com`
 - 密碼：安全的密碼（建議用密碼管理器產生）
 - 公司名稱：`JDI 脈動傳媒`
 
@@ -118,7 +118,7 @@ JDI 脈動傳媒專注於 TikTok LIVE、17LIVE、陸抖三大平台的直播經�
 ▸ 社群小編 / 內容編輯（32-42K，可高比例遠端）
 ▸ 行政 / 人資（30-38K）
 
-投遞履歷：pulsepop9@gmail.com
+投遞履歷：pulsepop@jdi-pulse.com
 LINE 諮詢：@354ykfbp
 完整職缺：https://jdi-pulse.com/careers
 ```
@@ -223,7 +223,7 @@ Talent Manager, 藝人經紀, 主播經紀, TikTok LIVE, 直播經紀, MCN,
 ### 3-5. 收件方式
 
 - ✅ 開啟「透過 Cake 收履歷」
-- ✅ 加寄一份到 `pulsepop9@gmail.com`
+- ✅ 加寄一份到 `pulsepop@jdi-pulse.com`
 
 ### 3-6. 儲存 → 發布
 
@@ -278,7 +278,7 @@ OBS, vMix, 直播工程師, 影音技術, 網管, 推流,
 - ✅ 完整公司頁面（含 About、Logo、特色標籤）
 - ✅ 3 個熱門職缺已提交審核
 - ✅ 24 小時內上架
-- ✅ 履歷會自動寄到 `pulsepop9@gmail.com`
+- ✅ 履歷會自動寄到 `pulsepop@jdi-pulse.com`
 - ✅ **Google Jobs 會抓 Cake 資料 → 額外 SEO 曝光**
 
 ---
@@ -319,7 +319,7 @@ OBS, vMix, 直播工程師, 影音技術, 網管, 推流,
 
 ## 💬 收到履歷後的 SOP
 
-Cake 會把履歷寄到 `pulsepop9@gmail.com`。JDI 承諾**5 個工作天內回覆**，所以：
+Cake 會把履歷寄到 `pulsepop@jdi-pulse.com`。JDI 承諾**5 個工作天內回覆**，所以：
 
 1. **每日檢查**信箱（最好設個 filter 標記 "Cake" 為紅色）
 2. **收到履歷 24 小時內回一個「已收到」的自動回覆**（Cake 有內建功能可設定）
@@ -345,7 +345,7 @@ XX 您好：
 祝您順利找到理想的工作！
 
 JDI 脈動傳媒 HR
-pulsepop9@gmail.com
+pulsepop@jdi-pulse.com
 ```
 
 ---
