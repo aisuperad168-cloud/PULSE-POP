@@ -33,15 +33,39 @@
   .lc-section-fig--portrait { max-width: 520px; margin-left: auto; margin-right: auto; }
   /* 等級表格樣式（水平捲動 for 手機） */
   .lc-level-table-wrap { overflow-x: auto; margin: 24px 0; -webkit-overflow-scrolling: touch; }
-  .lc-level-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
-  .lc-level-table th, .lc-level-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eaeaea; vertical-align: top; line-height: 1.5; }
-  .lc-level-table thead th { background: linear-gradient(135deg, #E8392A 0%, #FE2C55 100%); color: #fff; font-weight: 700; }
-  .lc-level-table tbody tr:hover { background: #fafafa; }
-  .lc-level-table .lvl { font-weight: 700; color: #E8392A; white-space: nowrap; }
-  .lc-level-table .tier-bronze { background: #f0f7ff; }
-  .lc-level-table .tier-silver { background: #f4f0ff; }
-  .lc-level-table .tier-gold { background: #fff9e6; }
-  .lc-level-table .tier-top { background: #fce6ff; }
+  .lc-level-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; background: #fff; }
+  .lc-level-table th,
+  .lc-level-table td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+    line-height: 1.55;
+    color: #1a1a1a;            /* 明確指定深色文字，避免繼承全站 muted color */
+  }
+  .lc-level-table thead th {
+    background: linear-gradient(135deg, #E8392A 0%, #FE2C55 100%);
+    color: #fff !important;    /* 標題保持白字 */
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .lc-level-table tbody td strong { color: #0a0a0a; }           /* strong 更黑 */
+  .lc-level-table tbody td { color: #1a1a1a; }                  /* 覆蓋所有 tbody 儲存格 */
+  .lc-level-table .lvl {
+    font-weight: 800;
+    color: #C02818;            /* 加深紅色，跟淡色背景對比夠 */
+    white-space: nowrap;
+    font-size: 15px;
+  }
+  /* 四階段背景色 —— 加深一點確保與深色文字對比 */
+  .lc-level-table .tier-bronze { background: #E3F0FF; }         /* 淡藍 */
+  .lc-level-table .tier-silver { background: #EDE4FF; }         /* 淡藍紫 */
+  .lc-level-table .tier-gold   { background: #FFF3D1; }         /* 淡金黃 */
+  .lc-level-table .tier-top    { background: #FBD4FA; }         /* 淡粉紫 */
+  /* 手機 hover 相容處理 —— 不因觸控而變淡色 */
+  @media (hover: hover) {
+    .lc-level-table tbody tr:hover { filter: brightness(1.02); }
+  }
 </style>
 
 <script type="application/ld+json">
@@ -262,16 +286,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="tier-bronze"><td rowspan="3"><strong>🥉 青銅階段</strong><br/><span style="color:#555;font-size:12px;">（藍色）</span></td><td class="lvl">1 級</td><td>藍色倒三角徽章</td><td>—</td><td>基礎送禮者身分標識</td></tr>
+            <tr class="tier-bronze"><td rowspan="3"><strong>🥉 青銅階段</strong><br/><span style="color:#333;font-size:12px;font-weight:500;">（藍色）</span></td><td class="lvl">1 級</td><td>藍色倒三角徽章</td><td>—</td><td>基礎送禮者身分標識</td></tr>
             <tr class="tier-bronze"><td class="lvl">5 級</td><td>藍色倒三角徽章</td><td>—</td><td>送禮者身分標識</td></tr>
             <tr class="tier-bronze"><td class="lvl">10 級</td><td>藍色倒三角徽章</td><td>100 金幣「彩虹愛心」</td><td>專屬晉級慶祝特效</td></tr>
-            <tr class="tier-silver"><td rowspan="3"><strong>🥈 白銀階段</strong><br/><span style="color:#555;font-size:12px;">（藍紫色）</span></td><td class="lvl">15 級</td><td>藍色方塊徽章</td><td>500 金幣「TikTok 禮物」</td><td>等級飛船特效</td></tr>
+            <tr class="tier-silver"><td rowspan="3"><strong>🥈 白銀階段</strong><br/><span style="color:#333;font-size:12px;font-weight:500;">（藍紫色）</span></td><td class="lvl">15 級</td><td>藍色方塊徽章</td><td>500 金幣「TikTok 禮物」</td><td>等級飛船特效</td></tr>
             <tr class="tier-silver"><td class="lvl">20 級</td><td>藍色菱形徽章</td><td>1,000 金幣「熱氣球禮物」</td><td>—</td></tr>
             <tr class="tier-silver"><td class="lvl">25 級</td><td>紫色菱形徽章</td><td>4,888 金幣「飛機禮物」</td><td>晉級慶祝、<strong>進場聚光燈</strong>、夜行客與守護者特效 <strong>← 守護者門檻</strong></td></tr>
-            <tr class="tier-gold"><td rowspan="3"><strong>🥇 黃金階段</strong><br/><span style="color:#555;font-size:12px;">（金色）</span></td><td class="lvl">30 級</td><td>紫金菱形徽章</td><td>20,000 金幣「宇宙球禮物」</td><td>頂級聚船特效</td></tr>
+            <tr class="tier-gold"><td rowspan="3"><strong>🥇 黃金階段</strong><br/><span style="color:#333;font-size:12px;font-weight:500;">（金色）</span></td><td class="lvl">30 級</td><td>紫金菱形徽章</td><td>20,000 金幣「宇宙球禮物」</td><td>頂級聚船特效</td></tr>
             <tr class="tier-gold"><td class="lvl">35 級</td><td>金邊菱形徽章</td><td>—</td><td>晉級慶祝、進場聚光燈</td></tr>
             <tr class="tier-gold"><td class="lvl">40 級</td><td>紫色八面體徽章</td><td>34,999 金幣「TikTok Live 禮物」</td><td><strong>🎧 VIP 快速客服專屬通道</strong></td></tr>
-            <tr class="tier-top"><td rowspan="4"><strong>👑 頂級階段</strong><br/><span style="color:#555;font-size:12px;">（頂級）</span></td><td class="lvl">43 級</td><td>—</td><td>39,999 金幣「獨角鷹禮物」</td><td>—</td></tr>
+            <tr class="tier-top"><td rowspan="4"><strong>👑 頂級階段</strong><br/><span style="color:#333;font-size:12px;font-weight:500;">（頂級）</span></td><td class="lvl">43 級</td><td>—</td><td>39,999 金幣「獨角鷹禮物」</td><td>—</td></tr>
             <tr class="tier-top"><td class="lvl">45 級</td><td>金邊六邊形徽章</td><td>—</td><td>—</td></tr>
             <tr class="tier-top"><td class="lvl">46 級</td><td>—</td><td>41,999 金幣「鳳凰禮物」</td><td>—</td></tr>
             <tr class="tier-top"><td class="lvl">50 級</td><td><strong>頂級送禮者榮耀徽章</strong></td><td>42,999 金幣「獨角獸禮物」</td><td><strong>全平台稀有頂級榮譽</strong></td></tr>
