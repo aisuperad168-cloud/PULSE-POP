@@ -43,6 +43,7 @@ import * as statsPublic from './functions/api/stats/public.js';
 import * as statsIncrement from './functions/api/stats/increment.js';
 import * as statsArticleView from './functions/api/stats/article-view.js';
 import * as statsHotArticles from './functions/api/stats/hot-articles.js';
+import * as statsSeedTitles from './functions/api/stats/seed-titles.js';
 
 // 電子報系統 (/newsletter/*)
 import * as nlSubscribe from './functions/api/newsletter/subscribe.js';
@@ -93,6 +94,7 @@ const API_ROUTES = {
   '/api/stats/increment': statsIncrement,
   '/api/stats/article-view': statsArticleView,
   '/api/stats/hot-articles': statsHotArticles,
+  '/api/stats/seed-titles': statsSeedTitles,
 
   // 電子報系統
   '/api/newsletter/subscribe': nlSubscribe,
