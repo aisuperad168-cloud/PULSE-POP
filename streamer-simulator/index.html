@@ -390,6 +390,235 @@
     .sim-option { padding: 14px 16px; font-size: 14px; }
     .sim-hero-meta { gap: 20px; }
   }
+
+  /* ============ Share Modal (v2 · 2026-09-18) ============ */
+  .sim-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .sim-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: fadeIn 0.3s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .sim-modal-panel {
+    position: relative;
+    background: linear-gradient(180deg, #1a1a24 0%, #14141e 100%);
+    border: 1px solid rgba(255, 197, 61, 0.25);
+    border-radius: 20px;
+    padding: 24px 20px 20px;
+    max-width: 480px;
+    width: 100%;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    animation: modalSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 197, 61, 0.08);
+  }
+  @keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .sim-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .sim-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: rotate(90deg);
+  }
+
+  /* 抽獎橫幅 */
+  .sim-lottery-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(255, 197, 61, 0.15) 0%, rgba(255, 100, 40, 0.12) 100%);
+    border: 1px solid rgba(255, 197, 61, 0.3);
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .sim-lottery-icon {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .sim-lottery-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .sim-lottery-text strong {
+    color: var(--sim-gold);
+    font-weight: 700;
+  }
+  .sim-lottery-text span {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+  }
+
+  .sim-modal-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+    margin: 4px 0 6px;
+    line-height: 1.3;
+  }
+  .sim-modal-sub {
+    text-align: center;
+    color: var(--sim-text-dim);
+    font-size: 13.5px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  /* 分享圖預覽 */
+  .sim-modal-preview-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 300px;
+    margin: 0 auto 18px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--sim-border);
+  }
+  .sim-modal-preview {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sim-modal-preview.is-loading {
+    opacity: 0;
+  }
+  .sim-modal-preview-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+  .sim-modal-preview-loading.is-hidden {
+    display: none;
+  }
+
+  /* Modal 內按鈕群 */
+  .sim-modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .sim-modal-actions .sim-btn {
+    width: 100%;
+    justify-content: center;
+    position: relative;
+  }
+  .sim-btn-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    background: #fff;
+    color: var(--sim-red);
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+
+  .sim-lottery-rules {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--sim-border);
+    border-radius: 10px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .sim-lottery-rules summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--sim-cyan);
+    padding: 2px 0;
+    outline: none;
+  }
+  .sim-lottery-rules summary:hover { color: #7ff7f1; }
+  .sim-lottery-rules ol {
+    margin-top: 10px;
+    padding-left: 20px;
+    line-height: 1.65;
+  }
+  .sim-lottery-rules li {
+    margin-bottom: 6px;
+  }
+  .sim-lottery-rules a {
+    color: var(--sim-green);
+    text-decoration: underline;
+  }
+
+  .sim-modal-later {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    font-size: 13px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .sim-modal-later:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background: transparent;
+  }
+
+  @media (max-width: 480px) {
+    .sim-modal { padding: 10px; }
+    .sim-modal-panel { padding: 20px 16px 16px; border-radius: 16px; }
+    .sim-modal-title { font-size: 19px; }
+    .sim-modal-preview-wrap { max-width: 240px; }
+    .sim-lottery-icon { font-size: 26px; }
+  }
+
+  /* 隱藏原本的 share-preview（改到 modal 內） */
+  .sim-share-preview { display: none !important; }
 </style>
 
 </head>
@@ -479,42 +708,97 @@
     </div>
   </section>
 
-  <!-- ============ RESULT ============ -->
+  <!-- ============ RESULT (簡短版：只顯示分型 + 主 CTA) ============ -->
   <section id="simResult" class="sim-hide">
     <div class="sim-result">
       <span class="sim-result-title-tag">🏆 你的主播人格</span>
       <h1 class="sim-result-title" id="simResultTitle">-</h1>
       <p class="sim-result-score">臨場反應力 <strong id="simResultScore">-</strong> 分</p>
       <div class="sim-result-desc" id="simResultDesc"></div>
-      <canvas id="simShareCanvas" width="1080" height="1080" style="display:none;"></canvas>
-      <img id="simSharePreview" class="sim-share-preview sim-hide" alt="你的主播人格分享圖" />
-      <div class="sim-actions">
-        <!-- 系統原生分享（手機優先）：偵測到支援時顯示，否則隱藏 -->
+
+      <!-- 展開全部細節按鈕（如需查看策略建議） -->
+      <button class="sim-btn sim-btn--ghost sim-hide" id="simRetryBtn" type="button" style="margin-top: 12px;">
+        🔄 再測一次
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ SHARE MODAL (獨立浮層 · 完成後跳出) ============ -->
+  <div id="simShareModal" class="sim-modal sim-hide" role="dialog" aria-modal="true" aria-labelledby="simModalTitle">
+    <div class="sim-modal-backdrop" id="simModalBackdrop"></div>
+    <div class="sim-modal-panel">
+      <button class="sim-modal-close" id="simModalClose" aria-label="關閉">×</button>
+
+      <!-- 抽獎橫幅 -->
+      <div class="sim-lottery-banner">
+        <div class="sim-lottery-icon">🎁</div>
+        <div class="sim-lottery-text">
+          <strong>分享 + 截圖給官方 LINE = 抽 iPhone 保護殼 / LINE 貼圖</strong>
+          <span>每月抽 5 位分享的朋友！</span>
+        </div>
+      </div>
+
+      <h2 id="simModalTitle" class="sim-modal-title">🎉 完成！立即分享你的結果</h2>
+      <p class="sim-modal-sub">分享你的主播人格，讓朋友也來測，參加每月抽獎</p>
+
+      <!-- 分享圖預覽 -->
+      <div class="sim-modal-preview-wrap">
+        <img id="simSharePreview" class="sim-modal-preview" alt="你的主播人格分享圖" />
+        <div class="sim-modal-preview-loading" id="simPreviewLoading">
+          <div class="sim-loading">正在為你產生專屬分享圖...</div>
+        </div>
+      </div>
+
+      <!-- 主分享按鈕（自動偵測 native / download）-->
+      <div class="sim-modal-actions">
         <button class="sim-btn sim-btn--primary sim-hide" id="simShareNative" type="button">
-          📱 分享到其他應用
+          📱 立即分享到社群
         </button>
-        <!-- 下載圖片（桌機優先，或作為 fallback）：預設隱藏，JS 決定顯示 -->
         <a href="#" class="sim-btn sim-btn--primary sim-hide" id="simShareDownload" download="jdi-streamer-type.png">
           📸 下載分享圖
         </a>
-        <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line">
-          💬 LINE 諮詢加入 JDI
+        <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line" id="simLineShareBtn">
+          💬 截圖給官方 LINE 抽獎
+          <span class="sim-btn-badge">HOT</span>
         </a>
-        <button class="sim-btn sim-btn--ghost" id="simRetryBtn">
-          🔄 再測一次
-        </button>
       </div>
+
       <!-- 分享狀態提示 -->
       <p class="sim-share-hint" id="simShareHint"></p>
+
+      <!-- 抽獎規則 -->
+      <details class="sim-lottery-rules">
+        <summary>🎁 抽獎規則說明</summary>
+        <ol>
+          <li>完成模擬器測驗後，將專屬分享圖分享到 <strong>IG / Threads / FB 動態</strong>（公開設定）</li>
+          <li>截圖你的分享畫面，傳給 <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">@354ykfbp</a> 官方 LINE</li>
+          <li>每月月底抽出 <strong>5 位分享者</strong>，可獲得：
+            <ul style="margin-top:6px;padding-left:20px;">
+              <li>🏆 iPhone / Android 潮牌保護殼</li>
+              <li>🎁 精選 LINE 貼圖組合包</li>
+              <li>🎧 藍牙耳機（頭獎）</li>
+            </ul>
+          </li>
+          <li>抽獎結果會在官方 LINE + IG 公布</li>
+          <li>限台灣地區，實體獎品需提供收件地址</li>
+        </ol>
+      </details>
+
+      <button class="sim-btn sim-btn--ghost sim-modal-later" id="simModalLater" type="button">
+        稍後再說
+      </button>
+
+      <!-- 隱藏 canvas 給圖片產生用 -->
+      <canvas id="simShareCanvas" width="1080" height="1080" style="display:none;"></canvas>
     </div>
-  </section>
+  </div>
 
 </main>
 
 <!-- 品牌浮水印 Logo（給 canvas 用，隱藏） -->
 <img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" crossorigin="anonymous" style="display:none;" />
 
-<script src="/js/streamer-simulator.js?v=20260917b"></script>
+<script src="/js/streamer-simulator.js?v=20260918a"></script>
 
 <link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
 <script src="/js/activity-toast.js?v=20260917b" defer></script>
