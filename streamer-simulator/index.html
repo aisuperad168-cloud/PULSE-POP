@@ -340,6 +340,26 @@
     align-items: center;
   }
   .sim-actions .sim-btn { width: 100%; max-width: 320px; justify-content: center; }
+  .sim-btn--primary.is-loading {
+    pointer-events: none;
+    opacity: 0.7;
+    cursor: wait;
+  }
+  .sim-share-hint {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--sim-text-dim);
+    text-align: center;
+    min-height: 20px;
+    transition: color 0.2s;
+  }
+  .sim-share-hint.is-success {
+    color: var(--sim-green);
+    font-weight: 600;
+  }
+  .sim-share-hint.is-error {
+    color: #ff6b6b;
+  }
 
   /* Utils */
   .sim-hide { display: none !important; }
@@ -469,7 +489,12 @@
       <canvas id="simShareCanvas" width="1080" height="1080" style="display:none;"></canvas>
       <img id="simSharePreview" class="sim-share-preview sim-hide" alt="你的主播人格分享圖" />
       <div class="sim-actions">
-        <a href="#" class="sim-btn sim-btn--primary" id="simShareDownload" download="jdi-streamer-type.png">
+        <!-- 系統原生分享（手機優先）：偵測到支援時顯示，否則隱藏 -->
+        <button class="sim-btn sim-btn--primary sim-hide" id="simShareNative" type="button">
+          📱 分享到其他應用
+        </button>
+        <!-- 下載圖片（桌機優先，或作為 fallback）：預設隱藏，JS 決定顯示 -->
+        <a href="#" class="sim-btn sim-btn--primary sim-hide" id="simShareDownload" download="jdi-streamer-type.png">
           📸 下載分享圖
         </a>
         <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line">
@@ -479,6 +504,8 @@
           🔄 再測一次
         </button>
       </div>
+      <!-- 分享狀態提示 -->
+      <p class="sim-share-hint" id="simShareHint"></p>
     </div>
   </section>
 
@@ -487,7 +514,7 @@
 <!-- 品牌浮水印 Logo（給 canvas 用，隱藏） -->
 <img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" crossorigin="anonymous" style="display:none;" />
 
-<script src="/js/streamer-simulator.js?v=20260917"></script>
+<script src="/js/streamer-simulator.js?v=20260917b"></script>
 
 <link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
 <script src="/js/activity-toast.js?v=20260917b" defer></script>
