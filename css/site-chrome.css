@@ -154,7 +154,12 @@
   .site-nav-inner {
     height: 56px;
     padding: 0 16px;
-    gap: 12px;
+    gap: 10px;
+  }
+  /* Brand 推到最左，並用 margin-right:auto 撐開右側元素 */
+  .site-nav-brand {
+    margin-right: auto;
+    min-width: 0; /* 允許 flex item 縮小以避免 overflow */
   }
   .site-nav-brand img { height: 28px; }
   .site-nav-brand-txt .zh { font-size: 14px; }
@@ -188,20 +193,38 @@
     padding: 12px 14px;
     font-size: 15px;
   }
+  /* Toggle: 順序調整到最右邊，並統一視覺大小 */
+  .site-nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    order: 3; /* 確保排在 CTA 之後（最右）*/
+  }
+  /* CTA: 縮成 icon-only 圓形，與 Toggle 尺寸一致 */
   .site-nav-cta {
-    padding: 6px 12px;
-    font-size: 13px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 999px;
+    order: 2;
   }
   .site-nav-cta span { display: none; } /* hide "LINE 諮詢" text, keep only icon */
   .site-nav-cta svg:last-child { display: none; }
-  .site-nav-toggle { display: inline-flex; align-items: center; }
 }
 
 /* Very small phones */
 @media (max-width: 480px) {
   .site-nav-brand-txt .en { display: none; }
   .site-nav-brand-txt .zh { font-size: 13px; }
-  .site-nav-inner { gap: 8px; }
+  .site-nav-inner { gap: 8px; padding: 0 12px; }
+  .site-nav-toggle, .site-nav-cta {
+    width: 38px;
+    height: 38px;
+  }
 }
 @media (max-width: 360px) {
   .site-nav-brand-txt { display: none; }
