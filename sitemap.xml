@@ -167,6 +167,21 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://jdi-pulse.com/streamer-simulator/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/streamer-simulator/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/streamer-simulator/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/streamer-simulator/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/og_banner.jpg</image:loc>
+      <image:title>主播開播模擬器｜60 秒測你的臨場反應力</image:title>
+      <image:caption>5 個直播現場情境，測出你的主播人格分數（0-15 分）與適合的主播路線。結果可下載分享圖到 IG / Threads。</image:caption>
+    </image:image>
+  </url>
+
   <!-- ========== 主播頁 ========== -->
 
   <url>

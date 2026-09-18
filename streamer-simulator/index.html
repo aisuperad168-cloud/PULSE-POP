@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ========== PRIMARY SEO ========== -->
+<title>主播開播模擬器｜5 題測你的臨場反應力 · JDI 脈動傳媒</title>
+<meta name="description" content="想當主播卻不知道自己適不適合？5 題情境模擬直播現場真實狀況，60 秒測出你的臨場反應力分數與適合的主播路線。可分享到 IG / Threads。100% 免費。" />
+<meta name="keywords" content="主播模擬器, 主播測驗, 直播模擬, TikTok 主播, 開播模擬, 主播適合度, 臨場反應" />
+<meta name="author" content="JDI 脈動傳媒 JDI Pulse MEDIA" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#E8392A" />
+
+<link rel="canonical" href="https://jdi-pulse.com/streamer-simulator/" />
+
+<!-- Favicon -->
+<link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260820b" sizes="180x180" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="JDI 脈動傳媒" />
+<meta property="og:title" content="主播開播模擬器｜60 秒測你的臨場反應力" />
+<meta property="og:description" content="5 題情境模擬直播現場，測出你的主播人格分數與路線建議" />
+<meta property="og:url" content="https://jdi-pulse.com/streamer-simulator/" />
+<meta property="og:image" content="https://jdi-pulse.com/assets/og_banner.jpg?v=20260819" />
+<meta property="og:locale" content="zh_TW" />
+
+<!-- Schema.org Quiz -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Quiz",
+  "name": "主播開播模擬器",
+  "description": "5 題情境測驗你的直播臨場反應力",
+  "provider": { "@type": "Organization", "name": "JDI 脈動傳媒", "url": "https://jdi-pulse.com/" },
+  "numberOfQuestions": 5,
+  "timeRequired": "PT1M"
+}
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" />
+
+<link rel="stylesheet" href="/css/site-chrome.css?v=20260917-line-green" />
+<script src="/js/analytics.js?v=20260915" defer></script>
+
+<style>
+  :root {
+    --sim-bg: #0a0a0f;
+    --sim-bg-2: #14141e;
+    --sim-surface: rgba(255, 255, 255, 0.04);
+    --sim-border: rgba(255, 255, 255, 0.1);
+    --sim-text: #F5F5F7;
+    --sim-text-dim: rgba(245, 245, 247, 0.6);
+    --sim-red: #E8392A;
+    --sim-cyan: #25F4EE;
+    --sim-gold: #FFC53D;
+    --sim-green: #06C755;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--sim-bg);
+    color: var(--sim-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Layout */
+  .sim-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* Hero (intro) */
+  .sim-hero { text-align: center; padding: 20px 0 40px; }
+  .sim-hero-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 197, 61, 0.12);
+    color: var(--sim-gold);
+    border: 1px solid rgba(255, 197, 61, 0.3);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+  }
+  .sim-hero h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E0E0E8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sim-hero p {
+    color: var(--sim-text-dim);
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto 30px;
+  }
+  .sim-hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  .sim-hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .sim-hero-meta-num {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--sim-cyan);
+    font-family: 'Inter', sans-serif;
+  }
+  .sim-hero-meta-label {
+    font-size: 12px;
+    color: var(--sim-text-dim);
+  }
+  .sim-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .sim-btn--primary {
+    background: linear-gradient(135deg, #E8392A 0%, #FF5444 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(232, 57, 42, 0.35);
+  }
+  .sim-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232, 57, 42, 0.5);
+  }
+  .sim-btn--line {
+    background: var(--sim-green);
+    color: #fff;
+  }
+  .sim-btn--line:hover {
+    background: #05B84C;
+    transform: translateY(-2px);
+  }
+  .sim-btn--ghost {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--sim-text);
+    border: 1px solid var(--sim-border);
+  }
+  .sim-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Progress */
+  .sim-progress {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .sim-progress-dot {
+    width: 32px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    transition: background 0.3s;
+  }
+  .sim-progress-dot.active { background: var(--sim-red); }
+  .sim-progress-dot.done { background: var(--sim-cyan); }
+
+  /* Question card */
+  .sim-question {
+    background: var(--sim-surface);
+    border: 1px solid var(--sim-border);
+    border-radius: 20px;
+    padding: 32px 24px;
+    margin-bottom: 20px;
+    animation: fadeSlideIn 0.4s ease-out;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .sim-q-num {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(37, 244, 238, 0.12);
+    color: var(--sim-cyan);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .sim-q-scenario {
+    font-size: 14px;
+    color: var(--sim-text-dim);
+    margin-bottom: 6px;
+  }
+  .sim-q-text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+  .sim-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .sim-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid var(--sim-border);
+    border-radius: 14px;
+    text-align: left;
+    cursor: pointer;
+    color: var(--sim-text);
+    font-size: 15px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    width: 100%;
+  }
+  .sim-option:hover {
+    background: rgba(232, 57, 42, 0.08);
+    border-color: rgba(232, 57, 42, 0.4);
+    transform: translateY(-1px);
+  }
+  .sim-option-key {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--sim-text-dim);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+  }
+  .sim-option:hover .sim-option-key {
+    background: var(--sim-red);
+    color: #fff;
+  }
+  .sim-option-text {
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  /* Result */
+  .sim-result {
+    text-align: center;
+    animation: fadeSlideIn 0.5s ease-out;
+  }
+  .sim-result-title-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 197, 61, 0.15);
+    color: var(--sim-gold);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+  .sim-result-title {
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #FFD56B 0%, #FFA000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sim-result-score {
+    font-size: 16px;
+    color: var(--sim-text-dim);
+    margin-bottom: 24px;
+  }
+  .sim-result-score strong {
+    color: var(--sim-cyan);
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+  }
+  .sim-result-desc {
+    background: var(--sim-surface);
+    border: 1px solid var(--sim-border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(245, 245, 247, 0.85);
+  }
+  .sim-result-highlight {
+    color: var(--sim-cyan);
+    font-weight: 700;
+  }
+  .sim-share-preview {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 20px auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--sim-border);
+  }
+  .sim-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+  .sim-actions .sim-btn { width: 100%; max-width: 320px; justify-content: center; }
+
+  /* Utils */
+  .sim-hide { display: none !important; }
+  .sim-loading {
+    text-align: center;
+    color: var(--sim-text-dim);
+    padding: 40px 20px;
+    font-size: 15px;
+  }
+  .sim-loading::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(37, 244, 238, 0.3);
+    border-top-color: var(--sim-cyan);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 480px) {
+    .sim-wrap { padding: 24px 14px 60px; }
+    .sim-question { padding: 24px 18px; }
+    .sim-q-text { font-size: 17px; }
+    .sim-option { padding: 14px 16px; font-size: 14px; }
+    .sim-hero-meta { gap: 20px; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- ============ SITE NAV ============ -->
+<nav class="site-nav" data-active="test" aria-label="主導覽">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
+      <span class="site-nav-brand-txt">
+        <span class="zh">JDI 脈動傳媒</span>
+        <span class="en">JDI PULSE MEDIA</span>
+      </span>
+    </a>
+    <button class="site-nav-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="siteNavLinks">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="site-nav-links" id="siteNavLinks">
+      <li><a href="/" data-key="home">首頁</a></li>
+      <li><a href="/join.html" data-key="join">加入我們</a></li>
+      <li><a href="/partnership.html" data-key="partnership">商業合作</a></li>
+      <li><a href="/streamer-test/" data-key="test">主播測驗</a></li>
+      <li><a href="/live-center/" data-key="live-center">直播中心</a></li>
+      <li><a href="/faq.html" data-key="faq">新人 FAQ</a></li>
+    </ul>
+    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="site-nav-cta" aria-label="LINE 諮詢">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+      <span>LINE 諮詢</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+<script>
+  (function(){
+    var btn = document.querySelector('.site-nav-toggle');
+    var links = document.getElementById('siteNavLinks');
+    if(!btn || !links) return;
+    btn.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+<main class="sim-wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section id="simIntro" class="sim-hero">
+    <span class="sim-hero-badge">🎬 主播開播模擬器</span>
+    <h1>60 秒測你的<br/>「主播臨場反應力」</h1>
+    <p>5 個真實直播情境，測出你的主播人格分數與適合的路線。<br/>結果可分享到 IG / Threads，看看朋友是哪一型！</p>
+    <div class="sim-hero-meta">
+      <div class="sim-hero-meta-item">
+        <span class="sim-hero-meta-num">5</span>
+        <span class="sim-hero-meta-label">題情境</span>
+      </div>
+      <div class="sim-hero-meta-item">
+        <span class="sim-hero-meta-num">60s</span>
+        <span class="sim-hero-meta-label">完成時間</span>
+      </div>
+      <div class="sim-hero-meta-item">
+        <span class="sim-hero-meta-num">5</span>
+        <span class="sim-hero-meta-label">主播分型</span>
+      </div>
+    </div>
+    <button class="sim-btn sim-btn--primary" id="simStartBtn">
+      🎯 開始模擬
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="simQuiz" class="sim-hide">
+    <div class="sim-progress" id="simProgress"></div>
+    <div class="sim-question" id="simQuestion">
+      <span class="sim-q-num" id="simQNum">Q 1 / 5</span>
+      <div class="sim-q-scenario" id="simQScenario"></div>
+      <h2 class="sim-q-text" id="simQText"></h2>
+      <div class="sim-options" id="simOptions"></div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="simResult" class="sim-hide">
+    <div class="sim-result">
+      <span class="sim-result-title-tag">🏆 你的主播人格</span>
+      <h1 class="sim-result-title" id="simResultTitle">-</h1>
+      <p class="sim-result-score">臨場反應力 <strong id="simResultScore">-</strong> 分</p>
+      <div class="sim-result-desc" id="simResultDesc"></div>
+      <canvas id="simShareCanvas" width="1080" height="1080" style="display:none;"></canvas>
+      <img id="simSharePreview" class="sim-share-preview sim-hide" alt="你的主播人格分享圖" />
+      <div class="sim-actions">
+        <a href="#" class="sim-btn sim-btn--primary" id="simShareDownload" download="jdi-streamer-type.png">
+          📸 下載分享圖
+        </a>
+        <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line">
+          💬 LINE 諮詢加入 JDI
+        </a>
+        <button class="sim-btn sim-btn--ghost" id="simRetryBtn">
+          🔄 再測一次
+        </button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 品牌浮水印 Logo（給 canvas 用，隱藏） -->
+<img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" crossorigin="anonymous" style="display:none;" />
+
+<script src="/js/streamer-simulator.js?v=20260917"></script>
+
+<link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
+<script src="/js/activity-toast.js?v=20260917b" defer></script>
+</body>
+</html>
