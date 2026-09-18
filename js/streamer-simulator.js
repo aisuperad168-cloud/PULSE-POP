@@ -121,12 +121,14 @@
   function startQuiz() {
     state.current = 0;
     state.scores = [];
+    closeShareModal(); // 保險：關閉可能開著的 modal
     $('simIntro').classList.add('sim-hide');
     $('simQuiz').classList.remove('sim-hide');
     $('simResult').classList.add('sim-hide');
+    $('simRetryBtn').classList.add('sim-hide');
     renderProgress();
     renderQuestion();
-    // GA / Pixel 追蹤（如果有）
+    // GA / Pixel 追蹤
     try {
       if (window.gtag) window.gtag('event', 'simulator_start', { event_category: 'streamer_simulator' });
       if (window.fbq) window.fbq('trackCustom', 'SimulatorStart');
@@ -189,80 +191,21 @@
     var total = state.scores.reduce(function (a, b) { return a + b; }, 0);
     var result = getResult(total);
 
+    // 顯示結果頁（分型 + 詳細描述）
     $('simQuiz').classList.add('sim-hide');
     $('simResult').classList.remove('sim-hide');
-
     $('simResultTitle').textContent = result.emoji + ' ' + result.title;
     $('simResultScore').textContent = total;
     $('simResultDesc').innerHTML = result.desc;
+    $('simRetryBtn').classList.remove('sim-hide');
 
     currentShare.result = result;
     currentShare.score = total;
 
-    // 分享圖只在使用者需要時才產生（省效能）
-    $('simSharePreview').classList.add('sim-hide');
-    var nativeBtn = $('simShareNative');
-    var dlBtn = $('simShareDownload');
-    var hint = $('simShareHint');
-    hint.textContent = '';
-    hint.className = 'sim-share-hint';
+    // 回到頁頂
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // 判斷該顯示哪個按鈕
-    var canNative = supportsNativeShare();
-
-    // 先隱藏兩個 CTA button，等圖生成完再顯示對的
-    nativeBtn.classList.add('sim-hide');
-    dlBtn.classList.add('sim-hide');
-    nativeBtn.classList.add('is-loading');
-    nativeBtn.textContent = '⏳ 準備分享圖中...';
-
-    // 500ms 後產生分享圖
-    setTimeout(function () {
-      generateShareImage(result, total).then(function (dataUrl) {
-        $('simSharePreview').src = dataUrl;
-        $('simSharePreview').classList.remove('sim-hide');
-
-        currentShare.dataUrl = dataUrl;
-        currentShare.blob = dataUrlToBlob(dataUrl);
-        try {
-          currentShare.file = new File([currentShare.blob], 'jdi-streamer-type.png', { type: 'image/png' });
-        } catch (e) {
-          currentShare.file = null;
-        }
-
-        // 決定顯示哪個按鈕
-        var canShareFile = canNative && currentShare.file && navigator.canShare && navigator.canShare({ files: [currentShare.file] });
-
-        if (canShareFile || (canNative && !currentShare.file)) {
-          // 手機優先：原生分享按鈕
-          nativeBtn.classList.remove('sim-hide');
-          nativeBtn.classList.remove('is-loading');
-          nativeBtn.innerHTML = '📱 分享到其他應用';
-          // 桌機也保留下載圖作為 secondary
-          if (!isMobile()) {
-            dlBtn.classList.remove('sim-hide');
-            dlBtn.classList.remove('sim-btn--primary');
-            dlBtn.classList.add('sim-btn--ghost');
-          }
-        } else {
-          // 桌機或不支援：只顯示下載
-          dlBtn.classList.remove('sim-hide');
-          dlBtn.classList.remove('sim-btn--ghost');
-          dlBtn.classList.add('sim-btn--primary');
-        }
-        dlBtn.href = dataUrl;
-
-      }).catch(function (err) {
-        console.error('[simulator] share image error:', err);
-        // 失敗至少讓下載按鈕顯示
-        dlBtn.classList.remove('sim-hide');
-        dlBtn.classList.add('sim-btn--primary');
-        hint.textContent = '⚠️ 分享圖產生失敗，請再試一次';
-        hint.classList.add('is-error');
-      });
-    }, 400);
-
-    // Analytics
+    // Analytics: complete
     try {
       if (window.gtag) window.gtag('event', 'simulator_complete', {
         event_category: 'streamer_simulator',
@@ -275,8 +218,94 @@
       });
     } catch (e) { /* ignore */ }
 
-    // 回到頁頂
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 800ms 後跳出分享 modal
+    setTimeout(function () {
+      openShareModal(result, total);
+    }, 800);
+  }
+
+  function openShareModal(result, total) {
+    var modal = $('simShareModal');
+    if (!modal) return;
+
+    // 重置狀態
+    var hint = $('simShareHint');
+    hint.textContent = '';
+    hint.className = 'sim-share-hint';
+
+    var nativeBtn = $('simShareNative');
+    var dlBtn = $('simShareDownload');
+    nativeBtn.classList.add('sim-hide');
+    dlBtn.classList.add('sim-hide');
+
+    var preview = $('simSharePreview');
+    var previewLoading = $('simPreviewLoading');
+    preview.classList.add('is-loading');
+    previewLoading.classList.remove('is-hidden');
+
+    modal.classList.remove('sim-hide');
+    document.body.style.overflow = 'hidden'; // 鎖 scroll
+
+    // Analytics: modal_open
+    try {
+      if (window.gtag) window.gtag('event', 'simulator_share_modal_open', {
+        event_category: 'streamer_simulator',
+        result_type: result.title,
+      });
+    } catch (e) { /* ignore */ }
+
+    // 產生分享圖
+    generateShareImage(result, total).then(function (dataUrl) {
+      preview.src = dataUrl;
+      preview.classList.remove('is-loading');
+      previewLoading.classList.add('is-hidden');
+
+      currentShare.dataUrl = dataUrl;
+      currentShare.blob = dataUrlToBlob(dataUrl);
+      try {
+        currentShare.file = new File([currentShare.blob], 'jdi-streamer-type.png', { type: 'image/png' });
+      } catch (e) {
+        currentShare.file = null;
+      }
+
+      // 決定顯示按鈕
+      var canNative = supportsNativeShare();
+      var canShareFile = canNative && currentShare.file && navigator.canShare && navigator.canShare({ files: [currentShare.file] });
+
+      if (canShareFile || (canNative && !currentShare.file)) {
+        // 手機優先
+        nativeBtn.classList.remove('sim-hide');
+        nativeBtn.innerHTML = '📱 立即分享到社群';
+        if (!isMobile()) {
+          // 桌機也保留下載作為 secondary
+          dlBtn.classList.remove('sim-hide');
+          dlBtn.classList.remove('sim-btn--primary');
+          dlBtn.classList.add('sim-btn--ghost');
+        }
+      } else {
+        // 桌機或不支援
+        dlBtn.classList.remove('sim-hide');
+        dlBtn.classList.remove('sim-btn--ghost');
+        dlBtn.classList.add('sim-btn--primary');
+      }
+      dlBtn.href = dataUrl;
+
+    }).catch(function (err) {
+      console.error('[simulator] share image error:', err);
+      dlBtn.classList.remove('sim-hide');
+      dlBtn.classList.add('sim-btn--primary');
+      preview.classList.remove('is-loading');
+      previewLoading.classList.add('is-hidden');
+      hint.textContent = '⚠️ 分享圖產生失敗，請再試一次';
+      hint.classList.add('is-error');
+    });
+  }
+
+  function closeShareModal() {
+    var modal = $('simShareModal');
+    if (!modal) return;
+    modal.classList.add('sim-hide');
+    document.body.style.overflow = '';
   }
 
   // ============ Native Share 邏輯 ============
@@ -324,19 +353,9 @@
     }
 
     navigator.share(shareData).then(function () {
-      hint.textContent = '✅ 分享成功！';
+      hint.innerHTML = '✅ 分享成功！別忘了<strong style="color:#FFC53D">截圖給官方 LINE 抽獎</strong> 🎁';
       hint.classList.add('is-success');
-      // Analytics
-      try {
-        if (window.gtag) window.gtag('event', 'simulator_share_native', {
-          event_category: 'streamer_simulator',
-          result_type: currentShare.result.title,
-        });
-        if (window.fbq) window.fbq('trackCustom', 'SimulatorShare', {
-          method: 'native',
-          result: currentShare.result.title,
-        });
-      } catch (e) { /* ignore */ }
+      trackShare('native');
     }).catch(function (err) {
       // 使用者取消不算錯
       if (err && err.name === 'AbortError') {
@@ -352,6 +371,7 @@
   }
 
   function retryQuiz() {
+    closeShareModal();
     startQuiz();
   }
 
@@ -515,25 +535,54 @@
   function init() {
     $('simStartBtn').addEventListener('click', startQuiz);
     $('simRetryBtn').addEventListener('click', retryQuiz);
+
     var nativeBtn = $('simShareNative');
     if (nativeBtn) nativeBtn.addEventListener('click', handleNativeShare);
 
-    // 下載按鈕的追蹤
+    // 下載按鈕追蹤
     var dlBtn = $('simShareDownload');
     if (dlBtn) {
       dlBtn.addEventListener('click', function () {
-        try {
-          if (window.gtag) window.gtag('event', 'simulator_share_download', {
-            event_category: 'streamer_simulator',
-            result_type: currentShare.result ? currentShare.result.title : 'unknown',
-          });
-          if (window.fbq) window.fbq('trackCustom', 'SimulatorShare', {
-            method: 'download',
-            result: currentShare.result ? currentShare.result.title : 'unknown',
-          });
-        } catch (e) { /* ignore */ }
+        trackShare('download');
       });
     }
+
+    // LINE 抽獎按鈕追蹤
+    var lineBtn = $('simLineShareBtn');
+    if (lineBtn) {
+      lineBtn.addEventListener('click', function () {
+        trackShare('line_lottery');
+      });
+    }
+
+    // Modal 關閉
+    var closeBtn = $('simModalClose');
+    var backdrop = $('simModalBackdrop');
+    var laterBtn = $('simModalLater');
+    if (closeBtn) closeBtn.addEventListener('click', closeShareModal);
+    if (backdrop) backdrop.addEventListener('click', closeShareModal);
+    if (laterBtn) laterBtn.addEventListener('click', closeShareModal);
+
+    // ESC 關閉
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        var modal = $('simShareModal');
+        if (modal && !modal.classList.contains('sim-hide')) closeShareModal();
+      }
+    });
+  }
+
+  function trackShare(method) {
+    try {
+      if (window.gtag) window.gtag('event', 'simulator_share_' + method, {
+        event_category: 'streamer_simulator',
+        result_type: currentShare.result ? currentShare.result.title : 'unknown',
+      });
+      if (window.fbq) window.fbq('trackCustom', 'SimulatorShare', {
+        method: method,
+        result: currentShare.result ? currentShare.result.title : 'unknown',
+      });
+    } catch (e) { /* ignore */ }
   }
 
   if (document.readyState === 'loading') {
