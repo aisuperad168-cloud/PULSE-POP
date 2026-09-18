@@ -82,8 +82,10 @@ jobs:
               hero = extract(r'<meta property="og:image" content="[^"]*(/assets/[^"]+)"')
 
               category = '📚 直播中心'
+              category_key = None
               m = re.search(r'lc-tag lc-tag--(\w+)', html)
               if m:
+                  category_key = m.group(1)
                   cat_map = {
                       'creator': '🎨 主播專欄',
                       'policy': '📢 活動政策',
@@ -92,7 +94,13 @@ jobs:
                       'glory': '🏆 榮耀時刻',
                       'career':  '💼 產業職涯',
                   }
-                  category = cat_map.get(m.group(1), category)
+                  category = cat_map.get(category_key, category)
+
+              # 週報排除：訂閱者主要是主播，不寄求職者導向內容
+              EXCLUDED = {'career'}  # 💼 產業職涯 (給求職者看)
+              if category_key in EXCLUDED:
+                  print(f"[skip] {slug} excluded from newsletter (category: {category_key})", file=sys.stderr)
+                  continue
 
               articles.append({
                   'slug': slug,
