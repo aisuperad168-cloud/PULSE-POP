@@ -882,3 +882,140 @@
   .footer .footer-brand { align-items: center; text-align: center; }
   .footer .footer-links { justify-content: center; }
 }
+
+/* ============================================================
+ * Hot Articles 本週熱門 v1.0 · 2026-09-17
+ * ============================================================ */
+.lc-hot-section {
+  padding: 40px 0 20px;
+}
+.lc-hot-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.lc-hot-flame {
+  display: inline-block;
+  animation: flameFlicker 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 100, 40, 0.5));
+}
+@keyframes flameFlicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  50% { transform: scale(1.08) rotate(2deg); }
+}
+.lc-hot-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+.lc-hot-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+}
+.lc-hot-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #F5F5F7;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.lc-hot-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(232, 57, 42, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+.lc-hot-item[data-rank="1"] { border-color: rgba(255, 197, 61, 0.35); background: rgba(255, 197, 61, 0.05); }
+.lc-hot-item[data-rank="2"] { border-color: rgba(200, 200, 220, 0.28); }
+.lc-hot-item[data-rank="3"] { border-color: rgba(200, 130, 60, 0.28); }
+.lc-hot-rank {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+.lc-hot-item[data-rank="1"] .lc-hot-rank {
+  background: linear-gradient(135deg, #FFD56B 0%, #FFA000 100%);
+  color: #1a1a1a;
+}
+.lc-hot-item[data-rank="2"] .lc-hot-rank {
+  background: linear-gradient(135deg, #E8E8F0 0%, #A8A8B0 100%);
+  color: #1a1a1a;
+}
+.lc-hot-item[data-rank="3"] .lc-hot-rank {
+  background: linear-gradient(135deg, #E8A868 0%, #B87840 100%);
+  color: #1a1a1a;
+}
+.lc-hot-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lc-hot-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #F5F5F7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lc-hot-meta {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+}
+.lc-hot-meta .lc-hot-views {
+  color: var(--tt-cyan, #25F4EE);
+  font-weight: 600;
+}
+
+/* Skeleton loader */
+.lc-hot-item--skeleton {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.lc-hot-item--skeleton .lc-hot-title-line {
+  flex: 1;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.06) 0%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.06) 100%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (max-width: 640px) {
+  .lc-hot-list { grid-template-columns: 1fr; }
+  .lc-hot-item { padding: 12px 14px; }
+  .lc-hot-title { font-size: 13.5px; }
+}

@@ -386,7 +386,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" /></noscript>
-  <link rel="stylesheet" href="css/style.css?v=20260909a" />
+  <link rel="stylesheet" href="css/style.css?v=20260917-stats-v2" />
   <link rel="stylesheet" href="/css/site-chrome.css?v=20260917-line-green" />
   <!-- streamer-test.css: 首頁未直接使用，改為非阻塞延後載入 -->
   <link rel="preload" as="style" href="css/streamer-test.css?v=20260820a" onload="this.onload=null;this.rel='stylesheet'" />
@@ -725,39 +725,52 @@
   <!-- ========== STATS ========== -->
   <!-- 註：完整營運事實（費率、統編、地址、平台清單）已於 <head> 內
        schema.org JSON-LD 中揭露供 AI/搜尋引擎讀取，畫面僅保留 4 張正面數字。 -->
-  <section class="stats-section" id="by-the-numbers" aria-label="JDI 脈動傳媒營運數據">
+  <section class="stats-section stats-section--v2" id="by-the-numbers" aria-label="JDI 脈動傳媒營運數據">
     <div class="stats-header">
-      <span class="section-tag section-tag--cyan">JDI BY THE NUMBERS</span>
+      <span class="section-tag section-tag--cyan">JDI BY THE NUMBERS · 實時營運數據</span>
       <h2 class="stats-title">用數字寫的成績單</h2>
+      <p class="stats-subtitle">最後更新：<span id="statsLastUpdate">剛剛</span> · 每小時自動同步</p>
     </div>
-    <div class="stats-container">
+    <div class="stats-container stats-container--5">
       <div class="stat-item">
         <div class="stat-num-wrap">
-          <span class="stat-num" data-target="328">328</span>
+          <span class="stat-num" data-target="328" data-base="328" data-hourly-rate="0.15">0</span>
           <span class="stat-plus">+</span>
         </div>
         <span class="stat-label">旗下活躍主播</span>
+        <span class="stat-delta">本週新增 +3</span>
       </div>
       <div class="stat-item">
         <div class="stat-num-wrap">
-          <span class="stat-num" data-target="3">3</span>
+          <span class="stat-currency">NT$</span>
+          <span class="stat-num" data-target="45800" data-base="45800" data-hourly-rate="0.5" data-format="comma">0</span>
+        </div>
+        <span class="stat-label">主播平均月收入</span>
+        <span class="stat-delta">頂尖 &gt; 200K</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num-wrap">
+          <span class="stat-num" data-target="52" data-base="52" data-hourly-rate="0.02">0</span>
+          <span class="stat-plus">+</span>
+        </div>
+        <span class="stat-label">畢業金牌主播</span>
+        <span class="stat-delta">從新人到獨立</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num-wrap">
+          <span class="stat-num" data-target="12" data-base="12" data-hourly-rate="0.01">0</span>
+          <span class="stat-plus">+</span>
+        </div>
+        <span class="stat-label">合作品牌數</span>
+        <span class="stat-delta">業配 · 代言 · 直播帶貨</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num-wrap">
+          <span class="stat-num" data-target="3">0</span>
           <span class="stat-plus">&nbsp;大平台</span>
         </div>
         <span class="stat-label">TikTok / 陸抖 / 17LIVE</span>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num-wrap">
-          <span class="stat-num" data-target="24">24</span>
-          <span class="stat-plus">&nbsp;小時</span>
-        </div>
-        <span class="stat-label">全天候直播</span>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num-wrap">
-          <span class="stat-num" data-target="100">100</span>
-          <span class="stat-plus">%</span>
-        </div>
-        <span class="stat-label">專業培訓支持</span>
+        <span class="stat-delta">跨境直播經紀</span>
       </div>
     </div>
   </section>
@@ -1592,5 +1605,8 @@
   </script>
 
   <script src="js/main.js?v=20260909a"></script>
+  <script src="js/stats-animate.js?v=20260917"></script>
+  <link rel="stylesheet" href="/css/activity-toast.css?v=20260917" />
+  <script src="/js/activity-toast.js?v=20260917" defer></script>
 </body>
 </html>
