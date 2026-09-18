@@ -47,7 +47,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" /></noscript>
 <link rel="stylesheet" href="/css/style.css?v=20260901p" />
-<link rel="stylesheet" href="/css/live-center.css?v=20260902a" />
+<link rel="stylesheet" href="/css/live-center.css?v=20260917-hot" />
 <style>
   body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; }
 </style>
@@ -132,6 +132,25 @@
       <a href="/live-center/career/" class="lc-subnav-item" data-cat="career">💼 產業職涯</a>
     </div>
   </nav>
+
+  <!-- ========== 本週熱門 TOP 5（動態） ========== -->
+  <section class="lc-section lc-hot-section" id="lc-hot-articles" aria-label="本週熱門文章">
+    <div class="lc-container">
+      <div class="lc-section-header lc-hot-header">
+        <h2 class="lc-section-title">
+          <span class="lc-hot-flame">🔥</span> 本週熱門
+        </h2>
+        <p class="lc-hot-subtitle">近 7 天最多主播閱讀的文章</p>
+      </div>
+      <ol class="lc-hot-list" id="lcHotList">
+        <li class="lc-hot-item lc-hot-item--skeleton"><span class="lc-hot-rank">1</span><span class="lc-hot-title-line"></span></li>
+        <li class="lc-hot-item lc-hot-item--skeleton"><span class="lc-hot-rank">2</span><span class="lc-hot-title-line"></span></li>
+        <li class="lc-hot-item lc-hot-item--skeleton"><span class="lc-hot-rank">3</span><span class="lc-hot-title-line"></span></li>
+        <li class="lc-hot-item lc-hot-item--skeleton"><span class="lc-hot-rank">4</span><span class="lc-hot-title-line"></span></li>
+        <li class="lc-hot-item lc-hot-item--skeleton"><span class="lc-hot-rank">5</span><span class="lc-hot-title-line"></span></li>
+      </ol>
+    </div>
+  </section>
 
   <!-- ========== 精選推薦 ========== -->
   <section class="lc-section">
@@ -755,5 +774,6 @@
 
 
 
+  <script src="/js/hot-articles.js?v=20260917" defer></script>
 </body>
 </html>

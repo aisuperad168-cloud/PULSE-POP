@@ -41,6 +41,8 @@ import * as opsAdminDelete from './functions/api/ops/admin-delete.js';
 // 公開統計數字（首頁數字條）
 import * as statsPublic from './functions/api/stats/public.js';
 import * as statsIncrement from './functions/api/stats/increment.js';
+import * as statsArticleView from './functions/api/stats/article-view.js';
+import * as statsHotArticles from './functions/api/stats/hot-articles.js';
 
 // 電子報系統 (/newsletter/*)
 import * as nlSubscribe from './functions/api/newsletter/subscribe.js';
@@ -89,6 +91,8 @@ const API_ROUTES = {
   // 公開統計
   '/api/stats/public': statsPublic,
   '/api/stats/increment': statsIncrement,
+  '/api/stats/article-view': statsArticleView,
+  '/api/stats/hot-articles': statsHotArticles,
 
   // 電子報系統
   '/api/newsletter/subscribe': nlSubscribe,
