@@ -1,11 +1,16 @@
 /*!
- * JDI 首頁數據儀表板動畫 v1.1 · 2026-09-17
+ * JDI 首頁數據儀表板 v1.2 · 2026-09-17
  * ────────────────────────────────────────
- * v1.1 修正：
- *   - 節流：只在整數變化時才 update DOM（大數字千分位不再每 frame reflow）
- *   - 錯開 5 個數字動畫啟動時間，避免同時算
- *   - 縮短動畫時間 1600ms → 1200ms，減少總 frame 數
- *   - will-change 提示
+ * v1.2 修正（使用者回饋）：
+ *   - 拿掉 0 → 目標值的滾動動畫（造成卡頓）
+ *   - 進入視野後直接淡入顯示最終值
+ *   - 保留「每小時自動 +N」邏輯（基於基準日期計算）
+ *
+ * data-* 屬性：
+ *   data-target      : 目標數字
+ *   data-base        : 基準數字（同 target，用於 hourly 計算）
+ *   data-hourly-rate : 每小時應加多少
+ *   data-format      : "comma" = 千分位 · "k" = K 縮寫（45800 → 45.8K）
  */
 (function () {
   'use strict';
@@ -21,38 +26,22 @@
   }
 
   function formatNumber(n, format) {
+    if (format === 'k') {
+      // K 縮寫：45800 → 45.8K，1200 → 1.2K，350 → 350
+      if (n < 1000) return String(n);
+      var k = n / 1000;
+      // 保留一位小數，但整數就不顯示 .0
+      return (k % 1 === 0 ? k.toFixed(0) : k.toFixed(1)) + 'K';
+    }
     if (format === 'comma') return n.toLocaleString('zh-TW');
     return String(n);
   }
 
-  function animateNumber(el, target, duration) {
+  function showFinalValue(el) {
+    var target = parseInt(el.dataset.currentValue, 10);
     var format = el.dataset.format;
-    var startTime = null;
-    var lastRenderedValue = -1;
-    function ease(t) { return 1 - Math.pow(1 - t, 3); }
-
-    // 提示瀏覽器
-    el.style.willChange = 'contents';
-
-    function step(ts) {
-      if (!startTime) startTime = ts;
-      var progress = Math.min((ts - startTime) / duration, 1);
-      var value = Math.floor(target * ease(progress));
-
-      // 節流：只在整數值真的變化時才 update DOM
-      if (value !== lastRenderedValue) {
-        el.textContent = formatNumber(value, format);
-        lastRenderedValue = value;
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = formatNumber(target, format);
-        el.style.willChange = 'auto'; // 動畫結束移除提示
-      }
-    }
-    requestAnimationFrame(step);
+    el.textContent = formatNumber(target, format);
+    el.classList.add('stat-num--revealed');
   }
 
   function initStats() {
@@ -61,6 +50,10 @@
 
     nums.forEach(function (el) {
       el.dataset.currentValue = computeCurrentValue(el);
+      // 預先設定為最終值（讓非 JS 用戶也看到）
+      el.textContent = formatNumber(parseInt(el.dataset.currentValue, 10), el.dataset.format);
+      // 加入 fade-in class 起始狀態
+      el.classList.add('stat-num--fade-init');
     });
 
     if ('IntersectionObserver' in window) {
@@ -68,21 +61,21 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting && !entry.target.dataset.animated) {
             entry.target.dataset.animated = 'true';
-            var target = parseInt(entry.target.dataset.currentValue, 10);
-            // 錯開啟動時間：0ms / 100ms / 200ms / 300ms / 400ms
+            // 錯開啟動時間讓 5 個數字依序淡入
             var siblings = Array.prototype.slice.call(entry.target.closest('.stats-container').querySelectorAll('.stat-num'));
             var idx = siblings.indexOf(entry.target);
             setTimeout(function () {
-              animateNumber(entry.target, target, 1200);
-            }, idx * 100);
+              showFinalValue(entry.target);
+            }, idx * 120);
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.3 });
+      }, { threshold: 0.2 });
       nums.forEach(function (el) { observer.observe(el); });
     } else {
+      // 無 IO 支援 → 直接顯示
       nums.forEach(function (el) {
-        el.textContent = formatNumber(parseInt(el.dataset.currentValue, 10), el.dataset.format);
+        el.classList.add('stat-num--revealed');
       });
     }
   }
