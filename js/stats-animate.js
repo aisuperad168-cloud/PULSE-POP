@@ -1,21 +1,15 @@
 /*!
- * JDI 首頁數據儀表板動畫 v1.0 · 2026-09-17
+ * JDI 首頁數據儀表板動畫 v1.1 · 2026-09-17
  * ────────────────────────────────────────
- * 功能：
- *   1. Intersection Observer：進入視野時數字從 0 滾動到目標值（1.6 秒）
- *   2. 「每小時自動 +N」：使用網站上線基準日期，計算至今應加多少
- *   3. 顯示「最後更新」相對時間
- * 
- * data-* 屬性：
- *   data-target      : 目標數字（進入視野時滾動到這裡）
- *   data-base        : 基準數字（同 target，用於 hourly 計算）
- *   data-hourly-rate : 每小時應加多少（例 0.15 = 每小時 +0.15，一週約 +25）
- *   data-format      : "comma" = 使用千分位（例 45,800）
+ * v1.1 修正：
+ *   - 節流：只在整數變化時才 update DOM（大數字千分位不再每 frame reflow）
+ *   - 錯開 5 個數字動畫啟動時間，避免同時算
+ *   - 縮短動畫時間 1600ms → 1200ms，減少總 frame 數
+ *   - will-change 提示
  */
 (function () {
   'use strict';
 
-  // 基準時間：2026-09-17 00:00:00（今天上線）
   var BASELINE_TS = new Date('2026-09-17T00:00:00+08:00').getTime();
 
   function computeCurrentValue(el) {
@@ -33,17 +27,30 @@
 
   function animateNumber(el, target, duration) {
     var format = el.dataset.format;
-    var start = 0;
     var startTime = null;
-    // easeOutCubic
+    var lastRenderedValue = -1;
     function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+    // 提示瀏覽器
+    el.style.willChange = 'contents';
+
     function step(ts) {
       if (!startTime) startTime = ts;
       var progress = Math.min((ts - startTime) / duration, 1);
-      var value = Math.floor(start + (target - start) * ease(progress));
-      el.textContent = formatNumber(value, format);
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = formatNumber(target, format);
+      var value = Math.floor(target * ease(progress));
+
+      // 節流：只在整數值真的變化時才 update DOM
+      if (value !== lastRenderedValue) {
+        el.textContent = formatNumber(value, format);
+        lastRenderedValue = value;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = formatNumber(target, format);
+        el.style.willChange = 'auto'; // 動畫結束移除提示
+      }
     }
     requestAnimationFrame(step);
   }
@@ -52,26 +59,28 @@
     var nums = document.querySelectorAll('.stat-num[data-target]');
     if (!nums.length) return;
 
-    // 計算並儲存目前值（含 hourly 增量）
     nums.forEach(function (el) {
       el.dataset.currentValue = computeCurrentValue(el);
     });
 
-    // Intersection Observer — 進入視野才開始動畫
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting && !entry.target.dataset.animated) {
             entry.target.dataset.animated = 'true';
             var target = parseInt(entry.target.dataset.currentValue, 10);
-            animateNumber(entry.target, target, 1600);
+            // 錯開啟動時間：0ms / 100ms / 200ms / 300ms / 400ms
+            var siblings = Array.prototype.slice.call(entry.target.closest('.stats-container').querySelectorAll('.stat-num'));
+            var idx = siblings.indexOf(entry.target);
+            setTimeout(function () {
+              animateNumber(entry.target, target, 1200);
+            }, idx * 100);
             observer.unobserve(entry.target);
           }
         });
       }, { threshold: 0.3 });
       nums.forEach(function (el) { observer.observe(el); });
     } else {
-      // fallback
       nums.forEach(function (el) {
         el.textContent = formatNumber(parseInt(el.dataset.currentValue, 10), el.dataset.format);
       });
@@ -81,7 +90,7 @@
   function updateLastUpdateLabel() {
     var el = document.getElementById('statsLastUpdate');
     if (!el) return;
-    var minutes = Math.floor(Math.random() * 15) + 1; // 1-15 分鐘前
+    var minutes = Math.floor(Math.random() * 15) + 1;
     if (minutes < 5) el.textContent = '剛剛';
     else el.textContent = minutes + ' 分鐘前';
   }

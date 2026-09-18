@@ -1,15 +1,16 @@
 /*!
- * JDI 訪客即時活動氣泡 v1.0 · 2026-09-17
+ * JDI 訪客即時活動氣泡 v1.1 · 2026-09-17
  * ────────────────────────────────────────
- * 只在指定頁面顯示（首頁 + landing pages）
- * 通用文案（不涉及真實人名），營造網站活力感
- * 
+ * v1.1 修正：
+ *   - 首次顯示：15s → 8s（更快看到）
+ *   - 顯示時間：6s → 8s（更好閱讀）
+ *   - console.log 標記讓 debug 更容易
+ *
  * 顯示邏輯：
- *   - 頁面載入 15 秒後首次顯示
- *   - 之後每 45-75 秒隨機一次
- *   - 每次顯示 6 秒後淡出
- *   - 使用 sessionStorage 記錄已顯示過的訊息避免重複
- *   - 使用者關閉後 10 分鐘內不再顯示
+ *   - 頁面載入 8 秒後首次顯示
+ *   - 之後每 35-60 秒隨機一次
+ *   - 每次顯示 8 秒後淡出
+ *   - 使用者關閉後 10 分鐘內不再顯示（sessionStorage）
  */
 (function () {
   'use strict';
@@ -37,7 +38,11 @@
     var np = p.replace(/\/+$/, '') || '/';
     return np === normalizedPath;
   });
-  if (!allowed) return;
+  if (!allowed) {
+    console.log('[jdi-toast] skipped: path not allowed', normalizedPath);
+    return;
+  }
+  console.log('[jdi-toast] initialized on', normalizedPath);
 
   // 使用者按 X 關閉後，10 分鐘內不再顯示
   var DISMISS_KEY = 'jdi_activity_toast_dismissed';
@@ -110,12 +115,14 @@
       toast.classList.add('is-visible');
     });
 
-    // 6 秒後自動移除
+    console.log('[jdi-toast] showing:', msg.icon);
+
+    // 8 秒後自動移除（比原本 6 秒更好閱讀）
     var removeTimer = setTimeout(function () {
       toast.classList.remove('is-visible');
       toast.classList.add('is-leaving');
       setTimeout(function () { toast.remove(); }, 400);
-    }, 6000);
+    }, 8000);
 
     // 關閉按鈕：這次 session 內不再顯示
     toast.querySelector('.jdi-toast-close').addEventListener('click', function () {
@@ -137,9 +144,9 @@
   }
 
   function scheduleNext(isFirst) {
-    var delay = isFirst ? 15000 : (45000 + Math.random() * 30000); // 首次 15s、之後 45-75s
+    var delay = isFirst ? 8000 : (35000 + Math.random() * 25000); // 首次 8s、之後 35-60s
+    console.log('[jdi-toast] next toast in', Math.round(delay / 1000), 'seconds');
     schedulerTimer = setTimeout(function () {
-      // 若使用者已滾動離開，仍然顯示（右下角浮出）
       if (!document.hidden) {
         showToast();
       }

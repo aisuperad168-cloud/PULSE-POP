@@ -115,6 +115,15 @@ function isValidSlug(slug) {
     && /^[a-z0-9-]{3,100}$/.test(slug);
 }
 
+// 明顯是測試值的 title 就忽略（不覆寫 DB）
+function isJunkTitle(title) {
+  if (!title) return true;
+  var t = title.trim().toLowerCase();
+  if (t.length < 4) return true; // 太短
+  if (/^(test|測試|hello|debug|foo|bar)$/i.test(t)) return true;
+  return false;
+}
+
 export async function onRequestPost({ request, env }) {
   try {
     let body = {};
@@ -125,6 +134,9 @@ export async function onRequestPost({ request, env }) {
     if (!isValidSlug(slug)) {
       return json({ ok: false, error: 'invalid slug' }, 400);
     }
+
+    // 過濾垃圾 title（測試值）
+    var safeTitle = isJunkTitle(title) ? '' : title;
 
     await ensureTables(env);
 
@@ -157,7 +169,7 @@ export async function onRequestPost({ request, env }) {
       await env.DB.prepare(`
         INSERT INTO article_views (slug, title, views, views_7d)
         VALUES (?, ?, ?, ?)
-      `).bind(slug, title || slug, seed, seed7d).run();
+      `).bind(slug, safeTitle || slug, seed, seed7d).run();
       article = { views: seed, views_7d: seed7d, last_reset_7d: null };
     }
 
@@ -177,14 +189,14 @@ export async function onRequestPost({ request, env }) {
     }
 
     if (shouldIncrement) {
-      // 累加
+      // 累加 · 只在 safeTitle 非空時覆寫（避免測試值污染）
       await env.DB.prepare(`
         UPDATE article_views
         SET views = views + 1, views_7d = views_7d + 1,
             title = COALESCE(NULLIF(?, ''), title),
             updated_at = datetime('now', '+8 hours')
         WHERE slug = ?
-      `).bind(title, slug).run();
+      `).bind(safeTitle, slug).run();
 
       // 更新訪客記錄
       await env.DB.prepare(`
