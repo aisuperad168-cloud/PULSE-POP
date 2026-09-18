@@ -115,13 +115,13 @@
   background: rgba(37, 244, 238, 0.08);
 }
 
-/* --- CTA（右） --- */
+/* --- CTA（右）：LINE 諮詢按鈕，使用 LINE 官方綠 --- */
 .site-nav-cta {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: var(--sc-red);
+  background: var(--sc-line);
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -131,9 +131,9 @@
   flex-shrink: 0;
 }
 .site-nav-cta:hover {
-  background: var(--sc-red-hover);
+  background: #05B84C;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(232, 57, 42, 0.35);
+  box-shadow: 0 4px 12px rgba(6, 199, 85, 0.35);
 }
 
 /* --- Hamburger（mobile only） --- */
@@ -152,7 +152,7 @@
 /* --- Mobile RWD --- */
 @media (max-width: 900px) {
   .site-nav-inner {
-    height: 56px;
+    height: 60px;
     padding: 0 16px;
     gap: 10px;
   }
@@ -160,13 +160,14 @@
   .site-nav-brand {
     margin-right: auto;
     min-width: 0; /* 允許 flex item 縮小以避免 overflow */
+    gap: 12px;
   }
-  .site-nav-brand img { height: 28px; }
-  .site-nav-brand-txt .zh { font-size: 14px; }
+  .site-nav-brand img { height: 40px; }
+  .site-nav-brand-txt .zh { font-size: 15px; }
   .site-nav-brand-txt .en { display: none; }
   .site-nav-links {
     position: fixed;
-    top: 56px;
+    top: 60px;
     left: 0;
     right: 0;
     background: #0A0A0F;
@@ -175,7 +176,7 @@
     gap: 2px;
     padding: 12px 16px 20px;
     border-bottom: 1px solid var(--sc-border);
-    max-height: calc(100vh - 56px);
+    max-height: calc(100vh - 60px);
     overflow-y: auto;
     transform: translateY(-8px);
     opacity: 0;
@@ -218,8 +219,10 @@
 
 /* Very small phones */
 @media (max-width: 480px) {
+  .site-nav-brand img { height: 36px; }
   .site-nav-brand-txt .en { display: none; }
-  .site-nav-brand-txt .zh { font-size: 13px; }
+  .site-nav-brand-txt .zh { font-size: 14px; }
+  .site-nav-brand { gap: 10px; }
   .site-nav-inner { gap: 8px; padding: 0 12px; }
   .site-nav-toggle, .site-nav-cta {
     width: 38px;
@@ -227,6 +230,7 @@
   }
 }
 @media (max-width: 360px) {
+  .site-nav-brand img { height: 32px; }
   .site-nav-brand-txt { display: none; }
 }
 
