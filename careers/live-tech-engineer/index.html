@@ -187,6 +187,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
 
+<link rel="stylesheet" href="/css/site-chrome.css?v=20260917-line-green" />
+
 <style>
   :root {
     --brand: #E8392A;
@@ -205,18 +207,12 @@
   body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--ink); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
   a { color: var(--brand-2); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.92); backdrop-filter: saturate(180%) blur(14px); -webkit-backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid var(--line); }
-  .site-nav-inner { max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
-  .site-nav-brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; }
+
   .site-nav-brand img { height: 32px; width: auto; }
-  .site-nav-brand-txt { display: flex; flex-direction: column; line-height: 1.1; }
-  .site-nav-brand-txt .zh { font-size: 14px; }
-  .site-nav-brand-txt .en { font-size: 10px; color: var(--text-2); letter-spacing: 1px; }
-  .site-nav-links { list-style: none; display: flex; gap: 24px; margin-left: auto; }
+
   .site-nav-links a { color: var(--text); font-size: 14px; font-weight: 500; }
   .site-nav-links a:hover { color: var(--brand-2); text-decoration: none; }
-  .site-nav-cta { background: var(--brand); color: #fff !important; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
-  .site-nav-cta:hover { text-decoration: none; background: #d02420; }
+
   @media (max-width: 768px) { .site-nav-links { display: none; } .site-nav-brand-txt .en { display: none; } }
   .job-hero { padding: 60px 24px 40px; background: linear-gradient(135deg, #14141e 0%, #1a1a2e 100%); border-bottom: 1px solid var(--line); }
   .job-hero-inner { max-width: 900px; margin: 0 auto; }
@@ -292,24 +288,51 @@
 </head>
 <body>
 
-<nav class="site-nav" aria-label="主導覽">
+<nav class="site-nav" data-active="join" aria-label="主導覽">
   <div class="site-nav-inner">
     <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
-      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" />
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
       <span class="site-nav-brand-txt">
         <span class="zh">JDI 脈動傳媒</span>
         <span class="en">JDI PULSE MEDIA</span>
       </span>
     </a>
-    <ul class="site-nav-links">
-      <li><a href="/">首頁</a></li>
-      <li><a href="/careers.html">職缺</a></li>
-      <li><a href="/live-center/">直播中心</a></li>
-      <li><a href="/faq.html">新人 FAQ</a></li>
+    <button class="site-nav-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="siteNavLinks">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="site-nav-links" id="siteNavLinks">
+      <li><a href="/" data-key="home">首頁</a></li>
+      <li><a href="/join.html" data-key="join">加入我們</a></li>
+      <li><a href="/partnership.html" data-key="partnership">商業合作</a></li>
+      <li><a href="/streamer-test/" data-key="test">主播測驗</a></li>
+      <li><a href="/live-center/" data-key="live-center">直播中心</a></li>
+      <li><a href="/faq.html" data-key="faq">新人 FAQ</a></li>
     </ul>
-    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="site-nav-cta">LINE 諮詢</a>
+    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="site-nav-cta" aria-label="LINE 諮詢">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+      <span>LINE 諮詢</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
 </nav>
+<script>
+  // Mobile hamburger toggle
+  (function(){
+    var btn = document.querySelector('.site-nav-toggle');
+    var links = document.getElementById('siteNavLinks');
+    if(!btn || !links) return;
+    btn.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 
 <header class="job-hero">
   <div class="job-hero-inner">
