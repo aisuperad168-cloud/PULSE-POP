@@ -329,6 +329,17 @@ ul  { list-style: none; }
 
 /* ========== Stats v2 (2026-09-17) ========== */
 .stats-section--v2 .stats-header { position: relative; z-index: 1; text-align: center; }
+
+/* 淡入動畫（取代 0→N 滾動，效能更好） */
+.stat-num--fade-init {
+  opacity: 0.35;
+  transform: translateY(6px);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stat-num--revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
 .stats-subtitle {
   margin-top: 8px; font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.45); letter-spacing: 0.05em;
