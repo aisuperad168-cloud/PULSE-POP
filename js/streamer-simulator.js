@@ -477,24 +477,28 @@
     startQuiz();
   }
 
-  // ============ Canvas 分享圖生成 v2 ============
-  // Cache 已產生的圖，同一個結果不重複生成
-  var _shareImageCache = null;
-  var _shareImageResult = null;
+  // ============ Canvas 分享圖生成 v3 · 完全同步、無阻塞 ============
+  // 尺寸：800x800（原 1080x1080 太大，手機 GPU 慢）
+  // 完全純文字繪製，不載入 logo 圖片
+  var _shareImageCache = {};
 
   function generateShareImage(result, score) {
-    // 若同結果已產生過，直接回用（重要：加速二次分享）
-    if (_shareImageCache && _shareImageResult === result.title + '_' + score) {
-      return Promise.resolve(_shareImageCache);
+    var cacheKey = result.title + '_' + score;
+    if (_shareImageCache[cacheKey]) {
+      return Promise.resolve(_shareImageCache[cacheKey]);
     }
 
-    return new Promise(function (resolve, reject) {
+    // 同步繪製 + Promise 包裝（不等任何非同步資源）
+    try {
       var canvas = $('simShareCanvas');
+      // 動態設置為 800x800 加速
+      canvas.width = 800;
+      canvas.height = 800;
       var ctx = canvas.getContext('2d');
-      var W = canvas.width;  // 1080
-      var H = canvas.height; // 1080
+      var W = 800;
+      var H = 800;
 
-      // 背景漸層（深黑→深藍紫）
+      // 背景漸層
       var bgGrad = ctx.createLinearGradient(0, 0, 0, H);
       bgGrad.addColorStop(0, '#0a0a0f');
       bgGrad.addColorStop(0.5, '#1a1a2e');
@@ -502,176 +506,125 @@
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
-      // 光暈裝飾（左上紅、右下青）
-      var glow1 = ctx.createRadialGradient(200, 200, 0, 200, 200, 400);
+      // 光暈裝飾
+      var glow1 = ctx.createRadialGradient(160, 160, 0, 160, 160, 320);
       glow1.addColorStop(0, 'rgba(232, 57, 42, 0.35)');
       glow1.addColorStop(1, 'rgba(232, 57, 42, 0)');
       ctx.fillStyle = glow1;
       ctx.fillRect(0, 0, W, H);
 
-      var glow2 = ctx.createRadialGradient(W - 200, H - 200, 0, W - 200, H - 200, 400);
-      glow2.addColorStop(0, 'rgba(37, 244, 238, 0.25)');
+      var glow2 = ctx.createRadialGradient(W - 160, H - 160, 0, W - 160, H - 160, 320);
+      glow2.addColorStop(0, 'rgba(37, 244, 238, 0.22)');
       glow2.addColorStop(1, 'rgba(37, 244, 238, 0)');
       ctx.fillStyle = glow2;
       ctx.fillRect(0, 0, W, H);
 
       // 頂部標籤
-      ctx.font = '600 32px "Noto Sans TC", sans-serif';
+      ctx.font = '600 24px "Noto Sans TC", -apple-system, sans-serif';
       ctx.fillStyle = 'rgba(255, 197, 61, 0.85)';
       ctx.textAlign = 'center';
-      ctx.fillText('🎬 主播開播模擬器 · 結果報告', W / 2, 130);
+      ctx.fillText('🎬 主播開播模擬器 · 結果報告', W / 2, 90);
 
       // Emoji 圖示
-      ctx.font = '180px "Noto Sans TC", sans-serif';
+      ctx.font = '140px "Noto Sans TC", sans-serif';
       ctx.fillStyle = '#fff';
       ctx.textAlign = 'center';
-      ctx.fillText(result.emoji, W / 2, 320);
+      ctx.fillText(result.emoji, W / 2, 240);
 
-      // 主標題（結果類型名）
-      ctx.font = '900 96px "Noto Sans TC", sans-serif';
+      // 主標題（結果分型）
+      ctx.font = '900 72px "Noto Sans TC", sans-serif';
       ctx.fillStyle = result.color;
       ctx.textAlign = 'center';
-      ctx.fillText(result.title, W / 2, 460);
+      ctx.fillText(result.title, W / 2, 340);
 
       // 英文副標
-      ctx.font = '500 32px "Inter", sans-serif';
+      ctx.font = '500 22px "Inter", sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      ctx.fillText(result.subtitle, W / 2, 510);
+      ctx.fillText(result.subtitle, W / 2, 378);
 
-      // 分數區塊背景
+      // 分數區塊
       ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      roundRect(ctx, W / 2 - 260, 570, 520, 200, 24, true, false);
+      roundRect(ctx, W / 2 - 190, 415, 380, 145, 18, true, false);
       ctx.strokeStyle = 'rgba(37, 244, 238, 0.3)';
       ctx.lineWidth = 2;
-      roundRect(ctx, W / 2 - 260, 570, 520, 200, 24, false, true);
+      roundRect(ctx, W / 2 - 190, 415, 380, 145, 18, false, true);
 
-      ctx.font = '500 28px "Noto Sans TC", sans-serif';
+      ctx.font = '500 20px "Noto Sans TC", sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
       ctx.textAlign = 'center';
-      ctx.fillText('臨場反應力', W / 2, 630);
+      ctx.fillText('臨場反應力', W / 2, 458);
 
-      ctx.font = '900 130px "Inter", sans-serif';
+      ctx.font = '900 96px "Inter", sans-serif';
       ctx.fillStyle = '#25F4EE';
-      ctx.fillText(score, W / 2 - 30, 745);
+      ctx.fillText(String(score), W / 2 - 22, 540);
 
-      ctx.font = '600 40px "Inter", sans-serif';
+      ctx.font = '600 30px "Inter", sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-      ctx.fillText('/ 15', W / 2 + 90, 745);
+      ctx.fillText('/ 15', W / 2 + 66, 540);
 
-      // 🎁 抽獎徽章（醒目金色橢圓 · 本月獎品）
-      var badgeText = '🎁 本月抽 直播聲卡 · 補光燈 · 手機支架';
-      ctx.font = '700 26px "Noto Sans TC", sans-serif';
+      // 🎁 抽獎徽章
+      var badgeText = '🎁 本月抽 直播聲卡·補光燈·手機支架';
+      ctx.font = '700 20px "Noto Sans TC", sans-serif';
       ctx.textAlign = 'center';
       var badgeMetrics = ctx.measureText(badgeText);
-      var badgeW = badgeMetrics.width + 40;
-      var badgeH = 42;
+      var badgeW = badgeMetrics.width + 32;
+      var badgeH = 36;
       var badgeX = (W - badgeW) / 2;
-      var badgeY = 820;
-      // 徽章底
+      var badgeY = 600;
       var badgeGrad = ctx.createLinearGradient(0, badgeY, 0, badgeY + badgeH);
       badgeGrad.addColorStop(0, 'rgba(255, 197, 61, 0.25)');
       badgeGrad.addColorStop(1, 'rgba(232, 57, 42, 0.2)');
       ctx.fillStyle = badgeGrad;
-      roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 21, true, false);
+      roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 18, true, false);
       ctx.strokeStyle = 'rgba(255, 197, 61, 0.6)';
       ctx.lineWidth = 2;
-      roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 21, false, true);
-      // 徽章文字
+      roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 18, false, true);
       ctx.fillStyle = '#FFD56B';
-      ctx.fillText(badgeText, W / 2, badgeY + 29);
+      ctx.fillText(badgeText, W / 2, badgeY + 24);
 
       // 呼籲文字
-      ctx.font = '500 28px "Noto Sans TC", sans-serif';
+      ctx.font = '500 22px "Noto Sans TC", sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
       ctx.textAlign = 'center';
-      ctx.fillText('你也來測測看？', W / 2, 900);
+      ctx.fillText('你也來測測看？', W / 2, 675);
 
-      ctx.font = '700 32px "Noto Sans TC", sans-serif';
+      ctx.font = '700 26px "Inter", sans-serif';
       ctx.fillStyle = '#fff';
-      ctx.fillText('jdi-pulse.com/streamer-simulator', W / 2, 946);
+      ctx.fillText('jdi-pulse.com/streamer-simulator', W / 2, 712);
 
-      // ============ 品牌浮水印區（底部）============
-      // 底部漸變透明遮罩
-      var footerGrad = ctx.createLinearGradient(0, H - 150, 0, H);
+      // ============ 底部品牌浮水印區 ============
+      var footerGrad = ctx.createLinearGradient(0, H - 90, 0, H);
       footerGrad.addColorStop(0, 'rgba(232, 57, 42, 0)');
       footerGrad.addColorStop(1, 'rgba(232, 57, 42, 0.15)');
       ctx.fillStyle = footerGrad;
-      ctx.fillRect(0, H - 150, W, 150);
+      ctx.fillRect(0, H - 90, W, 90);
 
-      // JDI Logo（左）— 用純文字繪製避免 CORS + 載入等待問題
-      // 純文字風格：紅色 "JDI" logo + 品牌文字
-      var drawBrandBottom = function (logoSuccess, logoImg) {
-        if (logoSuccess && logoImg) {
-          try {
-            var logoH = 70;
-            var logoW = (logoImg.naturalWidth * logoH / logoImg.naturalHeight);
-            ctx.drawImage(logoImg, 80, H - 110, logoW, logoH);
-          } catch (e) {
-            drawTextLogo();
-          }
-        } else {
-          drawTextLogo();
-        }
+      // 純文字 logo（不載圖片，永遠 0ms 渲染）
+      ctx.font = '900 40px "Inter", sans-serif';
+      ctx.fillStyle = '#E8392A';
+      ctx.textAlign = 'left';
+      ctx.fillText('JDI', 50, H - 42);
+      ctx.font = '600 13px "Inter", sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.fillText('PULSE MEDIA', 50, H - 22);
 
-        // 品牌文字（右）
-        ctx.font = '700 36px "Noto Sans TC", sans-serif';
-        ctx.fillStyle = '#fff';
-        ctx.textAlign = 'right';
-        ctx.fillText('JDI 脈動傳媒', W - 80, H - 80);
-        ctx.font = '500 24px "Inter", sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-        ctx.fillText('TikTok LIVE 官方合作經紀公會', W - 80, H - 45);
+      // 右側品牌文字
+      ctx.font = '700 24px "Noto Sans TC", sans-serif';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'right';
+      ctx.fillText('JDI 脈動傳媒', W - 50, H - 48);
+      ctx.font = '500 15px "Inter", sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.fillText('TikTok LIVE 官方合作經紀公會', W - 50, H - 24);
 
-        // 匯出
-        try {
-          var dataUrl = canvas.toDataURL('image/png', 0.9);
-          _shareImageCache = dataUrl;
-          _shareImageResult = result.title + '_' + score;
-          resolve(dataUrl);
-        } catch (err) {
-          reject(err);
-        }
-      };
-
-      function drawTextLogo() {
-        // 純文字 JDI 標誌
-        ctx.font = '900 56px "Inter", sans-serif';
-        ctx.fillStyle = '#E8392A';
-        ctx.textAlign = 'left';
-        ctx.fillText('JDI', 80, H - 65);
-        ctx.font = '600 18px "Inter", sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.fillText('PULSE MEDIA', 80, H - 40);
-      }
-
-      // 嘗試載入 logo，最多等 500ms（不阻塞）
-      var logoImg = $('simWatermarkLogo');
-      var logoResolved = false;
-
-      function finalize(withLogo) {
-        if (logoResolved) return;
-        logoResolved = true;
-        drawBrandBottom(withLogo, logoImg);
-      }
-
-      if (logoImg && logoImg.complete && logoImg.naturalWidth > 0) {
-        // 已載入
-        finalize(true);
-      } else if (logoImg) {
-        // 未載入 → 等 500ms，超時就用文字 fallback
-        var timeout = setTimeout(function () { finalize(false); }, 500);
-        logoImg.onload = function () {
-          clearTimeout(timeout);
-          finalize(true);
-        };
-        logoImg.onerror = function () {
-          clearTimeout(timeout);
-          finalize(false);
-        };
-      } else {
-        finalize(false);
-      }
-    });
+      // 匯出（用 image/jpeg 更快，體積更小）
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      _shareImageCache[cacheKey] = dataUrl;
+      return Promise.resolve(dataUrl);
+    } catch (err) {
+      console.error('[simulator] canvas error:', err);
+      return Promise.reject(err);
+    }
   }
 
   // Round rect helper

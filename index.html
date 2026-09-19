@@ -745,35 +745,12 @@
       <div class="stat-item">
         <div class="stat-num-wrap">
           <span class="stat-currency">NT$</span>
-          <span class="stat-num" data-target="45800" data-base="45800" data-hourly-rate="0.5" data-format="k">45.8K</span>
+          <!-- 直接寫死 45.8K · 不加 data-target 就不會被 JS 覆蓋 -->
+          <span class="stat-num stat-num--static">45.8K</span>
         </div>
         <span class="stat-label">主播平均月收入</span>
         <span class="stat-delta">頂尖 &gt; 200K</span>
       </div>
-      <!-- 保底：強制寫入 45.8K，即使外部 JS 沒載入也能正確顯示 -->
-      <script>
-        (function () {
-          function fixIncome() {
-            var el = document.querySelector('.stat-num[data-target="45800"]');
-            if (!el) return;
-            var txt = (el.textContent || '').trim();
-            // 任何非 K 格式的都修正
-            if (txt !== '45.8K' && !/K$/i.test(txt)) {
-              el.textContent = '45.8K';
-            }
-          }
-          // 立即執行
-          fixIncome();
-          // DOMContentLoaded 再修一次（保險）
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', fixIncome);
-          }
-          // 從瀏覽器上一頁回來時 (bfcache 恢復) 也要修
-          window.addEventListener('pageshow', function (e) {
-            if (e.persisted) fixIncome();
-          });
-        })();
-      </script>
       <div class="stat-item">
         <div class="stat-num-wrap">
           <span class="stat-num" data-target="52" data-base="52" data-hourly-rate="0.02">52</span>
@@ -1511,55 +1488,46 @@
       </button>
 
       <div class="stmt-home-popup-header">
-        <div class="stmt-home-popup-eyebrow">先了解自己再開始</div>
-        <h2 class="stmt-home-popup-title" id="stmtHomePopupTitle">你適合當主播嗎？</h2>
-        <p class="stmt-home-popup-sub">在申請成為主播之前，先用一個測驗看看自己準備到哪。</p>
+        <div class="stmt-home-popup-eyebrow">🎁 本月抽獎進行中</div>
+        <h2 class="stmt-home-popup-title" id="stmtHomePopupTitle">抽 直播聲卡 + 補光燈！</h2>
+        <p class="stmt-home-popup-sub">60 秒完成主播模擬器 → 分享結果 → 傳截圖到官方 LINE，就有抽獎資格 · 免費參加</p>
       </div>
 
       <div class="stmt-popup-choices">
-        <!-- 主推：新的 5 分鐘測驗 -->
-        <a href="/streamer-test/" class="stmt-popup-choice stmt-popup-choice-primary" data-stmt-popup-track="deep">
-          <span class="stmt-popup-choice-tag">全新推薦</span>
+        <!-- 主推：抽獎活動（60 秒模擬器）-->
+        <a href="/streamer-simulator/" class="stmt-popup-choice stmt-popup-choice-primary" data-stmt-popup-track="simulator">
+          <span class="stmt-popup-choice-tag" style="background:linear-gradient(135deg,#FFC53D 0%,#FFA000 100%);color:#1a1a1a;font-weight:800;">🎁 抽獎主活動</span>
+          <div class="stmt-popup-choice-title">
+            60 秒開播模擬器 · 參加抽獎
+            <span class="stmt-popup-choice-arrow">→</span>
+          </div>
+          <p class="stmt-popup-choice-desc">5 個直播情境 · <strong style="color:#FFD56B;">分享結果就有機會抽直播聲卡套組、補光燈、手機支架</strong> · 每月開獎</p>
+          <div class="stmt-popup-choice-meta">
+            <span>約 60 秒</span>
+            <span>🎙️ 聲卡</span>
+            <span>💡 補光燈</span>
+            <span>📱 手機支架</span>
+          </div>
+        </a>
+
+        <!-- 查看完整活動 -->
+        <a href="/lottery/" class="stmt-popup-choice" data-stmt-popup-track="lottery" style="border-color:rgba(255,197,61,0.3);">
+          <span class="stmt-popup-choice-tag">📋 完整活動說明</span>
+          <div class="stmt-popup-choice-title">
+            查看抽獎規則 + 獎品詳情
+            <span class="stmt-popup-choice-arrow">→</span>
+          </div>
+          <p class="stmt-popup-choice-desc">獎項內容、參加流程、下月預告一次看清楚</p>
+        </a>
+
+        <!-- 次要：深度測驗 -->
+        <a href="/streamer-test/" class="stmt-popup-choice" data-stmt-popup-track="deep">
+          <span class="stmt-popup-choice-tag">🎯 深度分析</span>
           <div class="stmt-popup-choice-title">
             5 分鐘主播適配度深度測驗
             <span class="stmt-popup-choice-arrow">→</span>
           </div>
-          <p class="stmt-popup-choice-desc">60 題深度心理測驗，分析你的 6 大能力、找出你的主播分型，並產出完整發展報告寄到信箱。</p>
-          <div class="stmt-popup-choice-meta">
-            <span>約 5 分鐘</span>
-            <span>60 題</span>
-            <span>完整報告</span>
-          </div>
-        </a>
-
-        <!-- 舊的 1 分鐘測驗 -->
-        <a href="/quiz.html" class="stmt-popup-choice" data-stmt-popup-track="quick">
-          <span class="stmt-popup-choice-tag">快速版</span>
-          <div class="stmt-popup-choice-title">
-            1 分鐘主播類型快速測驗
-            <span class="stmt-popup-choice-arrow">→</span>
-          </div>
-          <p class="stmt-popup-choice-desc">10 題，快速看你適合哪種主播類型（陪伴、才藝、電商、知識…）。</p>
-          <div class="stmt-popup-choice-meta">
-            <span>約 1 分鐘</span>
-            <span>10 題</span>
-            <span>快速分型</span>
-          </div>
-        </a>
-
-        <!-- NEW: 60 秒開播模擬器（可分享圖 + 抽獎）-->
-        <a href="/streamer-simulator/" class="stmt-popup-choice" data-stmt-popup-track="simulator">
-          <span class="stmt-popup-choice-tag">🎁 分享抽獎中</span>
-          <div class="stmt-popup-choice-title">
-            60 秒開播模擬器
-            <span class="stmt-popup-choice-arrow">→</span>
-          </div>
-          <p class="stmt-popup-choice-desc">5 個直播現場情境，模擬觀眾送禮、忘詞、深夜留人等真實狀況。分享結果<strong>參加每月抽獎</strong>（iPhone 殼、藍牙耳機）。</p>
-          <div class="stmt-popup-choice-meta">
-            <span>約 60 秒</span>
-            <span>5 題情境</span>
-            <span>🎁 每月抽獎</span>
-          </div>
+          <p class="stmt-popup-choice-desc">60 題深度心理測驗，6 大能力分析 + 完整報告寄信箱（不參加抽獎）</p>
         </a>
       </div>
 
