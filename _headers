@@ -20,6 +20,16 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
+# ------------ HTML 頁面：強制每次 revalidate（避免瀏覽器/CDN 顯示舊版）------------
+# 這些 pattern 涵蓋所有 HTML 路由（有/沒有 .html 後綴、有/沒有尾部 slash）
+/
+  Cache-Control: public, max-age=0, must-revalidate
+  Vary: Accept-Encoding
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+  Vary: Accept-Encoding
+
 # ------------ API 動態端點：完全不 cache ------------
 /api/*
   Cache-Control: no-store, no-cache, must-revalidate
