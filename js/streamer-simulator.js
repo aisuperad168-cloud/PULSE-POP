@@ -218,7 +218,10 @@
       });
     } catch (e) { /* ignore */ }
 
-    // 800ms 後跳出分享 modal
+    // 同步預先產生分享圖（不阻塞 modal 開啟）
+    generateShareImage(result, total).catch(function () { /* ignore */ });
+
+    // 800ms 後跳出分享 modal（此時圖通常已準備好）
     setTimeout(function () {
       openShareModal(result, total);
     }, 800);
@@ -274,24 +277,32 @@
         currentShare.file = null;
       }
 
-      // 一律先確保 dlBtn 有 href 可下載
-      dlBtn.href = dataUrl;
+      // dlBtn 用 blob URL 讓桌機可另開分頁看
+      if (currentShare.blob) {
+        // 撤銷舊 URL
+        if (dlBtn._blobUrl) URL.revokeObjectURL(dlBtn._blobUrl);
+        dlBtn._blobUrl = URL.createObjectURL(currentShare.blob);
+        dlBtn.href = dlBtn._blobUrl;
+      } else {
+        dlBtn.href = dataUrl;
+      }
 
-      // 進階：若支援 native share，把 native 升級為主按鈕，download 降為次要
+      // 判斷該顯示哪個按鈕（不再兩顆都顯示）
       var canNative = supportsNativeShare();
       var canShareFile = canNative && currentShare.file && navigator.canShare && navigator.canShare({ files: [currentShare.file] });
 
+      // 隱藏兩個先，再選一個顯示（避免 UI 混亂）
+      nativeBtn.classList.add('sim-hide');
+      dlBtn.classList.add('sim-hide');
+
       if (canShareFile || (canNative && isMobile())) {
-        // 手機或支援檔案分享：native 為主
+        // 手機/支援檔案分享：只顯示 native
         nativeBtn.classList.remove('sim-hide');
         nativeBtn.innerHTML = '📱 立即分享到社群';
-        // 手機環境把下載降為 ghost（不搶主按鈕焦點）
-        if (isMobile()) {
-          dlBtn.classList.remove('sim-btn--primary');
-          dlBtn.classList.add('sim-btn--ghost');
-        }
+      } else {
+        // 桌機/不支援：只顯示「另開圖片」
+        dlBtn.classList.remove('sim-hide');
       }
-      // else: 保持預設 —— download 為主按鈕
 
     }).catch(function (err) {
       console.error('[simulator] share image error:', err);
@@ -344,11 +355,11 @@
     hint.className = 'sim-share-hint';
     hint.textContent = '';
 
-    // 完整分享文案：結果 + 抽獎誘因 + 網址
+    // 完整分享文案：結果 + 本月獎品 + 網址
     var shareText =
       '我在 JDI 開播模擬器測出了「' + currentShare.result.title + '」！臨場反應力 ' + currentShare.score + '/15 分 🎬\n\n' +
       '🎁 分享這篇 + 截圖給官方 LINE @354ykfbp\n' +
-      '👉 就能參加每月抽獎（iPhone 潮牌保護殼 / LINE 貼圖 / 藍牙耳機）\n\n' +
+      '👉 就能參加抽獎！本月獎品：直播聲卡套組 + 補光燈 🎙️💡\n\n' +
       '你也來測看看：';
 
     var shareData = {
@@ -362,21 +373,102 @@
       shareData.files = [currentShare.file];
     }
 
+    // 標記「使用者剛按了分享」— 用來偵測回訪
+    sessionStorage.setItem('jdi_just_shared', String(Date.now()));
+
     navigator.share(shareData).then(function () {
-      hint.innerHTML = '✅ 分享成功！別忘了<strong style="color:#FFC53D">截圖給官方 LINE 抽獎</strong> 🎁';
+      hint.innerHTML = '✅ 分享成功！';
       hint.classList.add('is-success');
       trackShare('native');
+      // 分享成功後跳出大提醒
+      showLineReminderModal();
     }).catch(function (err) {
       // 使用者取消不算錯
       if (err && err.name === 'AbortError') {
         hint.textContent = '';
+        sessionStorage.removeItem('jdi_just_shared');
         return;
       }
       console.warn('[simulator] native share failed:', err);
-      hint.textContent = '⚠️ 分享失敗，改用下載圖片吧！';
+      hint.textContent = '⚠️ 分享失敗，請再試一次';
       hint.classList.add('is-error');
-      // fallback: 顯示下載按鈕
-      $('simShareDownload').classList.remove('sim-hide');
+    });
+  }
+
+  // ============ 分享後大提醒 modal ============
+  function showLineReminderModal() {
+    // 若已顯示過就不重複
+    if (document.getElementById('simLineReminderModal')) return;
+
+    var modal = document.createElement('div');
+    modal.id = 'simLineReminderModal';
+    modal.className = 'sim-modal sim-line-reminder-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.innerHTML =
+      '<div class="sim-modal-backdrop" data-close></div>' +
+      '<div class="sim-modal-panel sim-line-reminder-panel">' +
+        '<button class="sim-modal-close" data-close aria-label="關閉">×</button>' +
+        '<div class="sim-line-reminder-icon">📸</div>' +
+        '<h2 class="sim-line-reminder-title">最後一步！</h2>' +
+        '<p class="sim-line-reminder-sub">' +
+          '<strong style="color:#FFC53D;font-size:17px;">截圖你剛剛分享的畫面</strong><br/>' +
+          '傳給官方 LINE 就完成抽獎登記 🎁' +
+        '</p>' +
+        '<div class="sim-line-reminder-steps">' +
+          '<div class="sim-lr-step">1. 打開你剛才分享的貼文</div>' +
+          '<div class="sim-lr-step">2. 截圖分享頁面（Screenshot）</div>' +
+          '<div class="sim-lr-step">3. 打開官方 LINE @354ykfbp</div>' +
+          '<div class="sim-lr-step">4. 傳截圖過去 · 完成抽獎登記！</div>' +
+        '</div>' +
+        '<a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line sim-lr-cta-btn">' +
+          '💬 打開官方 LINE 傳截圖' +
+        '</a>' +
+        '<button class="sim-lr-later" type="button" data-close>我知道了，晚點傳</button>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    // 綁定關閉
+    var closeAll = function () {
+      modal.classList.add('sim-hide');
+      setTimeout(function () { modal.remove(); }, 300);
+    };
+    modal.querySelectorAll('[data-close]').forEach(function (el) {
+      el.addEventListener('click', closeAll);
+    });
+
+    // ESC 關閉
+    var escHandler = function (e) {
+      if (e.key === 'Escape') {
+        closeAll();
+        document.removeEventListener('keydown', escHandler);
+      }
+    };
+    document.addEventListener('keydown', escHandler);
+
+    // 追蹤
+    try {
+      if (window.gtag) window.gtag('event', 'simulator_line_reminder_shown', {
+        event_category: 'streamer_simulator',
+      });
+    } catch (e) { /* ignore */ }
+  }
+
+  // ============ 從外部返回時的提醒（visibilitychange） ============
+  function setupReturnReminder() {
+    // 使用者切離頁面（可能去 IG/Threads 分享）後回來 → 提醒截圖 LINE
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState !== 'visible') return;
+      var justShared = sessionStorage.getItem('jdi_just_shared');
+      if (!justShared) return;
+      var elapsed = Date.now() - parseInt(justShared, 10);
+      // 只在 3 秒 - 5 分鐘之間顯示（太快是取消、太久可能已忘）
+      if (elapsed < 3000 || elapsed > 300000) return;
+      // 只顯示一次
+      sessionStorage.removeItem('jdi_just_shared');
+      // 稍微延遲避免頁面 render 卡頓
+      setTimeout(showLineReminderModal, 800);
     });
   }
 
@@ -385,8 +477,17 @@
     startQuiz();
   }
 
-  // ============ Canvas 分享圖生成 ============
+  // ============ Canvas 分享圖生成 v2 ============
+  // Cache 已產生的圖，同一個結果不重複生成
+  var _shareImageCache = null;
+  var _shareImageResult = null;
+
   function generateShareImage(result, score) {
+    // 若同結果已產生過，直接回用（重要：加速二次分享）
+    if (_shareImageCache && _shareImageResult === result.title + '_' + score) {
+      return Promise.resolve(_shareImageCache);
+    }
+
     return new Promise(function (resolve, reject) {
       var canvas = $('simShareCanvas');
       var ctx = canvas.getContext('2d');
@@ -457,9 +558,9 @@
       ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
       ctx.fillText('/ 15', W / 2 + 90, 745);
 
-      // 🎁 抽獎徽章（醒目金色橢圓）
-      var badgeText = '🎁 分享 + 傳 LINE 抽 iPhone 殼 · LINE 貼圖 · 藍牙耳機';
-      ctx.font = '700 24px "Noto Sans TC", sans-serif';
+      // 🎁 抽獎徽章（醒目金色橢圓 · 本月獎品）
+      var badgeText = '🎁 本月抽 直播聲卡 · 補光燈 · 手機支架';
+      ctx.font = '700 26px "Noto Sans TC", sans-serif';
       ctx.textAlign = 'center';
       var badgeMetrics = ctx.measureText(badgeText);
       var badgeW = badgeMetrics.width + 40;
@@ -497,20 +598,19 @@
       ctx.fillStyle = footerGrad;
       ctx.fillRect(0, H - 150, W, 150);
 
-      // JDI Logo（左）
-      var logoImg = $('simWatermarkLogo');
-      var drawLogo = function () {
-        // 嘗試繪製 logo，若失敗則畫文字替代
-        try {
-          var logoH = 70;
-          var logoW = logoImg.naturalWidth ? (logoImg.naturalWidth * logoH / logoImg.naturalHeight) : 70;
-          ctx.drawImage(logoImg, 80, H - 110, logoW, logoH);
-        } catch (e) {
-          // fallback: 文字
-          ctx.font = '900 48px "Inter", sans-serif';
-          ctx.fillStyle = '#E8392A';
-          ctx.textAlign = 'left';
-          ctx.fillText('JDI', 80, H - 60);
+      // JDI Logo（左）— 用純文字繪製避免 CORS + 載入等待問題
+      // 純文字風格：紅色 "JDI" logo + 品牌文字
+      var drawBrandBottom = function (logoSuccess, logoImg) {
+        if (logoSuccess && logoImg) {
+          try {
+            var logoH = 70;
+            var logoW = (logoImg.naturalWidth * logoH / logoImg.naturalHeight);
+            ctx.drawImage(logoImg, 80, H - 110, logoW, logoH);
+          } catch (e) {
+            drawTextLogo();
+          }
+        } else {
+          drawTextLogo();
         }
 
         // 品牌文字（右）
@@ -522,24 +622,54 @@
         ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
         ctx.fillText('TikTok LIVE 官方合作經紀公會', W - 80, H - 45);
 
-        // 匯出成 dataURL
+        // 匯出
         try {
-          resolve(canvas.toDataURL('image/png', 0.92));
+          var dataUrl = canvas.toDataURL('image/png', 0.9);
+          _shareImageCache = dataUrl;
+          _shareImageResult = result.title + '_' + score;
+          resolve(dataUrl);
         } catch (err) {
           reject(err);
         }
       };
 
-      // Logo 已載入好？
+      function drawTextLogo() {
+        // 純文字 JDI 標誌
+        ctx.font = '900 56px "Inter", sans-serif';
+        ctx.fillStyle = '#E8392A';
+        ctx.textAlign = 'left';
+        ctx.fillText('JDI', 80, H - 65);
+        ctx.font = '600 18px "Inter", sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fillText('PULSE MEDIA', 80, H - 40);
+      }
+
+      // 嘗試載入 logo，最多等 500ms（不阻塞）
+      var logoImg = $('simWatermarkLogo');
+      var logoResolved = false;
+
+      function finalize(withLogo) {
+        if (logoResolved) return;
+        logoResolved = true;
+        drawBrandBottom(withLogo, logoImg);
+      }
+
       if (logoImg && logoImg.complete && logoImg.naturalWidth > 0) {
-        drawLogo();
+        // 已載入
+        finalize(true);
       } else if (logoImg) {
-        logoImg.onload = drawLogo;
+        // 未載入 → 等 500ms，超時就用文字 fallback
+        var timeout = setTimeout(function () { finalize(false); }, 500);
+        logoImg.onload = function () {
+          clearTimeout(timeout);
+          finalize(true);
+        };
         logoImg.onerror = function () {
-          drawLogo(); // 失敗也照樣輸出（會用 fallback 文字）
+          clearTimeout(timeout);
+          finalize(false);
         };
       } else {
-        drawLogo();
+        finalize(false);
       }
     });
   }
@@ -567,6 +697,9 @@
   function init() {
     $('simStartBtn').addEventListener('click', startQuiz);
     $('simRetryBtn').addEventListener('click', retryQuiz);
+
+    // 分享後回來時的提醒
+    setupReturnReminder();
 
     var nativeBtn = $('simShareNative');
     if (nativeBtn) nativeBtn.addEventListener('click', handleNativeShare);
