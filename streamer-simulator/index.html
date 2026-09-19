@@ -619,6 +619,92 @@
 
   /* 隱藏原本的 share-preview（改到 modal 內） */
   .sim-share-preview { display: none !important; }
+
+  /* 3 步驟提示條 */
+  .sim-modal-instruction {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(6, 199, 85, 0.08);
+    border: 1px solid rgba(6, 199, 85, 0.25);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    line-height: 1.65;
+  }
+  .sim-modal-instruction strong {
+    color: var(--sim-green);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .sim-modal-instruction span {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* ============ Line Reminder Modal ============ */
+  .sim-line-reminder-panel {
+    max-width: 420px;
+    text-align: center;
+    padding: 32px 24px 24px;
+    background: linear-gradient(180deg, #1a1a24 0%, #14141e 100%);
+    border: 2px solid rgba(6, 199, 85, 0.4);
+  }
+  .sim-line-reminder-icon {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 12px;
+    animation: shake 1.2s ease-in-out infinite;
+  }
+  @keyframes shake {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  .sim-line-reminder-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--sim-green);
+    margin-bottom: 12px;
+  }
+  .sim-line-reminder-sub {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14.5px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .sim-line-reminder-steps {
+    background: rgba(6, 199, 85, 0.08);
+    border: 1px solid rgba(6, 199, 85, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .sim-lr-step {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    line-height: 1.9;
+    padding-left: 6px;
+  }
+  .sim-lr-cta-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px !important;
+    font-size: 16px !important;
+    box-shadow: 0 6px 20px rgba(6, 199, 85, 0.35);
+  }
+  .sim-lr-later {
+    display: block;
+    margin: 12px auto 0;
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .sim-lr-later:hover { color: rgba(255, 255, 255, 0.7); }
 </style>
 
 </head>
@@ -733,8 +819,8 @@
       <div class="sim-lottery-banner">
         <div class="sim-lottery-icon">🎁</div>
         <div class="sim-lottery-text">
-          <strong>分享 + 截圖給官方 LINE = 每月抽 <span style="color:#fff;">3-5 位</span> 得獎者</strong>
-          <span id="simLotteryParticipants">🎯 每月獎品皆不同，詳見粉專 IG <a href="/lottery/" style="color:#25F4EE;">查看活動 →</a></span>
+          <strong>本月抽 <span style="color:#fff;">直播聲卡 + 補光燈</span> · 每月 3-5 位</strong>
+          <span id="simLotteryParticipants">🎙️ 主播裝備升級系列 · <a href="/lottery/" style="color:#25F4EE;">看完整活動 →</a></span>
         </div>
       </div>
 
@@ -751,16 +837,17 @@
 
       <!-- 主分享按鈕（自動偵測 native / download）-->
       <div class="sim-modal-actions">
-        <!-- native share 預設隱藏，JS 偵測支援才顯示 -->
+        <!-- 手機主按鈕：立即分享到社群 -->
         <button class="sim-btn sim-btn--primary sim-hide" id="simShareNative" type="button">
           📱 立即分享到社群
         </button>
-        <!-- 下載按鈕預設顯示（保底），有 native 時 JS 會決定要不要降為 ghost 或隱藏 -->
-        <a href="#" class="sim-btn sim-btn--primary" id="simShareDownload" download="jdi-streamer-type.png">
-          📸 下載分享圖
+        <!-- 桌機主按鈕：另開分享圖（右鍵可存） -->
+        <a href="#" class="sim-btn sim-btn--primary sim-hide" id="simShareDownload" target="_blank" rel="noopener">
+          🖼️ 打開分享圖 · 長按/右鍵儲存
         </a>
+        <!-- 主推：LINE 抽獎（永遠顯示）-->
         <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line" id="simLineShareBtn">
-          💬 截圖給官方 LINE 抽獎
+          💬 傳截圖到官方 LINE 抽獎
           <span class="sim-btn-badge">HOT</span>
         </a>
       </div>
@@ -768,19 +855,25 @@
       <!-- 分享狀態提示 -->
       <p class="sim-share-hint" id="simShareHint"></p>
 
+      <!-- 步驟提示（顯眼） -->
+      <div class="sim-modal-instruction">
+        <strong>📌 3 步驟參加抽獎：</strong>
+        <span>1️⃣ 分享圖到社群 → 2️⃣ 截圖分享頁 → 3️⃣ 傳截圖到官方 LINE</span>
+      </div>
+
       <!-- 抽獎規則 -->
       <details class="sim-lottery-rules">
-        <summary>🎁 抽獎規則說明</summary>
+        <summary>🎁 本月抽獎規則說明</summary>
         <ol>
-          <li>完成模擬器測驗後，將專屬分享圖分享到 <strong>IG / Threads / FB 動態</strong>（公開設定）</li>
+          <li><strong style="color:#FFC53D;">本月獎品：直播聲卡套組（頭獎）· 補光燈（貳獎）· 手機直播支架（參獎）</strong></li>
+          <li>完成模擬器 → 將分享圖分享到 <strong>IG / Threads / FB 動態</strong>（公開設定）</li>
           <li>截圖你的分享畫面，傳給 <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">@354ykfbp</a> 官方 LINE</li>
           <li>每月月底抽出 <strong>3-5 位分享者</strong></li>
-          <li><strong style="color:#FFC53D;">每月獎品皆不相同，詳見官方粉專 IG @pulse.pop9</strong></li>
-          <li>抽獎結果會在官方 LINE + IG 公布</li>
+          <li>抽獎結果會在官方 LINE + IG 公布，未來每月獎品皆為主播必備器材</li>
           <li>限台灣地區，實體獎品需提供收件地址</li>
         </ol>
         <p style="margin-top:10px;text-align:center;">
-          <a href="/lottery/" style="color:#25F4EE;text-decoration:underline;font-weight:600;">查看完整活動說明 →</a>
+          <a href="/lottery/" style="color:#25F4EE;text-decoration:underline;font-weight:600;">查看完整活動說明與下月預告 →</a>
         </p>
       </details>
 
@@ -796,9 +889,10 @@
 </main>
 
 <!-- 品牌浮水印 Logo（給 canvas 用，隱藏） -->
-<img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" crossorigin="anonymous" style="display:none;" />
+<!-- 拿掉 crossorigin：同源不需要，反而會觸發 CORS 阻塞 -->
+<img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" style="display:none;" />
 
-<script src="/js/streamer-simulator.js?v=20260918d"></script>
+<script src="/js/streamer-simulator.js?v=20260918e"></script>
 
 <link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
 <script src="/js/activity-toast.js?v=20260917b" defer></script>
