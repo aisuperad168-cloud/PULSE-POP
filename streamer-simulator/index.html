@@ -842,7 +842,8 @@
           📱 立即分享到社群
         </button>
         <!-- 桌機主按鈕：另開分享圖（右鍵可存） -->
-        <a href="#" class="sim-btn sim-btn--primary sim-hide" id="simShareDownload" target="_blank" rel="noopener">
+        <!-- 使用 javascript:void(0) 避免 href="#" 跳頂 · JS 會設 blob URL -->
+        <a href="javascript:void(0)" class="sim-btn sim-btn--primary sim-hide" id="simShareDownload" target="_blank" rel="noopener">
           🖼️ 打開分享圖 · 長按/右鍵儲存
         </a>
         <!-- 主推：LINE 抽獎（永遠顯示）-->
@@ -892,7 +893,7 @@
 <!-- 拿掉 crossorigin：同源不需要，反而會觸發 CORS 阻塞 -->
 <img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" style="display:none;" />
 
-<script src="/js/streamer-simulator.js?v=20260918e"></script>
+<script src="/js/streamer-simulator.js?v=20260918f"></script>
 
 <link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
 <script src="/js/activity-toast.js?v=20260917b" defer></script>
