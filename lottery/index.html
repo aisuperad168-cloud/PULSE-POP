@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>每月抽獎活動｜分享主播模擬器抽 iPhone 殼、藍牙耳機 · JDI 脈動傳媒</title>
+<meta name="description" content="JDI 脈動傳媒每月抽獎活動：完成主播開播模擬器 → 分享結果到 IG/Threads/FB → 截圖給官方 LINE @354ykfbp → 每月抽 3-5 位得獎者。獎品含潮牌保護殼、精選 LINE 貼圖、藍牙耳機。每月獎品詳見官方粉絲專頁與 IG。" />
+<meta name="keywords" content="JDI 脈動傳媒 抽獎, 主播模擬器抽獎, 分享抽獎, LINE 抽獎活動, iPhone 保護殼抽獎" />
+<meta name="author" content="JDI 脈動傳媒" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#FFC53D" />
+
+<link rel="canonical" href="https://jdi-pulse.com/lottery/" />
+
+<link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260820b" sizes="180x180" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="JDI 脈動傳媒" />
+<meta property="og:title" content="🎁 每月抽獎活動｜分享主播模擬器抽 iPhone 殼、藍牙耳機" />
+<meta property="og:description" content="完成主播模擬器 → 分享結果 → 截圖傳 LINE → 每月抽 3-5 位得獎者" />
+<meta property="og:url" content="https://jdi-pulse.com/lottery/" />
+<meta property="og:image" content="https://jdi-pulse.com/assets/og_banner.jpg?v=20260819" />
+<meta property="og:locale" content="zh_TW" />
+
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" />
+
+<link rel="stylesheet" href="/css/site-chrome.css?v=20260917-line-green" />
+<script src="/js/analytics.js?v=20260915" defer></script>
+
+<style>
+  :root {
+    --lot-bg: #0a0a0f;
+    --lot-bg-2: #14141e;
+    --lot-surface: rgba(255, 255, 255, 0.04);
+    --lot-border: rgba(255, 255, 255, 0.1);
+    --lot-text: #F5F5F7;
+    --lot-text-dim: rgba(245, 245, 247, 0.6);
+    --lot-red: #E8392A;
+    --lot-cyan: #25F4EE;
+    --lot-gold: #FFC53D;
+    --lot-gold-dark: #FFA000;
+    --lot-green: #06C755;
+    --lot-purple: #a855f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--lot-bg);
+    color: var(--lot-text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .lot-hero {
+    position: relative;
+    padding: 60px 20px 80px;
+    text-align: center;
+    background: radial-gradient(ellipse at top, rgba(255, 197, 61, 0.12) 0%, transparent 60%);
+    overflow: hidden;
+  }
+  .lot-hero::before {
+    content: '';
+    position: absolute;
+    top: 20%; left: 10%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(232, 57, 42, 0.15) 0%, transparent 70%);
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+  .lot-hero::after {
+    content: '';
+    position: absolute;
+    top: 60%; right: 10%;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(37, 244, 238, 0.1) 0%, transparent 70%);
+    animation: floatSlow 10s ease-in-out infinite reverse;
+  }
+  @keyframes floatSlow {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, -20px); }
+  }
+  .lot-hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .lot-hero-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #FFC53D 0%, #FFA000 100%);
+    color: #1a1a1a;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(255, 197, 61, 0.35);
+  }
+  .lot-hero h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFD56B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .lot-hero-sub {
+    font-size: 17px;
+    color: var(--lot-text-dim);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+  .lot-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 34px;
+    background: linear-gradient(135deg, #E8392A 0%, #FF5444 100%);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 999px;
+    box-shadow: 0 8px 28px rgba(232, 57, 42, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .lot-hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(232, 57, 42, 0.6);
+  }
+
+  /* HERO STATS */
+  .lot-hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .lot-hero-stat {
+    text-align: center;
+  }
+  .lot-hero-stat-num {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--lot-gold);
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+  }
+  .lot-hero-stat-label {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--lot-text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  /* SECTIONS */
+  .lot-section {
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .lot-section-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(37, 244, 238, 0.12);
+    color: var(--lot-cyan);
+    border: 1px solid rgba(37, 244, 238, 0.25);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .lot-section h2 {
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .lot-section-sub {
+    color: var(--lot-text-dim);
+    font-size: 15px;
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+
+  /* HOW IT WORKS - 4 STEP */
+  .lot-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .lot-step {
+    background: var(--lot-surface);
+    border: 1px solid var(--lot-border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  .lot-step:hover {
+    border-color: rgba(255, 197, 61, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .lot-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFC53D 0%, #FFA000 100%);
+    color: #1a1a1a;
+    font-weight: 900;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 16px rgba(255, 197, 61, 0.3);
+  }
+  .lot-step-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .lot-step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .lot-step-desc {
+    font-size: 13px;
+    color: var(--lot-text-dim);
+    line-height: 1.55;
+  }
+
+  /* PRIZES */
+  .lot-prizes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .lot-prize {
+    background: linear-gradient(180deg, var(--lot-surface) 0%, rgba(255, 197, 61, 0.03) 100%);
+    border: 1px solid var(--lot-border);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .lot-prize--head {
+    border-color: rgba(255, 197, 61, 0.5);
+    background: linear-gradient(180deg, rgba(255, 197, 61, 0.1) 0%, rgba(232, 57, 42, 0.05) 100%);
+  }
+  .lot-prize--head::before {
+    content: '👑 頭獎';
+    position: absolute;
+    top: 10px; right: 10px;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #FFC53D 0%, #FFA000 100%);
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+  .lot-prize-emoji {
+    font-size: 60px;
+    line-height: 1;
+    margin: 12px 0 16px;
+    display: inline-block;
+    filter: drop-shadow(0 6px 12px rgba(255, 197, 61, 0.3));
+  }
+  .lot-prize-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .lot-prize-desc {
+    font-size: 13px;
+    color: var(--lot-text-dim);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .lot-prize-note {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--lot-border);
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--lot-cyan);
+    letter-spacing: 0.5px;
+  }
+
+  /* MONTHLY LOOKUP */
+  .lot-monthly-notice {
+    background: linear-gradient(135deg, rgba(255, 197, 61, 0.1) 0%, rgba(232, 57, 42, 0.08) 100%);
+    border: 1px solid rgba(255, 197, 61, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .lot-monthly-notice h3 {
+    font-size: 17px;
+    color: var(--lot-gold);
+    margin-bottom: 10px;
+    font-weight: 800;
+  }
+  .lot-monthly-notice p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+  .lot-social-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .lot-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--lot-border);
+    border-radius: 999px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .lot-social-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+  }
+  .lot-social-btn--ig { border-color: rgba(228, 64, 95, 0.4); }
+  .lot-social-btn--tt { border-color: rgba(37, 244, 238, 0.4); }
+  .lot-social-btn--line { border-color: rgba(6, 199, 85, 0.4); }
+
+  /* RULES */
+  .lot-rules-list {
+    background: var(--lot-surface);
+    border: 1px solid var(--lot-border);
+    border-radius: 16px;
+    padding: 24px;
+    counter-reset: rules;
+  }
+  .lot-rules-list > li {
+    list-style: none;
+    padding-left: 40px;
+    position: relative;
+    margin-bottom: 14px;
+    counter-increment: rules;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .lot-rules-list > li::before {
+    content: counter(rules);
+    position: absolute;
+    left: 0; top: 2px;
+    width: 26px;
+    height: 26px;
+    background: rgba(37, 244, 238, 0.15);
+    border: 1px solid rgba(37, 244, 238, 0.4);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lot-cyan);
+    font-weight: 800;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+  }
+  .lot-rules-list strong { color: var(--lot-gold); }
+  .lot-rules-list a {
+    color: var(--lot-green);
+    text-decoration: underline;
+  }
+
+  /* FINAL CTA */
+  .lot-final-cta {
+    padding: 60px 20px;
+    text-align: center;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 197, 61, 0.06) 100%);
+  }
+  .lot-final-cta h2 {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .lot-final-cta p {
+    color: var(--lot-text-dim);
+    margin-bottom: 24px;
+  }
+  .lot-final-cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .lot-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .lot-btn--primary {
+    background: linear-gradient(135deg, #E8392A 0%, #FF5444 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(232, 57, 42, 0.4);
+  }
+  .lot-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(232, 57, 42, 0.55);
+  }
+  .lot-btn--line {
+    background: var(--lot-green);
+    color: #fff;
+  }
+  .lot-btn--line:hover {
+    background: #05B84C;
+    transform: translateY(-2px);
+  }
+
+  /* Winners placeholder */
+  .lot-winners-placeholder {
+    background: var(--lot-surface);
+    border: 1px dashed var(--lot-border);
+    border-radius: 16px;
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--lot-text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .lot-winners-placeholder-emoji {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 480px) {
+    .lot-hero { padding: 40px 16px 60px; }
+    .lot-section { padding: 40px 16px; }
+    .lot-hero-stats { gap: 24px; }
+    .lot-hero-stat-num { font-size: 26px; }
+    .lot-prize { padding: 20px 16px; }
+    .lot-prize-emoji { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ SITE NAV ============ -->
+<nav class="site-nav" data-active="test" aria-label="主導覽">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
+      <span class="site-nav-brand-txt">
+        <span class="zh">JDI 脈動傳媒</span>
+        <span class="en">JDI PULSE MEDIA</span>
+      </span>
+    </a>
+    <button class="site-nav-toggle" aria-label="開啟選單" aria-expanded="false" aria-controls="siteNavLinks">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="site-nav-links" id="siteNavLinks">
+      <li><a href="/" data-key="home">首頁</a></li>
+      <li><a href="/join.html" data-key="join">加入我們</a></li>
+      <li><a href="/partnership.html" data-key="partnership">商業合作</a></li>
+      <li><a href="/streamer-test/" data-key="test">主播測驗</a></li>
+      <li><a href="/live-center/" data-key="live-center">直播中心</a></li>
+      <li><a href="/faq.html" data-key="faq">新人 FAQ</a></li>
+    </ul>
+    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="site-nav-cta" aria-label="LINE 諮詢">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+      <span>LINE 諮詢</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+<script>
+  (function(){
+    var btn = document.querySelector('.site-nav-toggle');
+    var links = document.getElementById('siteNavLinks');
+    if(!btn || !links) return;
+    btn.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+<!-- ============ HERO ============ -->
+<section class="lot-hero">
+  <div class="lot-hero-inner">
+    <span class="lot-hero-badge">🎁 JDI 脈動傳媒 · 每月抽獎活動</span>
+    <h1>分享主播人格<br/>抽 iPhone 殼、藍牙耳機</h1>
+    <p class="lot-hero-sub">
+      完成 60 秒開播模擬器 → 分享結果到社群 → 截圖給官方 LINE<br/>
+      每月抽出 <strong style="color:#FFD56B;">3-5 位</strong> 得獎者，每月獎品皆有變化
+    </p>
+    <a href="/streamer-simulator/" class="lot-hero-cta">
+      🎬 立即開始參加
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+    <div class="lot-hero-stats">
+      <div class="lot-hero-stat">
+        <span class="lot-hero-stat-num">3-5</span>
+        <span class="lot-hero-stat-label">每月得獎人數</span>
+      </div>
+      <div class="lot-hero-stat">
+        <span class="lot-hero-stat-num">100%</span>
+        <span class="lot-hero-stat-label">免費參加</span>
+      </div>
+      <div class="lot-hero-stat">
+        <span class="lot-hero-stat-num">60s</span>
+        <span class="lot-hero-stat-label">最快參加時間</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="lot-section">
+  <span class="lot-section-tag">4 STEPS · 參加流程</span>
+  <h2>如何參加抽獎？</h2>
+  <p class="lot-section-sub">整個流程 3 分鐘完成，完全免費！</p>
+
+  <div class="lot-steps">
+    <div class="lot-step">
+      <div class="lot-step-num">1</div>
+      <span class="lot-step-icon">🎬</span>
+      <div class="lot-step-title">完成模擬器</div>
+      <p class="lot-step-desc">花 60 秒完成 5 題主播情境模擬，看看你的臨場反應力</p>
+    </div>
+    <div class="lot-step">
+      <div class="lot-step-num">2</div>
+      <span class="lot-step-icon">📱</span>
+      <div class="lot-step-title">分享結果圖</div>
+      <p class="lot-step-desc">下載或直接分享專屬結果圖到 IG、Threads、FB（公開設定）</p>
+    </div>
+    <div class="lot-step">
+      <div class="lot-step-num">3</div>
+      <span class="lot-step-icon">📸</span>
+      <div class="lot-step-title">截圖傳 LINE</div>
+      <p class="lot-step-desc">將你分享的畫面截圖，傳給官方 LINE 即完成登記</p>
+    </div>
+    <div class="lot-step">
+      <div class="lot-step-num">4</div>
+      <span class="lot-step-icon">🎁</span>
+      <div class="lot-step-title">等待開獎</div>
+      <p class="lot-step-desc">每月月底於粉絲專頁 + IG 公布中獎名單，得獎者將收到 LINE 通知</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRIZES ============ -->
+<section class="lot-section">
+  <span class="lot-section-tag">🎁 PRIZES · 當月獎品</span>
+  <h2>本月獎項</h2>
+  <p class="lot-section-sub">每月 3-5 個獎品，實際內容以官方粉專為準</p>
+
+  <div class="lot-prizes">
+    <div class="lot-prize lot-prize--head">
+      <span class="lot-prize-emoji">🎧</span>
+      <h3 class="lot-prize-name">藍牙耳機</h3>
+      <p class="lot-prize-desc">頭獎精選藍牙耳機一組，直播必備良伴</p>
+      <span class="lot-prize-note">頭獎 · 1 名</span>
+    </div>
+    <div class="lot-prize">
+      <span class="lot-prize-emoji">📱</span>
+      <h3 class="lot-prize-name">iPhone / Android 潮牌保護殼</h3>
+      <p class="lot-prize-desc">聯名潮牌手機保護殼，型號可依中獎者手機選擇</p>
+      <span class="lot-prize-note">貳獎 · 2 名</span>
+    </div>
+    <div class="lot-prize">
+      <span class="lot-prize-emoji">🎨</span>
+      <h3 class="lot-prize-name">精選 LINE 貼圖組合包</h3>
+      <p class="lot-prize-desc">當月熱門 LINE 貼圖任選一組，開播必備 emoji 神器</p>
+      <span class="lot-prize-note">參獎 · 2 名</span>
+    </div>
+  </div>
+
+  <div class="lot-monthly-notice">
+    <h3>🎁 每月獎品皆有更換</h3>
+    <p>
+      實際獎品內容以 <strong style="color:#fff;">官方粉絲專頁</strong> 與 <strong style="color:#fff;">Instagram</strong> 公告為準，<br/>
+      追蹤我們不錯過任何一月的獎品資訊！
+    </p>
+    <div class="lot-social-buttons">
+      <a href="https://www.instagram.com/pulse.pop9" target="_blank" rel="noopener" class="lot-social-btn lot-social-btn--ig">
+        📷 追蹤 Instagram
+      </a>
+      <a href="https://www.tiktok.com/@pulse.pop9" target="_blank" rel="noopener" class="lot-social-btn lot-social-btn--tt">
+        🎵 追蹤 TikTok
+      </a>
+      <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="lot-social-btn lot-social-btn--line">
+        💬 加入官方 LINE
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section class="lot-section">
+  <span class="lot-section-tag">📜 RULES · 活動規則</span>
+  <h2>活動細則</h2>
+  <p class="lot-section-sub">請仔細閱讀，符合資格才能中獎唷 🙏</p>
+
+  <ol class="lot-rules-list">
+    <li>參加對象：<strong>限台灣地區居民</strong>，實體獎品需提供台灣收件地址</li>
+    <li>參加期間：<strong>每月 1 日 00:00 至月底 23:59</strong>（台灣時間）</li>
+    <li>參加方式：至 <a href="/streamer-simulator/">主播開播模擬器</a> 完成 5 題測驗，將結果圖分享到 <strong>IG / Threads / FB 公開動態</strong>，並截圖傳給官方 LINE <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">@354ykfbp</a></li>
+    <li>抽獎日期：<strong>每月 1 日</strong>公布上個月得獎名單於粉專與 IG</li>
+    <li>得獎通知：官方 LINE 主動聯繫，7 天內未回覆視同放棄</li>
+    <li>獎品寄送：得獎者確認後，5-10 個工作天內寄出（僅限台灣本島與離島）</li>
+    <li>同一人每月僅有一次中獎機會</li>
+    <li>使用假帳號、虛假分享等不當方式將取消資格</li>
+    <li>JDI 脈動傳媒保有最終活動解釋權，如有調整將於粉專公告</li>
+  </ol>
+</section>
+
+<!-- ============ PAST WINNERS PLACEHOLDER ============ -->
+<section class="lot-section">
+  <span class="lot-section-tag">🏆 HALL OF FAME · 歷屆得主</span>
+  <h2>歷屆得獎者</h2>
+  <p class="lot-section-sub">感謝所有參加者，讓我們的活動持續進行</p>
+
+  <div class="lot-winners-placeholder">
+    <div class="lot-winners-placeholder-emoji">🎊</div>
+    <p>
+      <strong style="color:#fff;">首月抽獎正在進行中</strong><br/>
+      2026 年 10 月 1 日將公布首批得獎名單於<br/>
+      <a href="https://www.instagram.com/pulse.pop9" target="_blank" rel="noopener" style="color:#25F4EE;text-decoration:underline;">Instagram @pulse.pop9</a> 與 LINE 官方帳號
+    </p>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="lot-final-cta">
+  <h2>🎁 準備好參加了嗎？</h2>
+  <p>60 秒完成模擬器，馬上取得抽獎資格</p>
+  <div class="lot-final-cta-buttons">
+    <a href="/streamer-simulator/" class="lot-btn lot-btn--primary">
+      🎬 開始模擬器
+    </a>
+    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="lot-btn lot-btn--line">
+      💬 加入官方 LINE
+    </a>
+  </div>
+</section>
+
+<link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
+<script src="/js/activity-toast.js?v=20260917b" defer></script>
+</body>
+</html>

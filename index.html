@@ -750,13 +750,28 @@
         <span class="stat-label">主播平均月收入</span>
         <span class="stat-delta">頂尖 &gt; 200K</span>
       </div>
-      <!-- 保底：強制寫入 45.8K，即使外部 JS 有 bug 也不會顯示 45800 -->
+      <!-- 保底：強制寫入 45.8K，即使外部 JS 沒載入也能正確顯示 -->
       <script>
         (function () {
-          var el = document.querySelector('.stat-num[data-target="45800"]');
-          if (el && (el.textContent === '45800' || el.textContent === '0')) {
-            el.textContent = '45.8K';
+          function fixIncome() {
+            var el = document.querySelector('.stat-num[data-target="45800"]');
+            if (!el) return;
+            var txt = (el.textContent || '').trim();
+            // 任何非 K 格式的都修正
+            if (txt !== '45.8K' && !/K$/i.test(txt)) {
+              el.textContent = '45.8K';
+            }
           }
+          // 立即執行
+          fixIncome();
+          // DOMContentLoaded 再修一次（保險）
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fixIncome);
+          }
+          // 從瀏覽器上一頁回來時 (bfcache 恢復) 也要修
+          window.addEventListener('pageshow', function (e) {
+            if (e.persisted) fixIncome();
+          });
         })();
       </script>
       <div class="stat-item">
@@ -1420,6 +1435,7 @@
           <li><a href="/join.html">成為主播</a></li>
           <li><a href="/streamer-test/">主播適配度測驗</a></li>
           <li><a href="/streamer-simulator/">主播開播模擬器 🎬</a></li>
+          <li><a href="/lottery/">每月抽獎活動 🎁</a></li>
           <li><a href="/partnership.html">商業合作</a></li>
           <li><a href="/careers.html">加入我們（職缺）</a></li>
           <li><a href="/venues.html">場地合作（屋主）</a></li>
@@ -1531,18 +1547,18 @@
           </div>
         </a>
 
-        <!-- NEW: 60 秒開播模擬器（可分享圖）-->
+        <!-- NEW: 60 秒開播模擬器（可分享圖 + 抽獎）-->
         <a href="/streamer-simulator/" class="stmt-popup-choice" data-stmt-popup-track="simulator">
-          <span class="stmt-popup-choice-tag">🎬 最快 + 可分享</span>
+          <span class="stmt-popup-choice-tag">🎁 分享抽獎中</span>
           <div class="stmt-popup-choice-title">
             60 秒開播模擬器
             <span class="stmt-popup-choice-arrow">→</span>
           </div>
-          <p class="stmt-popup-choice-desc">5 個直播現場情境，模擬觀眾送禮、忘詞、深夜留人等真實狀況。結果可下載分享到 IG / Threads。</p>
+          <p class="stmt-popup-choice-desc">5 個直播現場情境，模擬觀眾送禮、忘詞、深夜留人等真實狀況。分享結果<strong>參加每月抽獎</strong>（iPhone 殼、藍牙耳機）。</p>
           <div class="stmt-popup-choice-meta">
             <span>約 60 秒</span>
             <span>5 題情境</span>
-            <span>可分享圖</span>
+            <span>🎁 每月抽獎</span>
           </div>
         </a>
       </div>
