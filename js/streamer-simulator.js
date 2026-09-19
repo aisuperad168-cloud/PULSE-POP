@@ -254,6 +254,9 @@
       });
     } catch (e) { /* ignore */ }
 
+    // 讀取本月已參加人數（social proof · 靜默失敗）
+    fetchLotteryParticipants();
+
     // 產生分享圖
     generateShareImage(result, total).then(function (dataUrl) {
       preview.src = dataUrl;
@@ -547,11 +550,12 @@
       });
     }
 
-    // LINE 抽獎按鈕追蹤
+    // LINE 抽獎按鈕：ping API + 追蹤
     var lineBtn = $('simLineShareBtn');
     if (lineBtn) {
       lineBtn.addEventListener('click', function () {
         trackShare('line_lottery');
+        registerLotteryEntry();
       });
     }
 
@@ -583,6 +587,31 @@
         result: currentShare.result ? currentShare.result.title : 'unknown',
       });
     } catch (e) { /* ignore */ }
+  }
+
+  function registerLotteryEntry() {
+    if (!currentShare.result) return;
+    var body = JSON.stringify({
+      result_type: currentShare.result.title,
+      score: currentShare.score,
+    });
+    // 用 fetch keepalive（不用 sendBeacon 因為要拿回應更新畫面）
+    fetch('/api/simulator/lottery-entry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body,
+      keepalive: true,
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data && data.ok && data.participants_this_month) {
+        updateLotteryParticipants(data.participants_this_month);
+      }
+    }).catch(function () { /* silent */ });
+  }
+
+  function updateLotteryParticipants(count) {
+    var el = document.getElementById('simLotteryParticipants');
+    if (!el || !count || count < 5) return; // 太少就不顯示，避免尷尬
+    el.innerHTML = '🔥 本月已有 <strong style="color:#FFD56B;">' + count + '</strong> 位登記抽獎！';
   }
 
   if (document.readyState === 'loading') {

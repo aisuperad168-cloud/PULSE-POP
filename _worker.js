@@ -44,6 +44,8 @@ import * as statsIncrement from './functions/api/stats/increment.js';
 import * as statsArticleView from './functions/api/stats/article-view.js';
 import * as statsHotArticles from './functions/api/stats/hot-articles.js';
 import * as statsSeedTitles from './functions/api/stats/seed-titles.js';
+import * as lotteryEntry from './functions/api/simulator/lottery-entry.js';
+import * as lotteryStats from './functions/api/simulator/lottery-stats.js';
 
 // 電子報系統 (/newsletter/*)
 import * as nlSubscribe from './functions/api/newsletter/subscribe.js';
@@ -95,6 +97,8 @@ const API_ROUTES = {
   '/api/stats/article-view': statsArticleView,
   '/api/stats/hot-articles': statsHotArticles,
   '/api/stats/seed-titles': statsSeedTitles,
+  '/api/simulator/lottery-entry': lotteryEntry,
+  '/api/simulator/lottery-stats': lotteryStats,
 
   // 電子報系統
   '/api/newsletter/subscribe': nlSubscribe,
