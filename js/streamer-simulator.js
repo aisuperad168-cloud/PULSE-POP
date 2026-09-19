@@ -235,8 +235,11 @@
 
     var nativeBtn = $('simShareNative');
     var dlBtn = $('simShareDownload');
+    // 重置：預設 native 隱藏、download 顯示（primary）
     nativeBtn.classList.add('sim-hide');
-    dlBtn.classList.add('sim-hide');
+    dlBtn.classList.remove('sim-hide');
+    dlBtn.classList.remove('sim-btn--ghost');
+    dlBtn.classList.add('sim-btn--primary');
 
     var preview = $('simSharePreview');
     var previewLoading = $('simPreviewLoading');
@@ -271,27 +274,24 @@
         currentShare.file = null;
       }
 
-      // 決定顯示按鈕
+      // 一律先確保 dlBtn 有 href 可下載
+      dlBtn.href = dataUrl;
+
+      // 進階：若支援 native share，把 native 升級為主按鈕，download 降為次要
       var canNative = supportsNativeShare();
       var canShareFile = canNative && currentShare.file && navigator.canShare && navigator.canShare({ files: [currentShare.file] });
 
-      if (canShareFile || (canNative && !currentShare.file)) {
-        // 手機優先
+      if (canShareFile || (canNative && isMobile())) {
+        // 手機或支援檔案分享：native 為主
         nativeBtn.classList.remove('sim-hide');
         nativeBtn.innerHTML = '📱 立即分享到社群';
-        if (!isMobile()) {
-          // 桌機也保留下載作為 secondary
-          dlBtn.classList.remove('sim-hide');
+        // 手機環境把下載降為 ghost（不搶主按鈕焦點）
+        if (isMobile()) {
           dlBtn.classList.remove('sim-btn--primary');
           dlBtn.classList.add('sim-btn--ghost');
         }
-      } else {
-        // 桌機或不支援
-        dlBtn.classList.remove('sim-hide');
-        dlBtn.classList.remove('sim-btn--ghost');
-        dlBtn.classList.add('sim-btn--primary');
       }
-      dlBtn.href = dataUrl;
+      // else: 保持預設 —— download 為主按鈕
 
     }).catch(function (err) {
       console.error('[simulator] share image error:', err);
@@ -611,7 +611,7 @@
   function updateLotteryParticipants(count) {
     var el = document.getElementById('simLotteryParticipants');
     if (!el || !count || count < 5) return; // 太少就不顯示，避免尷尬
-    el.innerHTML = '🔥 本月已有 <strong style="color:#FFD56B;">' + count + '</strong> 位登記抽獎！';
+    el.innerHTML = '🔥 本月已有 <strong style="color:#FFD56B;">' + count + '</strong> 位登記抽獎！ <a href="/lottery/" style="color:#25F4EE;">查看活動 →</a>';
   }
 
   if (document.readyState === 'loading') {
