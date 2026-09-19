@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>抽獎中｜JDI 脈動傳媒 · 選一張卡翻開你的獎品</title>
+<meta name="description" content="翻開 3 張神秘卡片，看看你這次能抽到什麼獎品！" />
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=20260820b" sizes="180x180" />
+<meta name="theme-color" content="#FFC53D" />
+
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" />
+
+<link rel="stylesheet" href="/css/site-chrome.css?v=20260917-line-green" />
+<link rel="stylesheet" href="/css/lottery-flow.css?v=20260919a" />
+<script src="/js/analytics.js?v=20260915" defer></script>
+</head>
+<body class="lf-body">
+
+<!-- ============ SITE NAV ============ -->
+<nav class="site-nav" data-active="lottery" aria-label="主導覽">
+  <div class="site-nav-inner">
+    <a href="/" class="site-nav-brand" aria-label="JDI 脈動傳媒首頁">
+      <img src="/assets/logo_jdi_transparent.png?v=20260820c" alt="JDI 脈動傳媒 Logo" loading="lazy"/>
+      <span class="site-nav-brand-txt">
+        <span class="zh">JDI 脈動傳媒</span>
+        <span class="en">JDI PULSE MEDIA</span>
+      </span>
+    </a>
+    <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="site-nav-cta" aria-label="LINE 諮詢">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 3.14 1.94 5.91 4.87 7.53-.14.57-.63 2.46-.68 2.68-.07.29.11.28.23.21.09-.06 1.47-.99 2.11-1.42.8.12 1.62.18 2.47.18 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+      <span>LINE 諮詢</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main class="lf-container">
+
+  <!-- 錯誤訊息 -->
+  <div class="lf-msg lf-msg--error" id="lfDrawError"></div>
+
+  <!-- 抽獎頭部 -->
+  <div class="lf-draw-hero" id="lfDrawHero">
+    <div class="lf-chances" id="lfChances">🎁 抽獎機會：<span id="lfChancesNum">--</span> 次</div>
+    <h1 id="lfDrawTitle">🎲 選一張卡片開獎</h1>
+    <p id="lfDrawSub">憑感覺點下去 · 每次只能翻一張</p>
+  </div>
+
+  <!-- 3 張卡片 -->
+  <div class="lf-cards" id="lfCards">
+    <div class="lf-card-flip" data-idx="0" role="button" tabindex="0" aria-label="翻開第 1 張卡片">
+      <div class="lf-card-face lf-card-back">
+        <div class="lf-card-back-content">
+          <div class="lf-card-q">?</div>
+          <div class="lf-card-hint">1</div>
+        </div>
+      </div>
+      <div class="lf-card-face lf-card-front" id="lfCardFront0">
+        <span class="lf-card-emoji">🎁</span>
+        <div class="lf-card-name">載入中</div>
+      </div>
+    </div>
+    <div class="lf-card-flip" data-idx="1" role="button" tabindex="0" aria-label="翻開第 2 張卡片">
+      <div class="lf-card-face lf-card-back">
+        <div class="lf-card-back-content">
+          <div class="lf-card-q">?</div>
+          <div class="lf-card-hint">2</div>
+        </div>
+      </div>
+      <div class="lf-card-face lf-card-front" id="lfCardFront1">
+        <span class="lf-card-emoji">🎁</span>
+        <div class="lf-card-name">載入中</div>
+      </div>
+    </div>
+    <div class="lf-card-flip" data-idx="2" role="button" tabindex="0" aria-label="翻開第 3 張卡片">
+      <div class="lf-card-face lf-card-back">
+        <div class="lf-card-back-content">
+          <div class="lf-card-q">?</div>
+          <div class="lf-card-hint">3</div>
+        </div>
+      </div>
+      <div class="lf-card-face lf-card-front" id="lfCardFront2">
+        <span class="lf-card-emoji">🎁</span>
+        <div class="lf-card-name">載入中</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="lf-draw-hint" id="lfDrawHint">👆 點擊任一張卡片開始抽獎</p>
+
+  <!-- 獎品剩餘資訊 -->
+  <div class="lf-card" style="padding: 16px;">
+    <h2 style="font-size: 14px; margin-bottom: 12px; color: var(--lf-text-dim); font-weight: 600;">🎁 本月剩餘獎品</h2>
+    <div id="lfStockList" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 13px;">
+      <div style="color: var(--lf-text-dim);">載入中...</div>
+    </div>
+  </div>
+
+</main>
+
+<script src="/js/lottery-draw.js?v=20260919a"></script>
+
+</body>
+</html>

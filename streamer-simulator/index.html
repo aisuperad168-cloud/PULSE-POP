@@ -170,6 +170,15 @@
   .sim-btn--ghost:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+  .sim-btn--cyan {
+    background: linear-gradient(135deg, #25F4EE 0%, #a855f7 100%);
+    color: #0a0a0f;
+    box-shadow: 0 6px 20px rgba(37, 244, 238, 0.3);
+  }
+  .sim-btn--cyan:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 244, 238, 0.5);
+  }
 
   /* Progress */
   .sim-progress {
@@ -817,69 +826,71 @@
 
       <!-- 抽獎橫幅 -->
       <div class="sim-lottery-banner">
-        <div class="sim-lottery-icon">🎁</div>
+        <div class="sim-lottery-icon">🎰</div>
         <div class="sim-lottery-text">
-          <strong>本月抽 <span style="color:#fff;">直播聲卡 + 補光燈</span> · 每月 3-5 位</strong>
-          <span id="simLotteryParticipants">🎙️ 主播裝備升級系列 · <a href="/lottery/" style="color:#25F4EE;">看完整活動 →</a></span>
+          <strong>🎁 立即翻牌抽獎 · <span style="color:#fff;">28 個獎項</span></strong>
+          <span id="simLotteryParticipants">直播聲卡 / 補光燈 / TikTok 支架 / 燕麥拿鐵</span>
         </div>
       </div>
 
-      <h2 id="simModalTitle" class="sim-modal-title">🎉 完成！立即分享你的結果</h2>
-      <p class="sim-modal-sub">分享你的主播人格，讓朋友也來測，參加每月抽獎</p>
+      <h2 id="simModalTitle" class="sim-modal-title">🎉 恭喜完成測驗！</h2>
+      <p class="sim-modal-sub">立即抽獎 · 中獎機率 <strong style="color:#FFC53D;">14%</strong>（每 7 人有 1 人中獎）</p>
 
-      <!-- 分享圖預覽 -->
-      <div class="sim-modal-preview-wrap">
-        <img id="simSharePreview" class="sim-modal-preview" alt="你的主播人格分享圖" />
-        <div class="sim-modal-preview-loading" id="simPreviewLoading">
-          <div class="sim-loading">正在為你產生專屬分享圖...</div>
+      <!-- 主 CTA：立即抽獎（大按鈕、顯眼）-->
+      <div class="sim-modal-actions" style="margin-top: 8px;">
+        <a href="javascript:void(0)" id="simGoLotteryBtn" class="sim-btn sim-btn--primary" style="font-size: 18px; padding: 20px 24px;">
+          🎲 立即翻牌抽獎
+        </a>
+      </div>
+
+      <!-- 分享圖預覽（次要 · 可折疊） -->
+      <details style="margin: 20px 0 10px;">
+        <summary style="cursor:pointer; color:#25F4EE; text-align:center; font-weight:700; padding: 8px;">
+          🎨 我要先分享測驗結果到社群
+        </summary>
+        <div style="margin-top: 16px;">
+          <div class="sim-modal-preview-wrap">
+            <img id="simSharePreview" class="sim-modal-preview" alt="你的主播人格分享圖" />
+            <div class="sim-modal-preview-loading" id="simPreviewLoading">
+              <div class="sim-loading">正在為你產生專屬分享圖...</div>
+            </div>
+          </div>
+
+          <div class="sim-modal-actions">
+            <!-- 手機主按鈕：立即分享到社群 -->
+            <button class="sim-btn sim-btn--cyan sim-hide" id="simShareNative" type="button">
+              📱 分享分享圖到社群
+            </button>
+            <!-- 桌機主按鈕：另開分享圖 -->
+            <a href="javascript:void(0)" class="sim-btn sim-btn--cyan sim-hide" id="simShareDownload" target="_blank" rel="noopener">
+              🖼️ 打開分享圖 · 長按/右鍵儲存
+            </a>
+          </div>
+          <p class="sim-share-hint" id="simShareHint"></p>
+          <p style="text-align: center; font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 12px;">
+            💡 分享後回來抽獎，仍可正常參加
+          </p>
         </div>
-      </div>
-
-      <!-- 主分享按鈕（自動偵測 native / download）-->
-      <div class="sim-modal-actions">
-        <!-- 手機主按鈕：立即分享到社群 -->
-        <button class="sim-btn sim-btn--primary sim-hide" id="simShareNative" type="button">
-          📱 立即分享到社群
-        </button>
-        <!-- 桌機主按鈕：另開分享圖（右鍵可存） -->
-        <!-- 使用 javascript:void(0) 避免 href="#" 跳頂 · JS 會設 blob URL -->
-        <a href="javascript:void(0)" class="sim-btn sim-btn--primary sim-hide" id="simShareDownload" target="_blank" rel="noopener">
-          🖼️ 打開分享圖 · 長按/右鍵儲存
-        </a>
-        <!-- 主推：LINE 抽獎（永遠顯示）-->
-        <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener" class="sim-btn sim-btn--line" id="simLineShareBtn">
-          💬 傳截圖到官方 LINE 抽獎
-          <span class="sim-btn-badge">HOT</span>
-        </a>
-      </div>
-
-      <!-- 分享狀態提示 -->
-      <p class="sim-share-hint" id="simShareHint"></p>
-
-      <!-- 步驟提示（顯眼） -->
-      <div class="sim-modal-instruction">
-        <strong>📌 3 步驟參加抽獎：</strong>
-        <span>1️⃣ 分享圖到社群 → 2️⃣ 截圖分享頁 → 3️⃣ 傳截圖到官方 LINE</span>
-      </div>
+      </details>
 
       <!-- 抽獎規則 -->
       <details class="sim-lottery-rules">
         <summary>🎁 本月抽獎規則說明</summary>
         <ol>
-          <li><strong style="color:#FFC53D;">本月獎品：直播聲卡套組（頭獎）· 補光燈（貳獎）· 手機直播支架（參獎）</strong></li>
-          <li>完成模擬器 → 將分享圖分享到 <strong>IG / Threads / FB 動態</strong>（公開設定）</li>
-          <li>截圖你的分享畫面，傳給 <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">@354ykfbp</a> 官方 LINE</li>
-          <li>每月月底抽出 <strong>3-5 位分享者</strong></li>
-          <li>抽獎結果會在官方 LINE + IG 公布，未來每月獎品皆為主播必備器材</li>
-          <li>限台灣地區，實體獎品需提供收件地址</li>
+          <li><strong style="color:#FFC53D;">本月獎品：直播聲卡（1）· 補光燈（2）· TikTok 支架（5）· 7-11 燕麥拿鐵（20）</strong></li>
+          <li>填寫姓名 / 電話 / Email → 立即翻 3 張卡開獎</li>
+          <li>中獎後截圖領獎頁，加 <a href="https://line.me/R/ti/p/@354ykfbp" target="_blank" rel="noopener">@354ykfbp</a> 官方 LINE 領獎</li>
+          <li>分享推薦連結給朋友，每邀請 1 人 <strong>+1 次抽獎機會</strong>（最多 5 次）</li>
+          <li>領獎期限：中獎後至次月 15 日</li>
+          <li>限台灣地區居民，實體獎品需提供收件地址</li>
         </ol>
         <p style="margin-top:10px;text-align:center;">
-          <a href="/lottery/" style="color:#25F4EE;text-decoration:underline;font-weight:600;">查看完整活動說明與下月預告 →</a>
+          <a href="/lottery/" style="color:#25F4EE;text-decoration:underline;font-weight:600;">查看完整活動說明 →</a>
         </p>
       </details>
 
       <button class="sim-btn sim-btn--ghost sim-modal-later" id="simModalLater" type="button">
-        稍後再說
+        稍後再玩
       </button>
 
       <!-- 隱藏 canvas 給圖片產生用 -->

@@ -669,7 +669,27 @@
       });
     }
 
-    // LINE 抽獎按鈕：ping API + 追蹤
+    // === 立即抽獎主 CTA（新流程）===
+    var lotteryBtn = $('simGoLotteryBtn');
+    if (lotteryBtn) {
+      lotteryBtn.addEventListener('click', function () {
+        trackShare('go_lottery');
+        registerLotteryEntry(); // 記錄「有點過抽獎按鈕」統計
+        var result = currentShare.result;
+        var score = currentShare.score;
+        var params = new URLSearchParams();
+        if (result && result.title) params.set('type', result.title);
+        if (typeof score === 'number') params.set('score', score);
+        // 若 URL 有 ref=xxxx 也保留
+        try {
+          var currRef = new URLSearchParams(window.location.search).get('ref');
+          if (currRef) params.set('ref', currRef);
+        } catch (e) {}
+        window.location.href = '/lottery/register/?' + params.toString();
+      });
+    }
+
+    // 舊 LINE 抽獎按鈕（改成「已存在則綁」的相容處理）
     var lineBtn = $('simLineShareBtn');
     if (lineBtn) {
       lineBtn.addEventListener('click', function () {

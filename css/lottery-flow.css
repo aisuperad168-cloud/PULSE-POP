@@ -1,0 +1,762 @@
+/* ============================================================
+ * lottery-flow.css - 抽獎流程共用樣式
+ * 覆蓋：登記表單 / 抽獎動畫 / 結果頁
+ * ============================================================ */
+
+.lf-body {
+  --lf-bg: #0a0a0f;
+  --lf-bg-2: #14141e;
+  --lf-surface: rgba(255, 255, 255, 0.04);
+  --lf-border: rgba(255, 255, 255, 0.1);
+  --lf-text: #F5F5F7;
+  --lf-text-dim: rgba(245, 245, 247, 0.6);
+  --lf-red: #E8392A;
+  --lf-cyan: #25F4EE;
+  --lf-gold: #FFC53D;
+  --lf-gold-dark: #FFA000;
+  --lf-green: #06C755;
+  --lf-purple: #a855f7;
+
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--lf-bg);
+  color: var(--lf-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.lf-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* HERO SECTION */
+.lf-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.lf-hero-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255, 197, 61, 0.15);
+  border: 1px solid rgba(255, 197, 61, 0.4);
+  border-radius: 999px;
+  color: var(--lf-gold);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+.lf-hero h1 {
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #FFC53D 0%, #FF7A5C 60%, #E8392A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lf-hero p {
+  color: var(--lf-text-dim);
+  font-size: 15px;
+}
+.lf-hero p strong {
+  color: var(--lf-cyan);
+  font-weight: 700;
+}
+
+/* PRIZE STRIP - 顯示本月獎品 */
+.lf-prize-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 32px;
+  background: var(--lf-surface);
+  border: 1px solid var(--lf-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+.lf-prize-strip-item {
+  text-align: center;
+}
+.lf-prize-strip-emoji {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.lf-prize-strip-name {
+  font-size: 11px;
+  color: var(--lf-text-dim);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.lf-prize-strip-count {
+  font-size: 10px;
+  color: var(--lf-gold);
+  font-weight: 700;
+  margin-top: 2px;
+}
+@media (max-width: 480px) {
+  .lf-prize-strip-emoji { font-size: 26px; }
+  .lf-prize-strip-name { font-size: 10px; }
+}
+
+/* FORM CARD */
+.lf-card {
+  background: var(--lf-surface);
+  border: 1px solid var(--lf-border);
+  border-radius: 20px;
+  padding: 32px 24px;
+  margin-bottom: 20px;
+}
+.lf-card h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--lf-text);
+}
+.lf-card .lf-card-sub {
+  color: var(--lf-text-dim);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* FORM */
+.lf-form-group {
+  margin-bottom: 20px;
+}
+.lf-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--lf-text);
+}
+.lf-form-group label .lf-required {
+  color: var(--lf-red);
+  margin-left: 4px;
+}
+.lf-form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--lf-border);
+  border-radius: 12px;
+  color: var(--lf-text);
+  font-size: 16px; /* 16px 避免 iOS zoom */
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+}
+.lf-form-group input:focus {
+  outline: none;
+  border-color: var(--lf-cyan);
+  background: rgba(37, 244, 238, 0.05);
+}
+.lf-form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.lf-form-group .lf-form-hint {
+  font-size: 12px;
+  color: var(--lf-text-dim);
+  margin-top: 6px;
+}
+.lf-form-group .lf-form-error {
+  font-size: 13px;
+  color: #ff6b6b;
+  margin-top: 6px;
+  display: none;
+}
+.lf-form-group.has-error input {
+  border-color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.05);
+}
+.lf-form-group.has-error .lf-form-error {
+  display: block;
+}
+
+/* PRIVACY CHECKBOX */
+.lf-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--lf-border);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.lf-privacy input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--lf-cyan);
+}
+.lf-privacy-text {
+  font-size: 13px;
+  color: var(--lf-text-dim);
+  line-height: 1.6;
+}
+.lf-privacy-text a {
+  color: var(--lf-cyan);
+  text-decoration: underline;
+}
+
+/* SUBMIT BUTTON */
+.lf-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.lf-btn:active { transform: scale(0.98); }
+.lf-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lf-btn--primary {
+  background: linear-gradient(135deg, #FFC53D 0%, #E8392A 100%);
+  color: #1a1a1a;
+  box-shadow: 0 10px 30px rgba(255, 197, 61, 0.35);
+}
+.lf-btn--primary:hover:not(:disabled) {
+  box-shadow: 0 14px 40px rgba(255, 197, 61, 0.5);
+}
+.lf-btn--line {
+  background: var(--lf-green);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(6, 199, 85, 0.35);
+}
+.lf-btn--ghost {
+  background: transparent;
+  color: var(--lf-text);
+  border: 1px solid var(--lf-border);
+}
+.lf-btn--cyan {
+  background: linear-gradient(135deg, #25F4EE 0%, #a855f7 100%);
+  color: #0a0a0f;
+  box-shadow: 0 10px 30px rgba(37, 244, 238, 0.3);
+}
+
+/* INFO STRIP - 顯示參加人數等 */
+.lf-info-strip {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  background: rgba(37, 244, 238, 0.08);
+  border: 1px solid rgba(37, 244, 238, 0.25);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.lf-info-strip-item {
+  text-align: center;
+}
+.lf-info-strip-num {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--lf-cyan);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.lf-info-strip-label {
+  font-size: 11px;
+  color: var(--lf-text-dim);
+  font-weight: 600;
+}
+
+/* BACK LINK */
+.lf-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--lf-text-dim);
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: color 0.2s;
+}
+.lf-back-link:hover { color: var(--lf-cyan); }
+
+/* LOADING */
+.lf-loading {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: lfSpin 0.7s linear infinite;
+}
+@keyframes lfSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* GLOBAL MSG */
+.lf-msg {
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: none;
+}
+.lf-msg.is-visible { display: block; }
+.lf-msg--error {
+  background: rgba(232, 57, 42, 0.12);
+  border: 1px solid rgba(232, 57, 42, 0.4);
+  color: #ff9a90;
+}
+.lf-msg--success {
+  background: rgba(6, 199, 85, 0.12);
+  border: 1px solid rgba(6, 199, 85, 0.4);
+  color: #7ff2a3;
+}
+.lf-msg--warning {
+  background: rgba(255, 197, 61, 0.12);
+  border: 1px solid rgba(255, 197, 61, 0.4);
+  color: #ffd97a;
+}
+
+/* ============================================================
+ * DRAW PAGE - 3 CARD FLIP
+ * ============================================================ */
+.lf-draw-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.lf-draw-hero h1 {
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.lf-draw-hero p {
+  color: var(--lf-text-dim);
+  font-size: 15px;
+}
+
+.lf-chances {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255, 197, 61, 0.15);
+  border: 1px solid rgba(255, 197, 61, 0.4);
+  border-radius: 999px;
+  color: var(--lf-gold);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* 3 卡片容器 */
+.lf-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  perspective: 1200px;
+  margin-bottom: 32px;
+}
+
+.lf-card-flip {
+  position: relative;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.lf-card-flip.is-flipped {
+  transform: rotateY(180deg);
+}
+.lf-card-flip.is-disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.lf-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 卡片背面（未翻開） */
+.lf-card-back {
+  background: linear-gradient(135deg, #E8392A 0%, #FFC53D 100%);
+  color: #fff;
+  font-size: 60px;
+  font-weight: 900;
+  box-shadow: 0 10px 30px rgba(232, 57, 42, 0.35);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+}
+.lf-card-back::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  pointer-events: none;
+}
+.lf-card-back-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 12px;
+}
+.lf-card-back-content .lf-card-q {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.lf-card-back-content .lf-card-hint {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+/* 卡片正面（翻開後） */
+.lf-card-front {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #14141e 0%, #1f1f2e 100%);
+  border: 2px solid var(--lf-border);
+  flex-direction: column;
+  padding: 10px 8px;
+  text-align: center;
+}
+.lf-card-front.is-winner {
+  background: linear-gradient(135deg, #FFC53D 0%, #FFA000 100%);
+  border-color: #FFC53D;
+  box-shadow: 0 10px 40px rgba(255, 197, 61, 0.5);
+  color: #1a1a1a;
+}
+.lf-card-front.is-none {
+  background: linear-gradient(135deg, #2a2a3a 0%, #1a1a2a 100%);
+  color: var(--lf-text-dim);
+}
+
+.lf-card-emoji {
+  font-size: clamp(32px, 8vw, 48px);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.lf-card-name {
+  font-size: clamp(11px, 3vw, 14px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+.lf-card-tier {
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+@media (min-width: 640px) {
+  .lf-card-back-content .lf-card-q { font-size: 84px; }
+  .lf-card-emoji { font-size: 56px; }
+  .lf-card-name { font-size: 15px; }
+}
+
+/* 卡片被選中閃光 */
+@keyframes lfCardShake {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-8px) rotate(-2deg); }
+  75% { transform: translateY(-8px) rotate(2deg); }
+}
+.lf-card-flip.is-drawing {
+  animation: lfCardShake 0.4s ease-in-out;
+}
+
+.lf-draw-hint {
+  text-align: center;
+  color: var(--lf-text-dim);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+ * RESULT PAGE
+ * ============================================================ */
+.lf-result-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+.lf-result-title {
+  text-align: center;
+  font-size: clamp(24px, 6vw, 32px);
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.lf-result-title.is-winner {
+  background: linear-gradient(135deg, #FFC53D, #FF7A5C);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lf-result-sub {
+  text-align: center;
+  color: var(--lf-text-dim);
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+/* 截圖卡片 */
+.lf-screenshot-card {
+  background: linear-gradient(160deg, #14141e 0%, #1a1a2a 100%);
+  border: 2px dashed var(--lf-cyan);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.lf-screenshot-card::before {
+  content: '📸 請截圖此區塊';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--lf-cyan);
+  color: #0a0a0f;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 0 0 12px 12px;
+  letter-spacing: 0.05em;
+}
+.lf-screenshot-card.is-winner {
+  border-color: var(--lf-gold);
+  background: linear-gradient(160deg, #2a2114 0%, #3a2814 100%);
+}
+.lf-screenshot-card.is-winner::before {
+  background: var(--lf-gold);
+  content: '🎉 中獎憑證 · 請截圖';
+}
+
+.lf-prize-display {
+  text-align: center;
+  padding: 12px 0 20px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+.lf-prize-display .lf-prize-emoji {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+.lf-prize-display .lf-prize-tier {
+  display: inline-block;
+  padding: 3px 12px;
+  background: rgba(255, 197, 61, 0.2);
+  color: var(--lf-gold);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.lf-prize-display .lf-prize-name {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--lf-gold);
+}
+.lf-prize-display.is-none .lf-prize-name {
+  color: var(--lf-text-dim);
+  font-size: 20px;
+}
+
+.lf-ticket-info {
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+}
+.lf-ticket-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+.lf-ticket-info-label {
+  color: var(--lf-text-dim);
+  font-weight: 600;
+}
+.lf-ticket-info-value {
+  color: var(--lf-text);
+  font-weight: 700;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+}
+.lf-ticket-info-value.is-big {
+  font-size: 20px;
+  color: var(--lf-cyan);
+  letter-spacing: 0.05em;
+}
+
+.lf-brand-strip {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+.lf-brand-strip img {
+  height: 20px;
+  opacity: 0.6;
+}
+.lf-brand-strip .lf-brand-txt {
+  font-size: 11px;
+  color: var(--lf-text-dim);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* 領獎流程 */
+.lf-claim-steps {
+  background: rgba(6, 199, 85, 0.08);
+  border: 1px solid rgba(6, 199, 85, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.lf-claim-steps h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--lf-green);
+  margin-bottom: 12px;
+}
+.lf-claim-steps ol {
+  padding-left: 20px;
+  color: var(--lf-text);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.lf-claim-steps ol strong {
+  color: var(--lf-cyan);
+}
+
+/* 分享區塊 */
+.lf-share-block {
+  background: var(--lf-surface);
+  border: 1px solid var(--lf-border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.lf-share-block h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--lf-cyan);
+  margin-bottom: 4px;
+}
+.lf-share-block p {
+  color: var(--lf-text-dim);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+.lf-share-block .lf-share-progress {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.lf-share-progress-num {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--lf-gold);
+  display: block;
+}
+.lf-share-progress-label {
+  font-size: 12px;
+  color: var(--lf-text-dim);
+}
+
+.lf-share-url {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.lf-share-url input {
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--lf-border);
+  border-radius: 8px;
+  color: var(--lf-text);
+  font-size: 13px;
+  font-family: 'SF Mono', Monaco, monospace;
+}
+.lf-share-url button {
+  padding: 10px 16px;
+  background: var(--lf-cyan);
+  color: #0a0a0f;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+}
+.lf-share-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.lf-share-buttons button {
+  padding: 10px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--lf-border);
+  border-radius: 10px;
+  color: var(--lf-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.lf-share-buttons button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--lf-cyan);
+}
+.lf-share-buttons .lf-share-line {
+  background: var(--lf-green);
+  color: #fff;
+  border-color: var(--lf-green);
+}
+.lf-share-buttons .lf-share-line:hover {
+  background: #05a848;
+}
+.lf-share-buttons .lf-share-fb {
+  background: #1877f2;
+  color: #fff;
+  border-color: #1877f2;
+}
+
+/* ACTION FOOTER */
+.lf-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
