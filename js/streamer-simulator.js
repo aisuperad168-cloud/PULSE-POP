@@ -260,19 +260,23 @@
       });
     } catch (e) { /* ignore */ }
 
-    // 讀取本月已參加人數（social proof · 靜默失敗）
-    fetchLotteryParticipants();
-
     // 產生分享圖
+    console.log('[simulator] start generating share image');
+    var startTime = Date.now();
     generateShareImage(result, total).then(function (dataUrl) {
-      preview.src = dataUrl;
+      console.log('[simulator] share image generated in', Date.now() - startTime, 'ms');
+      // preview loading 立刻移除（因為圖已產生完）
       preview.classList.remove('is-loading');
       previewLoading.classList.add('is-hidden');
+      preview.src = dataUrl;
 
       currentShare.dataUrl = dataUrl;
       currentShare.blob = dataUrlToBlob(dataUrl);
       try {
-        currentShare.file = new File([currentShare.blob], 'jdi-streamer-type.png', { type: 'image/png' });
+        // 從 dataUrl 或 blob 判斷 mime（新版是 jpeg）
+        var mime = (currentShare.blob && currentShare.blob.type) || 'image/jpeg';
+        var ext = mime.indexOf('png') > -1 ? 'png' : 'jpg';
+        currentShare.file = new File([currentShare.blob], 'jdi-streamer-type.' + ext, { type: mime });
       } catch (e) {
         currentShare.file = null;
       }
