@@ -344,10 +344,17 @@
     hint.className = 'sim-share-hint';
     hint.textContent = '';
 
+    // 完整分享文案：結果 + 抽獎誘因 + 網址
+    var shareText =
+      '我在 JDI 開播模擬器測出了「' + currentShare.result.title + '」！臨場反應力 ' + currentShare.score + '/15 分 🎬\n\n' +
+      '🎁 分享這篇 + 截圖給官方 LINE @354ykfbp\n' +
+      '👉 就能參加每月抽獎（iPhone 潮牌保護殼 / LINE 貼圖 / 藍牙耳機）\n\n' +
+      '你也來測看看：';
+
     var shareData = {
-      title: '我的主播人格：' + currentShare.result.title,
-      text: '我在 JDI 開播模擬器測出了「' + currentShare.result.title + '」！臨場反應力 ' + currentShare.score + '/15 分 🎬 你也來測測看：',
-      url: 'https://jdi-pulse.com/streamer-simulator/',
+      title: '我的主播人格：' + currentShare.result.title + ' · JDI 開播模擬器',
+      text: shareText,
+      url: 'https://jdi-pulse.com/streamer-simulator/?utm_source=share&utm_medium=' + encodeURIComponent(currentShare.result.title),
     };
 
     // 有 file 且支援檔案分享
@@ -450,15 +457,37 @@
       ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
       ctx.fillText('/ 15', W / 2 + 90, 745);
 
+      // 🎁 抽獎徽章（醒目金色橢圓）
+      var badgeText = '🎁 分享 + 傳 LINE 抽 iPhone 殼 · LINE 貼圖 · 藍牙耳機';
+      ctx.font = '700 24px "Noto Sans TC", sans-serif';
+      ctx.textAlign = 'center';
+      var badgeMetrics = ctx.measureText(badgeText);
+      var badgeW = badgeMetrics.width + 40;
+      var badgeH = 42;
+      var badgeX = (W - badgeW) / 2;
+      var badgeY = 820;
+      // 徽章底
+      var badgeGrad = ctx.createLinearGradient(0, badgeY, 0, badgeY + badgeH);
+      badgeGrad.addColorStop(0, 'rgba(255, 197, 61, 0.25)');
+      badgeGrad.addColorStop(1, 'rgba(232, 57, 42, 0.2)');
+      ctx.fillStyle = badgeGrad;
+      roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 21, true, false);
+      ctx.strokeStyle = 'rgba(255, 197, 61, 0.6)';
+      ctx.lineWidth = 2;
+      roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 21, false, true);
+      // 徽章文字
+      ctx.fillStyle = '#FFD56B';
+      ctx.fillText(badgeText, W / 2, badgeY + 29);
+
       // 呼籲文字
       ctx.font = '500 28px "Noto Sans TC", sans-serif';
       ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
       ctx.textAlign = 'center';
-      ctx.fillText('你也來測測看？', W / 2, 850);
+      ctx.fillText('你也來測測看？', W / 2, 900);
 
-      ctx.font = '700 36px "Noto Sans TC", sans-serif';
+      ctx.font = '700 32px "Noto Sans TC", sans-serif';
       ctx.fillStyle = '#fff';
-      ctx.fillText('jdi-pulse.com/streamer-simulator', W / 2, 910);
+      ctx.fillText('jdi-pulse.com/streamer-simulator', W / 2, 946);
 
       // ============ 品牌浮水印區（底部）============
       // 底部漸變透明遮罩
