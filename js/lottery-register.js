@@ -25,6 +25,36 @@
     try { referrer = sessionStorage.getItem('jdi_lottery_ref') || ''; } catch (e) {}
   }
 
+  // === 即時檢查推薦人 ===
+  var referrerBanner = document.getElementById('lfReferrerBanner');
+  var referrerText = document.getElementById('lfReferrerText');
+  var referrerSubtext = document.getElementById('lfReferrerSubtext');
+  if (referrer && referrerBanner) {
+    fetch('/api/lottery/check-referrer?code=' + encodeURIComponent(referrer))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data.ok) return;
+        if (data.valid) {
+          referrerText.textContent = '💌 ' + data.referrer_name + ' 邀請你來抽獎！';
+          referrerSubtext.textContent = '登記成功後，' + data.referrer_name + ' 會多 1 次抽獎機會 · 你也能拿到抽獎機會 🎁';
+          referrerBanner.style.display = 'flex';
+        } else if (data.reason === 'capped') {
+          referrerBanner.classList.add('is-invalid');
+          referrerText.textContent = '⚠️ 推薦人已達邀請上限';
+          referrerSubtext.textContent = (data.referrer_name || '推薦人') + ' 這個月已邀請 5 位朋友，你仍可登記但不再幫他加機會';
+          referrerBanner.style.display = 'flex';
+          try { sessionStorage.removeItem('jdi_lottery_ref'); } catch (e) {}
+        } else {
+          // 推薦碼無效 → 靜默清除
+          try { sessionStorage.removeItem('jdi_lottery_ref'); } catch (e) {}
+          referrer = '';
+        }
+      })
+      .catch(function () {
+        // 錯誤時不擋登記，靜默失敗
+      });
+  }
+
   var form = document.getElementById('lfRegisterForm');
   var submitBtn = document.getElementById('lfSubmitBtn');
   var submitText = document.getElementById('lfSubmitText');

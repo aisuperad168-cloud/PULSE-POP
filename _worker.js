@@ -52,6 +52,11 @@ import * as lotteryRegister from './functions/api/lottery/register.js';
 import * as lotteryTicketInfo from './functions/api/lottery/ticket-info.js';
 import * as lotteryDraw from './functions/api/lottery/draw.js';
 import * as lotteryResult from './functions/api/lottery/result.js';
+import * as lotteryCheckReferrer from './functions/api/lottery/check-referrer.js';
+import * as lotteryAdminSummary from './functions/api/lottery/admin-summary.js';
+import * as lotteryAdminWinners from './functions/api/lottery/admin-winners.js';
+import * as lotteryAdminParticipants from './functions/api/lottery/admin-participants.js';
+import * as lotteryAdminClaim from './functions/api/lottery/admin-claim.js';
 
 // 電子報系統 (/newsletter/*)
 import * as nlSubscribe from './functions/api/newsletter/subscribe.js';
@@ -111,6 +116,11 @@ const API_ROUTES = {
   '/api/lottery/ticket-info': lotteryTicketInfo,
   '/api/lottery/draw': lotteryDraw,
   '/api/lottery/result': lotteryResult,
+  '/api/lottery/check-referrer': lotteryCheckReferrer,
+  '/api/lottery/admin-summary': lotteryAdminSummary,
+  '/api/lottery/admin-winners': lotteryAdminWinners,
+  '/api/lottery/admin-participants': lotteryAdminParticipants,
+  '/api/lottery/admin-claim': lotteryAdminClaim,
 
   // 電子報系統
   '/api/newsletter/subscribe': nlSubscribe,

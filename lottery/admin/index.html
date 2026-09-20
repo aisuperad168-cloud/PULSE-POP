@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>抽獎管理後台｜JDI 脈動傳媒</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#FFC53D" />
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+
+<link rel="icon" href="/assets/favicon-32.png?v=20260820b" sizes="32x32" type="image/png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" />
+
+<style>
+  :root {
+    --la-bg: #0a0a0f;
+    --la-bg-2: #14141e;
+    --la-surface: rgba(255, 255, 255, 0.04);
+    --la-surface-hover: rgba(255, 255, 255, 0.08);
+    --la-border: rgba(255, 255, 255, 0.1);
+    --la-text: #F5F5F7;
+    --la-text-dim: rgba(245, 245, 247, 0.6);
+    --la-red: #E8392A;
+    --la-cyan: #25F4EE;
+    --la-gold: #FFC53D;
+    --la-green: #06C755;
+    --la-purple: #a855f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--la-bg);
+    color: var(--la-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .la-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--la-bg-2);
+    border-bottom: 1px solid var(--la-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .la-header h1 {
+    font-size: 18px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .la-header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .la-month-select {
+    padding: 8px 14px;
+    background: var(--la-surface);
+    border: 1px solid var(--la-border);
+    border-radius: 8px;
+    color: var(--la-text);
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .la-logout {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--la-border);
+    border-radius: 8px;
+    color: var(--la-text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .la-logout:hover { color: var(--la-red); border-color: var(--la-red); }
+
+  /* Container */
+  .la-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Login screen */
+  .la-login {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 40px 32px;
+    background: var(--la-surface);
+    border: 1px solid var(--la-border);
+    border-radius: 20px;
+    text-align: center;
+  }
+  .la-login h1 { font-size: 22px; margin-bottom: 8px; }
+  .la-login p { color: var(--la-text-dim); font-size: 14px; margin-bottom: 24px; }
+  .la-login input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--la-border);
+    border-radius: 10px;
+    color: var(--la-text);
+    font-size: 15px;
+    font-family: inherit;
+    margin-bottom: 12px;
+  }
+  .la-login button {
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #FFC53D 0%, #E8392A 100%);
+    border: none;
+    border-radius: 10px;
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .la-login-err {
+    display: none;
+    color: #ff9a90;
+    background: rgba(232, 57, 42, 0.12);
+    border: 1px solid rgba(232, 57, 42, 0.4);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .la-login-err.is-visible { display: block; }
+
+  /* Stats cards */
+  .la-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .la-stat-card {
+    background: var(--la-surface);
+    border: 1px solid var(--la-border);
+    border-radius: 14px;
+    padding: 16px 20px;
+  }
+  .la-stat-card-label {
+    font-size: 12px;
+    color: var(--la-text-dim);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .la-stat-card-num {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--la-cyan);
+    line-height: 1;
+  }
+  .la-stat-card-hint {
+    font-size: 11px;
+    color: var(--la-text-dim);
+    margin-top: 4px;
+  }
+
+  /* Sections */
+  .la-section {
+    background: var(--la-surface);
+    border: 1px solid var(--la-border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  .la-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .la-section-header h2 {
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .la-section-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .la-btn {
+    padding: 8px 14px;
+    background: var(--la-surface-hover);
+    border: 1px solid var(--la-border);
+    border-radius: 8px;
+    color: var(--la-text);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .la-btn:hover { background: rgba(255, 255, 255, 0.12); }
+  .la-btn--csv { background: var(--la-green); color: #fff; border-color: var(--la-green); }
+  .la-btn--csv:hover { background: #05a848; }
+  .la-btn--cyan { background: var(--la-cyan); color: #0a0a0f; border-color: var(--la-cyan); }
+  .la-btn--danger { border-color: var(--la-red); color: #ff9a90; }
+  .la-btn--danger:hover { background: rgba(232, 57, 42, 0.2); }
+  .la-btn--sm { padding: 4px 10px; font-size: 12px; }
+
+  /* Search */
+  .la-search {
+    padding: 8px 14px;
+    background: var(--la-surface-hover);
+    border: 1px solid var(--la-border);
+    border-radius: 8px;
+    color: var(--la-text);
+    font-size: 13px;
+    font-family: inherit;
+    min-width: 240px;
+  }
+
+  /* Filter tabs */
+  .la-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  .la-tab {
+    padding: 6px 14px;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    color: var(--la-text-dim);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .la-tab.is-active {
+    background: var(--la-cyan);
+    color: #0a0a0f;
+  }
+  .la-tab-count {
+    display: inline-block;
+    padding: 1px 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 999px;
+    font-size: 10px;
+    margin-left: 4px;
+  }
+  .la-tab.is-active .la-tab-count { background: rgba(255,255,255,0.35); }
+
+  /* Table */
+  .la-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 800px;
+  }
+  .la-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--la-text-dim);
+    font-weight: 700;
+    font-size: 12px;
+    border-bottom: 1px solid var(--la-border);
+    white-space: nowrap;
+  }
+  .la-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
+  }
+  .la-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  .la-table td.is-mono { font-family: 'SF Mono', Monaco, monospace; }
+
+  /* Status badges */
+  .la-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .la-badge--pending { background: rgba(255, 197, 61, 0.2); color: var(--la-gold); }
+  .la-badge--claimed { background: rgba(6, 199, 85, 0.2); color: #7ff2a3; }
+  .la-badge--expired { background: rgba(232, 57, 42, 0.2); color: #ff9a90; }
+  .la-badge--head { background: rgba(255, 197, 61, 0.15); color: var(--la-gold); }
+  .la-badge--2nd  { background: rgba(168, 85, 247, 0.15); color: #d0a6ff; }
+  .la-badge--3rd  { background: rgba(37, 244, 238, 0.15); color: var(--la-cyan); }
+  .la-badge--4th  { background: rgba(6, 199, 85, 0.15); color: #7ff2a3; }
+
+  /* Prize inventory grid */
+  .la-prize-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .la-prize-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--la-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .la-prize-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .la-prize-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .la-prize-card-emoji { font-size: 22px; }
+  .la-prize-card-stock {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    font-size: 11px;
+  }
+  .la-prize-card-stock-item {
+    text-align: center;
+    padding: 6px 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+  }
+  .la-prize-card-stock-num {
+    display: block;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .la-prize-card-stock-label {
+    color: var(--la-text-dim);
+    font-size: 10px;
+  }
+
+  /* Loading */
+  .la-loading-wrap {
+    text-align: center;
+    padding: 40px;
+    color: var(--la-text-dim);
+  }
+  .la-spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--la-cyan);
+    border-radius: 50%;
+    animation: laSpin 0.7s linear infinite;
+  }
+  @keyframes laSpin { to { transform: rotate(360deg); } }
+
+  /* Empty */
+  .la-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--la-text-dim);
+    font-size: 14px;
+  }
+
+  /* Modal (claim status change) */
+  .la-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 100;
+  }
+  .la-modal.is-open { display: block; }
+  .la-modal-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+  }
+  .la-modal-panel {
+    position: relative;
+    max-width: 460px;
+    margin: 100px auto 0;
+    padding: 24px;
+    background: var(--la-bg-2);
+    border: 1px solid var(--la-border);
+    border-radius: 16px;
+    z-index: 1;
+  }
+  .la-modal-panel h3 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .la-modal-panel p {
+    color: var(--la-text-dim);
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .la-modal-panel input,
+  .la-modal-panel textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--la-border);
+    border-radius: 8px;
+    color: var(--la-text);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    margin-bottom: 12px;
+  }
+  .la-modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  /* Toast */
+  .la-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 200;
+    transform: translateX(120%);
+    transition: transform 0.3s;
+  }
+  .la-toast.is-visible { transform: translateX(0); }
+  .la-toast--ok { background: var(--la-green); color: #fff; }
+  .la-toast--err { background: var(--la-red); color: #fff; }
+
+  @media (max-width: 640px) {
+    .la-container { padding: 16px; }
+    .la-header { padding: 12px 16px; }
+    .la-stat-card-num { font-size: 24px; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="laLogin" class="la-login">
+  <h1>🎁 抽獎後台</h1>
+  <p>請輸入管理密鑰</p>
+  <div class="la-login-err" id="laLoginErr">密鑰錯誤</div>
+  <input type="password" id="laTokenInput" placeholder="管理密鑰" autofocus />
+  <button id="laLoginBtn" type="button">登入</button>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="laDashboard" style="display:none;">
+  <div class="la-header">
+    <h1>🎁 抽獎管理後台</h1>
+    <div class="la-header-actions">
+      <select id="laMonthSelect" class="la-month-select">
+        <option value="">載入中...</option>
+      </select>
+      <button id="laLogoutBtn" class="la-logout" type="button">登出</button>
+    </div>
+  </div>
+
+  <div class="la-container">
+
+    <!-- 統計卡 -->
+    <div class="la-stats" id="laStats">
+      <div class="la-loading-wrap"><span class="la-spinner"></span></div>
+    </div>
+
+    <!-- 獎品庫存 -->
+    <div class="la-section">
+      <div class="la-section-header">
+        <h2>🎁 獎品庫存</h2>
+      </div>
+      <div class="la-prize-grid" id="laPrizeGrid">
+        <div class="la-loading-wrap"><span class="la-spinner"></span></div>
+      </div>
+    </div>
+
+    <!-- 中獎名單 -->
+    <div class="la-section">
+      <div class="la-section-header">
+        <h2>🏆 中獎名單</h2>
+        <div class="la-section-actions">
+          <div class="la-tabs" id="laWinnerTabs">
+            <button class="la-tab is-active" data-status="all">全部 <span class="la-tab-count" id="laCountAll">-</span></button>
+            <button class="la-tab" data-status="pending">待領獎 <span class="la-tab-count" id="laCountPending">-</span></button>
+            <button class="la-tab" data-status="claimed">已領獎 <span class="la-tab-count" id="laCountClaimed">-</span></button>
+            <button class="la-tab" data-status="expired">已過期 <span class="la-tab-count" id="laCountExpired">-</span></button>
+          </div>
+          <button id="laExportWinners" class="la-btn la-btn--csv" type="button">📥 匯出 CSV</button>
+        </div>
+      </div>
+      <div id="laWinnersTable">
+        <div class="la-loading-wrap"><span class="la-spinner"></span></div>
+      </div>
+    </div>
+
+    <!-- Top 邀請王 -->
+    <div class="la-section">
+      <div class="la-section-header">
+        <h2>👑 Top 5 邀請王</h2>
+      </div>
+      <div id="laTopReferrers">
+        <div class="la-loading-wrap"><span class="la-spinner"></span></div>
+      </div>
+    </div>
+
+    <!-- 所有參與者 -->
+    <div class="la-section">
+      <div class="la-section-header">
+        <h2>👥 所有參與者</h2>
+        <div class="la-section-actions">
+          <input id="laSearchInput" class="la-search" type="text" placeholder="搜尋姓名 / 電話 / Email / 抽獎編號" />
+          <button id="laExportParticipants" class="la-btn la-btn--csv" type="button">📥 匯出 CSV</button>
+        </div>
+      </div>
+      <div id="laParticipantsTable">
+        <div class="la-loading-wrap"><span class="la-spinner"></span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ CLAIM STATUS MODAL ============ -->
+<div id="laClaimModal" class="la-modal">
+  <div class="la-modal-bg" id="laClaimModalBg"></div>
+  <div class="la-modal-panel">
+    <h3 id="laClaimTitle">更新領獎狀態</h3>
+    <p id="laClaimDesc">-</p>
+    <label style="font-size:12px; color:var(--la-text-dim); font-weight:700; margin-bottom:6px; display:block;">新狀態</label>
+    <select id="laClaimStatusSelect" style="width:100%; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid var(--la-border); border-radius:8px; color:var(--la-text); font-size:14px; font-family:inherit; margin-bottom:12px;">
+      <option value="pending">待領獎</option>
+      <option value="claimed">已領獎</option>
+      <option value="expired">已過期</option>
+    </select>
+    <label style="font-size:12px; color:var(--la-text-dim); font-weight:700; margin-bottom:6px; display:block;">備註（選填 · 例：物流單號、退款原因）</label>
+    <textarea id="laClaimNote" rows="3" placeholder="例：黑貓 1234-5678"></textarea>
+    <div class="la-modal-actions">
+      <button id="laClaimCancel" class="la-btn" type="button">取消</button>
+      <button id="laClaimSave" class="la-btn la-btn--cyan" type="button">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div id="laToast" class="la-toast"></div>
+
+<script src="/js/lottery-admin.js?v=20260919a"></script>
+
+</body>
+</html>

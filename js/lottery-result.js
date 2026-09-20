@@ -26,6 +26,9 @@
   var LINE_URL = 'https://line.me/R/ti/p/@354ykfbp';
   var SITE_BASE = window.location.origin;
 
+  // 快取上次的資料，用於 diff 檢測
+  var lastData = null;
+
   function showError(msg) {
     errorEl.textContent = msg;
     errorEl.classList.add('is-visible');
@@ -38,23 +41,92 @@
     return;
   }
 
-  var url = '/api/lottery/result?t=' + encodeURIComponent(ticket) + '&s=' + encodeURIComponent(sig);
-  if (drawId) url += '&d=' + encodeURIComponent(drawId);
-  if (latest) url += '&latest=1';
+  function buildFetchUrl() {
+    var url = '/api/lottery/result?t=' + encodeURIComponent(ticket) + '&s=' + encodeURIComponent(sig);
+    if (drawId) url += '&d=' + encodeURIComponent(drawId);
+    if (latest) url += '&latest=1';
+    return url;
+  }
 
-  fetch(url)
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      if (!data.ok) {
-        showError(data.error || '無法載入結果');
-        return;
-      }
-      renderResult(data);
-    })
-    .catch(function (err) {
-      console.error('[lottery-result]', err);
-      showError('網路錯誤');
-    });
+  function loadResult(isRefresh) {
+    return fetch(buildFetchUrl(), { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data.ok) {
+          if (!isRefresh) showError(data.error || '無法載入結果');
+          return;
+        }
+        if (isRefresh && lastData) {
+          // Diff 檢查：invite_count 或 chances_total 有變化 → 顯示 toast + 重新渲染
+          var oldInvites = lastData.participant.invite_count;
+          var newInvites = data.participant.invite_count;
+          var oldChances = lastData.participant.chances_remaining;
+          var newChances = data.participant.chances_remaining;
+          if (newInvites > oldInvites) {
+            showInviteToast(newInvites - oldInvites);
+            // 觸發 bump 動畫
+            setTimeout(function () {
+              var el = document.getElementById('lfInviteCount');
+              if (el) {
+                el.classList.add('is-bump');
+                setTimeout(function () { el.classList.remove('is-bump'); }, 700);
+              }
+            }, 100);
+          }
+          if (newChances > oldChances) {
+            showChancesToast(newChances - oldChances);
+          }
+        }
+        lastData = data;
+        renderResult(data);
+      })
+      .catch(function (err) {
+        console.error('[lottery-result]', err);
+        if (!isRefresh) showError('網路錯誤');
+      });
+  }
+
+  loadResult(false);
+
+  // === 即時更新機制 ===
+  // 1. 頁面重新變為可見時 refresh（用戶從分享 → LINE → 回來）
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && lastData) {
+      loadResult(true);
+    }
+  });
+
+  // 2. pageshow 事件（處理 bfcache 從快取回來的狀況）
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted && lastData) {
+      loadResult(true);
+    }
+  });
+
+  // === Toast 通知 ===
+  function showInviteToast(count) {
+    var toast = document.createElement('div');
+    toast.className = 'lf-toast lf-toast--success';
+    toast.innerHTML = '🎉 恭喜！有 <strong>' + count + '</strong> 位朋友加入了！';
+    document.body.appendChild(toast);
+    setTimeout(function () { toast.classList.add('is-visible'); }, 30);
+    setTimeout(function () {
+      toast.classList.remove('is-visible');
+      setTimeout(function () { toast.remove(); }, 400);
+    }, 4500);
+  }
+
+  function showChancesToast(count) {
+    var toast = document.createElement('div');
+    toast.className = 'lf-toast lf-toast--gold';
+    toast.innerHTML = '🎁 你獲得了 <strong>' + count + ' 次</strong> 額外抽獎機會！';
+    document.body.appendChild(toast);
+    setTimeout(function () { toast.classList.add('is-visible'); }, 30);
+    setTimeout(function () {
+      toast.classList.remove('is-visible');
+      setTimeout(function () { toast.remove(); }, 400);
+    }, 4500);
+  }
 
   function renderResult(data) {
     loading.style.display = 'none';
@@ -163,14 +235,35 @@
         '</a>';
     }
 
-    // ==== 分享區塊 ====
+    // ==== 分享區塊（含里程碑進度條）====
+    var milestones = [
+      { threshold: 1, emoji: '🌱', label: '第 1 位朋友' },
+      { threshold: 3, emoji: '🚀', label: '3 位達標' },
+      { threshold: 5, emoji: '👑', label: '滿貫 5 位！' },
+    ];
+    var milestonesHtml = milestones.map(function (m) {
+      var reached = p.invite_count >= m.threshold;
+      return '<div class="lf-milestone ' + (reached ? 'is-reached' : '') + '">' +
+        '<span class="lf-milestone-emoji">' + m.emoji + '</span>' +
+        '<span class="lf-milestone-label">' + m.label + '</span>' +
+      '</div>';
+    }).join('');
+
+    var progressPct = Math.min(100, (p.invite_count / 5) * 100);
+
     var shareHtml =
       '<div class="lf-share-block">' +
         '<h3>📢 分享給朋友 +1 次抽獎機會</h3>' +
         '<p>朋友用你的連結登記 → 你就多 1 次抽獎（上限 +5）</p>' +
-        '<div class="lf-share-progress">' +
-          '<span class="lf-share-progress-num">' + p.invite_count + ' / 5</span>' +
-          '<span class="lf-share-progress-label">已成功邀請人數</span>' +
+        '<div class="lf-share-progress-wrap">' +
+          '<div class="lf-share-progress-header">' +
+            '<span class="lf-share-progress-num" id="lfInviteCount">' + p.invite_count + ' / 5</span>' +
+            '<span class="lf-share-progress-label">已成功邀請人數</span>' +
+          '</div>' +
+          '<div class="lf-share-progress-bar">' +
+            '<div class="lf-share-progress-fill" style="width:' + progressPct + '%;"></div>' +
+          '</div>' +
+          '<div class="lf-milestones">' + milestonesHtml + '</div>' +
         '</div>' +
         '<div class="lf-share-url">' +
           '<input type="text" id="lfRefLink" value="' + escapeHtml(refLink) + '" readonly />' +
