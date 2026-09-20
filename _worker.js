@@ -174,10 +174,14 @@ export default {
     }
 
     // ============ 0-C. 短網址：便利主播分享用（301 導向） ============
-    // /lc/coin → TikTok 金幣儲值省錢攻略
     const SHORT_URLS = {
-      '/lc/coin': '/live-center/article/tiktok-coin-web-recharge-guide/',
-      '/coin':    '/live-center/article/tiktok-coin-web-recharge-guide/',
+      // TikTok 金幣儲值省錢攻略
+      '/lc/coin':   '/live-center/article/tiktok-coin-web-recharge-guide/',
+      '/coin':      '/live-center/article/tiktok-coin-web-recharge-guide/',
+      // TikTok 邀請獎金懶人包（主播被動收入）
+      '/lc/invite': '/live-center/article/tiktok-streamer-invite-bonus-guide/',
+      '/invite':    '/live-center/article/tiktok-streamer-invite-bonus-guide/',
+      '/lc/bonus':  '/live-center/article/tiktok-streamer-invite-bonus-guide/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
