@@ -270,10 +270,11 @@
           '<button id="lfCopyBtn">複製</button>' +
         '</div>' +
         '<div class="lf-share-buttons">' +
-          '<button id="lfShareLine" class="lf-share-line">💬 LINE</button>' +
-          '<button id="lfShareFb" class="lf-share-fb">📘 FB</button>' +
-          '<button id="lfShareNative">📤 分享</button>' +
+          '<button id="lfShareLine" class="lf-share-line" type="button">💬 LINE</button>' +
+          '<button id="lfShareThreads" class="lf-share-threads" type="button">🧵 Threads</button>' +
+          '<button id="lfShareIg" class="lf-share-ig" type="button">📷 Instagram</button>' +
         '</div>' +
+        '<button id="lfShareNative" class="lf-share-more-btn" type="button" style="margin-top:8px; width:100%; padding:10px; background:rgba(255,255,255,0.04); border:1px solid var(--lf-border); border-radius:10px; color:var(--lf-text-dim); font-size:12px; font-weight:600; cursor:pointer;">📤 其他分享方式（含 FB、複製連結等）</button>' +
       '</div>';
 
     // ==== 歷史紀錄（若抽過 > 1 次） ====
@@ -317,27 +318,46 @@
     var copyBtn = document.getElementById('lfCopyBtn');
     var refInput = document.getElementById('lfRefLink');
     var lineBtn = document.getElementById('lfShareLine');
-    var fbBtn = document.getElementById('lfShareFb');
+    var threadsBtn = document.getElementById('lfShareThreads');
+    var igBtn = document.getElementById('lfShareIg');
     var nativeBtn = document.getElementById('lfShareNative');
 
-    if (copyBtn) {
-      copyBtn.addEventListener('click', function () {
+    // 給 Threads/IG 用的完整文案（把連結明確放在最後）
+    var fullShareText = shareText + refLink;
+
+    function copyToClipboard(text) {
+      // 優先用 navigator.clipboard，fallback 用 execCommand
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+      return new Promise(function (resolve, reject) {
         try {
-          refInput.select();
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
           document.execCommand('copy');
-          copyBtn.textContent = '✅ 已複製';
-          setTimeout(function () { copyBtn.textContent = '複製'; }, 1800);
-        } catch (e) {
-          if (navigator.clipboard) {
-            navigator.clipboard.writeText(refLink).then(function () {
-              copyBtn.textContent = '✅ 已複製';
-              setTimeout(function () { copyBtn.textContent = '複製'; }, 1800);
-            });
-          }
-        }
+          document.body.removeChild(ta);
+          resolve();
+        } catch (e) { reject(e); }
       });
     }
 
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        copyToClipboard(refLink).then(function () {
+          copyBtn.textContent = '✅ 已複製';
+          setTimeout(function () { copyBtn.textContent = '複製'; }, 1800);
+        }).catch(function () {
+          alert('複製失敗，請手動長按選取複製');
+        });
+      });
+    }
+
+    // === LINE ===
+    // 用 LINE 官方 lineit 分享，會把 text + url 一起帶入 LINE 聊天視窗
     if (lineBtn) {
       lineBtn.addEventListener('click', function () {
         var lineShare = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(refLink) + '&text=' + encodeURIComponent(shareText);
@@ -345,13 +365,45 @@
       });
     }
 
-    if (fbBtn) {
-      fbBtn.addEventListener('click', function () {
-        var fbShare = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(refLink);
-        window.open(fbShare, '_blank', 'noopener');
+    // === Threads ===
+    // Threads 官方 intent URL：把「文字 + 連結」全部塞進 text 參數
+    if (threadsBtn) {
+      threadsBtn.addEventListener('click', function () {
+        // Threads 官方分享格式：https://www.threads.net/intent/post?text=...
+        var threadsShare = 'https://www.threads.net/intent/post?text=' + encodeURIComponent(fullShareText);
+        // 先複製一份到剪貼簿（保險：iOS Threads App 有時只讀剪貼簿）
+        copyToClipboard(fullShareText).catch(function () {});
+        window.open(threadsShare, '_blank', 'noopener');
       });
     }
 
+    // === Instagram ===
+    // IG 沒有 web 分享 intent；改為「複製文案 + 開啟 IG App」
+    if (igBtn) {
+      igBtn.addEventListener('click', function () {
+        copyToClipboard(fullShareText).then(function () {
+          showToastLike('📋 分享文案已複製！請在 IG 貼上到限時動態或貼文', 3500);
+          // 3 秒後嘗試打開 IG（讓用戶看到 toast 訊息）
+          setTimeout(function () {
+            // iOS: instagram://camera 開限動；Android 可用 https 通用連結
+            var ua = navigator.userAgent;
+            if (/iPhone|iPad|iPod/.test(ua)) {
+              // 嘗試 URL Scheme（若沒裝 IG 會 fail，fallback https）
+              window.location.href = 'instagram://library';
+              setTimeout(function () {
+                window.open('https://www.instagram.com/', '_blank', 'noopener');
+              }, 800);
+            } else {
+              window.open('https://www.instagram.com/', '_blank', 'noopener');
+            }
+          }, 1500);
+        }).catch(function () {
+          alert('複製失敗，請手動長按複製上方連結，然後打開 IG 貼上');
+        });
+      });
+    }
+
+    // === 其他分享（Native Share Sheet）===
     if (nativeBtn) {
       nativeBtn.addEventListener('click', function () {
         if (navigator.share) {
@@ -361,14 +413,25 @@
             url: refLink,
           }).catch(function () {});
         } else {
-          if (navigator.clipboard) {
-            navigator.clipboard.writeText(refLink).then(function () {
-              alert('✅ 連結已複製，可以貼到任何地方分享！');
-            });
-          }
+          copyToClipboard(refLink).then(function () {
+            showToastLike('✅ 連結已複製，可以貼到任何地方分享！', 3000);
+          });
         }
       });
     }
+  }
+
+  // 頁面內 toast（給分享區塊用，複用主 toast 樣式）
+  function showToastLike(msg, duration) {
+    var toast = document.createElement('div');
+    toast.className = 'lf-toast lf-toast--success';
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(function () { toast.classList.add('is-visible'); }, 30);
+    setTimeout(function () {
+      toast.classList.remove('is-visible');
+      setTimeout(function () { toast.remove(); }, 400);
+    }, duration || 3000);
   }
 
   function escapeHtml(s) {
