@@ -225,21 +225,42 @@ export async function ensureLotteryTables(env) {
 }
 
 /**
- * 初始化該月獎品庫存（idempotent，只在第一次呼叫時建立）
+ * 初始化該月獎品庫存（idempotent）
+ * - 不存在 → 建立
+ * - 已存在但名稱/emoji/tier/win_rate 有變 → UPDATE（保留庫存數量）
+ * - stock_total 有變 → 一併同步（stock_remaining 按比例調整不動，只補新增的差）
  */
 export async function initMonthInventory(env, month, prizes) {
   for (const p of prizes) {
     // 檢查是否已存在
     const existing = await env.DB.prepare(
-      `SELECT id FROM lottery_prize_inventory WHERE month = ? AND prize_id = ? LIMIT 1`
+      `SELECT id, prize_name, prize_emoji, prize_tier, stock_total, win_rate
+       FROM lottery_prize_inventory WHERE month = ? AND prize_id = ? LIMIT 1`
     ).bind(month, p.id).first();
 
     if (!existing) {
+      // 新增
       await env.DB.prepare(`
         INSERT INTO lottery_prize_inventory
           (month, prize_id, prize_name, prize_emoji, prize_tier, stock_total, stock_remaining, win_rate)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `).bind(month, p.id, p.name, p.emoji, p.tier, p.stock, p.stock, p.rate).run();
+    } else {
+      // 存在 → 檢查是否需要更新（避免每次都寫入）
+      const needUpdate =
+        existing.prize_name !== p.name ||
+        existing.prize_emoji !== p.emoji ||
+        existing.prize_tier !== p.tier ||
+        existing.win_rate !== p.rate;
+
+      if (needUpdate) {
+        // 只同步「元資料」（名稱/emoji/tier/機率），保留庫存數量不動
+        await env.DB.prepare(`
+          UPDATE lottery_prize_inventory
+          SET prize_name = ?, prize_emoji = ?, prize_tier = ?, win_rate = ?
+          WHERE month = ? AND prize_id = ?
+        `).bind(p.name, p.emoji, p.tier, p.rate, month, p.id).run();
+      }
     }
   }
 }
