@@ -55,7 +55,9 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  // 也需檢查目前是否有 pending broadcast — 避免重複排程
+  // ==================================================
+  // Dedup Layer 1：檢查目前是否有 pending broadcast
+  // ==================================================
   const pending = await db.prepare(`
     SELECT id, scheduled_at FROM newsletter_broadcasts
     WHERE status='pending' AND scheduled_at > ?
@@ -70,6 +72,76 @@ export async function onRequestPost({ request, env }) {
       pending_scheduled_at: pending.scheduled_at,
       message: '已有一筆 pending broadcast，取消它或等它執行後再排程',
     }, 409);
+  }
+
+  // ==================================================
+  // Dedup Layer 2：檢查目前是否有 sending broadcast（正在寄）
+  // 這是 bug fix 關鍵！之前只擋 pending，若剛好在寄送中會漏
+  // ==================================================
+  const sending = await db.prepare(`
+    SELECT id, started_at FROM newsletter_broadcasts
+    WHERE status='sending'
+    LIMIT 1
+  `).first();
+  if (sending) {
+    return jsonResponse({
+      ok: false,
+      skipped: true,
+      reason: 'sending_broadcast_in_progress',
+      sending_broadcast_id: sending.id,
+      started_at: sending.started_at,
+      message: '有一筆 broadcast 正在寄送中，請等它完成再排程',
+    }, 409);
+  }
+
+  // ==================================================
+  // Dedup Layer 3：檢查最近 6 小時內是否已寄過相同 slug 組合
+  // 防止「寄完後 newsletter_articles_sent 寫入延遲」或
+  // 「broadcast 卡在 sent/failed 但 articles_sent 沒寫入」造成重複
+  // ==================================================
+  const sixHoursAgo = new Date(Date.now() - 6 * 3600 * 1000).toISOString();
+  const recentBroadcasts = await db.prepare(`
+    SELECT id, status, articles_json, created_at FROM newsletter_broadcasts
+    WHERE created_at > ? AND status IN ('sent', 'sending', 'partial')
+    ORDER BY id DESC LIMIT 5
+  `).bind(sixHoursAgo).all();
+
+  const newSlugsSorted = newArticles.map(a => a.slug).sort().join(',');
+  for (const rb of (recentBroadcasts.results || [])) {
+    try {
+      const rbArticles = JSON.parse(rb.articles_json || '[]');
+      const rbSlugsSorted = rbArticles.map(a => a.slug).sort().join(',');
+      // 完全相同的 slug 組合 → 一定是重複
+      if (rbSlugsSorted === newSlugsSorted) {
+        return jsonResponse({
+          ok: false,
+          skipped: true,
+          reason: 'duplicate_slugs_in_recent_broadcast',
+          duplicate_broadcast_id: rb.id,
+          duplicate_status: rb.status,
+          duplicate_created_at: rb.created_at,
+          slugs: newArticles.map(a => a.slug),
+          message: `最近 6 小時內已有 broadcast #${rb.id} 包含完全相同的文章組合，跳過`,
+        }, 409);
+      }
+      // 有交集但不完全相同 → 只警告不擋（可能是漸進式加篇）
+      const rbSlugs = new Set(rbArticles.map(a => a.slug));
+      const overlap = newArticles.filter(a => rbSlugs.has(a.slug));
+      if (overlap.length > 0 && overlap.length === newArticles.length) {
+        // 新 broadcast 的文章全部都在最近 broadcast 中 → 也算重複
+        return jsonResponse({
+          ok: false,
+          skipped: true,
+          reason: 'all_slugs_in_recent_broadcast',
+          duplicate_broadcast_id: rb.id,
+          duplicate_status: rb.status,
+          overlap_slugs: overlap.map(a => a.slug),
+          message: `所有文章都在最近的 broadcast #${rb.id} 中已寄出，跳過`,
+        }, 409);
+      }
+    } catch (e) {
+      // JSON parse 錯誤忽略
+    }
   }
 
   const scheduledAt = new Date(Date.now() + delayMin * 60 * 1000).toISOString();
