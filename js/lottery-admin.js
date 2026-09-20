@@ -207,7 +207,81 @@
     claimCancel.addEventListener('click', closeClaimModal);
     claimSave.addEventListener('click', saveClaimChange);
 
+    // 刪除測試資料
+    var delBtn = document.getElementById('laDelBtn');
+    if (delBtn) delBtn.addEventListener('click', handleDelete);
+
     loadAll();
+  }
+
+  function handleDelete() {
+    var mode = document.getElementById('laDelMode').value;
+    var value = document.getElementById('laDelValue').value.trim();
+    var resultEl = document.getElementById('laDelResult');
+    if (!value) {
+      resultEl.innerHTML = '<span style="color:#ff9a90;">⚠️ 請輸入要刪除的值</span>';
+      return;
+    }
+
+    var modeLabel = {
+      by_phone: '電話',
+      by_email: 'Email',
+      by_ticket: '抽獎編號'
+    }[mode];
+
+    if (!confirm('⚠️ 確定要用「' + modeLabel + ' = ' + value + '」刪除紀錄嗎？\n\n此操作無法復原！')) {
+      return;
+    }
+
+    var delBtn = document.getElementById('laDelBtn');
+    delBtn.disabled = true;
+    delBtn.textContent = '刪除中...';
+    resultEl.innerHTML = '<span style="color:var(--la-text-dim);">處理中...</span>';
+
+    fetch('/api/lottery/admin-delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: token,
+        mode: mode,
+        value: value,
+      }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          var d = data.deleted;
+          resultEl.innerHTML = '<div style="background:rgba(6,199,85,0.12); border:1px solid rgba(6,199,85,0.35); padding:12px; border-radius:8px;">' +
+            '<strong style="color:#7ff2a3;">✅ 刪除成功</strong><br/>' +
+            '<span style="font-size:12px;">' +
+              '• 參與者：' + d.participants_count + ' 筆<br/>' +
+              '• 抽獎紀錄：' + d.draws_count + ' 筆<br/>' +
+              '• 推薦紀錄：' + d.referrals_count + ' 筆' +
+            '</span>' +
+            '<div style="margin-top:8px; font-size:11px; color:var(--la-text-dim);">' +
+              d.participants.map(function (p) {
+                return '刪除：' + esc(p.ticket_no) + ' · ' + esc(p.name) + ' · ' + esc(p.phone);
+              }).join('<br/>') +
+            '</div>' +
+          '</div>';
+          document.getElementById('laDelValue').value = '';
+          showToast('✅ 已刪除 ' + d.participants_count + ' 筆', 'ok');
+          // 重新載入所有資料
+          loadAll();
+        } else {
+          resultEl.innerHTML = '<span style="color:#ff9a90;">❌ ' + esc(data.error || '刪除失敗') + '</span>';
+          showToast('❌ ' + (data.error || '刪除失敗'), 'err');
+        }
+      })
+      .catch(function (err) {
+        console.error(err);
+        resultEl.innerHTML = '<span style="color:#ff9a90;">❌ 網路錯誤</span>';
+        showToast('❌ 網路錯誤', 'err');
+      })
+      .finally(function () {
+        delBtn.disabled = false;
+        delBtn.textContent = '🗑️ 刪除';
+      });
   }
 
   function loadAll() {

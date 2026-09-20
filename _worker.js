@@ -57,6 +57,7 @@ import * as lotteryAdminSummary from './functions/api/lottery/admin-summary.js';
 import * as lotteryAdminWinners from './functions/api/lottery/admin-winners.js';
 import * as lotteryAdminParticipants from './functions/api/lottery/admin-participants.js';
 import * as lotteryAdminClaim from './functions/api/lottery/admin-claim.js';
+import * as lotteryAdminDelete from './functions/api/lottery/admin-delete.js';
 
 // 電子報系統 (/newsletter/*)
 import * as nlSubscribe from './functions/api/newsletter/subscribe.js';
@@ -121,6 +122,7 @@ const API_ROUTES = {
   '/api/lottery/admin-winners': lotteryAdminWinners,
   '/api/lottery/admin-participants': lotteryAdminParticipants,
   '/api/lottery/admin-claim': lotteryAdminClaim,
+  '/api/lottery/admin-delete': lotteryAdminDelete,
 
   // 電子報系統
   '/api/newsletter/subscribe': nlSubscribe,
