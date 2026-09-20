@@ -173,6 +173,16 @@ export default {
       }
     }
 
+    // ============ 0-C. 短網址：便利主播分享用（301 導向） ============
+    // /lc/coin → TikTok 金幣儲值省錢攻略
+    const SHORT_URLS = {
+      '/lc/coin': '/live-center/article/tiktok-coin-web-recharge-guide/',
+      '/coin':    '/live-center/article/tiktok-coin-web-recharge-guide/',
+    };
+    if (SHORT_URLS[path]) {
+      return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
+    }
+
     // ============ 1-A. 動態路徑：/api/newsletter/confirm/{token} 與 /unsubscribe/{token} ============
     // 這兩個 token 是變數，用正則配對
     const confirmMatch = path.match(/^\/api\/newsletter\/confirm\/([0-9a-f]{32})$/i);
