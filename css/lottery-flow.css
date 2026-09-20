@@ -898,10 +898,31 @@
 .lf-share-buttons .lf-share-line:hover {
   background: #05a848;
 }
+.lf-share-buttons .lf-share-threads {
+  background: #000;
+  color: #fff;
+  border-color: #333;
+}
+.lf-share-buttons .lf-share-threads:hover {
+  background: #1a1a1a;
+  border-color: #666;
+}
+.lf-share-buttons .lf-share-ig {
+  background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+  color: #fff;
+  border-color: transparent;
+}
+.lf-share-buttons .lf-share-ig:hover {
+  filter: brightness(1.1);
+}
 .lf-share-buttons .lf-share-fb {
   background: #1877f2;
   color: #fff;
   border-color: #1877f2;
+}
+.lf-share-more-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--lf-text) !important;
 }
 
 /* ACTION FOOTER */
