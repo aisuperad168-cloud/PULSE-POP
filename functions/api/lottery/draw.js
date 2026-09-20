@@ -13,7 +13,7 @@
  *   draw_no: 1,
  *   is_winner: 1,
  *   prize_id: "coffee",
- *   prize_name: "7-11 燕麥拿鐵",
+ *   prize_name: "7-11 特大杯冰拿鐵",
  *   prize_emoji: "☕",
  *   prize_tier: "肆獎",
  *   chances_remaining: 0

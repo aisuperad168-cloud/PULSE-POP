@@ -207,7 +207,7 @@
       { prize_id: 'soundcard', prize_name: '直播聲卡套組', prize_emoji: '🎙️', prize_tier: '頭獎', is_winner: false },
       { prize_id: 'light',     prize_name: '直播補光燈',   prize_emoji: '💡', prize_tier: '貳獎', is_winner: false },
       { prize_id: 'holder',    prize_name: 'TikTok 手機支架', prize_emoji: '📱', prize_tier: '參獎', is_winner: false },
-      { prize_id: 'coffee',    prize_name: '7-11 燕麥拿鐵',   prize_emoji: '☕', prize_tier: '肆獎', is_winner: false },
+      { prize_id: 'coffee',    prize_name: '7-11 特大杯冰拿鐵',   prize_emoji: '☕', prize_tier: '肆獎', is_winner: false },
       { prize_id: 'none',      prize_name: '銘謝惠顧',      prize_emoji: '😊', prize_tier: '無',   is_winner: false },
     ];
     // 過濾掉「跟實際結果一樣」的

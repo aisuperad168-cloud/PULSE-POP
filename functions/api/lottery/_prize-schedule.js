@@ -31,7 +31,7 @@ export const PRIZE_SCHEDULE = {
     { id: 'soundcard', name: '直播聲卡套組',     emoji: '🎙️', tier: '頭獎', stock: 1,  rate: 0.5 },
     { id: 'light',     name: '直播補光燈',       emoji: '💡', tier: '貳獎', stock: 2,  rate: 1.0 },
     { id: 'holder',    name: 'TikTok 手機支架',  emoji: '📱', tier: '參獎', stock: 5,  rate: 2.5 },
-    { id: 'coffee',    name: '7-11 燕麥拿鐵',    emoji: '☕', tier: '肆獎', stock: 20, rate: 10.0 },
+    { id: 'coffee',    name: '7-11 特大杯冰拿鐵',    emoji: '☕', tier: '肆獎', stock: 20, rate: 10.0 },
   ],
 
   // === 2026 年 10 月（同 9 月）===
@@ -39,7 +39,7 @@ export const PRIZE_SCHEDULE = {
     { id: 'soundcard', name: '直播聲卡套組',     emoji: '🎙️', tier: '頭獎', stock: 1,  rate: 0.5 },
     { id: 'light',     name: '直播補光燈',       emoji: '💡', tier: '貳獎', stock: 2,  rate: 1.0 },
     { id: 'holder',    name: 'TikTok 手機支架',  emoji: '📱', tier: '參獎', stock: 5,  rate: 2.5 },
-    { id: 'coffee',    name: '7-11 燕麥拿鐵',    emoji: '☕', tier: '肆獎', stock: 20, rate: 10.0 },
+    { id: 'coffee',    name: '7-11 特大杯冰拿鐵',    emoji: '☕', tier: '肆獎', stock: 20, rate: 10.0 },
   ],
 };
 
