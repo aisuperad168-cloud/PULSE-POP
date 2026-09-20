@@ -838,9 +838,9 @@
 
       <!-- 主 CTA：立即抽獎（大按鈕、顯眼）-->
       <div class="sim-modal-actions" style="margin-top: 8px;">
-        <a href="javascript:void(0)" id="simGoLotteryBtn" class="sim-btn sim-btn--primary" style="font-size: 18px; padding: 20px 24px;">
+        <button type="button" id="simGoLotteryBtn" class="sim-btn sim-btn--primary" style="font-size: 18px; padding: 20px 24px; width: 100%; border: none; cursor: pointer; font-family: inherit;">
           🎲 立即翻牌抽獎
-        </a>
+        </button>
       </div>
 
       <!-- 分享圖預覽（次要 · 可折疊） -->
@@ -904,7 +904,7 @@
 <!-- 拿掉 crossorigin：同源不需要，反而會觸發 CORS 阻塞 -->
 <img id="simWatermarkLogo" src="/assets/logo_jdi_transparent.png?v=20260820c" alt="" style="display:none;" />
 
-<script src="/js/streamer-simulator.js?v=20260919a"></script>
+<script src="/js/streamer-simulator.js?v=20260920a"></script>
 
 <link rel="stylesheet" href="/css/activity-toast.css?v=20260917b" />
 <script src="/js/activity-toast.js?v=20260917b" defer></script>

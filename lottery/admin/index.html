@@ -548,6 +548,26 @@
       </div>
     </div>
 
+    <!-- 危險工具：刪除測試資料 -->
+    <div class="la-section" style="border-color: rgba(232, 57, 42, 0.35);">
+      <div class="la-section-header">
+        <h2 style="color:#ff9a90;">🗑️ 刪除測試資料</h2>
+      </div>
+      <p style="font-size:12px; color:var(--la-text-dim); margin-bottom:14px;">
+        ⚠️ 用於清除測試用的登記紀錄。刪除會一併移除該人的所有抽獎紀錄與推薦紀錄，但<strong style="color:#ff9a90;">獎品庫存不會恢復</strong>。
+      </p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+        <select id="laDelMode" style="padding:8px 12px; background:var(--la-surface-hover); border:1px solid var(--la-border); border-radius:8px; color:var(--la-text); font-size:13px; font-family:inherit;">
+          <option value="by_phone">用電話刪除</option>
+          <option value="by_email">用 Email 刪除</option>
+          <option value="by_ticket">用抽獎編號刪除</option>
+        </select>
+        <input id="laDelValue" type="text" placeholder="輸入電話 / Email / 編號" style="flex:1; min-width:200px; padding:8px 14px; background:var(--la-surface-hover); border:1px solid var(--la-border); border-radius:8px; color:var(--la-text); font-size:13px; font-family:inherit;" />
+        <button id="laDelBtn" class="la-btn la-btn--danger" type="button">🗑️ 刪除</button>
+      </div>
+      <div id="laDelResult" style="margin-top:12px; font-size:13px;"></div>
+    </div>
+
   </div>
 </div>
 
@@ -575,7 +595,7 @@
 <!-- ============ TOAST ============ -->
 <div id="laToast" class="la-toast"></div>
 
-<script src="/js/lottery-admin.js?v=20260919a"></script>
+<script src="/js/lottery-admin.js?v=20260920a"></script>
 
 </body>
 </html>

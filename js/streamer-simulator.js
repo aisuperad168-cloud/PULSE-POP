@@ -672,21 +672,30 @@
     // === 立即抽獎主 CTA（新流程）===
     var lotteryBtn = $('simGoLotteryBtn');
     if (lotteryBtn) {
-      lotteryBtn.addEventListener('click', function () {
-        trackShare('go_lottery');
-        registerLotteryEntry(); // 記錄「有點過抽獎按鈕」統計
-        var result = currentShare.result;
-        var score = currentShare.score;
+      lotteryBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log('[simulator] go-lottery clicked');
+        // 錯誤都要 catch，確保 navigation 一定會發生
+        try { trackShare('go_lottery'); } catch (err) { console.warn('trackShare err', err); }
+        try { registerLotteryEntry(); } catch (err) { console.warn('registerLotteryEntry err', err); }
+
         var params = new URLSearchParams();
-        if (result && result.title) params.set('type', result.title);
-        if (typeof score === 'number') params.set('score', score);
-        // 若 URL 有 ref=xxxx 也保留
         try {
+          var result = currentShare.result;
+          var score = currentShare.score;
+          if (result && result.title) params.set('type', result.title);
+          if (typeof score === 'number') params.set('score', score);
           var currRef = new URLSearchParams(window.location.search).get('ref');
           if (currRef) params.set('ref', currRef);
-        } catch (e) {}
-        window.location.href = '/lottery/register/?' + params.toString();
+        } catch (err) { console.warn('build params err', err); }
+
+        var target = '/lottery/register/' + (params.toString() ? '?' + params.toString() : '');
+        console.log('[simulator] navigating to', target);
+        // 用 assign 而非 href（避免部分 iOS 情境不 navigate）
+        window.location.assign(target);
       });
+    } else {
+      console.warn('[simulator] simGoLotteryBtn not found');
     }
 
     // 舊 LINE 抽獎按鈕（改成「已存在則綁」的相容處理）
