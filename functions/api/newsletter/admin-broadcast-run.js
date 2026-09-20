@@ -60,6 +60,54 @@ export async function onRequestPost({ request, env }) {
     }
   }
 
+  // ==================================================
+  // Dedup 保險：執行前再檢查一次
+  // 若最近 6 小時內已有相同 slug 組合的 broadcast 成功寄出 → 拒絕重複執行
+  // 這是 bug fix 關鍵：schedule 端可能沒擋到，broadcast-run 這裡再擋一次
+  // ==================================================
+  try {
+    const broadcastArticles = JSON.parse(broadcast.articles_json || '[]');
+    const currentSlugsSorted = broadcastArticles.map(a => a.slug).sort().join(',');
+    if (currentSlugsSorted && !forceRun) {
+      const sixHoursAgo = new Date(Date.now() - 6 * 3600 * 1000).toISOString();
+      const recentBroadcasts = await db.prepare(`
+        SELECT id, status, articles_json, finished_at FROM newsletter_broadcasts
+        WHERE id != ? AND finished_at > ? AND status IN ('sent', 'partial')
+        ORDER BY id DESC LIMIT 5
+      `).bind(broadcast.id, sixHoursAgo).all();
+
+      for (const rb of (recentBroadcasts.results || [])) {
+        try {
+          const rbArticles = JSON.parse(rb.articles_json || '[]');
+          const rbSlugsSorted = rbArticles.map(a => a.slug).sort().join(',');
+          if (rbSlugsSorted === currentSlugsSorted) {
+            // 標記本 broadcast 為 skipped 狀態
+            await db.prepare(`
+              UPDATE newsletter_broadcasts
+              SET status='cancelled', finished_at=?, error_summary=?
+              WHERE id=?
+            `).bind(
+              taipeiNow(),
+              `Duplicate of broadcast #${rb.id} (same articles sent within 6 hours)`,
+              broadcast.id
+            ).run();
+
+            return jsonResponse({
+              ok: false,
+              skipped: true,
+              reason: 'duplicate_of_recent_broadcast',
+              current_broadcast_id: broadcast.id,
+              duplicate_of_broadcast_id: rb.id,
+              message: `broadcast #${broadcast.id} 已自動取消 · 6 小時內已由 #${rb.id} 寄過相同文章`,
+            }, 409);
+          }
+        } catch (e) { /* JSON parse 錯誤忽略 */ }
+      }
+    }
+  } catch (e) {
+    console.warn('[broadcast-run] dedup check err:', e.message);
+  }
+
   // 標記 sending
   const startedAt = taipeiNow();
   await db.prepare(`UPDATE newsletter_broadcasts SET status='sending', started_at=? WHERE id=?`)
@@ -179,15 +227,41 @@ export async function onRequestPost({ request, env }) {
   // ==================================================
   // 只有「至少 1 封成功」才記錄 articles_sent
   // 否則下次 workflow 掃描還會抓到這篇（避免全 fail 時誤登記已推過）
+  //
+  // Bug fix (2026-09-14 重複寄送事件)：
+  //   之前錯誤被 silent 吞掉，若 D1 寫入失敗，下次 schedule-weekly 找不到紀錄 → 再次排程
+  //   現在：改為累積錯誤 + log，並在最後回應中回傳寫入狀態供追蹤
   // ==================================================
+  const articlesSentResult = { attempted: 0, succeeded: 0, failed: 0, errors: [] };
   if (successCount > 0) {
     for (const a of articles) {
+      articlesSentResult.attempted++;
       try {
         await db.prepare(`
           INSERT OR IGNORE INTO newsletter_articles_sent (article_slug, broadcast_id, first_included_at)
           VALUES (?, ?, ?)
         `).bind(a.slug, broadcast.id, finishedAt).run();
-      } catch (e) { /* silent */ }
+        articlesSentResult.succeeded++;
+      } catch (e) {
+        articlesSentResult.failed++;
+        articlesSentResult.errors.push({ slug: a.slug, error: e.message });
+        console.error(`[broadcast-run] articles_sent write FAILED for ${a.slug}:`, e.message);
+      }
+    }
+    // 驗證：再讀一次確認真的寫入了
+    try {
+      const placeholders2 = articles.map(() => '?').join(',');
+      const verifyRows = await db.prepare(`
+        SELECT article_slug FROM newsletter_articles_sent WHERE article_slug IN (${placeholders2})
+      `).bind(...articles.map(a => a.slug)).all();
+      const verifiedSet = new Set((verifyRows.results || []).map(r => r.article_slug));
+      const missing = articles.filter(a => !verifiedSet.has(a.slug));
+      if (missing.length > 0) {
+        console.error(`[broadcast-run] articles_sent VERIFY FAILED: ${missing.length} slugs missing after insert:`, missing.map(a => a.slug));
+        articlesSentResult.missing_after_verify = missing.map(a => a.slug);
+      }
+    } catch (e) {
+      console.error('[broadcast-run] articles_sent verify err:', e.message);
     }
   }
 
@@ -237,6 +311,8 @@ export async function onRequestPost({ request, env }) {
     finished_at: finishedAt,
     // 第一個錯誤訊息（方便前端顯示）
     first_error: failedResults[0]?.error || null,
+    // articles_sent dedup 追蹤（避免下次重複寄送）
+    articles_sent_dedup: articlesSentResult,
   });
 }
 
