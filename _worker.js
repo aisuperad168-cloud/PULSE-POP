@@ -185,6 +185,10 @@ export default {
       // 主場感 / 直播節奏主導權
       '/lc/pace':   '/live-center/article/streamer-pace-control-dont-get-hijacked/',
       '/pace':      '/live-center/article/streamer-pace-control-dont-get-hijacked/',
+      // 阿比整蠱 / 菜單主播互動神器
+      '/lc/abi':    '/live-center/article/abi-interaction-tool-menu-streamer/',
+      '/abi':       '/live-center/article/abi-interaction-tool-menu-streamer/',
+      '/lc/menu':   '/live-center/article/abi-interaction-tool-menu-streamer/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
