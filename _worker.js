@@ -182,6 +182,9 @@ export default {
       '/lc/invite': '/live-center/article/tiktok-streamer-invite-bonus-guide/',
       '/invite':    '/live-center/article/tiktok-streamer-invite-bonus-guide/',
       '/lc/bonus':  '/live-center/article/tiktok-streamer-invite-bonus-guide/',
+      // 主場感 / 直播節奏主導權
+      '/lc/pace':   '/live-center/article/streamer-pace-control-dont-get-hijacked/',
+      '/pace':      '/live-center/article/streamer-pace-control-dont-get-hijacked/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
