@@ -189,6 +189,9 @@ export default {
       '/lc/abi':    '/live-center/article/abi-interaction-tool-menu-streamer/',
       '/abi':       '/live-center/article/abi-interaction-tool-menu-streamer/',
       '/lc/menu':   '/live-center/article/abi-interaction-tool-menu-streamer/',
+      // TikTok 星級主播達成條件
+      '/lc/star':   '/live-center/article/tiktok-star-streamer-criteria/',
+      '/star':      '/live-center/article/tiktok-star-streamer-criteria/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
