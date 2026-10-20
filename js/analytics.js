@@ -80,6 +80,63 @@
 
   // ============ 3. Meta Pixel (Facebook / Instagram) ============
   // https://developers.facebook.com/docs/meta-pixel/
+  // 進階配對（Advanced Matching）說明：
+  //   - 首次 init 時匿名訪客沒資料 → 傳空物件 {} 讓 Pixel 啟用自動進階配對
+  //   - 當用戶揭露 email/phone（如訂閱電子報）→ 呼叫 jdiFbqSetUser()
+  //     會用新資料重新 fbq('init', ...)，Pixel 自動用 SHA-256 hash
+  //   - 資料會存進 sessionStorage，SPA 切頁後仍保留配對
+  //   - 參考 https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching/
+  const AM_STORAGE_KEY = 'jdi_am';  // Advanced Matching session cache
+
+  // 正規化進階配對欄位（Meta 要求：小寫、trim、去空格/+號）
+  function normalizeAM(raw) {
+    if (!raw || typeof raw !== 'object') return {};
+    const out = {};
+    // em: email，全小寫、trim
+    if (raw.em) out.em = String(raw.em).trim().toLowerCase();
+    // ph: phone，去除 + 空白 - ( )，轉純數字
+    if (raw.ph) out.ph = String(raw.ph).replace(/[^0-9]/g, '');
+    // fn/ln: first/last name 小寫、trim
+    if (raw.fn) out.fn = String(raw.fn).trim().toLowerCase();
+    if (raw.ln) out.ln = String(raw.ln).trim().toLowerCase();
+    // ct/st/zp/country: 其他配對欄位
+    if (raw.ct) out.ct = String(raw.ct).trim().toLowerCase().replace(/\s+/g, '');
+    if (raw.st) out.st = String(raw.st).trim().toLowerCase().replace(/\s+/g, '');
+    if (raw.zp) out.zp = String(raw.zp).trim().toLowerCase().replace(/\s+/g, '');
+    if (raw.country) out.country = String(raw.country).trim().toLowerCase();
+    // ge: gender (m/f)
+    if (raw.ge) {
+      const g = String(raw.ge).trim().toLowerCase();
+      if (g === 'm' || g === 'f') out.ge = g;
+    }
+    // 過濾空值
+    Object.keys(out).forEach(k => { if (!out[k]) delete out[k]; });
+    return out;
+  }
+
+  // 從 sessionStorage 載入已知的進階配對資料
+  function loadStoredAM() {
+    try {
+      const raw = sessionStorage.getItem(AM_STORAGE_KEY);
+      if (!raw) return {};
+      return normalizeAM(JSON.parse(raw));
+    } catch (e) { return {}; }
+  }
+
+  // 儲存進階配對資料到 sessionStorage（合併既有的）
+  function saveAM(newData) {
+    try {
+      const merged = Object.assign({}, loadStoredAM(), normalizeAM(newData));
+      sessionStorage.setItem(AM_STORAGE_KEY, JSON.stringify(merged));
+      return merged;
+    } catch (e) { return normalizeAM(newData); }
+  }
+
+  // 敏感頁面不收集進階配對（避免身分證/合約相關頁面誤傳）
+  function amAllowed() {
+    return !isSensitive;
+  }
+
   (function initMetaPixel() {
     if (!META_PIXEL_ID) return;
     // 官方 snippet (轉為 IIFE 安全版)
@@ -91,7 +148,10 @@
       t=b.createElement(e);t.async=!0;t.src=v;
       s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
     }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    window.fbq('init', META_PIXEL_ID);
+
+    // 進階配對：若 session 裡已有資料就帶上；沒有則傳空物件啟用自動進階配對
+    const amData = amAllowed() ? loadStoredAM() : {};
+    window.fbq('init', META_PIXEL_ID, amData);
     window.fbq('track', 'PageView');
   })();
 
@@ -109,6 +169,22 @@
     } catch (e) { /* silent */ }
   }
 
+  // 進階配對：收到用戶 email/phone 時呼叫（例如訂閱成功、填完表單）
+  // 用法：window.jdiFbqSetUser({ em: 'user@example.com' })
+  //       window.jdiFbqSetUser({ em: '...', ph: '0912345678' })
+  // 效果：合併到 session cache，並用新資料重新 fbq('init', ...) 讓後續事件帶 hash
+  function jdiFbqSetUser(userData) {
+    if (!window.fbq || !META_PIXEL_ID) return;
+    if (!amAllowed()) return;  // 敏感頁面不收集
+    try {
+      const merged = saveAM(userData);
+      if (Object.keys(merged).length > 0) {
+        // Meta 官方做法：用新資料重新 init，Pixel 會自動 SHA-256 hash
+        window.fbq('init', META_PIXEL_ID, merged);
+      }
+    } catch (e) { /* silent */ }
+  }
+
   // ============ 4. 自訂事件追蹤 helper ============
   // 給其他 JS 呼叫：window.jdiTrack('event_name', { param: value })
   window.jdiTrack = function (eventName, params) {
@@ -119,6 +195,9 @@
 
   // 也對外暴露 fbqTrack，讓其他頁面 JS 可以主動觸發（例如訂閱成功回呼）
   window.jdiFbqTrack = fbqTrack;
+
+  // 進階配對 setter：收到 email / phone 時呼叫（會自動 hash）
+  window.jdiFbqSetUser = jdiFbqSetUser;
 
   // ============ 5. 自動追蹤重要互動 ============
   document.addEventListener('DOMContentLoaded', function () {
