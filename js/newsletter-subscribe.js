@@ -70,6 +70,11 @@
           } else if (window.gtag) {
             window.gtag('event', 'newsletter_subscribe_submit', { source });
           }
+          // 進階配對：訂閱成功時把 email 餵給 Meta Pixel（自動 SHA-256 hash）
+          // 不限於新訂閱 — 只要用戶自願提供 email、我們都該收，提升再行銷配對率
+          if (window.jdiFbqSetUser && email) {
+            window.jdiFbqSetUser({ em: email });
+          }
           // 追蹤 Meta Pixel Subscribe（僅在真正新訂閱或重新訂閱時觸發）
           if (data.status === 'subscribed' || data.status === 'resubscribed') {
             if (window.jdiFbqTrack) {
