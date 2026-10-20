@@ -542,6 +542,58 @@
   font-style: italic;
 }
 
+/* 直式 hero / 圖片（9:16 直播間格式 — 如娛樂主播教學文） */
+/* 使用方式：<div class="lc-article-cover lc-article-cover--photo lc-article-cover--portrait"> */
+.lc-article-cover--portrait {
+  aspect-ratio: auto;              /* 關掉 16/9 強制比例 */
+  max-width: 420px;                /* 直式最大寬 */
+  margin-left: auto;
+  margin-right: auto;
+}
+.lc-article-cover--portrait img {
+  width: 100%;
+  height: auto;                    /* 讓高度跟著 9:16 自然長 */
+  object-fit: contain;
+  aspect-ratio: 9 / 16;
+}
+@media (max-width: 480px) {
+  .lc-article-cover--portrait {
+    max-width: 320px;
+  }
+}
+
+/* 文章內嵌直式示意圖（非 hero，使用於段落中間插圖） */
+.lc-article-inline-portrait {
+  display: block;
+  max-width: 360px;
+  margin: 24px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  background: #0a0a0f;
+}
+.lc-article-inline-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+}
+.lc-article-inline-portrait-caption {
+  display: block;
+  margin: 8px auto 32px;
+  font-size: 13px;
+  color: var(--gray-light, #7A7A85);
+  text-align: center;
+  font-style: italic;
+  max-width: 480px;
+}
+@media (max-width: 480px) {
+  .lc-article-inline-portrait {
+    max-width: 280px;
+  }
+}
+
 /* 文章正文樣式 */
 .lc-article-body {
   color: #D5D5DA;
