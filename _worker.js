@@ -192,6 +192,9 @@ export default {
       // TikTok 星級主播達成條件
       '/lc/star':   '/live-center/article/tiktok-star-streamer-criteria/',
       '/star':      '/live-center/article/tiktok-star-streamer-criteria/',
+      // 高質感直播間 / 娛樂主播設備教學
+      '/lc/studio': '/live-center/article/entertainment-streamer-studio-guide/',
+      '/studio':    '/live-center/article/entertainment-streamer-studio-guide/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
