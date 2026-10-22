@@ -1266,3 +1266,275 @@ export function renderMissionStarNotifyEmail({
 </body>
 </html>`;
 }
+
+
+// ============================================================
+// 網紅合作專案 2026 Q4
+// ============================================================
+const IP_PLATFORM_LABELS = {
+  tiktok: 'TikTok', ig: 'Instagram', yt: 'YouTube',
+  threads: 'Threads', fb: 'Facebook', xhs: '小紅書',
+  douyin: '抖音', x: 'X (Twitter)', other: '其他'
+};
+const IP_CATEGORY_LABELS = {
+  beauty: '💄 美妝', fashion: '👗 時尚', food: '🍜 美食',
+  travel: '✈️ 旅遊', game: '🎮 遊戲', knowledge: '📚 知識',
+  entertainment: '🎬 娛樂', sport: '⚽ 運動', pet: '🐾 寵物',
+  parenting: '👶 親子', emotion: '💕 情感', other: '🌟 其他'
+};
+const IP_FREQUENCY_LABELS = {
+  daily: '每天', '3x_week': '每週 3+ 次', weekly: '每週',
+  '2x_month': '每月 2 次', monthly: '每月', irregular: '不定期'
+};
+const IP_GOAL_LABELS = {
+  traffic: '📈 流量扶持', livestream: '📡 開播扶持',
+  sponsorship: '💰 業配媒合', agency: '🤝 經紀簽約',
+  trainee: '⭐ 練習生培訓'
+};
+const IP_GENDER_LABELS = { male: '男', female: '女', other: '不透露' };
+
+// 粉絲數 → 預估獎金等級（給候選人參考，實際以合約為準）
+function ipBonusTier(followers) {
+  if (followers >= 500000) return { tier: '🏆 S 級', range: 'NT$ 80,000 ~ 120,000' };
+  if (followers >= 200000) return { tier: '🥇 A 級', range: 'NT$ 40,000 ~ 80,000' };
+  if (followers >= 100000) return { tier: '🥈 B 級', range: 'NT$ 20,000 ~ 40,000' };
+  if (followers >= 50000)  return { tier: '🥉 C 級', range: 'NT$ 10,000 ~ 20,000' };
+  if (followers >= 10000)  return { tier: '⭐ D 級', range: 'NT$ 3,000 ~ 10,000' };
+  return { tier: '🌱 新秀', range: 'NT$ 500 ~ 3,000（依後續成長調整）' };
+}
+
+export function renderInfluencerConfirmEmail({
+  realName, stageName, birthYear, birthMonth, birthDay,
+  gender, phone, email, lineId,
+  platforms, primaryUrl, totalFollowers, contentCategory, activityFrequency,
+  cooperationGoals, otherAccounts, additionalInfo
+}) {
+  const platformsHtml = platforms.map(p =>
+    `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#7b1fa222;color:#B9A4FF;border-radius:12px;font-size:12px;font-weight:600;">${esc(IP_PLATFORM_LABELS[p] || p)}</span>`
+  ).join('');
+  const goalsHtml = cooperationGoals.map(g =>
+    `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#FF4FA322;color:#FF4FA3;border-radius:12px;font-size:12px;font-weight:600;">${esc(IP_GOAL_LABELS[g] || g)}</span>`
+  ).join('');
+  const bonus = ipBonusTier(totalFollowers);
+  const birthDate = `${birthYear}-${String(birthMonth).padStart(2,'0')}-${String(birthDay).padStart(2,'0')}`;
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>網紅合作專案 · 已收到您的報名</title>
+</head>
+<body style="margin:0;padding:0;background:#0a0a14;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a14;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
+
+        <tr><td style="background:linear-gradient(135deg,#1a0b2e 0%,#5b1a66 50%,#FF4FA3 100%);padding:36px 32px 28px;text-align:center;">
+          <div style="color:#FFD700;font-size:11px;font-weight:800;letter-spacing:4px;margin-bottom:10px;">★ 2026 最後一季 · 網紅合作專案 ★</div>
+          <div style="color:#ffffff;font-size:26px;font-weight:900;letter-spacing:2px;line-height:1.3;">
+            ✅ 已收到您的報名
+          </div>
+          <div style="color:#FFC9DA;font-size:13px;margin-top:8px;">JDI 脈動傳媒 · Influencer Partnership</div>
+        </td></tr>
+
+        <tr><td style="padding:32px 32px 16px;text-align:center;">
+          <div style="font-size:16px;color:#333;line-height:1.7;">
+            <strong style="color:#7b1fa2;">${esc(stageName)}</strong>（${esc(realName)}）您好，<br>
+            感謝您報名 <strong style="color:#FF4FA3;">JDI 2026 最後一季網紅合作專案</strong>！
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#FFD70015,#FF4FA315);border:1px solid #FFD70055;border-radius:12px;padding:22px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:11px;color:#B8860B;letter-spacing:2px;font-weight:800;margin-bottom:6px;">初步估算獎金等級</div>
+              <div style="font-size:24px;font-weight:900;color:#111;margin-bottom:6px;">${bonus.tier}</div>
+              <div style="font-size:18px;font-weight:800;color:#FF4FA3;">${bonus.range}</div>
+              <div style="font-size:12px;color:#666;margin-top:10px;line-height:1.6;">
+                ⚠️ 僅為粉絲數換算的參考區間，<br>
+                實際獎金依「審核後的互動率、內容質量、合作深度」調整，<strong>最高 NT$ 120,000</strong>
+              </div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#7b1fa211,#FF4FA311);border-radius:12px;padding:22px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">💬</div>
+              <div style="font-size:18px;font-weight:800;color:#111;margin-bottom:6px;">7 個工作天內 LINE 聯繫</div>
+              <div style="font-size:13px;color:#666;line-height:1.6;">
+                審核詳細辦法將以 <strong>LINE 一對一私訊</strong>說明，<br>
+                請保持 LINE 可接收訊息（ID：${esc(lineId)}）
+              </div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:8px 32px 16px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📋 報名摘要</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;font-size:14px;color:#333;">
+            <tr><td style="padding:6px 0;color:#999;width:110px;">總粉絲數</td><td style="padding:6px 0;"><strong style="color:#FF4FA3;font-size:16px;">${totalFollowers.toLocaleString()}</strong></td></tr>
+            <tr><td style="padding:6px 0;color:#999;">內容類型</td><td style="padding:6px 0;font-weight:700;">${esc(IP_CATEGORY_LABELS[contentCategory] || contentCategory)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">更新頻率</td><td style="padding:6px 0;">${esc(IP_FREQUENCY_LABELS[activityFrequency] || activityFrequency)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">經營平台</td><td style="padding:6px 0;">${platformsHtml}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">主要帳號</td><td style="padding:6px 0;"><a href="${esc(primaryUrl)}" style="color:#7b1fa2;word-break:break-all;">${esc(primaryUrl)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">期望合作</td><td style="padding:6px 0;">${goalsHtml}</td></tr>
+            <tr><td style="padding:12px 0 6px;color:#999;border-top:1px solid #eee;">藝名 / 本名</td><td style="padding:12px 0 6px;border-top:1px solid #eee;">${esc(stageName)} / ${esc(realName)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">生日 · 性別</td><td style="padding:6px 0;">${esc(birthDate)} · ${esc(IP_GENDER_LABELS[gender] || gender)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">聯絡</td><td style="padding:6px 0;">${esc(phone)} · ${esc(email)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">LINE</td><td style="padding:6px 0;font-weight:700;">${esc(lineId)}</td></tr>
+            ${otherAccounts ? `<tr><td style="padding:6px 0;color:#999;vertical-align:top;">其他帳號</td><td style="padding:6px 0;line-height:1.7;font-size:12px;">${esc(otherAccounts).replace(/\n/g,'<br>')}</td></tr>` : ''}
+            ${additionalInfo ? `<tr><td style="padding:6px 0;color:#999;vertical-align:top;">補充</td><td style="padding:6px 0;line-height:1.7;">${esc(additionalInfo).replace(/\n/g,'<br>')}</td></tr>` : ''}
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="padding:16px;background:linear-gradient(135deg,#7b1fa208,#FF4FA308);border-left:4px solid #FF4FA3;border-radius:8px;font-size:13px;color:#333;line-height:1.7;">
+            💡 <strong>加分提醒</strong><br>
+            審核期間請保持社群帳號公開；若有新作品或流量亮點，可直接回覆此信補充，有助於拉高獎金等級。
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 32px;">
+          <div style="font-size:13px;color:#666;line-height:1.8;text-align:center;">
+            若有急件，歡迎直接聯絡：<br>
+            • LINE 官方：<a href="https://line.me/R/ti/p/@354ykfbp" style="color:#FF4FA3;">@354ykfbp</a><br>
+            • Email：<a href="mailto:pulsepop9@gmail.com" style="color:#FF4FA3;">pulsepop9@gmail.com</a>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:20px 32px;background:#0a0a14;text-align:center;">
+          <div style="color:#FFD700;font-size:11px;font-weight:700;letter-spacing:3px;margin-bottom:6px;">★ 2026 Q4 · INFLUENCER PARTNERSHIP ★</div>
+          <div style="color:#FFC9DA;font-size:11px;">JDI 脈動傳媒 · JDI PULSE MEDIA</div>
+          <div style="color:#666;font-size:10px;margin-top:4px;">TikTok LIVE 官方合作經紀公會 · 網紅合作專案</div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+
+export function renderInfluencerNotifyEmail({
+  realName, stageName, birthYear, birthMonth, birthDay,
+  gender, phone, email, lineId,
+  platforms, primaryUrl, totalFollowers, contentCategory, activityFrequency,
+  cooperationGoals, otherAccounts, additionalInfo,
+  source, country, appId
+}) {
+  const platformsText = platforms.map(p => IP_PLATFORM_LABELS[p] || p).join(' · ');
+  const goalsText = cooperationGoals.map(g => IP_GOAL_LABELS[g] || g).join(' / ');
+  const bonus = ipBonusTier(totalFollowers);
+  const birthDate = `${birthYear}-${String(birthMonth).padStart(2,'0')}-${String(birthDay).padStart(2,'0')}`;
+  const age = new Date().getFullYear() - birthYear;
+
+  const tierColor = totalFollowers >= 500000 ? '#FFD700'
+                  : totalFollowers >= 200000 ? '#FF4FA3'
+                  : totalFollowers >= 100000 ? '#B9A4FF'
+                  : totalFollowers >= 50000  ? '#25F4EE'
+                  : '#A1A1AA';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⭐ 新網紅合作報名</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+      <table width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+
+        <tr><td style="background:linear-gradient(135deg,#1a0b2e,#FF4FA3);padding:20px 24px;color:#fff;">
+          <div style="font-size:11px;letter-spacing:3px;color:#FFD700;font-weight:800;">★ INFLUENCER · 新報名 #${appId || '-'}</div>
+          <div style="font-size:20px;font-weight:800;margin-top:4px;">
+            <span style="color:${tierColor};">${totalFollowers.toLocaleString()} 粉</span>
+            <span style="color:#ccc;font-size:14px;">·</span>
+            ${esc(stageName)} <span style="color:#FFC9DA;">(${esc(realName)})</span>
+          </div>
+          <div style="font-size:12px;color:#FFC9DA;margin-top:4px;">
+            ${esc(bonus.tier)} · 預估 ${esc(bonus.range)} · ${esc(IP_GENDER_LABELS[gender])} · ${age} 歲
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:20px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;color:#222;">
+            <tr><td style="padding:6px 0;color:#777;width:110px;">內容類型</td><td style="padding:6px 0;font-weight:700;">${esc(IP_CATEGORY_LABELS[contentCategory] || contentCategory)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">更新頻率</td><td style="padding:6px 0;">${esc(IP_FREQUENCY_LABELS[activityFrequency] || activityFrequency)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">經營平台</td><td style="padding:6px 0;">${esc(platformsText)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">期望合作</td><td style="padding:6px 0;color:#FF4FA3;font-weight:700;">${esc(goalsText)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">生日</td><td style="padding:6px 0;">${esc(birthDate)}（${age} 歲）</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">電話</td><td style="padding:6px 0;"><a href="tel:${esc(phone)}" style="color:#111;font-weight:700;">${esc(phone)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#777;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#7b1fa2;">${esc(email)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#777;">LINE</td><td style="padding:6px 0;font-weight:700;color:#06C755;">${esc(lineId)}</td></tr>
+          </table>
+
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 主要帳號連結</div>
+            <a href="${esc(primaryUrl)}" style="color:#7b1fa2;word-break:break-all;font-size:13px;" target="_blank">${esc(primaryUrl)}</a>
+          </div>
+
+          ${otherAccounts ? `
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 其他社群帳號</div>
+            <div style="font-size:12px;line-height:1.7;color:#333;word-break:break-all;">${esc(otherAccounts).replace(/\n/g,'<br>')}</div>
+          </div>` : ''}
+
+          ${additionalInfo ? `
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 補充說明</div>
+            <div style="font-size:13px;line-height:1.7;color:#333;">${esc(additionalInfo).replace(/\n/g,'<br>')}</div>
+          </div>` : ''}
+
+          <div style="margin-top:20px;padding:12px;background:#1a0b2e;border-radius:8px;">
+            <div style="font-size:12px;color:#FFC9DA;line-height:1.6;">
+              ⚡ <strong style="color:#FFD700;">24 小時內評估 + 7 天內 LINE 聯繫</strong><br>
+              回覆此信 = 直接 reply 給本人（Reply-To 已設定）
+            </div>
+          </div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+            <tr>
+              <td width="25%" style="padding:0 3px 0 0;">
+                <a href="mailto:${esc(email)}" style="display:block;padding:12px 4px;background:#7b1fa2;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">
+                  📧 回信
+                </a>
+              </td>
+              <td width="25%" style="padding:0 3px;">
+                <a href="tel:${esc(phone)}" style="display:block;padding:12px 4px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">
+                  📞 撥打
+                </a>
+              </td>
+              <td width="25%" style="padding:0 3px;">
+                <a href="https://line.me/R/ti/p/${esc(lineId.replace(/^@/, '~'))}" style="display:block;padding:12px 4px;background:#06C755;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">
+                  💬 LINE
+                </a>
+              </td>
+              <td width="25%" style="padding:0 0 0 3px;">
+                <a href="${esc(primaryUrl)}" style="display:block;padding:12px 4px;background:#FF4FA3;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">
+                  🎬 看作品
+                </a>
+              </td>
+            </tr>
+          </table>
+
+        </td></tr>
+
+        <tr><td style="padding:14px 24px;background:#fafafa;text-align:center;">
+          <div style="font-size:11px;color:#aaa;">
+            網紅合作系統 · JDI 脈動傳媒 · Source: ${esc(source || 'influencer-partnership')} · ${esc(country || '--')}
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
