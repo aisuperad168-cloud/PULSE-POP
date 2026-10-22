@@ -328,3 +328,65 @@ CREATE INDEX IF NOT EXISTS idx_ip_followers  ON influencer_applications (total_f
 CREATE INDEX IF NOT EXISTS idx_ip_category   ON influencer_applications (content_category);
 CREATE INDEX IF NOT EXISTS idx_ip_status     ON influencer_applications (status);
 CREATE INDEX IF NOT EXISTS idx_ip_created    ON influencer_applications (created_at);
+
+
+-- ============================================================
+-- 藝人／經紀公司合作方案 (agency-partnership/)
+-- B2B 招募：抖音/TikTok 官方合作公會夥伴
+-- 月扶持影片 5 隻 / 週直播間加熱 2 次 / 藝人保底可談 / 大陸抖音及 TikTok
+-- 防刷：Email + 手機 + 統編 任一命中即拒
+-- ============================================================
+CREATE TABLE IF NOT EXISTS agency_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 身份別
+  entity_type TEXT NOT NULL,                   -- agency / studio / artist
+  -- 聯絡人
+  contact_name TEXT NOT NULL,                  -- 聯絡人姓名
+  contact_title TEXT NOT NULL,                 -- 職稱
+  -- 公司資料
+  company_name TEXT NOT NULL,                  -- 公司／工作室／藝名
+  tax_id TEXT,                                 -- 統編（藝人本人可空）
+  website TEXT NOT NULL,                       -- 公司／個人官網
+  -- 聯絡方式
+  phone TEXT NOT NULL,                         -- 手機（去符號後）
+  email TEXT NOT NULL,                         -- Email（lowercase）
+  line_id TEXT NOT NULL,                       -- LINE ID
+  -- 旗下規模
+  artist_count TEXT NOT NULL,                  -- 1 / 2_5 / 6_10 / 11_20 / 20_plus
+  artist_types TEXT NOT NULL,                  -- JSON array ["singer","actor","influencer","dancer","rapper","host","other"]
+  platforms TEXT NOT NULL,                     -- JSON array ["tiktok","douyin","ig","yt","threads","xhs","other"]
+  -- 代表藝人（最多 3 位）
+  artist1_name TEXT NOT NULL,                  -- 代表藝人 1 - 藝名
+  artist1_url TEXT NOT NULL,                   -- 主要社群連結
+  artist1_followers INTEGER NOT NULL,          -- 粉絲數
+  artist2_name TEXT,
+  artist2_url TEXT,
+  artist2_followers INTEGER,
+  artist3_name TEXT,
+  artist3_url TEXT,
+  artist3_followers INTEGER,
+  -- 合作意向
+  cooperation_areas TEXT NOT NULL,             -- JSON array ["traffic","livestream","guarantee","revenue","cn_expansion"]
+  coop_artist_count TEXT NOT NULL,             -- 預計合作藝人數量: 1 / 2_5 / 6_10 / 11_20 / 20_plus
+  guarantee_budget TEXT,                       -- 保底金額區間（選填）: under_3 / 3_5 / 5_10 / 10_30 / 30_plus / negotiable
+  additional_info TEXT,                        -- 補充說明
+  -- 同意
+  consent INTEGER NOT NULL DEFAULT 1,
+  -- Meta
+  source TEXT,                                 -- agency-partnership-page
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0,
+  -- 審核狀態
+  status TEXT NOT NULL DEFAULT 'pending',      -- pending / reviewing / contacted / signed / rejected
+  review_note TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_ag_email      ON agency_applications (email);
+CREATE INDEX IF NOT EXISTS idx_ag_phone      ON agency_applications (phone);
+CREATE INDEX IF NOT EXISTS idx_ag_tax_id     ON agency_applications (tax_id);
+CREATE INDEX IF NOT EXISTS idx_ag_entity     ON agency_applications (entity_type);
+CREATE INDEX IF NOT EXISTS idx_ag_status     ON agency_applications (status);
+CREATE INDEX IF NOT EXISTS idx_ag_created    ON agency_applications (created_at);

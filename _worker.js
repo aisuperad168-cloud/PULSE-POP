@@ -21,6 +21,7 @@ import * as careersHandler from './functions/api/careers-submit.js';
 import * as venuesHandler from './functions/api/venues-submit.js';
 import * as missionStarHandler from './functions/api/mission-star-submit.js';
 import * as influencerPartnershipHandler from './functions/api/influencer-partnership-submit.js';
+import * as agencyPartnershipHandler from './functions/api/agency-partnership-submit.js';
 
 // 主播端簽約系統 (/sign/*)
 import * as signSubmit from './functions/api/sign/submit.js';
@@ -88,6 +89,7 @@ const API_ROUTES = {
   '/api/venues-submit': venuesHandler,
   '/api/mission-star-submit': missionStarHandler,
   '/api/influencer-partnership-submit': influencerPartnershipHandler,
+  '/api/agency-partnership-submit': agencyPartnershipHandler,
 
   // 主播端簽約系統
   '/api/sign/submit': signSubmit,
@@ -207,6 +209,10 @@ export default {
       '/kol':         '/influencer-partnership/',
       '/influencer':  '/influencer-partnership/',
       '/partner':     '/influencer-partnership/',
+      // 2026 藝人／經紀公司合作方案 (B2B)
+      '/agency':      '/agency-partnership/',
+      '/artist':      '/agency-partnership/',
+      '/b2b':         '/agency-partnership/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
