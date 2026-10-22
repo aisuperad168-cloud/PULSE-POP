@@ -276,3 +276,55 @@ CREATE INDEX IF NOT EXISTS idx_ms_phone      ON mission_star_applications (phone
 CREATE INDEX IF NOT EXISTS idx_ms_category   ON mission_star_applications (audition_category);
 CREATE INDEX IF NOT EXISTS idx_ms_status     ON mission_star_applications (status);
 CREATE INDEX IF NOT EXISTS idx_ms_created    ON mission_star_applications (created_at);
+
+
+-- ============================================================
+-- 網紅合作專案 2026 Q4 (influencer-partnership/)
+-- 粉絲數 >= 3000 · 流量扶持 / 開播扶持 / 獎金依粉絲數計算（上限 12 萬）
+-- 持續徵選 · 一人僅一次（Email + 手機 任一命中）
+-- ============================================================
+CREATE TABLE IF NOT EXISTS influencer_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 基本資料
+  real_name TEXT NOT NULL,                    -- 本名
+  stage_name TEXT NOT NULL,                   -- 藝名/暱稱
+  birth_year INTEGER NOT NULL,                -- 出生年
+  birth_month INTEGER NOT NULL,
+  birth_day INTEGER NOT NULL,
+  gender TEXT NOT NULL,                       -- male / female / other
+  -- 聯絡
+  phone TEXT NOT NULL,                        -- 手機（去符號後）
+  email TEXT NOT NULL,                        -- Email（lowercase）
+  line_id TEXT NOT NULL,                      -- LINE ID
+  -- 社群數據
+  platforms TEXT NOT NULL,                    -- JSON array ["tiktok","ig","yt","threads","fb","xhs","douyin","x","other"]
+  primary_url TEXT NOT NULL,                  -- 主要帳號連結（最有流量那個）
+  total_followers INTEGER NOT NULL,           -- 總粉絲數（跨平台加總；硬門檻 >= 3000）
+  content_category TEXT NOT NULL,             -- beauty / fashion / food / travel / game / knowledge / entertainment / sport / pet / parenting / emotion / other
+  activity_frequency TEXT NOT NULL,           -- daily / 3x_week / weekly / 2x_month / monthly / irregular
+  -- 期望合作
+  cooperation_goals TEXT NOT NULL,            -- JSON array ["traffic","livestream","sponsorship","agency","trainee"]
+  other_accounts TEXT,                        -- 其他社群帳號（自由填寫 URL 列表）
+  additional_info TEXT,                       -- 補充說明
+  -- 同意
+  consent INTEGER NOT NULL DEFAULT 1,
+  -- Meta
+  source TEXT,                                -- influencer-partnership-page
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0,
+  -- 審核狀態
+  status TEXT NOT NULL DEFAULT 'pending',     -- pending / reviewing / shortlisted / rejected / signed
+  review_note TEXT,                           -- 內部備註
+  -- 預估獎金（admin 可填）
+  estimated_bonus INTEGER                     -- 預估獎金（NTD）
+);
+
+CREATE INDEX IF NOT EXISTS idx_ip_email      ON influencer_applications (email);
+CREATE INDEX IF NOT EXISTS idx_ip_phone      ON influencer_applications (phone);
+CREATE INDEX IF NOT EXISTS idx_ip_followers  ON influencer_applications (total_followers);
+CREATE INDEX IF NOT EXISTS idx_ip_category   ON influencer_applications (content_category);
+CREATE INDEX IF NOT EXISTS idx_ip_status     ON influencer_applications (status);
+CREATE INDEX IF NOT EXISTS idx_ip_created    ON influencer_applications (created_at);
