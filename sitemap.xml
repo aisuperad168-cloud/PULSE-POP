@@ -53,6 +53,21 @@
   </url>
 
   <url>
+    <loc>https://jdi-pulse.com/mission-star/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/mission-star/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/mission-star/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/mission-star/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/mission-star/mission-star-hero.jpg</image:loc>
+      <image:title>Mission Star 練習生培訓計畫｜造星任務正式啟動</image:title>
+      <image:caption>1996–2010 年出生、性別不限、國籍不限的練習生徵選。歌唱 / RAP / 舞蹈 / 其他才藝任選一項，持續徵選中。</image:caption>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://jdi-pulse.com/careers</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>

@@ -1019,3 +1019,250 @@ export function renderVenuesNotifyEmail({
 </body>
 </html>`;
 }
+
+
+// ============================================================
+// Mission Star 練習生培訓計畫 · 造星任務
+// ============================================================
+const MS_CATEGORY_LABELS = {
+  vocal: '🎤 歌唱',
+  rap:   '🎙️ RAP',
+  dance: '💃 舞蹈',
+  other: '🌟 其他（外貌／演技等）'
+};
+const MS_GENDER_LABELS = { male: '男', female: '女', other: '不透露' };
+
+const MS_NATIONALITY_LABELS = {
+  tw: '🇹🇼 台灣', cn: '🇨🇳 中國', hk: '🇭🇰 香港', mo: '🇲🇴 澳門',
+  sg: '🇸🇬 新加坡', my: '🇲🇾 馬來西亞', jp: '🇯🇵 日本', kr: '🇰🇷 韓國',
+  us: '🇺🇸 美國', other: '🌐 其他'
+};
+
+export function renderMissionStarConfirmEmail({
+  chineseName, stageName, birthYear, birthMonth, birthDay,
+  gender, nationality, heightCm, weightKg,
+  phone, email, igHandle, city,
+  auditionCategory, worksUrl, experience, additionalInfo, photosUrl
+}) {
+  const categoryLabel = MS_CATEGORY_LABELS[auditionCategory] || auditionCategory;
+  const genderLabel = MS_GENDER_LABELS[gender] || gender;
+  const nationalityLabel = MS_NATIONALITY_LABELS[nationality] || nationality;
+  const birthDate = `${birthYear}-${String(birthMonth).padStart(2,'0')}-${String(birthDay).padStart(2,'0')}`;
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Star · 已收到您的報名</title>
+</head>
+<body style="margin:0;padding:0;background:#0a0a14;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a14;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
+
+        <tr><td style="background:linear-gradient(135deg,#1a0b2e 0%,#3d1a66 50%,#7b1fa2 100%);padding:36px 32px 28px;text-align:center;">
+          <div style="color:#FF4FA3;font-size:11px;font-weight:800;letter-spacing:4px;margin-bottom:10px;text-transform:uppercase;">★ Mission Star · Initiated ★</div>
+          <div style="color:#ffffff;font-size:26px;font-weight:900;letter-spacing:2px;line-height:1.3;">
+            ⭐ 已收到您的報名
+          </div>
+          <div style="color:#B9A4FF;font-size:13px;margin-top:8px;">練習生培訓計畫 · 造星任務</div>
+        </td></tr>
+
+        <tr><td style="padding:32px 32px 16px;text-align:center;">
+          <div style="font-size:16px;color:#333;line-height:1.7;">
+            <strong style="color:#7b1fa2;">${esc(stageName)}</strong>（${esc(chineseName)}）您好，<br>
+            感謝您報名 <strong style="color:#FF4FA3;">Mission Star 練習生培訓計畫</strong>！<br>
+            我們已收到您的報名資料。
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#7b1fa211,#FF4FA311);border-radius:12px;padding:22px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">🎬</div>
+              <div style="font-size:18px;font-weight:800;color:#111;margin-bottom:6px;">14 個工作天內審核回覆</div>
+              <div style="font-size:13px;color:#666;line-height:1.6;">
+                我們的星探團隊將仔細檢視您的作品，<br>
+                若您進入下一關，將透過 Email 聯繫面試或試鏡安排。
+              </div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:8px 32px 16px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📋 報名摘要</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;font-size:14px;color:#333;">
+            <tr><td style="padding:6px 0;color:#999;width:110px;">徵選項目</td><td style="padding:6px 0;font-weight:700;color:#FF4FA3;">${esc(categoryLabel)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">藝名 / 本名</td><td style="padding:6px 0;">${esc(stageName)} / ${esc(chineseName)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">生日</td><td style="padding:6px 0;">${esc(birthDate)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">性別 / 國籍</td><td style="padding:6px 0;">${esc(genderLabel)} · ${esc(nationalityLabel)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">身高 / 體重</td><td style="padding:6px 0;">${heightCm} cm / ${weightKg} kg</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">聯絡</td><td style="padding:6px 0;">${esc(phone)} · ${esc(email)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">IG</td><td style="padding:6px 0;">${esc(igHandle)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">居住</td><td style="padding:6px 0;">${esc(city)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">作品</td><td style="padding:6px 0;"><a href="${esc(worksUrl)}" style="color:#7b1fa2;word-break:break-all;">${esc(worksUrl)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">照片</td><td style="padding:6px 0;"><a href="${esc(photosUrl)}" style="color:#7b1fa2;word-break:break-all;">${esc(photosUrl)}</a></td></tr>
+            ${experience ? `<tr><td style="padding:6px 0;color:#999;vertical-align:top;">相關經歷</td><td style="padding:6px 0;line-height:1.7;">${esc(experience).replace(/\n/g,'<br>')}</td></tr>` : ''}
+            ${additionalInfo ? `<tr><td style="padding:6px 0;color:#999;vertical-align:top;">補充</td><td style="padding:6px 0;line-height:1.7;">${esc(additionalInfo).replace(/\n/g,'<br>')}</td></tr>` : ''}
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="padding:16px;background:linear-gradient(135deg,#7b1fa208,#FF4FA308);border-left:4px solid #7b1fa2;border-radius:8px;font-size:13px;color:#333;line-height:1.7;">
+            💡 <strong>加分提醒</strong><br>
+            審核期間請保持 IG 公開、作品連結可開啟。若有新作品，可直接回覆此信補充。
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 32px;">
+          <div style="font-size:13px;color:#666;line-height:1.8;text-align:center;">
+            若有急件，歡迎直接聯絡：<br>
+            • LINE 官方：<a href="https://line.me/R/ti/p/@354ykfbp" style="color:#7b1fa2;">@354ykfbp</a><br>
+            • Email：<a href="mailto:pulsepop9@gmail.com" style="color:#7b1fa2;">pulsepop9@gmail.com</a>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:20px 32px;background:#0a0a14;text-align:center;">
+          <div style="color:#FF4FA3;font-size:11px;font-weight:700;letter-spacing:3px;margin-bottom:6px;">★ MISSION STAR ★</div>
+          <div style="color:#B9A4FF;font-size:11px;">JDI 脈動傳媒 · JDI PULSE MEDIA</div>
+          <div style="color:#666;font-size:10px;margin-top:4px;">TikTok LIVE 官方合作經紀公會 · 練習生培訓計畫</div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+
+export function renderMissionStarNotifyEmail({
+  chineseName, stageName, birthYear, birthMonth, birthDay,
+  gender, nationality, heightCm, weightKg,
+  phone, email, igHandle, city,
+  auditionCategory, worksUrl, experience, additionalInfo, photosUrl,
+  source, country, appId
+}) {
+  const categoryLabel = MS_CATEGORY_LABELS[auditionCategory] || auditionCategory;
+  const genderLabel = MS_GENDER_LABELS[gender] || gender;
+  const nationalityLabel = MS_NATIONALITY_LABELS[nationality] || nationality;
+  const birthDate = `${birthYear}-${String(birthMonth).padStart(2,'0')}-${String(birthDay).padStart(2,'0')}`;
+  const age = new Date().getFullYear() - birthYear;
+
+  const categoryColor = {
+    vocal: '#FF4FA3', rap: '#B9A4FF', dance: '#25F4EE', other: '#FFC53D'
+  }[auditionCategory] || '#7b1fa2';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⭐ 新 Mission Star 報名</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+      <table width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+
+        <tr><td style="background:linear-gradient(135deg,#1a0b2e,#7b1fa2);padding:20px 24px;color:#fff;">
+          <div style="font-size:11px;letter-spacing:3px;color:#FF4FA3;font-weight:800;">★ MISSION STAR · 新報名 #${appId || '-'}</div>
+          <div style="font-size:20px;font-weight:800;margin-top:4px;">
+            <span style="color:${categoryColor};">${esc(categoryLabel)}</span>
+            <span style="color:#ccc;font-size:14px;">·</span>
+            ${esc(stageName)} <span style="color:#B9A4FF;">(${esc(chineseName)})</span>
+          </div>
+          <div style="font-size:12px;color:#B9A4FF;margin-top:4px;">
+            ${esc(genderLabel)} · ${age} 歲 · ${esc(nationalityLabel)} · 居 ${esc(city)}
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:20px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;color:#222;">
+            <tr>
+              <td style="padding:6px 0;color:#777;width:120px;">生日</td>
+              <td style="padding:6px 0;">${esc(birthDate)}（${age} 歲）</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;color:#777;">身材</td>
+              <td style="padding:6px 0;">${heightCm} cm · ${weightKg} kg</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;color:#777;">電話</td>
+              <td style="padding:6px 0;"><a href="tel:${esc(phone)}" style="color:#111;font-weight:700;">${esc(phone)}</a></td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;color:#777;">Email</td>
+              <td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#7b1fa2;">${esc(email)}</a></td>
+            </tr>
+            <tr>
+              <td style="padding:6px 0;color:#777;">IG</td>
+              <td style="padding:6px 0;"><a href="https://instagram.com/${esc(igHandle.replace(/^@/, ''))}" style="color:#FF4FA3;" target="_blank">${esc(igHandle)}</a></td>
+            </tr>
+          </table>
+
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 作品連結</div>
+            <a href="${esc(worksUrl)}" style="color:#7b1fa2;word-break:break-all;font-size:13px;" target="_blank">${esc(worksUrl)}</a>
+          </div>
+
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 3 張照片連結</div>
+            <a href="${esc(photosUrl)}" style="color:#7b1fa2;word-break:break-all;font-size:13px;" target="_blank">${esc(photosUrl)}</a>
+          </div>
+
+          ${experience ? `
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 相關經歷</div>
+            <div style="font-size:13px;line-height:1.7;color:#333;">${esc(experience).replace(/\n/g,'<br>')}</div>
+          </div>` : ''}
+
+          ${additionalInfo ? `
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 其他補充</div>
+            <div style="font-size:13px;line-height:1.7;color:#333;">${esc(additionalInfo).replace(/\n/g,'<br>')}</div>
+          </div>` : ''}
+
+          <div style="margin-top:20px;padding:12px;background:#1a0b2e;border-radius:8px;">
+            <div style="font-size:12px;color:#B9A4FF;line-height:1.6;">
+              ⚡ <strong style="color:#FF4FA3;">24 小時內評估</strong><br>
+              回覆此信 = 直接 reply 給本人（Reply-To 已設定）
+            </div>
+          </div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+            <tr>
+              <td width="33%" style="padding:0 4px 0 0;">
+                <a href="mailto:${esc(email)}" style="display:block;padding:12px;background:#7b1fa2;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📧 回信
+                </a>
+              </td>
+              <td width="33%" style="padding:0 4px;">
+                <a href="tel:${esc(phone)}" style="display:block;padding:12px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  📞 撥打
+                </a>
+              </td>
+              <td width="33%" style="padding:0 0 0 4px;">
+                <a href="${esc(worksUrl)}" style="display:block;padding:12px;background:#FF4FA3;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:13px;">
+                  🎬 看作品
+                </a>
+              </td>
+            </tr>
+          </table>
+
+        </td></tr>
+
+        <tr><td style="padding:14px 24px;background:#fafafa;text-align:center;">
+          <div style="font-size:11px;color:#aaa;">
+            Mission Star 練習生系統 · JDI 脈動傳媒 · Source: ${esc(source || 'mission-star')} · ${esc(country || '--')}
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}

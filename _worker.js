@@ -19,6 +19,7 @@ import * as streamerTestHandler from './functions/api/streamer-test-submit.js';
 import * as rookieTestHandler from './functions/api/rookie-test-submit.js';
 import * as careersHandler from './functions/api/careers-submit.js';
 import * as venuesHandler from './functions/api/venues-submit.js';
+import * as missionStarHandler from './functions/api/mission-star-submit.js';
 
 // 主播端簽約系統 (/sign/*)
 import * as signSubmit from './functions/api/sign/submit.js';
@@ -84,6 +85,7 @@ const API_ROUTES = {
   '/api/rookie-test-submit': rookieTestHandler,
   '/api/careers-submit': careersHandler,
   '/api/venues-submit': venuesHandler,
+  '/api/mission-star-submit': missionStarHandler,
 
   // 主播端簽約系統
   '/api/sign/submit': signSubmit,
@@ -195,6 +197,10 @@ export default {
       // 高質感直播間 / 娛樂主播設備教學
       '/lc/studio': '/live-center/article/entertainment-streamer-studio-guide/',
       '/studio':    '/live-center/article/entertainment-streamer-studio-guide/',
+      // Mission Star 練習生培訓計畫
+      '/mission':   '/mission-star/',
+      '/trainee':   '/mission-star/',
+      '/star-mission': '/mission-star/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);
