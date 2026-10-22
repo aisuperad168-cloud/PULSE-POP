@@ -1538,3 +1538,304 @@ export function renderInfluencerNotifyEmail({
 </body>
 </html>`;
 }
+
+
+// ============================================================
+// 藝人／經紀公司合作方案（B2B · 深藍商務風）
+// ============================================================
+const AG_ENTITY_LABELS = {
+  agency: '🏢 經紀公司',
+  studio: '🎬 工作室',
+  artist: '⭐ 藝人本人'
+};
+const AG_ARTIST_TYPE_LABELS = {
+  singer: '🎤 歌手', actor: '🎬 演員', influencer: '📱 網紅',
+  dancer: '💃 舞者', rapper: '🎙️ Rapper', host: '🎙️ 主持',
+  other: '🌟 其他'
+};
+const AG_PLATFORM_LABELS = {
+  tiktok: 'TikTok', douyin: '抖音', ig: 'Instagram',
+  yt: 'YouTube', threads: 'Threads', xhs: '小紅書', other: '其他'
+};
+const AG_COUNT_LABELS = {
+  '1': '1 位', '2_5': '2-5 位', '6_10': '6-10 位',
+  '11_20': '11-20 位', '20_plus': '20 位以上'
+};
+const AG_COOP_LABELS = {
+  traffic: '📈 流量扶持',
+  livestream: '🔥 直播間加熱',
+  guarantee: '💎 藝人保底',
+  revenue: '💰 TikTok 分潤',
+  cn_expansion: '🌏 大陸抖音拓展'
+};
+const AG_BUDGET_LABELS = {
+  under_3:    'NT$ 3 萬以下',
+  '3_5':      'NT$ 3-5 萬',
+  '5_10':     'NT$ 5-10 萬',
+  '10_30':    'NT$ 10-30 萬',
+  '30_plus':  'NT$ 30 萬以上',
+  negotiable: '面議'
+};
+
+export function renderAgencyConfirmEmail({
+  entityType, contactName, contactTitle, companyName, taxId, website,
+  phone, email, lineId,
+  artistCount, artistTypes, platforms,
+  artist1Name, artist1Url, artist1Followers,
+  artist2Name, artist2Url, artist2Followers,
+  artist3Name, artist3Url, artist3Followers,
+  cooperationAreas, coopArtistCount, guaranteeBudget, additionalInfo
+}) {
+  const entityLabel = AG_ENTITY_LABELS[entityType] || entityType;
+  const artistTypesHtml = artistTypes.map(t =>
+    `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#F0C14422;color:#8B6914;border-radius:12px;font-size:12px;font-weight:600;">${esc(AG_ARTIST_TYPE_LABELS[t] || t)}</span>`
+  ).join('');
+  const platformsHtml = platforms.map(p =>
+    `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#2E5BFF22;color:#1A3A99;border-radius:12px;font-size:12px;font-weight:600;">${esc(AG_PLATFORM_LABELS[p] || p)}</span>`
+  ).join('');
+  const coopHtml = cooperationAreas.map(c =>
+    `<span style="display:inline-block;padding:3px 10px;margin:2px 4px 2px 0;background:#F0C14422;color:#8B6914;border-radius:12px;font-size:12px;font-weight:700;">${esc(AG_COOP_LABELS[c] || c)}</span>`
+  ).join('');
+
+  const artist2Html = artist2Name ? `
+    <tr><td style="padding:6px 0;color:#999;vertical-align:top;">代表藝人 2</td>
+      <td style="padding:6px 0;">
+        <strong>${esc(artist2Name)}</strong>（${artist2Followers?.toLocaleString() || '-'} 粉）<br>
+        <a href="${esc(artist2Url || '#')}" style="color:#2E5BFF;font-size:12px;word-break:break-all;">${esc(artist2Url || '')}</a>
+      </td>
+    </tr>` : '';
+  const artist3Html = artist3Name ? `
+    <tr><td style="padding:6px 0;color:#999;vertical-align:top;">代表藝人 3</td>
+      <td style="padding:6px 0;">
+        <strong>${esc(artist3Name)}</strong>（${artist3Followers?.toLocaleString() || '-'} 粉）<br>
+        <a href="${esc(artist3Url || '#')}" style="color:#2E5BFF;font-size:12px;word-break:break-all;">${esc(artist3Url || '')}</a>
+      </td>
+    </tr>` : '';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>藝人／經紀公司合作方案 · 已收到您的申請</title>
+</head>
+<body style="margin:0;padding:0;background:#0A1628;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0A1628;padding:20px 0;">
+    <tr><td align="center">
+
+      <table width="620" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
+
+        <tr><td style="background:linear-gradient(135deg,#0A1628 0%,#1A3A99 50%,#F0C144 100%);padding:36px 32px 28px;text-align:center;">
+          <div style="color:#F0C144;font-size:11px;font-weight:800;letter-spacing:4px;margin-bottom:10px;">★ ARTIST / AGENCY PARTNERSHIP ★</div>
+          <div style="color:#ffffff;font-size:26px;font-weight:900;letter-spacing:2px;line-height:1.3;">
+            ✅ 已收到您的合作申請
+          </div>
+          <div style="color:#B8D4FF;font-size:13px;margin-top:8px;">抖音／TikTok 官方合作公會夥伴</div>
+        </td></tr>
+
+        <tr><td style="padding:32px 32px 16px;text-align:center;">
+          <div style="font-size:16px;color:#333;line-height:1.7;">
+            <strong style="color:#1A3A99;">${esc(contactName)}</strong>（${esc(contactTitle)}）您好，<br>
+            感謝 <strong style="color:#8B6914;">${esc(companyName)}</strong>（${esc(entityLabel)}）<br>
+            選擇與 JDI 脈動傳媒洽談合作方案！
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#1A3A9911,#F0C14411);border-radius:12px;padding:22px;">
+            <tr><td style="text-align:center;">
+              <div style="font-size:36px;margin-bottom:8px;">🤝</div>
+              <div style="font-size:18px;font-weight:800;color:#111;margin-bottom:6px;">3-7 個工作天內 BD 專人聯繫</div>
+              <div style="font-size:13px;color:#666;line-height:1.6;">
+                我們的商務開發團隊將於 <strong>7 個工作天內</strong>以 Email 或電話聯繫，<br>
+                安排一對一洽談合作細節與獨家條款。
+              </div>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 20px;">
+          <div style="background:linear-gradient(135deg,#0A162811,#F0C14411);border:1px solid #F0C14455;border-radius:12px;padding:18px;">
+            <div style="font-size:11px;color:#8B6914;letter-spacing:2px;font-weight:800;margin-bottom:10px;">★ 合作權益一覽 ★</div>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px;color:#333;line-height:1.9;">
+              <tr><td>①&nbsp;&nbsp;月扶持影片 <strong style="color:#8B6914;">5 隻</strong></td></tr>
+              <tr><td>②&nbsp;&nbsp;週直播間加熱 <strong style="color:#8B6914;">2 次</strong></td></tr>
+              <tr><td>③&nbsp;&nbsp;藝人保底 <strong style="color:#8B6914;">可談</strong></td></tr>
+              <tr><td>④&nbsp;&nbsp;面向直播平台：<strong style="color:#8B6914;">大陸抖音 & TikTok</strong></td></tr>
+            </table>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:8px 32px 16px;">
+          <div style="font-size:13px;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:12px;">📋 申請摘要</div>
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafafa;border-radius:12px;padding:20px;font-size:14px;color:#333;">
+            <tr><td style="padding:6px 0;color:#999;width:110px;">身份別</td><td style="padding:6px 0;font-weight:700;">${esc(entityLabel)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">單位名稱</td><td style="padding:6px 0;font-weight:700;color:#1A3A99;">${esc(companyName)}</td></tr>
+            ${taxId ? `<tr><td style="padding:6px 0;color:#999;">統編</td><td style="padding:6px 0;">${esc(taxId)}</td></tr>` : ''}
+            <tr><td style="padding:6px 0;color:#999;">聯絡人</td><td style="padding:6px 0;">${esc(contactName)}（${esc(contactTitle)}）</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">官網</td><td style="padding:6px 0;"><a href="${esc(website)}" style="color:#2E5BFF;word-break:break-all;">${esc(website)}</a></td></tr>
+            <tr><td style="padding:12px 0 6px;color:#999;border-top:1px solid #eee;">旗下規模</td><td style="padding:12px 0 6px;border-top:1px solid #eee;">${esc(AG_COUNT_LABELS[artistCount] || artistCount)}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">藝人類型</td><td style="padding:6px 0;">${artistTypesHtml}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;vertical-align:top;">經營平台</td><td style="padding:6px 0;">${platformsHtml}</td></tr>
+            <tr><td style="padding:12px 0 6px;color:#999;vertical-align:top;border-top:1px solid #eee;">代表藝人 1</td>
+              <td style="padding:12px 0 6px;border-top:1px solid #eee;">
+                <strong>${esc(artist1Name)}</strong>（${artist1Followers.toLocaleString()} 粉）<br>
+                <a href="${esc(artist1Url)}" style="color:#2E5BFF;font-size:12px;word-break:break-all;">${esc(artist1Url)}</a>
+              </td>
+            </tr>
+            ${artist2Html}
+            ${artist3Html}
+            <tr><td style="padding:12px 0 6px;color:#999;vertical-align:top;border-top:1px solid #eee;">期望合作面向</td><td style="padding:12px 0 6px;border-top:1px solid #eee;">${coopHtml}</td></tr>
+            <tr><td style="padding:6px 0;color:#999;">預計合作藝人</td><td style="padding:6px 0;">${esc(AG_COUNT_LABELS[coopArtistCount] || coopArtistCount)}</td></tr>
+            ${guaranteeBudget ? `<tr><td style="padding:6px 0;color:#999;">保底期待</td><td style="padding:6px 0;color:#8B6914;font-weight:700;">${esc(AG_BUDGET_LABELS[guaranteeBudget] || guaranteeBudget)}</td></tr>` : ''}
+            ${additionalInfo ? `<tr><td style="padding:6px 0;color:#999;vertical-align:top;">補充</td><td style="padding:6px 0;line-height:1.7;">${esc(additionalInfo).replace(/\n/g,'<br>')}</td></tr>` : ''}
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 24px;">
+          <div style="padding:16px;background:linear-gradient(135deg,#1A3A9908,#F0C14408);border-left:4px solid #1A3A99;border-radius:8px;font-size:13px;color:#333;line-height:1.7;">
+            💡 <strong>加速審核</strong><br>
+            若您有過往案例、成功合作紀錄、藝人媒體曝光資料，歡迎直接回覆此信附上補充資料，有助加速 BD 評估。
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:0 32px 32px;">
+          <div style="font-size:13px;color:#666;line-height:1.8;text-align:center;">
+            急件請直接聯絡：<br>
+            • LINE 官方：<a href="https://line.me/R/ti/p/@354ykfbp" style="color:#2E5BFF;">@354ykfbp</a><br>
+            • Email：<a href="mailto:pulsepop9@gmail.com" style="color:#2E5BFF;">pulsepop9@gmail.com</a>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:20px 32px;background:#0A1628;text-align:center;">
+          <div style="color:#F0C144;font-size:11px;font-weight:700;letter-spacing:3px;margin-bottom:6px;">★ ARTIST / AGENCY PARTNERSHIP ★</div>
+          <div style="color:#B8D4FF;font-size:11px;">JDI 脈動傳媒 · JDI PULSE MEDIA</div>
+          <div style="color:#666;font-size:10px;margin-top:4px;">抖音／TikTok 官方合作經紀公會</div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+
+export function renderAgencyNotifyEmail({
+  entityType, contactName, contactTitle, companyName, taxId, website,
+  phone, email, lineId,
+  artistCount, artistTypes, platforms,
+  artist1Name, artist1Url, artist1Followers,
+  artist2Name, artist2Url, artist2Followers,
+  artist3Name, artist3Url, artist3Followers,
+  cooperationAreas, coopArtistCount, guaranteeBudget, additionalInfo,
+  source, country, appId
+}) {
+  const entityLabel = AG_ENTITY_LABELS[entityType] || entityType;
+  const artistTypesText = artistTypes.map(t => AG_ARTIST_TYPE_LABELS[t] || t).join(' · ');
+  const platformsText = platforms.map(p => AG_PLATFORM_LABELS[p] || p).join(' · ');
+  const coopText = cooperationAreas.map(c => AG_COOP_LABELS[c] || c).join(' / ');
+
+  const artist2Html = artist2Name ? `
+    <div style="margin-top:10px;padding:10px;background:#fff;border:1px solid #eee;border-radius:8px;">
+      <strong>② ${esc(artist2Name)}</strong>（${artist2Followers?.toLocaleString() || '-'} 粉）<br>
+      <a href="${esc(artist2Url || '#')}" style="color:#1A3A99;font-size:12px;word-break:break-all;" target="_blank">${esc(artist2Url || '')}</a>
+    </div>` : '';
+  const artist3Html = artist3Name ? `
+    <div style="margin-top:10px;padding:10px;background:#fff;border:1px solid #eee;border-radius:8px;">
+      <strong>③ ${esc(artist3Name)}</strong>（${artist3Followers?.toLocaleString() || '-'} 粉）<br>
+      <a href="${esc(artist3Url || '#')}" style="color:#1A3A99;font-size:12px;word-break:break-all;" target="_blank">${esc(artist3Url || '')}</a>
+    </div>` : '';
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤝 新藝人／經紀公司合作申請</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,'Segoe UI','PingFang TC','Noto Sans TC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f7;padding:20px 0;">
+    <tr><td align="center">
+      <table width="660" cellpadding="0" cellspacing="0" border="0" style="max-width:660px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+
+        <tr><td style="background:linear-gradient(135deg,#0A1628,#1A3A99);padding:20px 24px;color:#fff;">
+          <div style="font-size:11px;letter-spacing:3px;color:#F0C144;font-weight:800;">★ AGENCY · 新申請 #${appId || '-'}</div>
+          <div style="font-size:20px;font-weight:800;margin-top:4px;">
+            ${esc(entityLabel)} · <span style="color:#F0C144;">${esc(companyName)}</span>
+          </div>
+          <div style="font-size:12px;color:#B8D4FF;margin-top:4px;">
+            ${esc(contactName)}（${esc(contactTitle)}）· 旗下 ${esc(AG_COUNT_LABELS[artistCount] || artistCount)}
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:20px 24px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;color:#222;">
+            <tr><td style="padding:6px 0;color:#777;width:110px;">單位名稱</td><td style="padding:6px 0;font-weight:700;color:#1A3A99;">${esc(companyName)}</td></tr>
+            ${taxId ? `<tr><td style="padding:6px 0;color:#777;">統編</td><td style="padding:6px 0;">${esc(taxId)}</td></tr>` : ''}
+            <tr><td style="padding:6px 0;color:#777;">官網</td><td style="padding:6px 0;"><a href="${esc(website)}" style="color:#2E5BFF;" target="_blank">${esc(website)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#777;">聯絡人</td><td style="padding:6px 0;">${esc(contactName)}（${esc(contactTitle)}）</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">電話</td><td style="padding:6px 0;"><a href="tel:${esc(phone)}" style="color:#111;font-weight:700;">${esc(phone)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#777;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#1A3A99;">${esc(email)}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#777;">LINE</td><td style="padding:6px 0;font-weight:700;color:#06C755;">${esc(lineId)}</td></tr>
+            <tr><td style="padding:12px 0 6px;color:#777;border-top:1px solid #eee;">藝人類型</td><td style="padding:12px 0 6px;border-top:1px solid #eee;">${esc(artistTypesText)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">經營平台</td><td style="padding:6px 0;">${esc(platformsText)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">期望合作</td><td style="padding:6px 0;color:#8B6914;font-weight:700;">${esc(coopText)}</td></tr>
+            <tr><td style="padding:6px 0;color:#777;">預計合作</td><td style="padding:6px 0;">${esc(AG_COUNT_LABELS[coopArtistCount] || coopArtistCount)}</td></tr>
+            ${guaranteeBudget ? `<tr><td style="padding:6px 0;color:#777;">保底期待</td><td style="padding:6px 0;color:#8B6914;font-weight:700;">${esc(AG_BUDGET_LABELS[guaranteeBudget] || guaranteeBudget)}</td></tr>` : ''}
+          </table>
+
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:10px;">▶ 代表藝人</div>
+            <div style="padding:10px;background:#fff;border:1px solid #eee;border-radius:8px;">
+              <strong>① ${esc(artist1Name)}</strong>（${artist1Followers.toLocaleString()} 粉）<br>
+              <a href="${esc(artist1Url)}" style="color:#1A3A99;font-size:12px;word-break:break-all;" target="_blank">${esc(artist1Url)}</a>
+            </div>
+            ${artist2Html}
+            ${artist3Html}
+          </div>
+
+          ${additionalInfo ? `
+          <div style="margin:16px 0;padding:14px;background:#fafafa;border-radius:10px;">
+            <div style="font-size:11px;color:#777;letter-spacing:1px;margin-bottom:6px;">▶ 補充說明</div>
+            <div style="font-size:13px;line-height:1.7;color:#333;">${esc(additionalInfo).replace(/\n/g,'<br>')}</div>
+          </div>` : ''}
+
+          <div style="margin-top:20px;padding:12px;background:#0A1628;border-radius:8px;">
+            <div style="font-size:12px;color:#B8D4FF;line-height:1.6;">
+              ⚡ <strong style="color:#F0C144;">BD 於 7 工作天內聯繫</strong><br>
+              回覆此信 = 直接 reply 給聯絡人（Reply-To 已設定）
+            </div>
+          </div>
+
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+            <tr>
+              <td width="25%" style="padding:0 3px 0 0;">
+                <a href="mailto:${esc(email)}" style="display:block;padding:12px 4px;background:#1A3A99;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">📧 回信</a>
+              </td>
+              <td width="25%" style="padding:0 3px;">
+                <a href="tel:${esc(phone)}" style="display:block;padding:12px 4px;background:#111;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">📞 撥打</a>
+              </td>
+              <td width="25%" style="padding:0 3px;">
+                <a href="https://line.me/R/ti/p/${esc(lineId.replace(/^@/, '~'))}" style="display:block;padding:12px 4px;background:#06C755;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">💬 LINE</a>
+              </td>
+              <td width="25%" style="padding:0 0 0 3px;">
+                <a href="${esc(website)}" style="display:block;padding:12px 4px;background:#F0C144;color:#000;text-align:center;text-decoration:none;border-radius:8px;font-weight:700;font-size:12px;">🌐 官網</a>
+              </td>
+            </tr>
+          </table>
+
+        </td></tr>
+
+        <tr><td style="padding:14px 24px;background:#fafafa;text-align:center;">
+          <div style="font-size:11px;color:#aaa;">
+            Agency Partnership 系統 · JDI 脈動傳媒 · Source: ${esc(source || 'agency-partnership')} · ${esc(country || '--')}
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
