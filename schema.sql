@@ -227,3 +227,52 @@ CREATE INDEX IF NOT EXISTS idx_venue_email      ON venue_applications (email);
 CREATE INDEX IF NOT EXISTS idx_venue_city       ON venue_applications (city);
 CREATE INDEX IF NOT EXISTS idx_venue_mode       ON venue_applications (cooperation_mode);
 CREATE INDEX IF NOT EXISTS idx_venue_created    ON venue_applications (created_at);
+
+
+-- ============================================================
+-- Mission Star 練習生培訓計畫 · 造星任務 (mission-star/)
+-- 性別不限 · 1996-2010 出生 · 持續徵選 · 一人僅一次
+-- ============================================================
+CREATE TABLE IF NOT EXISTS mission_star_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 基本資料
+  chinese_name TEXT NOT NULL,                 -- 中文姓名
+  stage_name TEXT NOT NULL,                   -- 英文/藝名
+  birth_year INTEGER NOT NULL,                -- 出生年份 (1996-2010)
+  birth_month INTEGER NOT NULL,               -- 出生月份
+  birth_day INTEGER NOT NULL,                 -- 出生日
+  gender TEXT NOT NULL,                       -- male / female / other
+  nationality TEXT NOT NULL,                  -- tw / cn / hk / mo / sg / my / jp / kr / us / other
+  height_cm INTEGER NOT NULL,                 -- 身高（cm）
+  weight_kg INTEGER NOT NULL,                 -- 體重（kg）
+  -- 聯絡
+  phone TEXT NOT NULL,                        -- 手機
+  email TEXT NOT NULL,                        -- Email
+  ig_handle TEXT NOT NULL,                    -- IG 帳號（主要觀察）
+  city TEXT NOT NULL,                         -- 居住城市
+  -- 徵選資料
+  audition_category TEXT NOT NULL,            -- vocal / rap / dance / other
+  works_url TEXT NOT NULL,                    -- 作品連結（YouTube/IG/TikTok/Drive）
+  experience TEXT,                            -- 相關經歷（選填）
+  additional_info TEXT,                       -- 其他想補充（選填）
+  photos_url TEXT NOT NULL,                   -- 3 張照片雲端連結（正面/側面/全身）
+  -- 同意
+  consent INTEGER NOT NULL DEFAULT 1,
+  -- Meta
+  source TEXT,                                -- mission-star-page
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,                               -- CF-IPCountry
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0,
+  -- 審核狀態（admin 用）
+  status TEXT NOT NULL DEFAULT 'pending',     -- pending / reviewing / shortlisted / rejected / signed
+  review_note TEXT                            -- 內部審核備註
+);
+
+-- 防刷用的 index（email + phone 任一命中即視為重複）
+CREATE INDEX IF NOT EXISTS idx_ms_email      ON mission_star_applications (email);
+CREATE INDEX IF NOT EXISTS idx_ms_phone      ON mission_star_applications (phone);
+CREATE INDEX IF NOT EXISTS idx_ms_category   ON mission_star_applications (audition_category);
+CREATE INDEX IF NOT EXISTS idx_ms_status     ON mission_star_applications (status);
+CREATE INDEX IF NOT EXISTS idx_ms_created    ON mission_star_applications (created_at);
