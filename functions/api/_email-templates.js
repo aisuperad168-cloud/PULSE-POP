@@ -1839,3 +1839,239 @@ export function renderAgencyNotifyEmail({
 </body>
 </html>`;
 }
+
+// ============================================================
+// IDOL GROUP · 脈動直播男女團徵選 Email 模板
+// 風格：暗紫 (#1A0B2E / #2D1B5E) + 霓虹粉 (#FF2D9A) + 金色線框 (#FFD700)
+// K-POP 偶像舞台燈光感
+// ============================================================
+
+const IG_GENDER_LABELS = { male: '👦 男生', female: '👧 女生', other: '🌈 其他' };
+const IG_TALENT_LABELS = {
+  dance: '💃 舞蹈', vocal: '🎤 歌唱', host: '🎙️ 主持', acting: '🎭 表演',
+  instrument: '🎹 樂器', rap: '🎧 說唱 Rap', other: '✨ 其他'
+};
+const IG_TRAINING_YEARS_LABELS = {
+  none: '尚無正式訓練', under_1: '1 年以下', '1_3': '1 ~ 3 年',
+  '3_5': '3 ~ 5 年', '5_plus': '5 年以上'
+};
+const IG_AVAILABILITY_LABELS = { fulltime: '🔥 全職加入', parttime: '💼 兼職為主' };
+const IG_PREFERRED_LABELS = {
+  boy: '👦 男團', girl: '👧 女團', mixed: '🌈 男女混合團', any: '✨ 皆可'
+};
+
+export function renderIdolConfirmEmail(d) {
+  const birth = `${d.birthYear}/${String(d.birthMonth).padStart(2,'0')}/${String(d.birthDay).padStart(2,'0')}`;
+  const age = new Date().getFullYear() - d.birthYear;
+  const genderLabel = IG_GENDER_LABELS[d.gender] || d.gender;
+  const talents = (d.mainTalents || []).map(t => IG_TALENT_LABELS[t] || t).join('、');
+  const trainingYears = IG_TRAINING_YEARS_LABELS[d.trainingYears] || d.trainingYears;
+  const availabilityLabel = IG_AVAILABILITY_LABELS[d.availability] || d.availability;
+  const preferredLabel = IG_PREFERRED_LABELS[d.preferredGroup] || d.preferredGroup;
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JDI 脈動直播男女團 · 徵選申請確認</title>
+</head>
+<body style="margin:0;padding:0;background:#0A0514;font-family:'Noto Sans TC',-apple-system,'Segoe UI',sans-serif;color:#F0E6FF;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0A0514;padding:40px 16px;">
+  <tr><td align="center">
+    <table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;background:linear-gradient(180deg,#1A0B2E 0%,#2D1B5E 100%);border:1px solid rgba(255,45,154,0.3);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(255,45,154,0.15);">
+
+      <!-- Header -->
+      <tr><td style="background:linear-gradient(135deg,#FF2D9A 0%,#9B30FF 50%,#FFD700 100%);padding:40px 30px;text-align:center;">
+        <div style="color:#fff;font-size:12px;letter-spacing:4px;font-weight:600;margin-bottom:12px;">★ PULSE IDOL GROUP · AUDITION ★</div>
+        <h1 style="color:#fff;font-size:28px;margin:0;letter-spacing:2px;font-weight:900;text-shadow:0 2px 10px rgba(0,0,0,0.3);">脈動直播男女團</h1>
+        <p style="color:rgba(255,255,255,0.95);font-size:14px;margin:10px 0 0;letter-spacing:1px;">從台灣出發，走向國際舞台</p>
+      </td></tr>
+
+      <!-- Greeting -->
+      <tr><td style="padding:36px 30px 20px;">
+        <h2 style="color:#FFD700;font-size:22px;margin:0 0 10px;font-weight:800;">${esc(d.stageName)} 您好 ✨</h2>
+        <p style="color:#F0E6FF;font-size:15px;line-height:1.8;margin:0;">我們已收到您的 <strong style="color:#FF2D9A;">脈動直播男女團</strong> 徵選申請！專人將於 <strong style="color:#FFD700;">5 個工作天內</strong>進行初步書審，並透過 LINE 或 Email 通知結果。</p>
+      </td></tr>
+
+      <!-- 權益一覽 (4 cards) -->
+      <tr><td style="padding:10px 30px 30px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td width="50%" style="padding:6px;">
+              <div style="background:rgba(255,45,154,0.08);border:1px solid rgba(255,45,154,0.3);border-radius:8px;padding:16px;text-align:center;">
+                <div style="font-size:28px;line-height:1;margin-bottom:6px;">🎤</div>
+                <div style="color:#FF2D9A;font-weight:700;font-size:14px;margin-bottom:4px;">組團出道</div>
+                <div style="color:#C9B8E8;font-size:11px;line-height:1.5;">直接組團<br/>即戰力入列</div>
+              </div>
+            </td>
+            <td width="50%" style="padding:6px;">
+              <div style="background:rgba(155,48,255,0.1);border:1px solid rgba(155,48,255,0.3);border-radius:8px;padding:16px;text-align:center;">
+                <div style="font-size:28px;line-height:1;margin-bottom:6px;">💃</div>
+                <div style="color:#B666FF;font-weight:700;font-size:14px;margin-bottom:4px;">專業培訓</div>
+                <div style="color:#C9B8E8;font-size:11px;line-height:1.5;">舞蹈歌唱<br/>表演主持密訓</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td width="50%" style="padding:6px;">
+              <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:8px;padding:16px;text-align:center;">
+                <div style="font-size:28px;line-height:1;margin-bottom:6px;">🎬</div>
+                <div style="color:#FFD700;font-weight:700;font-size:14px;margin-bottom:4px;">直播+舞台</div>
+                <div style="color:#C9B8E8;font-size:11px;line-height:1.5;">月月開播<br/>季季上舞台</div>
+              </div>
+            </td>
+            <td width="50%" style="padding:6px;">
+              <div style="background:rgba(37,244,238,0.08);border:1px solid rgba(37,244,238,0.3);border-radius:8px;padding:16px;text-align:center;">
+                <div style="font-size:28px;line-height:1;margin-bottom:6px;">🌏</div>
+                <div style="color:#25F4EE;font-weight:700;font-size:14px;margin-bottom:4px;">國際舞台</div>
+                <div style="color:#C9B8E8;font-size:11px;line-height:1.5;">台灣出發<br/>日韓陸發展</div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- 申請摘要 -->
+      <tr><td style="padding:0 30px 20px;">
+        <div style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:20px;">
+          <h3 style="color:#FFD700;font-size:14px;margin:0 0 14px;letter-spacing:1px;">📋 您的申請資料</h3>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="color:#F0E6FF;font-size:13px;line-height:1.9;">
+            <tr><td width="30%" style="color:#B99DE8;">本名／藝名</td><td style="color:#fff;">${esc(d.realName)}／<strong>${esc(d.stageName)}</strong></td></tr>
+            <tr><td style="color:#B99DE8;">性別・年齡</td><td style="color:#fff;">${genderLabel}・${age} 歲（${birth}）</td></tr>
+            <tr><td style="color:#B99DE8;">身高・體重</td><td style="color:#fff;">${d.heightCm} cm · ${d.weightKg} kg</td></tr>
+            <tr><td style="color:#B99DE8;">居住縣市</td><td style="color:#fff;">${esc(d.city)}</td></tr>
+            <tr><td style="color:#B99DE8;">主修專長</td><td style="color:#FF2D9A;font-weight:700;">${talents}</td></tr>
+            <tr><td style="color:#B99DE8;">訓練經驗</td><td style="color:#fff;">${trainingYears}${d.formalTraining ? '（受過正式培訓）' : ''}</td></tr>
+            <tr><td style="color:#B99DE8;">加入意願</td><td style="color:#fff;">${availabilityLabel} · 偏好：${preferredLabel}</td></tr>
+            <tr><td style="color:#B99DE8;">配合度</td><td style="color:#fff;">密集培訓 ${d.intensiveOk ? '✅ 可' : '❌ 否'}  ·  國際行程 ${d.internationalOk ? '✅ 可' : '❌ 否'}</td></tr>
+          </table>
+        </div>
+      </td></tr>
+
+      <!-- 下一步 CTA -->
+      <tr><td style="padding:10px 30px 30px;">
+        <div style="background:linear-gradient(135deg,rgba(255,45,154,0.15),rgba(255,215,0,0.08));border:1px solid #FF2D9A;border-radius:10px;padding:22px;text-align:center;">
+          <div style="color:#FFD700;font-size:14px;font-weight:700;letter-spacing:1px;margin-bottom:10px;">🔥 想加速審核？</div>
+          <p style="color:#F0E6FF;font-size:13px;line-height:1.75;margin:0 0 16px;">直接加 LINE 聯繫我們、傳送更多作品影片<br/>或預約線下面試時段。</p>
+          <a href="https://line.me/R/ti/p/@354ykfbp" style="display:inline-block;padding:12px 28px;background:#06C755;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;font-size:14px;letter-spacing:1px;">💬 加入 LINE @354ykfbp</a>
+        </div>
+      </td></tr>
+
+      <!-- Footer -->
+      <tr><td style="background:#0A0514;padding:24px 30px;text-align:center;border-top:1px solid rgba(255,45,154,0.2);">
+        <div style="color:#B99DE8;font-size:11px;line-height:1.7;letter-spacing:0.5px;">
+          ★ 2026 PULSE IDOL GROUP AUDITION ★<br/>
+          JDI 脈動傳媒 · <a href="https://jdi-pulse.com/idol-group/" style="color:#FFD700;text-decoration:none;">jdi-pulse.com/idol-group</a>
+        </div>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
+}
+
+export function renderIdolNotifyEmail(d) {
+  const birth = `${d.birthYear}/${String(d.birthMonth).padStart(2,'0')}/${String(d.birthDay).padStart(2,'0')}`;
+  const age = new Date().getFullYear() - d.birthYear;
+  const genderLabel = IG_GENDER_LABELS[d.gender] || d.gender;
+  const talents = (d.mainTalents || []).map(t => IG_TALENT_LABELS[t] || t).join('、');
+  const trainingYears = IG_TRAINING_YEARS_LABELS[d.trainingYears] || d.trainingYears;
+  const availabilityLabel = IG_AVAILABILITY_LABELS[d.availability] || d.availability;
+  const preferredLabel = IG_PREFERRED_LABELS[d.preferredGroup] || d.preferredGroup;
+
+  const safePhone = d.phone;
+  const phoneLink = safePhone ? `tel:+886${safePhone.replace(/^0/, '')}` : '#';
+  const lineRaw = (d.lineId || '').replace(/^@/, '');
+  const lineLink = lineRaw ? `https://line.me/R/ti/p/@${lineRaw}` : '#';
+
+  const workList = [d.work1Url, d.work2Url, d.work3Url].filter(Boolean);
+  const photoList = [d.photo1Url, d.photo2Url, d.photo3Url].filter(Boolean);
+
+  return `<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head><meta charset="UTF-8"><title>🎤 新男女團徵選申請 · ${esc(d.stageName)}</title></head>
+<body style="margin:0;padding:0;background:#0A0514;font-family:'Noto Sans TC',-apple-system,sans-serif;color:#F0E6FF;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="padding:30px 16px;">
+  <tr><td align="center">
+    <table role="presentation" width="680" cellpadding="0" cellspacing="0" border="0" style="max-width:680px;background:#1A0B2E;border:1px solid rgba(255,45,154,0.3);border-radius:12px;overflow:hidden;">
+
+      <!-- Header -->
+      <tr><td style="background:linear-gradient(135deg,#FF2D9A 0%,#9B30FF 100%);padding:20px 24px;color:#fff;">
+        <div style="font-size:11px;letter-spacing:3px;opacity:0.95;">🎤 NEW IDOL GROUP APPLICATION</div>
+        <div style="font-size:19px;font-weight:800;margin-top:6px;">
+          ${esc(d.stageName)}（${esc(d.realName)}）· ${genderLabel.replace(/[^\u4e00-\u9fa5a-zA-Z]/g,'')} · ${age} 歲
+        </div>
+      </td></tr>
+
+      <!-- 一鍵 CTA -->
+      <tr><td style="padding:16px 24px 10px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td width="25%" style="padding:3px;">
+              <a href="mailto:${esc(d.email)}" style="display:block;background:#FF2D9A;color:#fff;text-align:center;padding:10px 4px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;">📧 回信</a>
+            </td>
+            <td width="25%" style="padding:3px;">
+              <a href="${phoneLink}" style="display:block;background:#9B30FF;color:#fff;text-align:center;padding:10px 4px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;">📞 撥打</a>
+            </td>
+            <td width="25%" style="padding:3px;">
+              <a href="${lineLink}" style="display:block;background:#06C755;color:#fff;text-align:center;padding:10px 4px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;">💬 LINE</a>
+            </td>
+            <td width="25%" style="padding:3px;">
+              <a href="${esc(d.work1Url)}" style="display:block;background:#FFD700;color:#1A0B2E;text-align:center;padding:10px 4px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;">🎬 作品</a>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- 完整資料 -->
+      <tr><td style="padding:10px 24px 20px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="color:#F0E6FF;font-size:13px;line-height:1.9;background:rgba(0,0,0,0.25);border-radius:8px;padding:16px;">
+          <tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">👤 基本資料</td></tr>
+          <tr><td width="24%" style="color:#B99DE8;padding-top:8px;">本名 / 藝名</td><td style="color:#fff;padding-top:8px;">${esc(d.realName)} / <strong style="color:#FF2D9A;">${esc(d.stageName)}</strong></td></tr>
+          <tr><td style="color:#B99DE8;">性別</td><td style="color:#fff;">${genderLabel}</td></tr>
+          <tr><td style="color:#B99DE8;">生日 / 年齡</td><td style="color:#fff;">${birth} · ${age} 歲</td></tr>
+          <tr><td style="color:#B99DE8;">身高 / 體重</td><td style="color:#fff;">${d.heightCm} cm · ${d.weightKg} kg</td></tr>
+          <tr><td style="color:#B99DE8;">居住</td><td style="color:#fff;">${esc(d.city)}</td></tr>
+          <tr><td style="color:#B99DE8;">手機</td><td style="color:#fff;">${esc(d.phone)}</td></tr>
+          <tr><td style="color:#B99DE8;">Email</td><td style="color:#fff;">${esc(d.email)}</td></tr>
+          <tr><td style="color:#B99DE8;">LINE</td><td style="color:#fff;">${esc(d.lineId)}</td></tr>
+
+          <tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-top:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">💃 專業背景</td></tr>
+          <tr><td style="color:#B99DE8;padding-top:8px;">主修專長</td><td style="color:#FF2D9A;font-weight:700;padding-top:8px;">${talents}</td></tr>
+          ${d.subTalents ? `<tr><td style="color:#B99DE8;">副項</td><td style="color:#fff;">${esc(d.subTalents)}</td></tr>` : ''}
+          <tr><td style="color:#B99DE8;">訓練年資</td><td style="color:#fff;">${trainingYears}</td></tr>
+          <tr><td style="color:#B99DE8;">正式培訓</td><td style="color:#fff;">${d.formalTraining ? '✅ 是' : '❌ 否'}${d.trainingDetail ? '｜' + esc(d.trainingDetail) : ''}</td></tr>
+
+          <tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-top:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">🎬 作品連結（${workList.length}）</td></tr>
+          ${workList.map((u,i) => `<tr><td style="color:#B99DE8;padding-top:${i===0?8:0}px;">作品 ${i+1}</td><td style="padding-top:${i===0?8:0}px;"><a href="${esc(u)}" style="color:#25F4EE;word-break:break-all;">${esc(u)}</a></td></tr>`).join('')}
+
+          <tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-top:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">📸 照片連結（${photoList.length}）</td></tr>
+          ${photoList.map((u,i) => `<tr><td style="color:#B99DE8;padding-top:${i===0?8:0}px;">照片 ${i+1}</td><td style="padding-top:${i===0?8:0}px;"><a href="${esc(u)}" style="color:#25F4EE;word-break:break-all;">${esc(u)}</a></td></tr>`).join('')}
+
+          ${d.appearanceNote ? `<tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-top:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">✨ 外型自述</td></tr><tr><td colspan="2" style="color:#fff;padding-top:8px;white-space:pre-wrap;">${esc(d.appearanceNote)}</td></tr>` : ''}
+
+          <tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-top:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">🔥 加入意願</td></tr>
+          <tr><td style="color:#B99DE8;padding-top:8px;">投入度</td><td style="color:#fff;padding-top:8px;">${availabilityLabel}</td></tr>
+          <tr><td style="color:#B99DE8;">性別團偏好</td><td style="color:#fff;">${preferredLabel}</td></tr>
+          <tr><td style="color:#B99DE8;">密集培訓</td><td style="color:#fff;">${d.intensiveOk ? '✅ 可配合' : '❌ 無法'}</td></tr>
+          <tr><td style="color:#B99DE8;">國際行程</td><td style="color:#fff;">${d.internationalOk ? '✅ 可配合（大陸／日韓）' : '❌ 僅國內'}</td></tr>
+
+          ${d.additionalInfo ? `<tr><td colspan="2" style="color:#FFD700;font-weight:700;padding-top:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.15);">📝 補充</td></tr><tr><td colspan="2" style="color:#fff;padding-top:8px;white-space:pre-wrap;">${esc(d.additionalInfo)}</td></tr>` : ''}
+        </table>
+      </td></tr>
+
+      <!-- Meta -->
+      <tr><td style="padding:0 24px 20px;color:#8A7BB2;font-size:11px;line-height:1.75;">
+        🆔 Application #${d.appId || 'N/A'} · 🌐 ${d.country || '-'} · 來源：${esc(d.source)}
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
+}
+
