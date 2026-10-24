@@ -22,6 +22,7 @@ import * as venuesHandler from './functions/api/venues-submit.js';
 import * as missionStarHandler from './functions/api/mission-star-submit.js';
 import * as influencerPartnershipHandler from './functions/api/influencer-partnership-submit.js';
 import * as agencyPartnershipHandler from './functions/api/agency-partnership-submit.js';
+import * as idolGroupHandler from './functions/api/idol-group-submit.js';
 
 // 主播端簽約系統 (/sign/*)
 import * as signSubmit from './functions/api/sign/submit.js';
@@ -90,6 +91,7 @@ const API_ROUTES = {
   '/api/mission-star-submit': missionStarHandler,
   '/api/influencer-partnership-submit': influencerPartnershipHandler,
   '/api/agency-partnership-submit': agencyPartnershipHandler,
+  '/api/idol-group-submit': idolGroupHandler,
 
   // 主播端簽約系統
   '/api/sign/submit': signSubmit,
@@ -213,6 +215,10 @@ export default {
       '/agency':      '/agency-partnership/',
       '/artist':      '/agency-partnership/',
       '/b2b':         '/agency-partnership/',
+      // 2026 脈動直播男女團徵選
+      '/idol':        '/idol-group/',
+      '/group':       '/idol-group/',
+      '/boygirl':     '/idol-group/',
     };
     if (SHORT_URLS[path]) {
       return Response.redirect('https://jdi-pulse.com' + SHORT_URLS[path] + url.search, 301);

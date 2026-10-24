@@ -390,3 +390,70 @@ CREATE INDEX IF NOT EXISTS idx_ag_tax_id     ON agency_applications (tax_id);
 CREATE INDEX IF NOT EXISTS idx_ag_entity     ON agency_applications (entity_type);
 CREATE INDEX IF NOT EXISTS idx_ag_status     ON agency_applications (status);
 CREATE INDEX IF NOT EXISTS idx_ag_created    ON agency_applications (created_at);
+
+
+-- ============================================================
+-- idol_group_applications: 脈動直播男女團徵選 (直接選團員)
+-- 從台灣出發，走向國際舞台
+-- 年齡 18-35 歲 / 男女生皆可 / 直接組團出道，立刻接直播+舞台
+-- 防刷：Email + 手機 任一命中即拒
+-- ============================================================
+CREATE TABLE IF NOT EXISTS idol_group_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  -- 基本資料
+  real_name TEXT NOT NULL,                    -- 本名
+  stage_name TEXT NOT NULL,                   -- 藝名／暱稱
+  gender TEXT NOT NULL,                       -- male / female / other
+  birth_year INTEGER NOT NULL,
+  birth_month INTEGER NOT NULL,
+  birth_day INTEGER NOT NULL,
+  height_cm INTEGER NOT NULL,                 -- 身高 cm
+  weight_kg INTEGER NOT NULL,                 -- 體重 kg
+  city TEXT NOT NULL,                         -- 居住縣市
+  -- 聯絡方式
+  phone TEXT NOT NULL,
+  email TEXT NOT NULL,
+  line_id TEXT NOT NULL,
+  -- 專業背景
+  main_talents TEXT NOT NULL,                 -- JSON array ["dance","vocal","host","acting","instrument","rap","other"]
+  sub_talents TEXT,                           -- 副項（文字補充）
+  training_years TEXT NOT NULL,               -- none / under_1 / 1_3 / 3_5 / 5_plus
+  formal_training INTEGER NOT NULL DEFAULT 0, -- 是否受過正式培訓 (0/1)
+  training_detail TEXT,                       -- 培訓機構／科系（選填）
+  -- 作品連結（最多 3 筆）
+  work1_url TEXT NOT NULL,                    -- 代表作 1
+  work2_url TEXT,
+  work3_url TEXT,
+  -- 照片連結（最多 3 筆）
+  photo1_url TEXT NOT NULL,                   -- 全身照 or 近照 1（必填）
+  photo2_url TEXT,
+  photo3_url TEXT,
+  -- 外型自述
+  appearance_note TEXT,                       -- 身材／外型自述
+  -- 加入意願
+  availability TEXT NOT NULL,                 -- fulltime / parttime
+  intensive_ok INTEGER NOT NULL DEFAULT 0,    -- 可否配合密集培訓 (0/1)
+  international_ok INTEGER NOT NULL DEFAULT 0, -- 可否配合國際行程 (0/1)
+  preferred_group TEXT NOT NULL,              -- boy / girl / mixed / any
+  -- 補充
+  additional_info TEXT,
+  -- 同意
+  consent INTEGER NOT NULL DEFAULT 1,
+  -- Meta
+  source TEXT,
+  ip TEXT,
+  user_agent TEXT,
+  country TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now', 'utc')),
+  notified INTEGER NOT NULL DEFAULT 0,
+  -- 審核狀態
+  status TEXT NOT NULL DEFAULT 'pending',     -- pending / reviewing / interview / accepted / rejected
+  review_note TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_ig_email       ON idol_group_applications (email);
+CREATE INDEX IF NOT EXISTS idx_ig_phone       ON idol_group_applications (phone);
+CREATE INDEX IF NOT EXISTS idx_ig_gender      ON idol_group_applications (gender);
+CREATE INDEX IF NOT EXISTS idx_ig_preferred   ON idol_group_applications (preferred_group);
+CREATE INDEX IF NOT EXISTS idx_ig_status      ON idol_group_applications (status);
+CREATE INDEX IF NOT EXISTS idx_ig_created     ON idol_group_applications (created_at);
