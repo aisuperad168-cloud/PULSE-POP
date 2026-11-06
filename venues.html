@@ -1362,8 +1362,8 @@ a { color: inherit; text-decoration: none; }
             <input type="email" id="v-email" name="email" required maxlength="80" placeholder="your@email.com" />
           </div>
           <div class="v-field">
-            <label for="v-lineId">LINE ID <span style="color:#8A8A99;font-size:12px">（選填，加快聯繫）</span></label>
-            <input type="text" id="v-lineId" name="lineId" maxlength="40" placeholder="line_id_here" />
+            <label for="v-lineId">LINE ID <span style="color:#FF4FA3">*</span></label>
+            <input type="text" id="v-lineId" name="lineId" required maxlength="40" placeholder="line_id_here" />
           </div>
         </div>
 
@@ -1748,7 +1748,7 @@ a { color: inherit; text-decoration: none; }
     };
 
     // 前端最小驗證
-    if (!payload.name || !payload.email || !payload.phone || !payload.city || !payload.district ||
+    if (!payload.name || !payload.email || !payload.phone || !payload.lineId || !payload.city || !payload.district ||
         !payload.spaceSize || !payload.spaceType || !payload.wifiSpeed || !payload.cooperationMode){
       showMsg('⚠️ 請完整填寫必填欄位（標記 * 的項目）', 'error');
       return;

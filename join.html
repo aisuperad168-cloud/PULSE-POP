@@ -1180,8 +1180,8 @@
             <input type="email" id="jf-email" name="email" placeholder="you@example.com" required />
           </div>
           <div>
-            <label for="jf-line">LINE ID（選填）</label>
-            <input type="text" id="jf-line" name="lineId" placeholder="@youraccount" />
+            <label for="jf-line">LINE ID<span style="color:#FF4FA3">*</span></label>
+            <input type="text" id="jf-line" name="lineId" required maxlength="50" placeholder="@youraccount" />
           </div>
         </div>
 
@@ -1468,6 +1468,7 @@
       if (!data.name) return showMsg('請填寫你的名字 / 暱稱', false);
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return showMsg('請填寫正確的 Email 格式', false);
       if (!data.phone) return showMsg('請填寫聯絡電話', false);
+      if (!form.lineId.value.trim()) return showMsg('請填寫 LINE ID（方便一對一聯繫）', false);
       if (!form.experience.value) return showMsg('請選擇你的直播經驗', false);
       if (!data.consent) return showMsg('請勾選同意隱私條款', false);
 

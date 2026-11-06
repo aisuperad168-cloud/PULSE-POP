@@ -139,10 +139,10 @@ export async function onRequestPost({ request, env }) {
   } = payload || {};
 
   // 2. Validate required fields
-  if (!name || !email || !phone || !city || !spaceSize || !spaceType || !wifiSpeed || !cooperationMode) {
+  if (!name || !email || !phone || !lineId || !city || !spaceSize || !spaceType || !wifiSpeed || !cooperationMode) {
     return json({
       error: 'MISSING_FIELDS',
-      message: '缺少必要欄位（姓名 / Email / 電話 / 縣市 / 空間大小 / 空間類型 / Wi-Fi 速度 / 合作模式）'
+      message: '缺少必要欄位（姓名 / Email / 電話 / LINE ID / 縣市 / 空間大小 / 空間類型 / Wi-Fi 速度 / 合作模式）'
     }, 400);
   }
 
