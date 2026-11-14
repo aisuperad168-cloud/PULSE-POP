@@ -338,7 +338,7 @@ function buildSubmittedEmail({ contractNo, entityName, partyType, years, startDa
       </table>
 
       <div style="background: #fff3cd; padding: 14px 16px; border-radius: 6px; margin: 20px 0; font-size: 13px; color: #856404; line-height: 1.6;">
-        <strong>📋 下一步：</strong> JDI 執行長 Jack 會在 3 個工作天內完成審核，審核完成後將自動蓋上甲方簽名章，並將完整合約 PDF 寄送給您。TikTok 平台任務、獎勵、扶持等附約將另行提供。
+        <strong>📋 下一步：</strong> JDI 執行長 Jack 會在 3 個工作天內完成審核，審核完成後將自動蓋上甲方簽名章，並將完整合約 PDF 寄送給您。各合作平台（TikTok、抖音大陸外區版、17Live 等）之平台任務、獎勵、扶持等附約將另行提供。
       </div>
 
       <div style="text-align: center; margin: 28px 0 12px;">

@@ -177,7 +177,7 @@ function buildApprovedEmail({ contractNo, entityName, partyType, approvedAt, sta
         </table>
       </div>
       <p style="color: #555; font-size: 14px; line-height: 1.7;">
-        主約已生效。TikTok 平台任務、獎勵、扶持等相關附約，甲方將於後續另行以 Email 或通訊軟體提供。
+        主約已生效。各合作平台（TikTok、抖音大陸外區版、17Live 等）之平台任務、獎勵、扶持等相關附約，甲方將於後續另行以 Email 或通訊軟體提供。
       </p>
       <div style="text-align: center; margin: 28px 0 12px;">
         <a href="${viewLink}" style="display: inline-block; background: #6366f1; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 15px;">
