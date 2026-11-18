@@ -371,12 +371,27 @@
 
   <url>
     <loc>https://jdi-pulse.com/live-center/policy/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/policy/" />
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/policy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/policy/" />
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/tiktok-live-fest-2026-guide/</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/tiktok-live-fest-2026-guide/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/tiktok-live-fest-2026-guide/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/tiktok-live-fest-2026-guide/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/articles/tiktok-live-fest-2026/hero.jpg</image:loc>
+      <image:title>TikTok LIVE FEST 2026 完整攻略：年度盛典獎金、賽程、報名資格一次看懂</image:title>
+      <image:caption>TikTok 直播年度盛典 · 力量聯盟 / 人氣聯盟 / 才藝聯盟 / 全球總決賽 · 鑽石獎池 + 東京慶功之旅 + 2026 年度直播主頭銜</image:caption>
+    </image:image>
   </url>
 
   <url>
