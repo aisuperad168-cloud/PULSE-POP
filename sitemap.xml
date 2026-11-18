@@ -416,12 +416,27 @@
 
   <url>
     <loc>https://jdi-pulse.com/live-center/glory/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/glory/" />
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/glory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/glory/" />
+  </url>
+
+  <url>
+    <loc>https://jdi-pulse.com/live-center/article/october-2026-top5-streamers/</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://jdi-pulse.com/live-center/article/october-2026-top5-streamers/" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://jdi-pulse.com/live-center/article/october-2026-top5-streamers/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jdi-pulse.com/live-center/article/october-2026-top5-streamers/" />
+    <image:image>
+      <image:loc>https://jdi-pulse.com/assets/articles/october-2026-top5/hero.jpg</image:loc>
+      <image:title>2026 年 10 月脈動之星 TOP 5｜JDI 脈動傳媒月度優秀主播榜</image:title>
+      <image:caption>多多綠 · 美麗🧸不打烊🧸 · 芮娜 · 河馬🍉 · 芊芊 coco · 10 月月度頂尖主播揭曉</image:caption>
+    </image:image>
   </url>
 
   <!-- 產業職涯（求職者導向，2026-09-13 新增） -->
