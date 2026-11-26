@@ -365,6 +365,7 @@
       <div class="admin-detail-row"><span class="admin-detail-label">生效日</span><span class="admin-detail-value">${c.contract_start_date}</span></div>
       <div class="admin-detail-row"><span class="admin-detail-label">到期日</span><span class="admin-detail-value">${c.contract_end_date}</span></div>
       <div class="admin-detail-row"><span class="admin-detail-label">服務手續費</span><span class="admin-detail-value" style="color: #a5b4fc; font-weight: 700;">${c.service_fee_rate}%</span></div>
+      <div class="admin-detail-row"><span class="admin-detail-label">合作平台</span><span class="admin-detail-value">${renderOpsPlatforms(c.cooperation_platforms)}</span></div>
 
       ${attaMap.company_stamp ? `
       <h3 style="color: #fff; font-size: 14px; margin: 20px 0 8px; letter-spacing: 1px;">🖋 公司大小章</h3>
@@ -591,6 +592,26 @@
   function maskBank(acc) {
     if (!acc) return '—';
     return acc.length > 5 ? '****' + acc.slice(-5) : '****';
+  }
+
+  // 合作平台 value → 中文顯示名
+  const OPS_PLATFORM_LABELS = {
+    tiktok: 'TikTok',
+    douyin_overseas: '大陸抖音（外區版）',
+    '17live': '17Live',
+    lang_live: '浪 Live',
+    sugo: 'Sugo',
+    bigo: 'Bigo',
+  };
+  function renderOpsPlatforms(jsonStr) {
+    if (!jsonStr) return '<span style="color: var(--sign-text-mute);">—（舊合約未記錄）</span>';
+    let arr;
+    try { arr = JSON.parse(jsonStr); } catch(e) { return escapeHtml(jsonStr); }
+    if (!Array.isArray(arr) || arr.length === 0) return '<span style="color: var(--sign-text-mute);">—</span>';
+    return arr.map(v => {
+      const label = v && typeof v === 'string' && v.startsWith('其他：') ? v : (OPS_PLATFORM_LABELS[v] || v);
+      return `<span style="display:inline-block; padding:2px 10px; margin:2px 4px 2px 0; background:rgba(99,102,241,0.15); border:1px solid rgba(165,180,252,0.3); border-radius:999px; font-size:12px; color:#a5b4fc;">${escapeHtml(label)}</span>`;
+    }).join('');
   }
 
   function escapeHtml(s) {

@@ -17,7 +17,7 @@
 
   const f = sess.form;
   const partyLabel = f.party_type === 'company' ? '🏢 經紀公司' : '👤 個人運營';
-  const feeRate = f.party_type === 'company' ? 10 : 15;
+  const feeRate = f.party_type === 'company' ? 0 : 5;
 
   // 計算日期預覽（Asia/Taipei）
   const nowTW = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Taipei' });
@@ -29,6 +29,24 @@
   const endStr = end.toISOString().split('T')[0];
 
   const esc = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  // 平台 value → 中文顯示名（含「其他」特殊處理）
+  const PLATFORM_LABELS = {
+    tiktok: 'TikTok',
+    douyin_overseas: '大陸抖音（外區版）',
+    '17live': '17Live',
+    lang_live: '浪 Live',
+    sugo: 'Sugo',
+    bigo: 'Bigo',
+  };
+  function formatPlatforms(list, otherName) {
+    if (!Array.isArray(list) || list.length === 0) return '<span style="color:var(--sign-danger);">⚠️ 未選擇</span>';
+    const names = list.map(v => {
+      if (v === 'other') return `其他：${esc(otherName || '（未填）')}`;
+      return esc(PLATFORM_LABELS[v] || v);
+    });
+    return names.map(n => `<span style="display:inline-block; padding:2px 10px; margin:2px 4px 2px 0; background:rgba(37,244,238,0.1); border:1px solid rgba(37,244,238,0.3); border-radius:999px; font-size:12px;">${n}</span>`).join('');
+  }
 
   // ============ 資料預覽 ============
   const preview = document.getElementById('dataPreview');
@@ -65,6 +83,11 @@
       <div style="font-size: 12px; color: var(--sign-text-mute); margin-bottom: 8px; font-weight: 700; letter-spacing: 1px;">🖋 公司大小章</div>
       <img src="${f.company_stamp}" style="max-width: 160px; max-height: 160px; background: #fff; padding: 8px; border-radius: 4px;" alt="公司大小章" />
     </div>` : ''}
+
+    <div style="background: var(--sign-bg-elev); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px;">
+      <div style="font-size: 12px; color: var(--sign-text-mute); margin-bottom: 8px; font-weight: 700; letter-spacing: 1px;">🌐 合作平台</div>
+      <div style="color: var(--sign-text); font-size: 13px; line-height: 1.9;">${formatPlatforms(f.cooperation_platforms, f.platform_other_name)}</div>
+    </div>
 
     <div style="background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(67,56,202,0.1) 100%); border-radius: 8px; padding: 16px 20px; border-left: 3px solid var(--ops-primary);">
       <div style="font-size: 12px; color: var(--sign-text-mute); margin-bottom: 8px; font-weight: 700; letter-spacing: 1px;">📅 合作條件</div>
@@ -205,6 +228,8 @@
       bank_account_name: f.bank_account_name,
       contract_years: f.contract_years,
       company_stamp: f.company_stamp || null,
+      cooperation_platforms: Array.isArray(f.cooperation_platforms) ? f.cooperation_platforms : [],
+      platform_other_name: f.platform_other_name || null,
       signature_data: signaturePng,
       signed_at: now,
       read_scrolled_at: sess.scrolledAt,

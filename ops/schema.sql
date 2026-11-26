@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS ops_contracts (
   contract_start_date TEXT NOT NULL,           -- 生效日（簽署當日，第 17 條）
   contract_end_date TEXT NOT NULL,             -- 到期日
   service_fee_rate INTEGER NOT NULL,           -- 服務手續費 % (公司 0 / 個人 5)
+  cooperation_platforms TEXT,                  -- 合作平台清單 JSON array, e.g. ["tiktok","douyin_overseas","17live","lang_live","sugo","bigo","其他：Line Live"]
 
   -- 簽署證據
   signature_data TEXT NOT NULL,                -- 乙方 Canvas 簽名 base64 PNG

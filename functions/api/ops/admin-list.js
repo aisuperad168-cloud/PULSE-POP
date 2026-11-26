@@ -41,6 +41,7 @@ async function ensureTable(env) {
       contract_years INTEGER NOT NULL,
       contract_start_date TEXT NOT NULL, contract_end_date TEXT NOT NULL,
       service_fee_rate INTEGER NOT NULL,
+      cooperation_platforms TEXT,
       signature_data TEXT NOT NULL,
       signed_at TEXT NOT NULL, signed_ip TEXT NOT NULL, signed_ua TEXT,
       read_scrolled_at TEXT, agreed_at TEXT NOT NULL,

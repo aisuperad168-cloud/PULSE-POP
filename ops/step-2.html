@@ -77,6 +77,106 @@
       </div>
       <div class="sign-form-error" id="err-party_type"></div>
 
+      <!-- ============ 合作平台（多選）============ -->
+      <div class="ops-form-section-title" style="margin-top:28px;">🌐 合作平台 <span style="color:var(--sign-danger);">*</span></div>
+      <p style="font-size: 13px; color: var(--sign-text-dim); margin-bottom: 12px;">
+        請勾選本次合約所要涵蓋的合作平台（可複選）；如有列表外之平台，請勾選「其他」並填寫名稱。
+      </p>
+      <div class="ops-platforms-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px; margin-bottom:12px;">
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="tiktok" />
+          <span class="ops-platform-icon">🎵</span>
+          <span class="ops-platform-label">TikTok</span>
+          <span class="ops-platform-sub">國際版 TikTok LIVE</span>
+        </label>
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="douyin_overseas" />
+          <span class="ops-platform-icon">🎶</span>
+          <span class="ops-platform-label">大陸抖音（外區版）</span>
+          <span class="ops-platform-sub">Douyin · 海外主播專用</span>
+        </label>
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="17live" />
+          <span class="ops-platform-icon">1️⃣7️⃣</span>
+          <span class="ops-platform-label">17Live</span>
+          <span class="ops-platform-sub">17LIVE 直播平台</span>
+        </label>
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="lang_live" />
+          <span class="ops-platform-icon">🌊</span>
+          <span class="ops-platform-label">浪 Live</span>
+          <span class="ops-platform-sub">Lang Live</span>
+        </label>
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="sugo" />
+          <span class="ops-platform-icon">⭐</span>
+          <span class="ops-platform-label">Sugo</span>
+          <span class="ops-platform-sub">Sugo Live</span>
+        </label>
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="bigo" />
+          <span class="ops-platform-icon">🅱️</span>
+          <span class="ops-platform-label">Bigo</span>
+          <span class="ops-platform-sub">Bigo Live</span>
+        </label>
+        <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="other" id="platformOther" />
+          <span class="ops-platform-icon">➕</span>
+          <span class="ops-platform-label">其他</span>
+          <span class="ops-platform-sub">自行填寫平台名稱</span>
+        </label>
+      </div>
+      <div id="platformOtherInputWrap" style="display:none; margin-top:8px;">
+        <input type="text" id="platform_other_name" name="platform_other_name" class="sign-form-input" placeholder="請填寫其他平台名稱，多個請用「、」分隔（例：Line Live、浪 LIVE、YY 直播）" maxlength="100" />
+      </div>
+      <div class="sign-form-error" id="err-cooperation_platforms"></div>
+
+      <style>
+        .ops-platform-option {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 14px 10px;
+          background: var(--sign-bg-elev, rgba(255,255,255,0.03));
+          border: 1.5px solid var(--sign-border, rgba(255,255,255,0.1));
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
+        }
+        .ops-platform-option:hover {
+          border-color: var(--ops-primary, #25f4ee);
+          background: rgba(37,244,238,0.04);
+        }
+        .ops-platform-option input[type="checkbox"] {
+          position: absolute;
+          top: 8px; right: 8px;
+          width: 16px; height: 16px;
+          accent-color: var(--ops-primary, #25f4ee);
+          cursor: pointer;
+        }
+        .ops-platform-option:has(input:checked) {
+          border-color: var(--ops-primary, #25f4ee);
+          background: rgba(37,244,238,0.08);
+          box-shadow: 0 0 0 1px var(--ops-primary, #25f4ee);
+        }
+        .ops-platform-icon {
+          font-size: 24px;
+          margin-bottom: 6px;
+        }
+        .ops-platform-label {
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--sign-text, #fff);
+          margin-bottom: 2px;
+        }
+        .ops-platform-sub {
+          font-size: 11px;
+          color: var(--sign-text-dim, rgba(255,255,255,0.5));
+        }
+      </style>
+
       <!-- ============ 動態顯示：公司或個人資料 ============ -->
       <div id="entityFields" style="display:none;">
 

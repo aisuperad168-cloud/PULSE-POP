@@ -155,8 +155,24 @@ export async function onRequestPost({ request, env }) {
     const endDateStr = endDate.toISOString().split('T')[0];
 
     // ============ 3. 服務手續費（第十一條）============
-    // 公司 10%, 個人 15%
-    const serviceFeeRate = partyType === 'company' ? 10 : 15;
+    // 公司 0%（開立統一發票）, 個人 5%（勞務報酬單）
+    const serviceFeeRate = partyType === 'company' ? 0 : 5;
+
+    // ============ 3-2. 合作平台（JSON array）============
+    // 格式：["tiktok","douyin_overseas","17live","lang_live","sugo","bigo","其他：Line Live"]
+    const ALLOWED_PLATFORMS = ['tiktok', 'douyin_overseas', '17live', 'lang_live', 'sugo', 'bigo', 'other'];
+    const rawPlatforms = Array.isArray(body.cooperation_platforms) ? body.cooperation_platforms : [];
+    const validPlatforms = rawPlatforms.filter(p => ALLOWED_PLATFORMS.includes(p));
+    if (validPlatforms.length === 0) {
+      return json({ ok: false, error: '請至少選擇一個合作平台' }, 400);
+    }
+    // 若有 other，把 other 替換為「其他：<填寫名稱>」字串
+    const otherName = (body.platform_other_name || '').trim().slice(0, 100);
+    if (validPlatforms.includes('other') && !otherName) {
+      return json({ ok: false, error: '勾選「其他」時請填寫平台名稱' }, 400);
+    }
+    const normalizedPlatforms = validPlatforms.map(p => (p === 'other' ? `其他：${otherName}` : p));
+    const cooperationPlatformsJson = JSON.stringify(normalizedPlatforms);
 
     // ============ 4. 產生合約編號 JDI-OPS-YYMMDD-XXXXXX ============
     const yy = String(ty).slice(-2);
@@ -193,9 +209,10 @@ export async function onRequestPost({ request, env }) {
         phone, phone_last4, email,
         bank_name, bank_branch, bank_account, bank_account_name,
         contract_years, contract_start_date, contract_end_date, service_fee_rate,
+        cooperation_platforms,
         signature_data, signed_at, signed_ip, signed_ua,
         read_scrolled_at, agreed_at, status
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
       contractNo, 'ops', partyType,
       body.entity_name, taxIdClean, taxIdClean.slice(-4),
@@ -203,6 +220,7 @@ export async function onRequestPost({ request, env }) {
       body.phone, body.phone.slice(-4), body.email,
       body.bank_name, body.bank_branch, bankAccountClean, body.bank_account_name,
       Number(body.contract_years), startDateStr, endDateStr, serviceFeeRate,
+      cooperationPlatformsJson,
       body.signature_data, body.signed_at, ip, body.user_agent || null,
       body.read_scrolled_at || null, body.agreed_at, 'pending'
     ).run();
