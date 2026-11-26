@@ -160,7 +160,7 @@ export async function onRequestPost({ request, env }) {
 
     // ============ 3-2. 合作平台（JSON array）============
     // 格式：["tiktok","douyin_overseas","17live","lang_live","sugo","bigo","其他：Line Live"]
-    const ALLOWED_PLATFORMS = ['tiktok', 'douyin_overseas', '17live', 'lang_live', 'sugo', 'bigo', 'other'];
+    const ALLOWED_PLATFORMS = ['tiktok', 'douyin_overseas', '17live', 'lang_live', 'sugo', 'bigo', 'rednote', 'other'];
     const rawPlatforms = Array.isArray(body.cooperation_platforms) ? body.cooperation_platforms : [];
     const validPlatforms = rawPlatforms.filter(p => ALLOWED_PLATFORMS.includes(p));
     if (validPlatforms.length === 0) {
