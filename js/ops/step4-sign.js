@@ -38,6 +38,7 @@
     lang_live: '浪 Live',
     sugo: 'Sugo',
     bigo: 'Bigo',
+    rednote: '小紅書（RedNote）',
   };
   function formatPlatforms(list, otherName) {
     if (!Array.isArray(list) || list.length === 0) return '<span style="color:var(--sign-danger);">⚠️ 未選擇</span>';

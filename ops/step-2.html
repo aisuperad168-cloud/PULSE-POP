@@ -85,41 +85,68 @@
       <div class="ops-platforms-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px; margin-bottom:12px;">
         <label class="ops-platform-option">
           <input type="checkbox" name="cooperation_platforms" value="tiktok" />
-          <span class="ops-platform-icon">🎵</span>
+          <picture>
+            <source srcset="/assets/platforms/tiktok.webp" type="image/webp" />
+            <img src="/assets/platforms/tiktok.png" alt="TikTok LIVE" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
           <span class="ops-platform-label">TikTok</span>
           <span class="ops-platform-sub">國際版 TikTok LIVE</span>
         </label>
         <label class="ops-platform-option">
           <input type="checkbox" name="cooperation_platforms" value="douyin_overseas" />
-          <span class="ops-platform-icon">🎶</span>
+          <picture>
+            <source srcset="/assets/platforms/douyin.webp" type="image/webp" />
+            <img src="/assets/platforms/douyin.png" alt="抖音 Douyin" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
           <span class="ops-platform-label">大陸抖音（外區版）</span>
           <span class="ops-platform-sub">Douyin · 海外主播專用</span>
         </label>
         <label class="ops-platform-option">
           <input type="checkbox" name="cooperation_platforms" value="17live" />
-          <span class="ops-platform-icon">1️⃣7️⃣</span>
+          <picture>
+            <source srcset="/assets/platforms/17live.webp" type="image/webp" />
+            <img src="/assets/platforms/17live.png" alt="17LIVE" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
           <span class="ops-platform-label">17Live</span>
           <span class="ops-platform-sub">17LIVE 直播平台</span>
         </label>
         <label class="ops-platform-option">
           <input type="checkbox" name="cooperation_platforms" value="lang_live" />
-          <span class="ops-platform-icon">🌊</span>
+          <picture>
+            <source srcset="/assets/platforms/langlive.webp" type="image/webp" />
+            <img src="/assets/platforms/langlive.png" alt="浪 Live" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
           <span class="ops-platform-label">浪 Live</span>
           <span class="ops-platform-sub">Lang Live</span>
         </label>
         <label class="ops-platform-option">
           <input type="checkbox" name="cooperation_platforms" value="sugo" />
-          <span class="ops-platform-icon">⭐</span>
+          <picture>
+            <source srcset="/assets/platforms/sugo.webp" type="image/webp" />
+            <img src="/assets/platforms/sugo.png" alt="SUGO Live" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
           <span class="ops-platform-label">Sugo</span>
           <span class="ops-platform-sub">Sugo Live</span>
         </label>
         <label class="ops-platform-option">
           <input type="checkbox" name="cooperation_platforms" value="bigo" />
-          <span class="ops-platform-icon">🅱️</span>
+          <picture>
+            <source srcset="/assets/platforms/bigo.webp" type="image/webp" />
+            <img src="/assets/platforms/bigo.png" alt="BIGO LIVE" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
           <span class="ops-platform-label">Bigo</span>
           <span class="ops-platform-sub">Bigo Live</span>
         </label>
         <label class="ops-platform-option">
+          <input type="checkbox" name="cooperation_platforms" value="rednote" />
+          <picture>
+            <source srcset="/assets/platforms/rednote.webp" type="image/webp" />
+            <img src="/assets/platforms/rednote.png" alt="小紅書 RedNote" class="ops-platform-logo" loading="lazy" width="56" height="56" />
+          </picture>
+          <span class="ops-platform-label">小紅書（RedNote）</span>
+          <span class="ops-platform-sub">Xiaohongshu / RedNote</span>
+        </label>
+        <label class="ops-platform-option ops-platform-option--other">
           <input type="checkbox" name="cooperation_platforms" value="other" id="platformOther" />
           <span class="ops-platform-icon">➕</span>
           <span class="ops-platform-label">其他</span>
@@ -127,9 +154,26 @@
         </label>
       </div>
       <div id="platformOtherInputWrap" style="display:none; margin-top:8px;">
-        <input type="text" id="platform_other_name" name="platform_other_name" class="sign-form-input" placeholder="請填寫其他平台名稱，多個請用「、」分隔（例：Line Live、浪 LIVE、YY 直播）" maxlength="100" />
+        <input type="text" id="platform_other_name" name="platform_other_name" class="sign-form-input" placeholder="請填寫其他平台名稱，多個請用「、」分隔（例：Line Live、YY 直播、快手）" maxlength="100" />
       </div>
       <div class="sign-form-error" id="err-cooperation_platforms"></div>
+
+      <!-- ============ MCN 合作機構授權聲明 ============ -->
+      <div class="ops-mcn-statement" aria-label="MCN 合作機構授權聲明">
+        <div class="ops-mcn-statement-icon">🛡️</div>
+        <div class="ops-mcn-statement-body">
+          <div class="ops-mcn-statement-title">JDI 脈動傳媒 · 平台合作 MCN 機構</div>
+          <p>
+            JDI 脈動傳媒（艾超數位傳媒有限公司，統編 60413705）為上述各平台之
+            <strong>正式 MCN 合作機構</strong>，具備各平台官方公會／機構合作資格；
+            本頁所顯示之平台商標／標誌，均依各平台 MCN 機構授權範圍，
+            用於合作宣傳與合約簽署流程之識別用途。
+          </p>
+          <p class="ops-mcn-statement-sub">
+            ※ 各平台之商標權仍屬各平台公司所有；合約之執行範圍以各平台 MCN 機構協議為準。
+          </p>
+        </div>
+      </div>
 
       <style>
         .ops-platform-option {
@@ -137,7 +181,7 @@
           flex-direction: column;
           align-items: center;
           text-align: center;
-          padding: 14px 10px;
+          padding: 14px 10px 12px;
           background: var(--sign-bg-elev, rgba(255,255,255,0.03));
           border: 1.5px solid var(--sign-border, rgba(255,255,255,0.1));
           border-radius: 10px;
@@ -155,25 +199,76 @@
           width: 16px; height: 16px;
           accent-color: var(--ops-primary, #25f4ee);
           cursor: pointer;
+          z-index: 2;
         }
         .ops-platform-option:has(input:checked) {
           border-color: var(--ops-primary, #25f4ee);
           background: rgba(37,244,238,0.08);
           box-shadow: 0 0 0 1px var(--ops-primary, #25f4ee);
         }
-        .ops-platform-icon {
-          font-size: 24px;
-          margin-bottom: 6px;
+        .ops-platform-logo {
+          width: 56px;
+          height: 56px;
+          object-fit: contain;
+          margin-bottom: 8px;
+          border-radius: 10px;
+          background: #fff;
+          padding: 4px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+        .ops-platform-option--other .ops-platform-icon {
+          font-size: 42px;
+          margin-bottom: 8px;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .ops-platform-label {
           font-size: 14px;
-          font-weight: 600;
+          font-weight: 700;
           color: var(--sign-text, #fff);
           margin-bottom: 2px;
+          line-height: 1.3;
         }
         .ops-platform-sub {
           font-size: 11px;
           color: var(--sign-text-dim, rgba(255,255,255,0.5));
+        }
+
+        /* MCN 合作機構授權聲明 */
+        .ops-mcn-statement {
+          display: flex;
+          gap: 14px;
+          align-items: flex-start;
+          padding: 14px 16px;
+          margin: 16px 0 8px;
+          background: linear-gradient(135deg, rgba(37,244,238,0.06), rgba(99,102,241,0.08));
+          border: 1px solid rgba(37,244,238,0.25);
+          border-radius: 10px;
+        }
+        .ops-mcn-statement-icon {
+          font-size: 22px;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+        .ops-mcn-statement-title {
+          font-size: 13px;
+          font-weight: 800;
+          color: #25f4ee;
+          letter-spacing: 0.5px;
+          margin-bottom: 6px;
+        }
+        .ops-mcn-statement-body p {
+          margin: 0 0 4px;
+          font-size: 12.5px;
+          line-height: 1.75;
+          color: var(--sign-text, rgba(255,255,255,0.88));
+        }
+        .ops-mcn-statement-body .ops-mcn-statement-sub {
+          color: var(--sign-text-dim, rgba(255,255,255,0.5));
+          font-size: 11.5px;
+          margin-top: 6px;
         }
       </style>
 

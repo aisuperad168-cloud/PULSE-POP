@@ -602,6 +602,7 @@
     lang_live: '浪 Live',
     sugo: 'Sugo',
     bigo: 'Bigo',
+    rednote: '小紅書（RedNote）',
   };
   function renderOpsPlatforms(jsonStr) {
     if (!jsonStr) return '<span style="color: var(--sign-text-mute);">—（舊合約未記錄）</span>';
