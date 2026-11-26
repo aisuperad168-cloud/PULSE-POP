@@ -32,7 +32,7 @@
     previewEnd.textContent = end.toISOString().split('T')[0];
 
     // 服務費依身份
-    const fee = sess.form.party_type === 'company' ? 10 : 15;
+    const fee = sess.form.party_type === 'company' ? 0 : 5;
     previewFee.textContent = `${fee}%（${sess.form.party_type === 'company' ? '公司合作' : '個人運營'}）`;
 
     preview.style.display = 'block';

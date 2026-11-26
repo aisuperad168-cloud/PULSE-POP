@@ -90,6 +90,17 @@
     r.addEventListener('change', () => applyPartyType(r.value));
   });
 
+  // ============ 合作平台：「其他」勾選顯示文字框 ============
+  const platformOtherCb = document.getElementById('platformOther');
+  const platformOtherInputWrap = document.getElementById('platformOtherInputWrap');
+  const platformOtherInput = document.getElementById('platform_other_name');
+  if (platformOtherCb && platformOtherInputWrap) {
+    platformOtherCb.addEventListener('change', () => {
+      platformOtherInputWrap.style.display = platformOtherCb.checked ? 'block' : 'none';
+      if (!platformOtherCb.checked && platformOtherInput) platformOtherInput.value = '';
+    });
+  }
+
   // 若 session 有記錄，還原
   if (sess.form) {
     if (sess.form.party_type) {
@@ -106,6 +117,19 @@
     if (sess.form.company_stamp) {
       companyStampBase64 = sess.form.company_stamp;
       showStampPreview(companyStampBase64, sess.form.company_stamp_name || 'stamp.png');
+    }
+    // 還原合作平台選擇
+    if (Array.isArray(sess.form.cooperation_platforms)) {
+      sess.form.cooperation_platforms.forEach(v => {
+        const cb = document.querySelector(`input[name="cooperation_platforms"][value="${v}"]`);
+        if (cb) cb.checked = true;
+      });
+      if (sess.form.cooperation_platforms.includes('other') && platformOtherInputWrap) {
+        platformOtherInputWrap.style.display = 'block';
+        if (platformOtherInput && sess.form.platform_other_name) {
+          platformOtherInput.value = sess.form.platform_other_name;
+        }
+      }
     }
   }
 
@@ -267,6 +291,18 @@
     if (!/^\d{6,20}$/.test(fields.bank_account)) { document.getElementById('err-bank_account').textContent = '銀行帳號必須為 6-20 位數字'; hasError = true; }
     if (!fields.bank_account_name) { document.getElementById('err-bank_account_name').textContent = '必填'; hasError = true; }
 
+    // ============ 合作平台驗證（至少勾一個）============
+    const platformChecks = Array.from(document.querySelectorAll('input[name="cooperation_platforms"]:checked'));
+    const platformValues = platformChecks.map(cb => cb.value);
+    const platformOtherName = (document.getElementById('platform_other_name')?.value || '').trim();
+    if (platformValues.length === 0) {
+      document.getElementById('err-cooperation_platforms').textContent = '請至少選擇一個合作平台';
+      hasError = true;
+    } else if (platformValues.includes('other') && !platformOtherName) {
+      document.getElementById('err-cooperation_platforms').textContent = '勾選「其他」時請填寫平台名稱';
+      hasError = true;
+    }
+
     if (hasError) {
       const firstErr = document.querySelector('.sign-form-error:not(:empty)');
       if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -279,6 +315,8 @@
       ...fields,
       company_stamp: companyStampBase64,
       company_stamp_name: stampInput.files[0]?.name || null,
+      cooperation_platforms: platformValues,
+      platform_other_name: platformValues.includes('other') ? platformOtherName : null,
     };
     sess.step = 2;
     sessionStorage.setItem('opsSession', JSON.stringify(sess));

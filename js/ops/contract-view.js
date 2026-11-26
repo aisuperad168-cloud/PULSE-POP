@@ -128,7 +128,15 @@
     document.getElementById('pv-bank').textContent = bankStr;
 
     // 服務手續費
-    const feeLabel = c.service_fee_rate === 10 ? '10%（公司合作）' : '15%（個人運營）';
+    const feeLabel = c.service_fee_rate === 0
+      ? '0%（公司合作 · 開立統一發票 · 免收）'
+      : c.service_fee_rate === 5
+        ? '5%（個人運營 · 勞務報酬單）'
+        : c.service_fee_rate === 10
+          ? '10%（公司合作 · 舊版合約）'
+          : c.service_fee_rate === 15
+            ? '15%（個人運營 · 舊版合約）'
+            : `${c.service_fee_rate}%`;
     document.getElementById('pv-fee-rate').textContent = feeLabel;
 
     // 合約條件
